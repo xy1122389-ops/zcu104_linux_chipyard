@@ -1,0 +1,186 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source scripts/dbg_hub_check_postroute.tcl
+# set dcp [lindex $argv 0]
+# puts "=== OPEN_DCP ==="
+=== OPEN_DCP ===
+# puts $dcp
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ila_from_postsynth_20260317_135147/post_route_ila.dcp
+# open_checkpoint $dcp
+Command: open_checkpoint /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ila_from_postsynth_20260317_135147/post_route_ila.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1602.516 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.534 . Memory (MB): peak = 1943.273 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 3647 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 2738.898 ; gain = 97.066
+Restored from archive | CPU: 4.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 2738.898 ; gain = 97.066
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 3207.430 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 583 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 48 instances
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 364 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 12 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:26 ; elapsed = 00:00:34 . Memory (MB): peak = 3207.430 ; gain = 1604.914
+# puts "=== GET_DEBUG_CORES ==="
+=== GET_DEBUG_CORES ===
+# set cores [get_debug_cores]
+# puts [join $cores "\n"]
+dbg_hub
+u_ila_heartbeat
+# puts "=== REPORT dbg_hub ==="
+=== REPORT dbg_hub ===
+# set dbg [get_debug_cores dbg_hub]
+# if {[llength $dbg] == 0} {
+#   puts "dbg_hub NOT FOUND"
+# } else {
+#   report_property $dbg
+# }
+Property              Type    Read-only  Value
+CLASS                 string  true       debug_core
+C_CLK_INPUT_FREQ_HZ   string  false      300000000
+C_ENABLE_CLK_DIVIDER  string  false      false
+C_USER_SCAN_CHAIN     string  false      1
+NAME                  string  true       dbg_hub
+UUID                  string  true       00000000000000000000000000000000
+# puts "=== REPORT u_ila_heartbeat ==="
+=== REPORT u_ila_heartbeat ===
+# set ila [get_debug_cores u_ila_heartbeat]
+# if {[llength $ila] == 0} {
+#   puts "u_ila_heartbeat NOT FOUND"
+# } else {
+#   report_property $ila
+# }
+Property               Type    Read-only  Value
+ALL_PROBE_SAME_MU      string  false      true
+ALL_PROBE_SAME_MU_CNT  string  false      1
+CLASS                  string  true       debug_core
+C_ADV_TRIGGER          string  false      false
+C_DATA_DEPTH           string  false      4096
+C_EN_STRG_QUAL         string  false      false
+C_INPUT_PIPE_STAGES    string  false      0
+C_TRIGIN_EN            string  false      false
+C_TRIGOUT_EN           string  false      false
+NAME                   string  true       u_ila_heartbeat
+UUID                   string  true       CE044F27042D5CE989B0A18684C8329C
+# puts "=== C_USER_SCAN_CHAIN ==="
+=== C_USER_SCAN_CHAIN ===
+# if {[llength $dbg] == 0} {
+#   puts "C_USER_SCAN_CHAIN=N/A"
+# } else {
+#   puts "C_USER_SCAN_CHAIN=[get_property C_USER_SCAN_CHAIN $dbg]"
+# }
+C_USER_SCAN_CHAIN=1
+# puts "=== dbg_hub/clk net ==="
+=== dbg_hub/clk net ===
+# if {[llength $dbg] == 0} {
+#   puts "dbg_hub/clk=N/A"
+# } else {
+#   set clkpin [get_pins dbg_hub/clk]
+#   puts "PIN=$clkpin"
+#   set clknets [get_nets -of_objects $clkpin]
+#   puts "NETS=[join $clknets { }]"
+# }
+PIN=dbg_hub/clk
+NETS=_dutWrangler_auto_out_clock
+# puts "=== all_fanin to dbg_hub/clk ==="
+=== all_fanin to dbg_hub/clk ===
+# if {[llength $dbg] != 0} {
+#   foreach x [all_fanin -to [get_pins dbg_hub/clk]] {
+#     puts $x
+#   }
+# }
+harnessSysPLL/inst/clkout1_buf/O
+harnessSysPLL/inst/clkout1_buf/I
+harnessSysPLL/inst/mmcme4_adv_inst/CLKOUT0
+# puts "=== report_property dbg_hub/clk pin ==="
+=== report_property dbg_hub/clk pin ===
+# if {[llength $dbg] != 0} {
+#   report_property [get_pins dbg_hub/clk]
+# }
+Property            Type     Read-only  Value
+CLASS               string   true       pin
+DIRECTION           enum     true       IN
+HD.ASSIGNED_PPLOCS  string*  true       
+HD.TANDEM           int      false      0
+HOLD_SLACK          double   true       needs timing update***
+IS_CLEAR            bool     true       0
+IS_CLOCK            bool     true       0
+IS_CONNECTED        bool     true       1
+IS_ENABLE           bool     true       0
+IS_INVERTED         bool     false      0
+IS_LEAF             bool     true       0
+IS_ORIG_PIN         bool     true       1
+IS_PRESET           bool     true       0
+IS_RESET            bool     true       0
+IS_REUSED           bool     true       0
+IS_SET              bool     true       0
+IS_SETRESET         bool     true       0
+IS_TIED             bool     true       0
+IS_WRITE_ENABLE     bool     true       0
+LOGIC_VALUE         string   true       needs timing update***
+NAME                string   true       dbg_hub/clk
+PARENT_CELL         cell     true       dbg_hub
+PARTITION_ID        int      true       0
+REF_NAME            string   true       dbg_hub
+REF_PIN_NAME        string   true       clk
+SETUP_SLACK         double   true       needs timing update***
+# puts "=== clock driver details ==="
+=== clock driver details ===
+# if {[llength $dbg] != 0} {
+#   set clkpin [get_pins dbg_hub/clk]
+#   set net [lindex [get_nets -of_objects $clkpin] 0]
+#   set drvPin [lindex [get_pins -of_objects $net -filter {DIRECTION == OUT}] 0]
+#   set drvCell [get_cells -of_objects $drvPin]
+#   puts "DBG_CLK_NET=$net"
+#   puts "DBG_CLK_DRV_PIN=$drvPin"
+#   puts "DBG_CLK_DRV_CELL=$drvCell"
+#   if {[llength $drvCell]} {
+#     puts "DBG_CLK_DRV_REF=[get_property REF_NAME $drvCell]"
+#   }
+# }
+DBG_CLK_NET=_dutWrangler_auto_out_clock
+DBG_CLK_DRV_PIN=harnessSysPLL/clk_out1
+DBG_CLK_DRV_CELL=harnessSysPLL
+DBG_CLK_DRV_REF=harnessSysPLL
+# puts "=== checkpoint identity ==="
+=== checkpoint identity ===
+# puts "CURRENT_DESIGN=[current_design]"
+CURRENT_DESIGN=checkpoint_post_route_ila
+# puts "CHECKPOINT_FILE=$dcp"
+CHECKPOINT_FILE=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ila_from_postsynth_20260317_135147/post_route_ila.dcp
+# close_design
+# puts "=== DONE ==="
+=== DONE ===
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 14:32:39 2026...

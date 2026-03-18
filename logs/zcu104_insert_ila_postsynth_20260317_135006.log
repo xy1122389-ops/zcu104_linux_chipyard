@@ -1,0 +1,142 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source scripts/insert_ila_heartbeat_zcu104.tcl
+# if { $argc < 2 } {
+#   puts "Usage: vivado -mode batch -source scripts/insert_ila_heartbeat_zcu104.tcl -tclargs <in_post_synth_dcp> <out_dir>"
+#   exit 2
+# }
+# set in_dcp [lindex $argv 0]
+# set out_dir [lindex $argv 1]
+# file mkdir $out_dir
+# open_checkpoint $in_dcp
+Command: open_checkpoint generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_synth.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 1603.371 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.630 . Memory (MB): peak = 1909.090 ; gain = 1.730
+INFO: [Netlist 29-17] Analyzing 3564 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.195 . Memory (MB): peak = 2597.195 ; gain = 0.000
+Restored from archive | CPU: 0.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.196 . Memory (MB): peak = 2597.195 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 3035.461 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 529 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:24 ; elapsed = 00:00:32 . Memory (MB): peak = 3035.461 ; gain = 1432.090
+# set clk_net       [get_nets -quiet _dutWrangler_auto_out_clock]
+# set rst_net       [get_nets -quiet _dutWrangler_auto_out_reset]
+# set reg25_net     [get_nets -quiet heartbeat_out_OBUF]
+# set hb_port_net   [get_nets -quiet heartbeat_out]
+# set pll_lock_net  [get_nets -quiet harnessSysPLL/inst/locked]
+# set reg_lo8_nets [list \
+#   [get_nets -quiet REG_reg_n_0_\[0\]] \
+#   [get_nets -quiet REG_reg_n_0_\[1\]] \
+#   [get_nets -quiet REG_reg_n_0_\[2\]] \
+#   [get_nets -quiet REG_reg_n_0_\[3\]] \
+#   [get_nets -quiet REG_reg_n_0_\[4\]] \
+#   [get_nets -quiet REG_reg_n_0_\[5\]] \
+#   [get_nets -quiet REG_reg_n_0_\[6\]] \
+#   [get_nets -quiet REG_reg_n_0_\[7\]] \
+# ]
+# set missing {}
+# foreach {name netobj} [list \
+#   clk_net $clk_net \
+#   rst_net $rst_net \
+#   reg25_net $reg25_net \
+#   hb_port_net $hb_port_net \
+#   pll_lock_net $pll_lock_net \
+# ] {
+#   if { $netobj eq "" } { lappend missing $name }
+# }
+# for {set i 0} {$i < 8} {incr i} {
+#   if { [lindex $reg_lo8_nets $i] eq "" } { lappend missing "reg_lo8_$i" }
+# }
+# if { [llength $missing] > 0 } {
+#   puts "ERROR: missing required nets: $missing"
+#   exit 3
+# }
+# create_debug_core u_ila_heartbeat ila
+# set dbg [get_debug_cores u_ila_heartbeat]
+# set_property C_DATA_DEPTH 4096 $dbg
+# set_property C_INPUT_PIPE_STAGES 0 $dbg
+# create_debug_port u_ila_heartbeat probe
+# create_debug_port u_ila_heartbeat probe
+# create_debug_port u_ila_heartbeat probe
+# create_debug_port u_ila_heartbeat probe
+# set_property port_width 8 [get_debug_ports u_ila_heartbeat/probe0]
+# set_property port_width 1 [get_debug_ports u_ila_heartbeat/probe1]
+# set_property port_width 1 [get_debug_ports u_ila_heartbeat/probe2]
+# set_property port_width 1 [get_debug_ports u_ila_heartbeat/probe3]
+# set_property port_width 1 [get_debug_ports u_ila_heartbeat/probe4]
+# connect_debug_port u_ila_heartbeat/clk $clk_net
+# connect_debug_port u_ila_heartbeat/probe0 $reg_lo8_nets
+# connect_debug_port u_ila_heartbeat/probe1 $reg25_net
+# connect_debug_port u_ila_heartbeat/probe2 $hb_port_net
+CRITICAL WARNING: [Chipscope 16-3] Cannot debug net 'heartbeat_out'; it is not accessible from the fabric routing.
+# connect_debug_port u_ila_heartbeat/probe3 $rst_net
+# connect_debug_port u_ila_heartbeat/probe4 $pll_lock_net
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port jtag_jtag_TCK expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port jtag_jtag_TDI expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port jtag_jtag_TDO expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port jtag_jtag_TMS expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_clk expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_cs expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_dat_0 expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_dat_3 expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port uart_rxd expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port uart_txd expects both input and output buffering but the buffers are incomplete.
+INFO: [Project 1-461] DRC finished with 0 Errors, 10 Warnings
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 3049.430 ; gain = 13.969
+
+Starting Cache Timing Information Task
+Ending Cache Timing Information Task | Checksum: 12a2594e3
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.162 . Memory (MB): peak = 3049.430 ; gain = 0.000
+
+Starting Logic Optimization Task
+INFO: [Common 17-83] Releasing license: Implementation
+5 Infos, 10 Warnings, 0 Critical Warnings and 1 Errors encountered.
+opt_design failed
+ERROR: [Chipscope 16-213] The debug port 'u_ila_heartbeat/probe2' has 1 unconnected channels (bits). This will cause errors during implementation.
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 13:50:45 2026...

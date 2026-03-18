@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+vivado_bat='E:\PRO_APP\xilinx\Vivado\2021.2\bin\vivado.bat'
+winpwd=$(wslpath -w "$PWD")
+tmp=$(mktemp /tmp/vivado_wrapperXXXX.cmd)
+trap 'rm -f "$tmp"' EXIT
+
+cat > "$tmp" <<CMD
+@echo off
+pushd "$winpwd"
+call $vivado_bat %*
+set EC=%ERRORLEVEL%
+popd
+exit /b %EC%
+CMD
+
+cmd.exe /c "$(wslpath -w "$tmp")" "$@"

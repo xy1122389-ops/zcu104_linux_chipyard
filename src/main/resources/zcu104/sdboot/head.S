@@ -1,20 +1,15 @@
 // See LICENSE.Sifive for license details.
 #include <platform.h>
-#include <smp.h>
-#include "common.h"
 
   .section .text.init
   .option norvc
   .globl _prog_start
+  .extern _sp
 _prog_start:
-  smp_pause(s1, s2)
-  li sp, (PAYLOAD_DEST + 0xffff000)
+  la sp, _sp
   call main
-  smp_resume(s1, s2)
-  csrr a0, mhartid // hartid for next level bootloader
-  la a1, dtb // dtb address for next level bootloader
-  li s1, PAYLOAD_DEST
-  jr s1
+1:
+  j 1b
 
   .section .dtb
   .align 3

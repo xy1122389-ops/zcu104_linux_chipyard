@@ -1,0 +1,37 @@
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 7 s, completed Mar 17, 2026, 8:40:11 PM[0m
+[0Jmkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config
+(set -o pipefail && 	cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/chipyard_fpga.jar chipyard.Generator  --target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --name chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --top-module chipyard.fpga.zcu104.ZCU104FPGATestHarness --legacy-configs chipyard.fpga.zcu104:RocketZCU104Config   | tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.chisel.log)
+ZCU104 FPGA Base Clock Freq: 50 MHz
+mem AXI4-ID <= TL-Source mapping:
+	[ 0, 16) <= [ 0, 16) "chip_ddr"
+
+make[1]: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+mkdir -p /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build
+/bin/riscv64-unknown-elf-gcc -march=rv64ima_zicsr_zifencei -mcmodel=medany -O2 -std=gnu11 -Wall -nostartfiles -fno-common -g -DENTROPY=0 -mabi=lp64 -DNONSMP_HART=0 -I /root/chipyard/fpga/src/main/resources/zcu104/sdboot//include -I. -DTL_CLK="50UL" -static -nostdlib -L /root/chipyard/fpga/src/main/resources/zcu104/sdboot//linker -T sdboot.elf.lds -o /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build/sdboot.elf head.S sd.c kprintf.c
+make[1]: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'

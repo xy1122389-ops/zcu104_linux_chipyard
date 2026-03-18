@@ -1,0 +1,10 @@
+CRITICAL WARNING: [Common 17-183] Failed to open handle vivado.log. Please check access permission of directory 'C:\Windows'. You should restart the application from a writable working directory.
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /tmp/zcu104_g7_minclk_audit.tcl
+couldn't read file "/tmp/zcu104_g7_minclk_audit.tcl": no such file or directory
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 21:20:41 2026...

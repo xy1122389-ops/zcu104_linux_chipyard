@@ -1,0 +1,90 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /root/chipyard/fpga/scripts/zcu104_clockalive_domain_check.tcl
+# set dcp [lindex $argv 0]
+# open_checkpoint $dcp
+Command: open_checkpoint /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_route.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1604.070 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.626 . Memory (MB): peak = 1908.336 ; gain = 1.191
+INFO: [Netlist 29-17] Analyzing 3563 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 2690.332 ; gain = 94.066
+Restored from archive | CPU: 6.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 2690.332 ; gain = 94.066
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 3160.645 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 529 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:31 ; elapsed = 00:00:41 . Memory (MB): peak = 3160.645 ; gain = 1556.574
+# puts "=== pll_locked_out path ==="
+=== pll_locked_out path ===
+# set p1 [get_ports pll_locked_out]
+# set n1 [get_nets -of_objects $p1]
+# puts "PORT=pll_locked_out NET=$n1"
+PORT=pll_locked_out NET=pll_locked_out
+# set d1 [lindex [get_pins -of_objects $n1 -filter {DIRECTION == OUT}] 0]
+# puts "DRV_PIN=$d1"
+DRV_PIN=pll_locked_out_OBUF_inst/O
+# puts "DRV_CELL=[get_cells -of_objects $d1]"
+DRV_CELL=pll_locked_out_OBUF_inst
+# puts "=== clock_alive_out path ==="
+=== clock_alive_out path ===
+# set p2 [get_ports clock_alive_out]
+# set n2 [get_nets -of_objects $p2]
+# puts "PORT=clock_alive_out NET=$n2"
+PORT=clock_alive_out NET=clock_alive_out
+# set d2 [lindex [get_pins -of_objects $n2 -filter {DIRECTION == OUT}] 0]
+# set c2 [get_cells -of_objects $d2]
+# puts "DRV_PIN=$d2"
+DRV_PIN=clock_alive_out_OBUF_inst/O
+# puts "DRV_CELL=$c2"
+DRV_CELL=clock_alive_out_OBUF_inst
+# if {[llength $c2]} {
+#   set cp [get_pins -of_objects $c2 -filter {REF_PIN_NAME == C}]
+#   set cn [get_nets -of_objects $cp]
+#   puts "DRV_CLK_PIN=$cp"
+#   puts "DRV_CLK_NET=$cn"
+# }
+WARNING: [Vivado 12-508] No pins matched 'get_pins -of_objects [get_cells -of_objects clock_alive_out_OBUF_inst/O] -filter {REF_PIN_NAME == C}'.
+WARNING: [Vivado 12-1023] No nets matched for command 'get_nets -of_objects [get_pins -of_objects [get_cells -of_objects clock_alive_out_OBUF_inst/O] -filter {REF_PIN_NAME == C}]'.
+DRV_CLK_PIN=
+DRV_CLK_NET=
+# puts "=== dut clock net check ==="
+=== dut clock net check ===
+# set m [get_nets _dutWrangler_auto_out_clock]
+# puts "DUT_CLK_NET=$m"
+DUT_CLK_NET=_dutWrangler_auto_out_clock
+# close_design
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 15:43:09 2026...

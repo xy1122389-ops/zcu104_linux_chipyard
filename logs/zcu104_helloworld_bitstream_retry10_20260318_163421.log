@@ -1,0 +1,316 @@
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /root/chipyard/fpga/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:66:18: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val pllReset = InModuleBody { Wire(Bool()) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:76:71: type LazyRawModuleImp in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawModuleImp(_outer) {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0m26 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m68 file(s) merged using strategy 'Rename (Custom)' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m391 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 26d9207bc4d60c5378b13426f2fc1d500fcc153f[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 16 s, completed Mar 18, 2026, 4:34:45 PM[0m
+[0Jmkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config
+(set -o pipefail && 	cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/chipyard_fpga.jar chipyard.Generator  --target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --name chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --top-module chipyard.fpga.zcu104.ZCU104FPGATestHarness --legacy-configs chipyard.fpga.zcu104:RocketZCU104Config   | tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.chisel.log)
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+echo "$mfc_extra_anno_contents" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.extrafirtool.anno.json
+jq -s '[.[][]]' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.anno.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.extrafirtool.anno.json > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.appended.anno.json
+mkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/
+echo "emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/.mfc_lowering_options
+rm -rf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral
+(set -o pipefail && firtool \
+		--format=fir \
+		--export-module-hierarchy \
+		--verify-each=true \
+		--warn-on-unprocessed-annotations \
+		--disable-annotation-classless \
+		--disable-annotation-unknown \
+		--mlir-timing \
+		--lowering-options=emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket \
+		--repl-seq-mem \
+		--repl-seq-mem-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.mems.conf \
+		--annotation-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.appended.anno.json \
+		--split-verilog \
+		 \
+		-o /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral \
+		/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir |& tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.firtool.log)
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir:68:3: warning: module `ChipTop` is empty but cannot be removed because the module is public
+  module ChipTop :
+  ^
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir:68:3: warning: module `ChipTop` is empty but cannot be removed because the module is public
+  module ChipTop :
+  ^
+===-------------------------------------------------------------------------===
+                         ... Execution time report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 0.0879 seconds
+
+  ----User Time----  ----Wall Time----  ----Name----
+    0.0016 (  1.7%)    0.0016 (  1.8%)  FIR Parser
+    0.0001 (  0.1%)    0.0001 (  0.1%)    Parse annotations
+    0.0000 (  0.0%)    0.0000 (  0.0%)    Parse OMIR
+    0.0006 (  0.6%)    0.0006 (  0.7%)    Parse modules
+    0.0009 (  0.9%)    0.0009 (  1.0%)    Verify circuit
+    0.0435 ( 44.7%)    0.0353 ( 40.2%)  'firrtl.circuit' Pipeline
+    0.0005 (  0.5%)    0.0005 (  0.6%)    LowerOpenAggs
+    0.0016 (  1.6%)    0.0016 (  1.8%)    ResolvePaths
+    0.0005 (  0.5%)    0.0005 (  0.6%)      (A) circt::firrtl::InstanceGraph
+    0.0021 (  2.2%)    0.0021 (  2.4%)    LowerFIRRTLAnnotations
+    0.0004 (  0.4%)    0.0004 (  0.5%)    LowerIntmodules
+    0.0004 (  0.4%)    0.0004 (  0.5%)      (A) circt::firrtl::InstanceGraph
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      LowerIntrinsics
+    0.0012 (  1.3%)    0.0012 (  1.4%)    LowerSignatures
+    0.0000 (  0.0%)    0.0000 (  0.0%)    InjectDUTHierarchy
+    0.0003 (  0.3%)    0.0002 (  0.2%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      PassiveWires
+    0.0001 (  0.1%)    0.0000 (  0.0%)      DropName
+    0.0001 (  0.1%)    0.0001 (  0.1%)      CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)        (A) DominanceInfo
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LowerCHIRRTLPass
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LowerMatches
+    0.0006 (  0.6%)    0.0006 (  0.7%)    InferWidths
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0006 (  0.6%)    0.0006 (  0.7%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0016 (  1.6%)    0.0016 (  1.8%)    MemToRegOfVec
+    0.0030 (  3.1%)    0.0030 (  3.5%)    InferResets
+    0.0003 (  0.3%)    0.0003 (  0.3%)      (A) circt::firrtl::InstanceGraph
+    0.0022 (  2.2%)    0.0022 (  2.5%)    DropConst
+    0.0000 (  0.0%)    0.0000 (  0.0%)    HoistPassthrough
+    0.0003 (  0.3%)    0.0003 (  0.4%)    Dedup
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0002 (  0.2%)    0.0002 (  0.2%)    'firrtl.module' Pipeline
+    0.0002 (  0.2%)    0.0002 (  0.2%)      FlattenMemory
+    0.0025 (  2.6%)    0.0025 (  2.9%)    LowerFIRRTLTypes
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0002 (  0.2%)    0.0001 (  0.2%)    'any' Pipeline
+    0.0002 (  0.2%)    0.0001 (  0.2%)      ExpandWhens
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0000 (  0.1%)    0.0000 (  0.0%)      SFCCompat
+    0.0001 (  0.1%)    0.0000 (  0.1%)      LayerMerge
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LayerSink
+    0.0000 (  0.0%)    0.0000 (  0.0%)        (A) DominanceInfo
+    0.0008 (  0.9%)    0.0008 (  1.0%)    LowerLayers
+    0.0013 (  1.3%)    0.0013 (  1.4%)    Inliner
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      RandomizeRegisterInit
+    0.0003 (  0.3%)    0.0003 (  0.4%)    CheckCombLoops
+    0.0003 (  0.3%)    0.0003 (  0.3%)      (A) circt::firrtl::InstanceGraph
+    0.0072 (  7.4%)    0.0028 (  3.1%)    'firrtl.module' Pipeline
+    0.0072 (  7.4%)    0.0028 (  3.1%)      Canonicalizer
+    0.0000 (  0.0%)    0.0000 (  0.0%)      InferReadWrite
+    0.0008 (  0.8%)    0.0008 (  0.9%)    LowerMemory
+    0.0001 (  0.1%)    0.0001 (  0.2%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0010 (  1.0%)    0.0010 (  1.1%)    PrefixModules
+    0.0009 (  0.9%)    0.0009 (  1.0%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0017 (  1.8%)    0.0017 (  2.0%)    IMConstProp
+    0.0002 (  0.2%)    0.0002 (  0.3%)    HoistPassthrough
+    0.0002 (  0.2%)    0.0002 (  0.2%)      (A) circt::firrtl::InstanceGraph
+    0.0029 (  3.0%)    0.0029 (  3.3%)  IMDeadCodeElim
+    0.0007 (  0.7%)    0.0007 (  0.8%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0002 (  0.2%)    0.0002 (  0.2%)    (A) circt::hw::InnerSymbolTableCollection
+    0.0002 (  0.3%)    0.0002 (  0.3%)  'firrtl.circuit' Pipeline
+    0.0002 (  0.3%)    0.0002 (  0.3%)    AddSeqMemPorts
+    0.0002 (  0.2%)    0.0002 (  0.3%)      (A) circt::firrtl::InstanceGraph
+    0.0008 (  0.8%)    0.0008 (  0.9%)  CreateSiFiveMetadata
+    0.0002 (  0.2%)    0.0002 (  0.2%)    (A) circt::firrtl::InstanceGraph
+    0.0057 (  5.8%)    0.0057 (  6.4%)  'firrtl.circuit' Pipeline
+    0.0004 (  0.4%)    0.0004 (  0.5%)    ExtractInstances
+    0.0004 (  0.4%)    0.0004 (  0.4%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)    GrandCentral
+    0.0014 (  1.4%)    0.0014 (  1.6%)    BlackBoxReader
+    0.0039 (  4.0%)    0.0039 (  4.4%)    SymbolDCE
+    0.0020 (  2.1%)    0.0020 (  2.3%)  InnerSymbolDCE
+    0.0028 (  2.9%)    0.0027 (  3.1%)  'firrtl.circuit' Pipeline
+    0.0002 (  0.2%)    0.0002 (  0.2%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.2%)      Canonicalizer
+    0.0000 (  0.0%)    0.0000 (  0.0%)      RegisterOptimizer
+    0.0017 (  1.7%)    0.0017 (  1.9%)    IMConstProp
+    0.0001 (  0.1%)    0.0001 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0012 (  1.3%)    0.0012 (  1.4%)  IMDeadCodeElim
+    0.0001 (  0.1%)    0.0001 (  0.1%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0002 (  0.2%)    0.0002 (  0.3%)    (A) circt::hw::InnerSymbolTableCollection
+    0.0128 ( 13.1%)    0.0126 ( 14.4%)  'firrtl.circuit' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)    EmitOMIR
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)      MergeConnections
+    0.0001 (  0.1%)    0.0001 (  0.1%)      Vectorization
+    0.0009 (  1.0%)    0.0009 (  1.1%)    ResolveTraces
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0007 (  0.8%)    0.0007 (  0.8%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0043 (  4.4%)    0.0043 (  4.9%)    LowerXMR
+    0.0011 (  1.2%)    0.0011 (  1.3%)      (A) circt::firrtl::InstanceGraph
+    0.0030 (  3.1%)    0.0030 (  3.4%)    LowerClasses
+    0.0004 (  0.4%)    0.0004 (  0.4%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0006 (  0.7%)    0.0006 (  0.7%)    VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0000 (  0.0%)    0.0000 (  0.0%)    'firrtl.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)      Lint
+    0.0029 (  3.0%)    0.0029 (  3.3%)  LowerFIRRTLToHW
+    0.0010 (  1.0%)    0.0010 (  1.1%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) circt::firrtl::NLATable
+    0.0003 (  0.3%)    0.0003 (  0.3%)  'hw.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)    CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) DominanceInfo
+    0.0003 (  0.3%)    0.0002 (  0.2%)    Canonicalizer
+    0.0010 (  1.0%)    0.0010 (  1.1%)  VerifyInnerRefNamespace
+    0.0008 (  0.8%)    0.0008 (  0.9%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0000 (  0.0%)    0.0000 (  0.0%)  ExternalizeClockGate
+    0.0022 (  2.2%)    0.0022 (  2.5%)  LowerSimToSV
+    0.0011 (  1.1%)    0.0011 (  1.2%)  LowerSeqToSV
+    0.0001 (  0.1%)    0.0001 (  0.1%)  'hw.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)    LowerVerifToSV
+    0.0000 (  0.0%)    0.0000 (  0.0%)  HWMemSimImpl
+    0.0002 (  0.3%)    0.0002 (  0.2%)  'hw.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)    CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) DominanceInfo
+    0.0001 (  0.1%)    0.0001 (  0.1%)    Canonicalizer
+    0.0000 (  0.0%)    0.0000 (  0.0%)    CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) DominanceInfo
+    0.0000 (  0.0%)    0.0000 (  0.0%)    HWCleanup
+    0.0017 (  1.8%)    0.0017 (  2.0%)  VerifyInnerRefNamespace
+    0.0004 (  0.5%)    0.0004 (  0.5%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)  'hw.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)    HWLegalizeModules
+    0.0001 (  0.1%)    0.0001 (  0.1%)    PrettifyVerilog
+    0.0011 (  1.1%)    0.0011 (  1.3%)  StripDebugInfoWithPred
+    0.0001 (  0.1%)    0.0001 (  0.1%)  HWExportModuleHierarchy
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0016 (  1.7%)    0.0016 (  1.8%)  VerifyInnerRefNamespace
+    0.0010 (  1.0%)    0.0010 (  1.1%)  VerifyObjectFields
+    0.0045 (  4.6%)    0.0045 (  5.1%)  ExportSplitVerilog
+    0.0031 (  3.2%)    0.0029 (  3.2%)  'builtin.module' Pipeline
+    0.0026 (  2.6%)    0.0026 (  2.9%)    HWLowerInstanceChoices
+    0.0002 (  0.3%)    0.0002 (  0.2%)    'hw.module' Pipeline
+    0.0002 (  0.3%)    0.0002 (  0.2%)      PrepareForEmission
+   -0.0008 ( -0.8%)   -0.0008 ( -0.9%)  Rest
+    0.0973 (100.0%)    0.0879 (100.0%)  Total
+sed -i 's/.*/& /' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.mems.conf # need trailing space for SFC macrocompiler
+# If there are no BB's then the file might not be generated; ensure it exists
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/firrtl_black_box_resource_files.f
+/root/chipyard/scripts/uniquify-module-names.py \
+	--model-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/model_module_hierarchy.json \
+	--top-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/top_module_hierarchy.json \
+	--in-all-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/filelist.f \
+	--in-bb-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/firrtl_black_box_resource_files.f \
+	--dut ChipTop \
+	--model ZCU104FPGATestHarness \
+	--target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral \
+	--out-dut-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.f \
+	--out-model-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.f \
+	--out-model-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/model_module_hierarchy.uniquified.json \
+	--gcpath /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral
+sed -e 's;^;/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/;' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/firrtl_black_box_resource_files.f > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.bb.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.bb.f
+sort -u /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.bb.f > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.all.f
+cp -f  /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral
+cp: missing destination file operand after '/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral'
+Try 'cp --help' for more information.
+make: [Makefile:152: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.f] Error 1 (ignored)
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.f
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project tapeout; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/tapeout.jar\"); assembly" && touch /root/chipyard/.classpath_cache/tapeout.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tapeout (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tapeout (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /root/chipyard/.classpath_cache/tapeout.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 1 s, completed Mar 18, 2026, 4:34:56 PM[0m
+[0J/root/chipyard/scripts/split-mems-conf.py \
+	--in-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.mems.conf \
+	--in-model-hrchy-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/model_module_hierarchy.uniquified.json \
+	--dut-module-name ChipTop \
+	--model-module-name ZCU104FPGATestHarness \
+	--out-dut-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf \
+	--out-model-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.conf
+[ -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/custom.mems.conf ] && cat /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/custom.mems.conf >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf
+make: [/root/chipyard/common.mk:283: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf] Error 1 (ignored)
+cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/tapeout.jar tapeout.macros.MacroCompiler -n /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf -v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.v -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.fir --mode synflops
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+WARNING: Empty *.mems.conf file. No memories generated.
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.fir
+cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/tapeout.jar tapeout.macros.MacroCompiler  -n /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.conf -v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.v -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.fir --mode synflops
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+WARNING: Empty *.mems.conf file. No memories generated.
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.fir
+rm -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+sort -u /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.all.f | grep -v '.*\.\(svh\|h\|conf\)$' >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+echo "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+echo "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+rm -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f
+echo "/root/chipyard/generators/rocket-chip-blocks/vsrc/SRLatch.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f;
+cat /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f
+cd /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config; vivado \
+	-nojournal -mode batch \
+	-source /root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl \
+	-tclargs \
+		-top-module "ZCU104FPGATestHarness" \
+		-F "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f" \
+		-board "zcu104" \
+		-ip-vivado-tcls "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.zcu104ps.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.harnessSysPLL.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.vivado.tcl"
+/usr/bin/bash: line 2: vivado: command not found
+make: *** [Makefile:184: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit] Error 127

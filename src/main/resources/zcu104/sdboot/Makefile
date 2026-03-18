@@ -15,10 +15,12 @@ PBUS_CLK ?= 1000000
 
 default: elf bin dump
 
+BOOTROM_SRCS := head.S baremetal.c kprintf.c
+
 elf := $(BUILD_DIR)/sdboot.elf
-$(elf): head.S kprintf.c sd.c
+$(elf): $(BOOTROM_SRCS)
 	mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -DTL_CLK="$(PBUS_CLK)UL" $(LFLAGS) -o $@ head.S sd.c kprintf.c
+	$(CC) $(CFLAGS) -DTL_CLK="$(PBUS_CLK)UL" $(LFLAGS) -o $@ $(BOOTROM_SRCS)
 
 .PHONY: elf
 elf: $(elf)

@@ -61,7 +61,7 @@ class SDIOZCU102PlacedOverlay(val shell: ZCU102ShellBasicOverlays, name: String,
                                         ("A22", IOPin(io.spi_dat(0))),   //PMOD0_2
                                         ("B21", IOPin(io.spi_dat(1))),   //PMOD0_4
                                         ("C21", IOPin(io.spi_dat(2))),   //PMOD0_5
-                                        ("A20", IOPin(io.spi_dat(3))))   //PMOD0_0
+                                        ("G8",  IOPin(io.spi_dat(3))))   //PMOD0_0
 
     packagePinsWithPackageIOs foreach { case (pin, io) => {
       shell.xdc.addPackagePin(io, pin)

@@ -1,0 +1,111 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /tmp/zcu104_pll_rootcause.tcl
+# set dcp [lindex $argv 0]
+# open_checkpoint $dcp
+Command: open_checkpoint /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_route.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1603.598 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.871 . Memory (MB): peak = 1907.633 ; gain = 1.285
+INFO: [Netlist 29-17] Analyzing 3563 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 2689.828 ; gain = 94.086
+Restored from archive | CPU: 6.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 2689.828 ; gain = 94.086
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.028 . Memory (MB): peak = 3159.234 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 529 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:36 ; elapsed = 00:00:47 . Memory (MB): peak = 3159.234 ; gain = 1555.637
+# puts "=== PLL CELL ==="
+=== PLL CELL ===
+# set pll [get_cells harnessSysPLL/inst]
+# puts "PLL_CELL=$pll"
+PLL_CELL=harnessSysPLL/inst
+# puts "PLL_REF=[get_property REF_NAME $pll]"
+PLL_REF=harnessSysPLL_clk_wiz
+# puts "=== CLKIN1 net and fanin ==="
+=== CLKIN1 net and fanin ===
+# set clkinPin [get_pins harnessSysPLL/inst/mmcme4_adv_inst/CLKIN1]
+# set clkinNet [get_nets -of_objects $clkinPin]
+# puts "CLKIN1_PIN=$clkinPin"
+CLKIN1_PIN=harnessSysPLL/inst/mmcme4_adv_inst/CLKIN1
+# puts "CLKIN1_NET=$clkinNet"
+CLKIN1_NET=harnessSysPLL/inst/clk_in1
+# foreach x [all_fanin -to $clkinPin -flat] { puts $x }
+harnessSysPLL/inst/mmcme4_adv_inst/CLKIN1
+_sys_clock_ibufds_O_BUFG_inst/O
+_sys_clock_ibufds_O_BUFG_inst/I
+sys_clock_ibufds/IBUFCTRL_INST/O
+sys_clock_ibufds/IBUFCTRL_INST/I
+sys_clock_ibufds/DIFFINBUF_INST/O
+sys_clock_ibufds/DIFFINBUF_INST/DIFF_IN_P
+sys_clock_p
+sys_clock_ibufds/DIFFINBUF_INST/DIFF_IN_N
+sys_clock_n
+# puts "=== RESET pin/net/fanin ==="
+=== RESET pin/net/fanin ===
+# set rstPin [get_pins harnessSysPLL/inst/mmcme4_adv_inst/RST]
+# set rstNet [get_nets -of_objects $rstPin]
+# puts "RST_PIN=$rstPin"
+RST_PIN=harnessSysPLL/inst/mmcme4_adv_inst/RST
+# puts "RST_NET=$rstNet"
+RST_NET=harnessSysPLL/inst/reset
+# foreach x [all_fanin -to $rstPin -flat] { puts $x }
+harnessSysPLL/inst/mmcme4_adv_inst/RST
+fpga_power_on/power_on_reset_reg/Q
+fpga_power_on/power_on_reset_reg/C
+# puts "=== LOCKED fanout endpoint port ==="
+=== LOCKED fanout endpoint port ===
+# set lockPin [get_pins harnessSysPLL/inst/mmcme4_adv_inst/LOCKED]
+# puts "LOCKED_PIN=$lockPin"
+LOCKED_PIN=harnessSysPLL/inst/mmcme4_adv_inst/LOCKED
+# foreach x [all_fanout -from $lockPin -flat -endpoints_only] { puts $x }
+dutWrangler/debounced_debounce/reg_0_reg[9]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[8]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[7]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[6]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[5]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[4]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[3]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[2]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[1]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[12]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[11]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[10]/CLR
+dutWrangler/debounced_debounce/reg_0_reg[0]/CLR
+dutWrangler/deglitched_deglitch/reg_0_reg/PRE
+pll_locked_out
+# close_design
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 16:12:10 2026...

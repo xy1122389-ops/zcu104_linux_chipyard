@@ -1,11 +1,55 @@
-[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/user007/project/chipyard/fpga/target/scala-2.13/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /root/chipyard/fpga/target/scala-2.13/classes.bak[0m
 [0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ZCU102FPGATestHarness.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ZCU102FPGATestHarnessImp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104FPGATestHarness.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART$$anonfun$$lessinit$greater$1$$anonfun$apply$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART$$anonfun$$lessinit$greater$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG$$anonfun$$lessinit$greater$4$$anonfun$apply$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104HelloWorldUART.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem$$anonfun$$lessinit$greater$3$$anonfun$apply$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104ChipTopStub.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem$$anonfun$$lessinit$greater$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard$$anonfun$$lessinit$greater$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard$$anonfun$$lessinit$greater$2$$anonfun$apply$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104FPGATestHarnessImp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG$$anonfun$$lessinit$greater$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ZCU102FPGATestHarness.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ZCU102FPGATestHarnessImp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104FPGATestHarness.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART$$anonfun$$lessinit$greater$1$$anonfun$apply$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART$$anonfun$$lessinit$greater$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG$$anonfun$$lessinit$greater$4$$anonfun$apply$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104HelloWorldUART.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem$$anonfun$$lessinit$greater$3$$anonfun$apply$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104ChipTopStub.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem$$anonfun$$lessinit$greater$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard$$anonfun$$lessinit$greater$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard$$anonfun$$lessinit$greater$2$$anonfun$apply$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104FPGATestHarnessImp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG$$anonfun$$lessinit$greater$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ZCU102FPGATestHarnessImp.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ZCU102FPGATestHarness.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/user007/project/chipyard/fpga/target/scala-2.13/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104FPGATestHarness.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART$$anonfun$$lessinit$greater$1$$anonfun$apply$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART$$anonfun$$lessinit$greater$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG$$anonfun$$lessinit$greater$4$$anonfun$apply$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104DirectUARTTestHarnessImp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem$$anonfun$$lessinit$greater$3$$anonfun$apply$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104DirectChipTopStub.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104DirectUARTTestHarness.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithUART.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithPSDDRMem$$anonfun$$lessinit$greater$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard$$anonfun$$lessinit$greater$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithSPISDCard$$anonfun$$lessinit$greater$2$$anonfun$apply$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104FPGATestHarnessImp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	WithJTAG$$anonfun$$lessinit$greater$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ZCU104DirectHelloWorldUART.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /root/chipyard/fpga/target/scala-2.13/classes.bak[0m

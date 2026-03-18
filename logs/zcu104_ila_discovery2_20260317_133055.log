@@ -1,0 +1,103 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /tmp/zcu104_probe_discovery2.tcl
+# set dcp [lindex $argv 0]
+# open_checkpoint $dcp
+Command: open_checkpoint /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_route.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1603.117 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.516 . Memory (MB): peak = 1908.723 ; gain = 1.676
+INFO: [Netlist 29-17] Analyzing 3563 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2692.449 ; gain = 96.270
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2692.449 ; gain = 96.270
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 3161.605 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 529 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:26 ; elapsed = 00:00:36 . Memory (MB): peak = 3161.605 ; gain = 1558.488
+# puts "=== TARGET_PORT ==="
+=== TARGET_PORT ===
+# puts [get_ports -quiet heartbeat_out]
+heartbeat_out
+# puts "=== REG25 PINS ==="
+=== REG25 PINS ===
+# puts "Q=[get_pins -hier -quiet *REG_reg\[25\]/Q]"
+Q=REG_reg[25]/Q
+# puts "C=[get_pins -hier -quiet *REG_reg\[25\]/C]"
+C=REG_reg[25]/C
+# puts "R=[get_pins -hier -quiet *REG_reg\[25\]/R]"
+R=REG_reg[25]/R
+# puts "=== REG25 NETS ==="
+=== REG25 NETS ===
+# puts "QNET=[get_nets -quiet -of_objects [get_pins -hier -quiet *REG_reg\[25\]/Q]]"
+QNET=heartbeat_out_OBUF
+# puts "CNET=[get_nets -quiet -of_objects [get_pins -hier -quiet *REG_reg\[25\]/C]]"
+CNET=_dutWrangler_auto_out_clock
+# puts "RNET=[get_nets -quiet -of_objects [get_pins -hier -quiet *REG_reg\[25\]/R]]"
+RNET=_dutWrangler_auto_out_reset
+# puts "=== REG[7:0] QNETS ==="
+=== REG[7:0] QNETS ===
+# for {set i 0} {$i < 8} {incr i} {
+#   set pin [get_pins -hier -quiet *REG_reg\[$i\]/Q]
+#   puts "REG${i}_QPIN=$pin"
+#   puts "REG${i}_QNET=[get_nets -quiet -of_objects $pin]"
+# }
+REG0_QPIN=REG_reg[0]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG_reg[0]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG_reg[0]/Q chiptop0/system/plic_domain/plic/intnodeOut_0_REG_reg[0]/Q
+REG0_QNET=REG_reg_n_0_[0] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG[0] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG[0] chiptop0/system/plic_domain/plic/intnodeOut_0_REG[0]
+REG1_QPIN=REG_reg[1]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG_reg[1]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG_reg[1]/Q chiptop0/system/plic_domain/plic/intnodeOut_0_REG_reg[1]/Q
+REG1_QNET=REG_reg_n_0_[1] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG[1] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG[1] chiptop0/system/plic_domain/plic/intnodeOut_0_REG[1]
+REG2_QPIN=REG_reg[2]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG_reg[2]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG_reg[2]/Q
+REG2_QNET=REG_reg_n_0_[2] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG[2] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG[2]
+REG3_QPIN=REG_reg[3]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG_reg[3]/Q chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG_reg[3]/Q
+REG3_QNET=REG_reg_n_0_[3] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceC_REG[3] chiptop0/system/coh_wrapper/l2/inclusive_cache_bank_sched/bankedStore/regsel_sourceD_REG[3]
+REG4_QPIN=REG_reg[4]/Q
+REG4_QNET=REG_reg_n_0_[4]
+REG5_QPIN=REG_reg[5]/Q
+REG5_QNET=REG_reg_n_0_[5]
+REG6_QPIN=REG_reg[6]/Q
+REG6_QNET=REG_reg_n_0_[6]
+REG7_QPIN=REG_reg[7]/Q
+REG7_QNET=REG_reg_n_0_[7]
+# puts "=== HEARTBEAT_OUT NET ==="
+=== HEARTBEAT_OUT NET ===
+# puts "PORTNET=[get_nets -quiet -of_objects [get_ports -quiet heartbeat_out]]"
+PORTNET=heartbeat_out
+# puts "OBUFINET=[get_nets -quiet -of_objects [get_pins -hier -quiet *heartbeat_out_OBUF_inst/I]]"
+OBUFINET=heartbeat_out_OBUF
+# puts "=== LOCKED CANDIDATES ==="
+=== LOCKED CANDIDATES ===
+ERROR: [Common 17-165] Too many positional options when parsing '*/LOCKED*', please type 'get_pins -help' for usage info.
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 13:31:34 2026...

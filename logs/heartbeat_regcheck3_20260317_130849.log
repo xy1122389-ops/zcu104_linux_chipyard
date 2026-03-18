@@ -1,0 +1,205 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /tmp/hb_regcheck3_20260317_130849.tcl
+# set dcp [lindex $argv 0]
+# open_checkpoint $dcp
+Command: open_checkpoint /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_route.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1603.320 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.865 . Memory (MB): peak = 1907.934 ; gain = 1.535
+INFO: [Netlist 29-17] Analyzing 3563 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 2690.746 ; gain = 94.281
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 2690.746 ; gain = 94.281
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 3160.375 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 529 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:35 ; elapsed = 00:00:47 . Memory (MB): peak = 3160.375 ; gain = 1557.055
+# puts "=== report_property [get_cells REG_reg[25]] ==="
+=== report_property REG_reg[25] ===
+# report_property [get_cells REG_reg[25]]
+Property            Type    Read-only  Value
+BEL                 string  false      SLICEL.BFF
+CLASS               string  true       cell
+FILE_NAME           string  true       Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ZCU104FPGATestHarness.sv
+INIT                binary  false      1'b0
+IS_BEL_FIXED        bool    false      0
+IS_BLACKBOX         bool    true       0
+IS_BOUNDARY_INST    bool    true       0
+IS_DEBUGGABLE       bool    true       1
+IS_LOC_FIXED        bool    false      0
+IS_MATCHED          bool    true       1
+IS_ORIG_CELL        bool    true       1
+IS_PRIMITIVE        bool    true       1
+IS_REUSED           bool    true       0
+IS_R_INVERTED       binary  false      1'b1
+IS_SEQUENTIAL       bool    true       1
+LINE_NUMBER         int     true       129
+LOC                 site    false      SLICE_X98Y278
+NAME                string  true       REG_reg[25]
+OPT_MODIFIED        string  true       RETARGET
+ORIG_REF_NAME       string  true       FDRE
+PRIMITIVE_COUNT     int     true       1
+PRIMITIVE_GROUP     enum    true       REGISTER
+PRIMITIVE_LEVEL     enum    true       LEAF
+PRIMITIVE_SUBGROUP  enum    true       SDR
+PRIMITIVE_TYPE      enum    true       REGISTER.SDR.FDRE
+REF_NAME            string  true       FDRE
+REUSE_STATUS        enum    true       
+SLR_INDEX           int     true       0
+STATUS              enum    true       PLACED
+# puts "=== report_property [get_pins REG_reg[25]/C] ==="
+=== report_property REG_reg[25]/C ===
+# report_property [get_pins REG_reg[25]/C]
+Property            Type     Read-only  Value
+CLASS               string   true       pin
+CLOCK_ROOT          string   true       X1Y2
+DIRECTION           enum     true       IN
+HD.ASSIGNED_PPLOCS  string*  true       
+HD.TANDEM           int      false      0
+HOLD_SLACK          double   true       needs timing update***
+IS_CLEAR            bool     true       0
+IS_CLOCK            bool     true       1
+IS_CONNECTED        bool     true       1
+IS_ENABLE           bool     true       0
+IS_INVERTED         bool     false      0
+IS_LEAF             bool     true       1
+IS_ORIG_PIN         bool     true       1
+IS_PRESET           bool     true       0
+IS_RESET            bool     true       0
+IS_REUSED           bool     true       0
+IS_SET              bool     true       0
+IS_SETRESET         bool     true       0
+IS_TIED             bool     true       0
+IS_WRITE_ENABLE     bool     true       0
+LOGIC_VALUE         string   true       needs timing update***
+NAME                string   true       REG_reg[25]/C
+PARENT_CELL         cell     true       REG_reg[25]
+PARTITION_ID        int      true       0
+REF_NAME            string   true       FDRE
+REF_PIN_NAME        string   true       C
+SETUP_SLACK         double   true       needs timing update***
+# puts "=== get_nets -of_objects [get_pins REG_reg[25]/C] ==="
+=== get_nets -of_objects REG_reg[25]/C ===
+# puts [get_nets -of_objects [get_pins REG_reg[25]/C]]
+_dutWrangler_auto_out_clock
+# puts "=== all_fanin -flat -to [get_pins REG_reg[25]/C] ==="
+=== all_fanin -flat -to REG_reg[25]/C ===
+# puts [all_fanin -flat -to [get_pins REG_reg[25]/C]]
+REG_reg[25]/C harnessSysPLL/inst/clkout1_buf/O harnessSysPLL/inst/clkout1_buf/I harnessSysPLL/inst/mmcme4_adv_inst/CLKOUT0
+# puts "=== get_clocks -of_objects [get_pins REG_reg[25]/C] ==="
+=== get_clocks -of_objects REG_reg[25]/C ===
+# puts [get_clocks -of_objects [get_pins REG_reg[25]/C]]
+clk_out1_harnessSysPLL
+# puts "=== report_property [get_pins REG_reg[25]/R] ==="
+=== report_property REG_reg[25]/R ===
+# report_property [get_pins REG_reg[25]/R]
+Property            Type     Read-only  Value
+CLASS               string   true       pin
+DIRECTION           enum     true       IN
+HD.ASSIGNED_PPLOCS  string*  true       
+HD.TANDEM           int      false      0
+HOLD_SLACK          double   true       needs timing update***
+IS_CLEAR            bool     true       0
+IS_CLOCK            bool     true       0
+IS_CONNECTED        bool     true       1
+IS_ENABLE           bool     true       0
+IS_INVERTED         bool     false      1
+IS_LEAF             bool     true       1
+IS_ORIG_PIN         bool     true       1
+IS_PRESET           bool     true       0
+IS_RESET            bool     true       1
+IS_REUSED           bool     true       0
+IS_SET              bool     true       0
+IS_SETRESET         bool     true       0
+IS_TIED             bool     true       0
+IS_WRITE_ENABLE     bool     true       0
+LOGIC_VALUE         string   true       needs timing update***
+NAME                string   true       REG_reg[25]/R
+PARENT_CELL         cell     true       REG_reg[25]
+PARTITION_ID        int      true       0
+REF_NAME            string   true       FDRE
+REF_PIN_NAME        string   true       R
+SETUP_SLACK         double   true       needs timing update***
+# puts "=== get_nets -of_objects [get_pins REG_reg[25]/R] ==="
+=== get_nets -of_objects REG_reg[25]/R ===
+# puts [get_nets -of_objects [get_pins REG_reg[25]/R]]
+_dutWrangler_auto_out_reset
+# puts "=== all_fanin -flat -to [get_pins REG_reg[25]/R] ==="
+=== all_fanin -flat -to REG_reg[25]/R ===
+# puts [all_fanin -flat -to [get_pins REG_reg[25]/R]]
+REG_reg[25]/R dutWrangler/nodeOut_reset_catcher/io_sync_reset_chain/output_chain/sync_0_reg/Q dutWrangler/nodeOut_reset_catcher/io_sync_reset_chain/output_chain/sync_0_reg/C
+# puts "=== report_property [get_pins REG_reg[25]/CE] ==="
+=== report_property REG_reg[25]/CE ===
+# report_property [get_pins REG_reg[25]/CE]
+Property            Type     Read-only  Value
+CLASS               string   true       pin
+DIRECTION           enum     true       IN
+HD.ASSIGNED_PPLOCS  string*  true       
+HD.TANDEM           int      false      0
+HOLD_SLACK          double   true       needs timing update***
+IS_CLEAR            bool     true       0
+IS_CLOCK            bool     true       0
+IS_CONNECTED        bool     true       1
+IS_ENABLE           bool     true       1
+IS_INVERTED         bool     false      0
+IS_LEAF             bool     true       1
+IS_ORIG_PIN         bool     true       1
+IS_PRESET           bool     true       0
+IS_RESET            bool     true       0
+IS_REUSED           bool     true       0
+IS_SET              bool     true       0
+IS_SETRESET         bool     true       0
+IS_TIED             bool     true       1
+IS_WRITE_ENABLE     bool     true       0
+LOGIC_VALUE         string   true       needs timing update***
+NAME                string   true       REG_reg[25]/CE
+PARENT_CELL         cell     true       REG_reg[25]
+PARTITION_ID        int      true       0
+REF_NAME            string   true       FDRE
+REF_PIN_NAME        string   true       CE
+SETUP_SLACK         double   true       needs timing update***
+# puts "=== get_nets -of_objects [get_pins REG_reg[25]/CE] ==="
+=== get_nets -of_objects REG_reg[25]/CE ===
+# puts [get_nets -of_objects [get_pins REG_reg[25]/CE]]
+<const1>
+# puts "=== all_fanin -flat -to [get_pins REG_reg[25]/CE] ==="
+=== all_fanin -flat -to REG_reg[25]/CE ===
+# puts [all_fanin -flat -to [get_pins REG_reg[25]/CE]]
+REG_reg[25]/CE
+# close_design
+# exit
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 13:09:40 2026...

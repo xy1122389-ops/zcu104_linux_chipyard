@@ -1,0 +1,211 @@
+[build] start_epoch=1773673404
+/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-gcc
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 7 s, completed Mar 16, 2026, 11:03:40 PM[0m
+[0Jmkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config
+(set -o pipefail && 	cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/chipyard_fpga.jar chipyard.Generator  --target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --name chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --top-module chipyard.fpga.zcu104.ZCU104FPGATestHarness --legacy-configs chipyard.fpga.zcu104:RocketZCU104Config   | tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.chisel.log)
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+ZCU104 FPGA Base Clock Freq: 50 MHz
+mem AXI4-ID <= TL-Source mapping:
+	[ 0, 16) <= [ 0, 16) "chip_ddr"
+
+make[1]: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+mkdir -p /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build
+/bin/riscv64-unknown-elf-gcc -march=rv64ima_zicsr_zifencei -mcmodel=medany -O2 -std=gnu11 -Wall -nostartfiles -fno-common -g -DENTROPY=0 -mabi=lp64 -DNONSMP_HART=0 -I /root/chipyard/fpga/src/main/resources/zcu104/sdboot//include -I. -DTL_CLK="50UL" -static -nostdlib -L /root/chipyard/fpga/src/main/resources/zcu104/sdboot//linker -T sdboot.elf.lds -o /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build/sdboot.elf head.S sd.c kprintf.c
+make[1]: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+/bin/sh: 1: /bin/riscv64-unknown-elf-gcc: not found
+make[1]: *** [Makefile:21: /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build/sdboot.elf] Error 127
+Exception in thread "main" java.lang.IllegalArgumentException: requirement failed: Failed to build ZCU104 bootrom
+	at ... ()
+	at chipyard.fpga.zcu104.WithZCU104SystemModifications$$anonfun$$lessinit$greater$2$$anonfun$apply$2.$anonfun$applyOrElse$1(Configs.scala:35)
+	at scala.collection.immutable.List.map(List.scala:247)
+	at scala.collection.immutable.List.map(List.scala:79)
+	at chipyard.fpga.zcu104.WithZCU104SystemModifications$$anonfun$$lessinit$greater$2$$anonfun$apply$2.applyOrElse(Configs.scala:32)
+	at scala.runtime.AbstractPartialFunction.apply(AbstractPartialFunction.scala:35)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:196)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Config.chain(config.scala:160)
+	at org.chipsalliance.cde.config$ChainView.find(config.scala:172)
+	at org.chipsalliance.cde.config$PartialParameters.chain(config.scala:197)
+	at org.chipsalliance.cde.config$ChainParameters.chain(config.scala:177)
+	at org.chipsalliance.cde.config$Parameters.find(config.scala:116)
+	at org.chipsalliance.cde.config$View.apply(config.scala:28)
+	at chipyard.ChipyardSystem.<init>(System.scala:32)
+	at chipyard.DigitalTop.<init>(DigitalTop.scala:16)
+	at chipyard.BuildSystem$$anonfun$$lessinit$greater$1.apply(ChipTop.scala:15)
+	at chipyard.BuildSystem$$anonfun$$lessinit$greater$1.apply(ChipTop.scala:15)
+	at chipyard.ChipTop.lazySystem$lzycompute(ChipTop.scala:27)
+	at chipyard.ChipTop.lazySystem(ChipTop.scala:27)
+	at chipyard.iobinders.HasIOBinders.$anonfun$lzy$3(IOBinders.scala:74)
+	at chipyard.iobinders.LazyIOBinder$$anonfun$$lessinit$greater$3.$anonfun$new$2(IOBinders.scala:149)
+	at chipyard.iobinders.LazyIOBinder$$anonfun$$lessinit$greater$3.$anonfun$new$2$adapted(IOBinders.scala:144)
+	at chipyard.iobinders.HasIOBinders.$anonfun$lzy$2(IOBinders.scala:74)
+	at scala.collection.immutable.List.map(List.scala:247)
+	at scala.collection.immutable.List.map(List.scala:79)
+	at chipyard.iobinders.HasIOBinders.$anonfun$lzy$1(IOBinders.scala:74)
+	at scala.collection.Iterator$$anon$9.next(Iterator.scala:584)
+	at scala.collection.immutable.HashMapBuilder.addAll(HashMap.scala:2406)
+	at scala.collection.immutable.HashMap$.from(HashMap.scala:2218)
+	at scala.collection.immutable.HashMap$.from(HashMap.scala:2194)
+	at scala.collection.MapOps.map(Map.scala:314)
+	at scala.collection.MapOps.map$(Map.scala:314)
+	at scala.collection.AbstractMap.map(Map.scala:420)
+	at chipyard.iobinders.HasIOBinders.$init$(IOBinders.scala:74)
+	at chipyard.ChipTop.<init>(ChipTop.scala:24)
+	at chipyard.harness.BuildTop$$anonfun$$lessinit$greater$1.apply(HasHarnessInstantiators.scala:23)
+	at chipyard.harness.BuildTop$$anonfun$$lessinit$greater$1.apply(HasHarnessInstantiators.scala:23)
+	at chipyard.harness.HasHarnessInstantiators.$anonfun$instantiateChipTops$2(HasHarnessInstantiators.scala:85)
+	at scala.collection.immutable.List.map(List.scala:247)
+	at scala.collection.immutable.List.map(List.scala:79)
+	at chipyard.harness.HasHarnessInstantiators.instantiateChipTops(HasHarnessInstantiators.scala:84)
+	at chipyard.harness.HasHarnessInstantiators.instantiateChipTops$(HasHarnessInstantiators.scala:80)
+	at chipyard.fpga.zcu104.ZCU104FPGATestHarnessImp.instantiateChipTops(TestHarness.scala:79)
+	at chipyard.fpga.zcu104.ZCU104FPGATestHarnessImp.<init>(TestHarness.scala:107)
+	at chipyard.fpga.zcu104.ZCU104FPGATestHarness.module$lzycompute(TestHarness.scala:76)
+	at chipyard.fpga.zcu104.ZCU104FPGATestHarness.module(TestHarness.scala:76)
+	at chipyard.fpga.zcu104.ZCU104FPGATestHarness.module(TestHarness.scala:24)
+	at chipyard.stage.phases.PreElaboration.$anonfun$transform$1(PreElaboration.scala:37)
+	at chisel3.Module$.evaluate(Module.scala:88)
+	at chisel3.Module$.do_apply(Module.scala:35)
+	at chisel3.stage.phases.Elaborate.$anonfun$transform$2(Elaborate.scala:53)
+	at chisel3.internal.Builder$.$anonfun$buildImpl$1(Builder.scala:1044)
+	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:59)
+	at chisel3.internal.Builder$.buildImpl(Builder.scala:1034)
+	at chisel3.internal.Builder$.$anonfun$build$1(Builder.scala:1025)
+	at logger.Logger$.$anonfun$makeScope$4(Logger.scala:148)
+	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:59)
+	at logger.Logger$.makeScope(Logger.scala:146)
+	at logger.Logger$.makeScope(Logger.scala:133)
+	at ... ()
+	at ... (Stack trace trimmed to user code only. Rerun with --full-stacktrace to see the full stack trace)
+make: *** [/root/chipyard/common.mk:151: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir] Error 1
+[build] end_epoch=1773673423
+[build] elapsed_seconds=19

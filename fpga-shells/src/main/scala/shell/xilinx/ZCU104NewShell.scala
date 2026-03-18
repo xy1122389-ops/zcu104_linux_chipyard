@@ -12,20 +12,20 @@ import sifive.fpgashells.ip.xilinx._
 import sifive.fpgashells.ip.xilinx.zcu102mig._
 import sifive.fpgashells.shell._
 
-// ZCU104 uses xczu7ev-ffvc1156-2-e (same package as ZCU102: ffvb1156)
+// ZCU104 uses xczu7ev-ffvc1156-2-e.
 // We reuse ZCU102 MIG IP since DDR4 topology is compatible
 
-// 300 MHz system clock on ZCU104 PL (H11/G11)
+// 125 MHz differential PL user clock on ZCU104
 class SysClockZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: ClockInputDesignInput, val shellInput: ClockInputShellInput)
   extends LVDSClockInputXilinxPlacedOverlay(name, designInput, shellInput)
 {
-  val node = shell { ClockSourceNode(freqMHz = 300, jitterPS = 50)(ValName(name)) }
+  val node = shell { ClockSourceNode(freqMHz = 125, jitterPS = 50)(ValName(name)) }
   shell { InModuleBody {
-    shell.xdc.addPackagePin(io.p, "H11")
-    shell.xdc.addPackagePin(io.n, "G11")
-    shell.xdc.addIOStandard(io.p, "DIFF_SSTL12")
-    shell.xdc.addIOStandard(io.n, "DIFF_SSTL12")
+    shell.xdc.addPackagePin(io.p, "F23")
+    shell.xdc.addPackagePin(io.n, "E23")
+    shell.xdc.addIOStandard(io.p, "LVDS")
+    shell.xdc.addIOStandard(io.n, "LVDS")
   }}
 }
 class SysClockZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: ClockInputShellInput)(implicit val valName: ValName)
@@ -34,18 +34,11 @@ class SysClockZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput:
   def place(designInput: ClockInputDesignInput) = new SysClockZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-// UART: USB-UART bridge CP2108 on ZCU104
+// UART on PMOD1
 class UARTZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: UARTDesignInput, val shellInput: UARTShellInput)
   extends UARTXilinxPlacedOverlay(name, designInput, shellInput, false)
 {
-  // Temporary heartbeat on J9 (UART TX) for scope probing
-  override def txdSource: UInt = {
-    val cnt = RegInit(0.U(32.W))
-    cnt := cnt + 1.U
-    cnt(20)
-  }
-
   shell { InModuleBody {
     val packagePinsWithPackageIOs = Seq(
       ("K9", IOPin(io.rxd)),

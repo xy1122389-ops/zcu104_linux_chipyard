@@ -1,0 +1,1579 @@
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 4 s, completed Mar 18, 2026, 4:39:59 PM[0m
+[0Jmkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config
+(set -o pipefail && 	cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/chipyard_fpga.jar chipyard.Generator  --target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --name chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config --top-module chipyard.fpga.zcu104.ZCU104FPGATestHarness --legacy-configs chipyard.fpga.zcu104:RocketZCU104Config   | tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.chisel.log)
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+echo "$mfc_extra_anno_contents" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.extrafirtool.anno.json
+jq -s '[.[][]]' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.anno.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.extrafirtool.anno.json > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.appended.anno.json
+mkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/
+echo "emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/.mfc_lowering_options
+rm -rf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral
+(set -o pipefail && firtool \
+		--format=fir \
+		--export-module-hierarchy \
+		--verify-each=true \
+		--warn-on-unprocessed-annotations \
+		--disable-annotation-classless \
+		--disable-annotation-unknown \
+		--mlir-timing \
+		--lowering-options=emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket \
+		--repl-seq-mem \
+		--repl-seq-mem-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.mems.conf \
+		--annotation-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.appended.anno.json \
+		--split-verilog \
+		 \
+		-o /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral \
+		/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir |& tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.firtool.log)
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir:68:3: warning: module `ChipTop` is empty but cannot be removed because the module is public
+  module ChipTop :
+  ^
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.fir:68:3: warning: module `ChipTop` is empty but cannot be removed because the module is public
+  module ChipTop :
+  ^
+===-------------------------------------------------------------------------===
+                         ... Execution time report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 0.0997 seconds
+
+  ----User Time----  ----Wall Time----  ----Name----
+    0.0022 (  2.2%)    0.0022 (  2.2%)  FIR Parser
+    0.0001 (  0.1%)    0.0001 (  0.1%)    Parse annotations
+    0.0000 (  0.0%)    0.0000 (  0.0%)    Parse OMIR
+    0.0006 (  0.6%)    0.0006 (  0.6%)    Parse modules
+    0.0014 (  1.4%)    0.0014 (  1.5%)    Verify circuit
+    0.0401 ( 39.2%)    0.0389 ( 39.0%)  'firrtl.circuit' Pipeline
+    0.0002 (  0.2%)    0.0002 (  0.2%)    LowerOpenAggs
+    0.0023 (  2.2%)    0.0023 (  2.3%)    ResolvePaths
+    0.0006 (  0.6%)    0.0006 (  0.6%)      (A) circt::firrtl::InstanceGraph
+    0.0015 (  1.5%)    0.0015 (  1.5%)    LowerFIRRTLAnnotations
+    0.0006 (  0.6%)    0.0006 (  0.6%)    LowerIntmodules
+    0.0006 (  0.6%)    0.0006 (  0.6%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    'firrtl.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LowerIntrinsics
+    0.0017 (  1.6%)    0.0017 (  1.7%)    LowerSignatures
+    0.0000 (  0.0%)    0.0000 (  0.0%)    InjectDUTHierarchy
+    0.0003 (  0.3%)    0.0002 (  0.2%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      PassiveWires
+    0.0001 (  0.1%)    0.0000 (  0.0%)      DropName
+    0.0001 (  0.1%)    0.0000 (  0.0%)      CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)        (A) DominanceInfo
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LowerCHIRRTLPass
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LowerMatches
+    0.0007 (  0.7%)    0.0007 (  0.7%)    InferWidths
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0007 (  0.7%)    0.0007 (  0.7%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0014 (  1.4%)    0.0014 (  1.4%)    MemToRegOfVec
+    0.0036 (  3.5%)    0.0036 (  3.6%)    InferResets
+    0.0008 (  0.7%)    0.0008 (  0.8%)      (A) circt::firrtl::InstanceGraph
+    0.0025 (  2.4%)    0.0025 (  2.5%)    DropConst
+    0.0000 (  0.0%)    0.0000 (  0.0%)    HoistPassthrough
+    0.0007 (  0.7%)    0.0007 (  0.7%)    Dedup
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      FlattenMemory
+    0.0023 (  2.3%)    0.0023 (  2.3%)    LowerFIRRTLTypes
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'any' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      ExpandWhens
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)      SFCCompat
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LayerMerge
+    0.0000 (  0.0%)    0.0000 (  0.0%)      LayerSink
+    0.0000 (  0.0%)    0.0000 (  0.0%)        (A) DominanceInfo
+    0.0009 (  0.9%)    0.0009 (  0.9%)    LowerLayers
+    0.0020 (  2.0%)    0.0020 (  2.0%)    Inliner
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)      RandomizeRegisterInit
+    0.0007 (  0.7%)    0.0007 (  0.7%)    CheckCombLoops
+    0.0007 (  0.6%)    0.0007 (  0.7%)      (A) circt::firrtl::InstanceGraph
+    0.0003 (  0.3%)    0.0002 (  0.2%)    'firrtl.module' Pipeline
+    0.0003 (  0.3%)    0.0002 (  0.2%)      Canonicalizer
+    0.0000 (  0.0%)    0.0000 (  0.0%)      InferReadWrite
+    0.0030 (  3.0%)    0.0030 (  3.0%)    LowerMemory
+    0.0007 (  0.7%)    0.0007 (  0.7%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0007 (  0.7%)    0.0007 (  0.7%)    PrefixModules
+    0.0007 (  0.7%)    0.0007 (  0.7%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0025 (  2.4%)    0.0025 (  2.5%)    IMConstProp
+    0.0007 (  0.6%)    0.0007 (  0.7%)    HoistPassthrough
+    0.0006 (  0.6%)    0.0006 (  0.6%)      (A) circt::firrtl::InstanceGraph
+    0.0007 (  0.7%)    0.0007 (  0.7%)  IMDeadCodeElim
+    0.0001 (  0.1%)    0.0001 (  0.1%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)    (A) circt::hw::InnerSymbolTableCollection
+    0.0004 (  0.4%)    0.0004 (  0.4%)  'firrtl.circuit' Pipeline
+    0.0004 (  0.4%)    0.0004 (  0.4%)    AddSeqMemPorts
+    0.0004 (  0.4%)    0.0004 (  0.4%)      (A) circt::firrtl::InstanceGraph
+    0.0016 (  1.5%)    0.0016 (  1.6%)  CreateSiFiveMetadata
+    0.0002 (  0.2%)    0.0002 (  0.2%)    (A) circt::firrtl::InstanceGraph
+    0.0053 (  5.2%)    0.0053 (  5.3%)  'firrtl.circuit' Pipeline
+    0.0007 (  0.7%)    0.0007 (  0.7%)    ExtractInstances
+    0.0007 (  0.6%)    0.0007 (  0.7%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)    GrandCentral
+    0.0023 (  2.3%)    0.0023 (  2.3%)    BlackBoxReader
+    0.0023 (  2.2%)    0.0023 (  2.3%)    SymbolDCE
+    0.0030 (  2.9%)    0.0030 (  3.0%)  InnerSymbolDCE
+    0.0054 (  5.3%)    0.0052 (  5.2%)  'firrtl.circuit' Pipeline
+    0.0002 (  0.2%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0002 (  0.2%)    0.0001 (  0.1%)      Canonicalizer
+    0.0000 (  0.0%)    0.0000 (  0.0%)      RegisterOptimizer
+    0.0035 (  3.4%)    0.0035 (  3.5%)    IMConstProp
+    0.0007 (  0.7%)    0.0007 (  0.7%)      (A) circt::firrtl::InstanceGraph
+    0.0051 (  5.0%)    0.0051 (  5.1%)  IMDeadCodeElim
+    0.0007 (  0.7%)    0.0007 (  0.7%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0006 (  0.5%)    0.0006 (  0.6%)    (A) circt::hw::InnerSymbolTableCollection
+    0.0137 ( 13.4%)    0.0136 ( 13.6%)  'firrtl.circuit' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)    EmitOMIR
+    0.0001 (  0.1%)    0.0001 (  0.1%)    'firrtl.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)      MergeConnections
+    0.0001 (  0.1%)    0.0001 (  0.1%)      Vectorization
+    0.0010 (  1.0%)    0.0010 (  1.0%)    ResolveTraces
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0008 (  0.7%)    0.0008 (  0.8%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0032 (  3.1%)    0.0032 (  3.2%)    LowerXMR
+    0.0005 (  0.5%)    0.0005 (  0.5%)      (A) circt::firrtl::InstanceGraph
+    0.0038 (  3.7%)    0.0038 (  3.8%)    LowerClasses
+    0.0007 (  0.7%)    0.0007 (  0.7%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0005 (  0.5%)    0.0005 (  0.5%)    VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0000 (  0.0%)    0.0000 (  0.0%)    'firrtl.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)      Lint
+    0.0016 (  1.6%)    0.0016 (  1.6%)  LowerFIRRTLToHW
+    0.0008 (  0.8%)    0.0008 (  0.8%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) circt::firrtl::NLATable
+    0.0002 (  0.2%)    0.0002 (  0.2%)  'hw.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)    CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) DominanceInfo
+    0.0002 (  0.2%)    0.0002 (  0.2%)    Canonicalizer
+    0.0011 (  1.0%)    0.0011 (  1.1%)  VerifyInnerRefNamespace
+    0.0005 (  0.5%)    0.0005 (  0.5%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0000 (  0.0%)    0.0000 (  0.0%)  ExternalizeClockGate
+    0.0011 (  1.1%)    0.0011 (  1.1%)  LowerSimToSV
+    0.0020 (  2.0%)    0.0020 (  2.0%)  LowerSeqToSV
+    0.0001 (  0.1%)    0.0001 (  0.1%)  'hw.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)    LowerVerifToSV
+    0.0000 (  0.0%)    0.0000 (  0.0%)  HWMemSimImpl
+    0.0004 (  0.4%)    0.0003 (  0.3%)  'hw.module' Pipeline
+    0.0001 (  0.1%)    0.0001 (  0.1%)    CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) DominanceInfo
+    0.0003 (  0.3%)    0.0002 (  0.2%)    Canonicalizer
+    0.0000 (  0.0%)    0.0000 (  0.0%)    CSE
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) DominanceInfo
+    0.0000 (  0.0%)    0.0000 (  0.0%)    HWCleanup
+    0.0019 (  1.8%)    0.0019 (  1.9%)  VerifyInnerRefNamespace
+    0.0008 (  0.8%)    0.0008 (  0.8%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0001 (  0.1%)    0.0001 (  0.1%)  'hw.module' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)    HWLegalizeModules
+    0.0001 (  0.1%)    0.0001 (  0.1%)    PrettifyVerilog
+    0.0037 (  3.6%)    0.0037 (  3.7%)  StripDebugInfoWithPred
+    0.0000 (  0.0%)    0.0000 (  0.0%)  HWExportModuleHierarchy
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0015 (  1.4%)    0.0015 (  1.5%)  VerifyInnerRefNamespace
+    0.0007 (  0.7%)    0.0007 (  0.7%)  VerifyObjectFields
+    0.0046 (  4.5%)    0.0046 (  4.6%)  ExportSplitVerilog
+    0.0023 (  2.2%)    0.0020 (  2.0%)  'builtin.module' Pipeline
+    0.0017 (  1.6%)    0.0017 (  1.7%)    HWLowerInstanceChoices
+    0.0002 (  0.2%)    0.0002 (  0.2%)    'hw.module' Pipeline
+    0.0002 (  0.2%)    0.0002 (  0.2%)      PrepareForEmission
+   -0.0002 ( -0.2%)   -0.0002 ( -0.2%)  Rest
+    0.1023 (100.0%)    0.0997 (100.0%)  Total
+sed -i 's/.*/& /' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.mems.conf # need trailing space for SFC macrocompiler
+# If there are no BB's then the file might not be generated; ensure it exists
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/firrtl_black_box_resource_files.f
+/root/chipyard/scripts/uniquify-module-names.py \
+	--model-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/model_module_hierarchy.json \
+	--top-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/top_module_hierarchy.json \
+	--in-all-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/filelist.f \
+	--in-bb-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/firrtl_black_box_resource_files.f \
+	--dut ChipTop \
+	--model ZCU104FPGATestHarness \
+	--target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral \
+	--out-dut-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.f \
+	--out-model-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.f \
+	--out-model-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/model_module_hierarchy.uniquified.json \
+	--gcpath /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral
+sed -e 's;^;/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/;' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/firrtl_black_box_resource_files.f > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.bb.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.bb.f
+sort -u /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.bb.f > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.all.f
+cp -f  /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral
+cp: missing destination file operand after '/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral'
+Try 'cp --help' for more information.
+make: [Makefile:152: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.f] Error 1 (ignored)
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.f
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project tapeout; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/tapeout.jar\"); assembly" && touch /root/chipyard/.classpath_cache/tapeout.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tapeout (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tapeout (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /root/chipyard/.classpath_cache/tapeout.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 1 s, completed Mar 18, 2026, 4:40:09 PM[0m
+[0J/root/chipyard/scripts/split-mems-conf.py \
+	--in-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.mems.conf \
+	--in-model-hrchy-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/model_module_hierarchy.uniquified.json \
+	--dut-module-name ChipTop \
+	--model-module-name ZCU104FPGATestHarness \
+	--out-dut-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf \
+	--out-model-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.conf
+[ -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/custom.mems.conf ] && cat /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/custom.mems.conf >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf
+make: [/root/chipyard/common.mk:283: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf] Error 1 (ignored)
+cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/tapeout.jar tapeout.macros.MacroCompiler -n /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.conf -v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.v -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.fir --mode synflops
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+WARNING: Empty *.mems.conf file. No memories generated.
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.fir
+cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/tapeout.jar tapeout.macros.MacroCompiler  -n /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.conf -v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.v -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.fir --mode synflops
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+WARNING: Empty *.mems.conf file. No memories generated.
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.fir
+rm -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+sort -u /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.all.f | grep -v '.*\.\(svh\|h\|conf\)$' >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+echo "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.top.mems.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+echo "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.model.mems.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f
+rm -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f
+echo "/root/chipyard/generators/rocket-chip-blocks/vsrc/SRLatch.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f;
+cat /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/sim_files.common.f >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f
+cd /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config; vivado \
+	-nojournal -mode batch \
+	-source /root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl \
+	-tclargs \
+		-top-module "ZCU104FPGATestHarness" \
+		-F "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.vsrcs.f" \
+		-board "zcu104" \
+		-ip-vivado-tcls "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.zcu104ps.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.harnessSysPLL.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.vivado.tcl"
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config'
+ÓÃ×÷Îªµ±Ç°Ä¿Â¼µÄÒÔÉÏÂ·¾¶Æô¶¯ÁË CMD.EXE¡£
+UNC Â·¾¶²»ÊÜÖ§³Ö¡£Ä¬ÈÏÖµÉèÎª Windows Ä¿Â¼¡£
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl
+# set scriptdir [file dirname [info script]]
+# source [file join $scriptdir "prologue.tcl"]
+## set ip_vivado_tcls {}
+## while {[llength $argv]} {
+##   set argv [lassign $argv[set argv {}] flag]
+##   switch -glob $flag {
+##     -top-module {
+##       set argv [lassign $argv[set argv {}] top]
+##     }
+##     -F {
+##       # This should be a simple file format with one filepath per line
+##       set argv [lassign $argv[set argv {}] vsrc_manifest]
+##     }
+##     -board {
+##       set argv [lassign $argv[set argv {}] board]
+##     }
+##     -ip-vivado-tcls {
+##       set argv [lassign $argv[set argv {}] ip_vivado_tcls]
+##     }
+##     -pre-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] pre_impl_debug_tcl]
+##     }
+##     -post-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] post_impl_debug_tcl]
+##     }
+##     -env-var-srcs {
+##       set argv [lassign $argv[set argv {}] env_var_srcs]
+##     }
+##     default {
+##       return -code error [list {unknown option} $flag]
+##     }
+##   }
+## }
+## if {![info exists top]} {
+##   return -code error [list {--top-module option is required}]
+## }
+## if {![info exists vsrc_manifest]} {
+##   return -code error [list {-F option is required}]
+## }
+## if {![info exists board]} {
+##   return -code error [list {--board option is required}]
+## }
+## set commondir [file dirname $scriptdir]
+## set boarddir [file join [file dirname $commondir] $board]
+## source [file join $boarddir tcl board.tcl]
+### set name {zcu104}
+### set part_fpga {xczu7ev-ffvc1156-2-e}
+### set part_board {xilinx.com:zcu104:part0:1.1}
+## set constraintsdir [file join $boarddir constraints]
+## set srcdir [file join $commondir vsrc]
+## set wrkdir [file join [pwd] obj]
+## set ipdir [file join $wrkdir ip]
+## create_project -part $part_fpga -force $top
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config'
+## set_param messaging.defaultLimit 1000000
+## set_property -dict [list \
+## 	BOARD_PART $part_board \
+## 	TARGET_LANGUAGE {Verilog} \
+## 	DEFAULT_LIB {xil_defaultlib} \
+## 	IP_REPO_PATHS $ipdir \
+## 	] [current_project]
+## if {[get_filesets -quiet sources_1] eq ""} {
+## 	create_fileset -srcset sources_1
+## }
+## set obj [current_fileset]
+## proc load_vsrc_manifest {obj vsrc_manifest} {
+##   set fp [open $vsrc_manifest r]
+##   set files [lsearch -not -exact -all -inline [split [read $fp] "\n"] {}]
+##   set relative_files {}
+##   foreach path $files {
+##     if {[string match {/*} $path]} {
+##       lappend relative_files $path
+##     } elseif {![string match {#*} $path]} {
+##       lappend relative_files [file join [file dirname $vsrc_manifest] $path]
+##     }
+##   }
+##   # Read environment variable vsrcs and append to relative_files
+##   upvar #0 env_var_srcs env_var_srcs
+##   set additions [info exists env_var_srcs]
+##   if {$additions} {
+##     if {[info exists ::env($env_var_srcs)]} {
+##       set resources [split $::env($env_var_srcs) :]
+##       set relative_files [list {*}$relative_files {*}$resources]
+##     }
+##   }
+##   add_files -norecurse -fileset $obj {*}$relative_files
+##   close $fp
+## }
+## load_vsrc_manifest $obj $vsrc_manifest
+## if {$ip_vivado_tcls ne {}} {
+##   # Split string into words even with multiple consecutive spaces
+##   # http://wiki.tcl.tk/989
+##   set ip_vivado_tcls [regexp -inline -all -- {\S+} $ip_vivado_tcls]
+## }
+## if {[get_filesets -quiet sim_1] eq ""} {
+## 	create_fileset -simset sim_1
+## }
+## set obj [current_fileset -simset]
+## if {[get_filesets -quiet constrs_1] eq ""} {
+## 	create_fileset -constrset constrs_1
+## }
+## set obj [current_fileset -constrset]
+## add_files -quiet -norecurse -fileset $obj [lsort [glob -directory $constraintsdir -nocomplain {*.tcl}]]
+## add_files -quiet -norecurse -fileset $obj [lsort [glob -directory $constraintsdir -nocomplain {*.xdc}]]
+# source [file join $scriptdir "init.tcl"]
+## source [file join $scriptdir "util.tcl"]
+### proc recglob { basedir pattern } {
+###   set dirlist [glob -nocomplain -directory $basedir -type d *]
+###   set findlist [glob -nocomplain -directory $basedir $pattern]
+###   foreach dir $dirlist {
+###     set reclist [recglob $dir $pattern]
+###     set findlist [concat $findlist $reclist]
+###   }
+###   return $findlist
+### }
+### proc findincludedir { basedir pattern } {
+###   set vhfiles [recglob $basedir $pattern]
+###   set vhdirs {}
+###   foreach match $vhfiles {
+###     lappend vhdirs [file dir $match]
+###   }
+###   set uniquevhdirs [lsort -unique $vhdirs]
+###   return $uniquevhdirs
+### }
+## file mkdir $ipdir
+## update_ip_catalog -rebuild
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'E:/PRO_APP/xilinx/Vivado/2021.2/data/ip'.
+WARNING: [IP_Flow 19-4830] Duplicate Interface found for 'xilinx.com:user:zynq_ftm:1.0'. The one found in location 'z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/zynq_ftm.xml' will take precedence over the same Interface in location 'e:/PRO_APP/xilinx/Vivado/2021.2/data/ip/xilinx/zynq_ultra_ps_e_v3_3/zynq_ftm.xml'
+WARNING: [IP_Flow 19-4830] Duplicate Interface found for 'xilinx.com:user:zynq_fifo_gem:1.0'. The one found in location 'z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/zynq_fifo_gem.xml' will take precedence over the same Interface in location 'e:/PRO_APP/xilinx/Vivado/2021.2/data/ip/xilinx/zynq_ultra_ps_e_v3_3/zynq_fifo_gem.xml'
+WARNING: [IP_Flow 19-4830] Duplicate Interface found for 'xilinx.com:user:test:1.0'. The one found in location 'z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/test.xml' will take precedence over the same Interface in location 'e:/PRO_APP/xilinx/Vivado/2021.2/data/ip/xilinx/zynq_ultra_ps_e_v3_3/test.xml'
+## foreach ip_vivado_tcl $ip_vivado_tcls {
+##   source $ip_vivado_tcl
+## }
+### create_ip -vendor xilinx.com -library ip -name zynq_ultra_ps_e \
+###         -module_name zcu104ps -dir $ipdir -force
+### set_property -dict [list \
+###         CONFIG.PSU_BANK_0_IO_STANDARD {LVCMOS18} \
+###         CONFIG.PSU__CRL_APB__PL0_REF_CTRL__FREQMHZ {100} \
+###         CONFIG.PSU__FPGA_PL0_ENABLE {1} \
+###         CONFIG.PSU__USE__S_AXI_GP2 {1} \
+###         CONFIG.PSU__SAXIGP2__DATA_WIDTH {128} \
+###         CONFIG.PSU__USE__M_AXI_GP0 {0} \
+###         CONFIG.PSU__USE__M_AXI_GP1 {0} \
+###         CONFIG.PSU__USE__M_AXI_GP2 {0} \
+###         CONFIG.PSU__UART1__PERIPHERAL__ENABLE {1} \
+###         CONFIG.PSU__UART1__PERIPHERAL__IO {MIO 36 .. 37} \
+###         CONFIG.PSU__SD1__PERIPHERAL__ENABLE {1} \
+###         CONFIG.PSU__SD1__PERIPHERAL__IO {MIO 46 .. 51} \
+###         CONFIG.PSU__SD1__SLOT_TYPE {SD 2.0} \
+###         CONFIG.PSU__DDRC__MEMORY_TYPE {DDR 4} \
+###         CONFIG.PSU__DDRC__BUS_WIDTH {32 Bit} \
+###         CONFIG.PSU__DDRC__DDR4_ADDR_MAPPING {0} \
+###         CONFIG.PSU__DDRC__DEVICE_CAPACITY {8192 MBits} \
+###         CONFIG.PSU__DDRC__DRAM_WIDTH {16 Bits} \
+###         CONFIG.PSU__DDRC__ROW_ADDR_COUNT {16} \
+###       ] [get_ips zcu104ps]
+CRITICAL WARNING: [PSU-1]  Setting of Bank Group Address Count (Parameter PSU__DDRC__BG_ADDR_COUNT) to 2 is not valid when the value of DRAM IC Bus Width (Parameter PSU__DDRC__DRAM_WIDTH) is set to 16. The valid value for Bank Group Address Count (Parameter PSU__DDRC__BG_ADDR_COUNT) is 1. 
+### generate_target all [get_ips zcu104ps]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'zcu104ps'...
+INFO: [xilinx.com:ip:zynq_ultra_ps_e:3.3-0] zcu104ps: 
+Changes in your design (including the PCW configuration settings) are not automatically exported from Vivado to Xilinx's SDK, Petalinux or Yocto.
+This is by design to avoid disrupting existing embedded development efforts. To have any changes of your design taking effect in the embedded software flow please export your
+design by going through Vivado's main menu, click on File, then Export finally select Export Hardware, please ensure you click on the Include BitStream option.
+The auto-generated HDF file is all you need to import in Xilinx's SDK, Petalinux or Yocto for your changes to be reflected in the Embedded Software Flow.
+For more information, please consult PG201, section: Exporting PCW Settings to Embedded Software Flows
+INFO: [PSU-0] Address Range of DDR (0x7ff00000 to 0x7fffffff) is reserved by PMU for internal purpose.
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI_HP0_FPD'. A default connection has been created.
+INFO: [IP_Flow 19-1686] Generating 'Miscellaneous' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Hardware Handoff' target for IP 'zcu104ps'...
+generate_target: Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 1602.977 ; gain = 0.000
+### create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name \
+###  harnessSysPLL -dir $ipdir -force
+create_ip: Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 2029.676 ; gain = 426.699
+### set_property -dict [list \
+###  CONFIG.CLK_IN1_BOARD_INTERFACE {Custom} \
+###  CONFIG.PRIM_SOURCE {No_buffer} \
+###  CONFIG.NUM_OUT_CLKS {1} \
+###  CONFIG.PRIM_IN_FREQ {125.0} \
+###  CONFIG.CLKIN1_JITTER_PS {50.0} \
+###  CONFIG.CLKOUT1_USED {true} \
+###  CONFIG.CLKOUT2_USED {false} \
+###  CONFIG.CLKOUT3_USED {false} \
+###  CONFIG.CLKOUT4_USED {false} \
+###  CONFIG.CLKOUT5_USED {false} \
+###  CONFIG.CLKOUT6_USED {false} \
+###  CONFIG.CLKOUT7_USED {false} \
+###  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {50.0} \
+###  CONFIG.CLKOUT1_REQUESTED_PHASE {0.0} \
+###  CONFIG.CLKOUT1_REQUESTED_DUTY_CYCLE {50.0} \
+### ] [get_ips harnessSysPLL]
+### set mult [get_property CONFIG.MMCM_CLKFBOUT_MULT_F [get_ips harnessSysPLL]]
+### set div1 [get_property CONFIG.MMCM_DIVCLK_DIVIDE [get_ips harnessSysPLL]]
+### set jitter [get_property CONFIG.CLKOUT1_JITTER [get_ips harnessSysPLL]]
+### if {$jitter > 300.0} {
+###   puts "Output jitter $jitter ps exceeds required limit of 300.0"
+###   exit 1
+### }
+### set phase [get_property CONFIG.MMCM_CLKOUT0_PHASE [get_ips harnessSysPLL]]
+### if {$phase < -5.0 || $phase > 5.0} {
+###   puts "Achieved phase $phase degrees is outside tolerated range -5.0-5.0"
+###   exit 1
+### }
+### set div2 [get_property CONFIG.MMCM_CLKOUT0_DIVIDE_F [get_ips harnessSysPLL]]
+### set freq [expr { 125.0 * $mult / $div1 / $div2 }]
+### if {$freq < 49.5 || $freq > 50.5} {
+###   puts "Achieved frequency $freq MHz is outside tolerated range 49.5-50.5"
+###   exit 1
+### }
+### puts "Achieve frequency $freq MHz phase $phase degrees jitter $jitter ps"
+Achieve frequency 50.0 MHz phase 0.000 degrees jitter 196.543 ps
+### set shell_vivado_tcl [file normalize [info script]]
+### set shell_vivado_idx [string last ".shell.vivado.tcl" $shell_vivado_tcl]
+### add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".shell.sdc"]
+### add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".shell.xdc"]
+### set extra_constr [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".extra.shell.xdc"]
+### if [file exist $extra_constr] {
+###   add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".extra.shell.xdc"]
+### }
+## set boardiptcl [file join $boarddir tcl ip.tcl]
+## if {[file exists $boardiptcl]} {
+##   source $boardiptcl
+## }
+## set xci_files [get_files -all {*.xci}]
+## foreach xci_file $xci_files {
+##   set_property GENERATE_SYNTH_CHECKPOINT {false} -quiet $xci_file
+## }
+## set obj [get_ips]
+## generate_target all $obj
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'zcu104ps'...
+INFO: [xilinx.com:ip:zynq_ultra_ps_e:3.3-0] zcu104ps: 
+Changes in your design (including the PCW configuration settings) are not automatically exported from Vivado to Xilinx's SDK, Petalinux or Yocto.
+This is by design to avoid disrupting existing embedded development efforts. To have any changes of your design taking effect in the embedded software flow please export your
+design by going through Vivado's main menu, click on File, then Export finally select Export Hardware, please ensure you click on the Include BitStream option.
+The auto-generated HDF file is all you need to import in Xilinx's SDK, Petalinux or Yocto for your changes to be reflected in the Embedded Software Flow.
+For more information, please consult PG201, section: Exporting PCW Settings to Embedded Software Flows
+INFO: [PSU-0] Address Range of DDR (0x7ff00000 to 0x7fffffff) is reserved by PMU for internal purpose.
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI_HP0_FPD'. A default connection has been created.
+INFO: [IP_Flow 19-1686] Generating 'Miscellaneous' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Hardware Handoff' target for IP 'zcu104ps'...
+generate_target: Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 2208.828 ; gain = 179.152
+## export_ip_user_files -of_objects $obj -no_script -force
+## set obj [current_fileset]
+## set property_include_dirs [get_property include_dirs $obj]
+## set ip_include_dirs [concat $property_include_dirs [findincludedir $ipdir "*.vh"]]
+## set ip_include_dirs [concat $ip_include_dirs [findincludedir $srcdir "*.h"]]
+## set ip_include_dirs [concat $ip_include_dirs [findincludedir $srcdir "*.vh"]]
+# source [file join $scriptdir "synth.tcl"]
+## read_ip [glob -directory $ipdir [file join * {*.xci}]]
+CRITICAL WARNING: [Vivado 12-1504] The IP is already part of the fileset 'sources_1'. Requested source 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL.xci' will not be added.
+CRITICAL WARNING: [Vivado 12-1504] The IP is already part of the fileset 'sources_1'. Requested source 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/zcu104ps.xci' will not be added.
+## synth_design -top $top -flatten_hierarchy rebuilt
+Command: synth_design -top ZCU104FPGATestHarness -flatten_hierarchy rebuilt
+Starting synth_design
+Using part: xczu7ev-ffvc1156-2-e
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu7ev'
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 37576
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2677.484 ; gain = 339.145
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'ZCU104FPGATestHarness' [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ZCU104FPGATestHarness.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'IBUFDS' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:55219]
+	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
+	Parameter DIFF_TERM bound to: FALSE - type: string 
+	Parameter DQS_BIAS bound to: FALSE - type: string 
+	Parameter IBUF_DELAY_VALUE bound to: 0 - type: integer 
+	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
+	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
+	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IBUFDS' (1#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:55219]
+INFO: [Synth 8-6157] synthesizing module 'PowerOnResetFPGAOnly' [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/PowerOnResetFPGAOnly.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'PowerOnResetFPGAOnly' (2#1) [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/PowerOnResetFPGAOnly.v:2]
+INFO: [Synth 8-6157] synthesizing module 'BUFGCE' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:1093]
+INFO: [Synth 8-6155] done synthesizing module 'BUFGCE' (3#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:1093]
+INFO: [Synth 8-6157] synthesizing module 'ChipTop' [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ChipTop.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ChipTop' (4#1) [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ChipTop.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'ZCU104HelloWorldUART' [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ZCU104HelloWorldUART.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ZCU104HelloWorldUART' (5#1) [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ZCU104HelloWorldUART.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ZCU104FPGATestHarness' (6#1) [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ZCU104FPGATestHarness.sv:2]
+WARNING: [Synth 8-7129] Port uart_rx in module ZCU104FPGATestHarness is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2726.676 ; gain = 388.336
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2744.602 ; gain = 406.262
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2744.602 ; gain = 406.262
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2756.621 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'zcu104ps'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/zcu104ps.xdc will not be read for any cell of this module.
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'harnessSysPLL'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL_board.xdc will not be read for any cell of this module.
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'harnessSysPLL'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL.xdc will not be read for any cell of this module.
+Parsing XDC File [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc]
+WARNING: [Vivado 12-5460] The attribute CONFIG_VOLTAGE is not supported in the xczu7ev-ffvc1156-2-e device [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc:17]
+Finished Parsing XDC File [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ZCU104FPGATestHarness_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ZCU104FPGATestHarness_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.sdc]
+Finished Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.sdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.sdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ZCU104FPGATestHarness_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ZCU104FPGATestHarness_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.xdc]
+Finished Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ZCU104FPGATestHarness_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ZCU104FPGATestHarness_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'harnessSysPLL'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL_late.xdc will not be read for any cell of this module.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2843.934 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1 instances were transformed.
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 2843.934 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2843.934 ; gain = 505.594
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xczu7ev-ffvc1156-2-e
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2843.934 ; gain = 505.594
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2843.934 ; gain = 505.594
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2843.934 ; gain = 505.594
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   11 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 2     
++---Registers : 
+	               11 Bit    Registers := 1     
+	               10 Bit    Registers := 1     
+	                4 Bit    Registers := 2     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input   11 Bit        Muxes := 1     
+	   2 Input   10 Bit        Muxes := 1     
+	  16 Input    7 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1728 (col length:144)
+BRAMs: 624 (col length: RAMB18 144 RAMB36 72)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7129] Port uart_rx in module ZCU104FPGATestHarness is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:12 . Memory (MB): peak = 2843.934 ; gain = 505.594
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5578] Moved timing constraint from pin 'fpga_power_on/power_on_reset' to pin 'fpga_power_on/power_on_reset_reg/Q'
+INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:14 . Memory (MB): peak = 2888.750 ; gain = 550.410
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:14 . Memory (MB): peak = 2909.367 ; gain = 571.027
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:11 ; elapsed = 00:00:14 . Memory (MB): peak = 2910.262 ; gain = 571.922
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-4649] Removing BlackBox instance ChipTop of module ChipTop having unconnected or no output ports
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-5410] Found another clock driver uart_clock_bufg:O [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/gen-collateral/ZCU104FPGATestHarness.sv:29]
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |BUFGCE |     1|
+|3     |LUT2   |     2|
+|4     |LUT3   |     2|
+|5     |LUT4   |    10|
+|6     |LUT5   |     6|
+|7     |LUT6   |    15|
+|8     |FDCE   |    19|
+|9     |FDPE   |     9|
+|10    |FDRE   |     1|
+|11    |IBUFDS |     1|
+|12    |OBUF   |     1|
++------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:07 ; elapsed = 00:00:13 . Memory (MB): peak = 2917.043 ; gain = 479.371
+Synthesis Optimization Complete : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 2917.043 ; gain = 578.703
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2925.051 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'zcu104ps'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/zcu104ps.xdc will not be read for any cell of this module.
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'harnessSysPLL'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL_board.xdc will not be read for any cell of this module.
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'harnessSysPLL'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL.xdc will not be read for any cell of this module.
+Parsing XDC File [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc]
+WARNING: [Vivado 12-5460] The attribute CONFIG_VOLTAGE is not supported in the xczu7ev-ffvc1156-2-e device [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc:17]
+Finished Parsing XDC File [Z:/root/chipyard/fpga/fpga-shells/xilinx/zcu104/constraints/zcu104-master.xdc]
+Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.sdc]
+Finished Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.sdc]
+Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.xdc]
+Finished Parsing XDC File [Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config.shell.xdc]
+CRITICAL WARNING: [Designutils 20-1280] Could not find module 'harnessSysPLL'. The XDC file z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/harnessSysPLL/harnessSysPLL_late.xdc will not be read for any cell of this module.
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2992.352 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  BUFG => BUFGCE: 1 instance 
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+Synth Design complete, checksum: 11bc6835
+INFO: [Common 17-83] Releasing license: Synthesis
+35 Infos, 6 Warnings, 8 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 2992.352 ; gain = 783.523
+## write_checkpoint -force [file join $wrkdir post_synth]
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.345 . Memory (MB): peak = 2992.352 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_synth.dcp' has been generated.
+# if {[info exists pre_impl_debug_tcl]} {
+#   source [file join $scriptdir $pre_impl_debug_tcl]
+# }
+# source [file join $scriptdir "opt.tcl"]
+## opt_design -directive Explore
+Command: opt_design -directive Explore
+INFO: [Vivado_Tcl 4-136] Directive used for opt_design is: Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.674 . Memory (MB): peak = 2992.352 ; gain = 0.000
+
+Starting Logic Optimization Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Phase 1 Retarget
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 1172d3b0d
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.108 . Memory (MB): peak = 3188.945 ; gain = 111.441
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+
+Phase 2 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 2 Constant propagation | Checksum: 1172d3b0d
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.111 . Memory (MB): peak = 3188.945 ; gain = 111.441
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 3 Sweep
+Phase 3 Sweep | Checksum: 1172d3b0d
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.114 . Memory (MB): peak = 3188.945 ; gain = 111.441
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Sweep, 2 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 4 BUFG optimization
+INFO: [Opt 31-1077] Phase BUFG optimization inserted 0 global clock buffer(s) for CLOCK_LOW_FANOUT.
+Phase 4 BUFG optimization | Checksum: 1ff9ea185
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.118 . Memory (MB): peak = 3188.945 ; gain = 111.441
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 1 cells.
+
+Phase 5 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 5 Shift Register Optimization | Checksum: 1ff9ea185
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.120 . Memory (MB): peak = 3188.945 ; gain = 111.441
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 6 Post Processing Netlist
+Phase 6 Post Processing Netlist | Checksum: 1064f44ed
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.122 . Memory (MB): peak = 3188.945 ; gain = 111.441
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               0  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               0  |               0  |                                              2  |
+|  BUFG optimization            |               0  |               1  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 3188.945 ; gain = 0.000
+Ending Logic Optimization Task | Checksum: 170f07260
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.130 . Memory (MB): peak = 3188.945 ; gain = 111.441
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3188.945 ; gain = 0.000
+Ending Netlist Obfuscation Task | Checksum: 170f07260
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 3188.945 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+19 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+## write_checkpoint -force [file join $wrkdir post_opt]
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.337 . Memory (MB): peak = 3188.945 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_opt.dcp' has been generated.
+# if {[info exists post_opt_debug_tcl]} {
+#   source [file join $scriptdir $post_opt_debug_tcl]
+# }
+# source [file join $scriptdir "place.tcl"]
+## place_design -directive Explore
+Command: place_design -directive Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+Starting Placer Task
+INFO: [Place 46-5] The placer was invoked with the 'Explore' directive.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: def9290a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 207c410b
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.427 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 10e0822de
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.604 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 10e0822de
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.606 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: 10e0822de
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.609 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+
+Phase 2.1.1 Partition Driven Placement
+
+Phase 2.1.1.1 PBP: Partition Driven Placement
+Phase 2.1.1.1 PBP: Partition Driven Placement | Checksum: fb464998
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.687 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.1.1.2 PBP: Clock Region Placement
+Phase 2.1.1.2 PBP: Clock Region Placement | Checksum: fb464998
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.798 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.1.1.3 PBP: Compute Congestion
+Phase 2.1.1.3 PBP: Compute Congestion | Checksum: fb464998
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.945 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.1.1.4 PBP: UpdateTiming
+Phase 2.1.1.4 PBP: UpdateTiming | Checksum: a3ae828f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.969 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.1.1.5 PBP: Add part constraints
+Phase 2.1.1.5 PBP: Add part constraints | Checksum: a3ae828f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.971 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 2.1.1 Partition Driven Placement | Checksum: a3ae828f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.974 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 2.1 Floorplanning | Checksum: f0486f75
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.976 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.2 Update Timing before SLR Path Opt
+Phase 2.2 Update Timing before SLR Path Opt | Checksum: f0486f75
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.977 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.3 Post-Processing in Floorplanning
+Phase 2.3 Post-Processing in Floorplanning | Checksum: f0486f75
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.979 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.4 Global Placement Core
+
+Phase 2.4.1 Physical Synthesis In Placer
+INFO: [Physopt 32-1044] Break lutnm for timing: one critical 0, two critical 0, total 0, new lutff created 0
+INFO: [Physopt 32-1138] End 1 Pass. Optimized 0 net or LUT. Breaked 0 LUT, combined 0 existing LUT and moved 0 existing LUT
+INFO: [Physopt 32-69] No nets found for rewiring optimization.
+INFO: [Physopt 32-661] Optimized 0 net.  Re-placed 0 instance.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-65] No nets found for high-fanout optimization.
+INFO: [Physopt 32-232] Optimized 0 net. Created 0 new instance.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-670] No setup violation found.  DSP Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register to Pipeline Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  BRAM Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  URAM Register Optimization was not performed.
+INFO: [Physopt 32-949] No candidate nets found for dynamic/static region interface net replication
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization                                     |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT Combining                                    |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Retime                                           |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Equivalent Driver Rewiring                       |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Very High Fanout                                 |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  DSP Register                                     |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register to Pipeline                       |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register                                   |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  BRAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  URAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Dynamic/Static Region Interface Net Replication  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Total                                            |            0  |              0  |                     0  |           0  |           5  |  00:00:00  |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Phase 2.4.1 Physical Synthesis In Placer | Checksum: 5c6a6c89
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 2.4 Global Placement Core | Checksum: 4bd65a96
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 2 Global Placement | Checksum: 4bd65a96
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 22dc6ff3
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: bdffcc9d
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3.3 Small Shape DP
+
+Phase 3.3.1 Small Shape Clustering
+Phase 3.3.1 Small Shape Clustering | Checksum: 11700a603
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3.3.2 Flow Legalize Slice Clusters
+Phase 3.3.2 Flow Legalize Slice Clusters | Checksum: 7c766967
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3.3.3 Slice Area Swap
+Phase 3.3.3 Slice Area Swap | Checksum: 445b5b61
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 3.3 Small Shape DP | Checksum: d6669c4a
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3.4 Re-assign LUT pins
+Phase 3.4 Re-assign LUT pins | Checksum: f95072de
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3.5 Pipeline Register Optimization
+Phase 3.5 Pipeline Register Optimization | Checksum: 125680c15
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 3 Detail Placement | Checksum: 125680c15
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Phase 4.1.1 Post Placement Optimization
+Post Placement Optimization Initialization | Checksum: 14df8afdd
+
+Phase 4.1.1.1 BUFG Insertion
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=6.724 | TNS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 11fe1c9ba
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Place 46-56] BUFG insertion identified 0 candidate nets. Inserted BUFG: 0, Replicated BUFG Driver: 0, Skipped due to Placement/Routing Conflicts: 0, Skipped due to Timing Degradation: 0, Skipped due to Illegal Netlist: 0.
+Ending Physical Synthesis Task | Checksum: 1d785ba85
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 4.1.1.1 BUFG Insertion | Checksum: 14df8afdd
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4.1.1.2 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=6.724. For the most accurate timing information please run report_timing.
+Phase 4.1.1.2 Post Placement Timing Optimization | Checksum: 21454fbf5
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 4.1 Post Commit Optimization | Checksum: 21454fbf5
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 290d23e70
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4.3 Placer Reporting
+
+Phase 4.3.1 Print Estimated Congestion
+INFO: [Place 30-612] Post-Placement Estimated Congestion 
+ ________________________________________________________________________
+|           | Global Congestion | Long Congestion   | Short Congestion  |
+| Direction | Region Size       | Region Size       | Region Size       |
+|___________|___________________|___________________|___________________|
+|      North|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+|      South|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+|       East|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+|       West|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+
+Phase 4.3.1 Print Estimated Congestion | Checksum: 290d23e70
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 4.3 Placer Reporting | Checksum: 290d23e70
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 2d63d932a
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Ending Placer Task | Checksum: 207770864
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+32 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 4062.176 ; gain = 873.230
+## phys_opt_design -directive Explore
+Command: phys_opt_design -directive Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Vivado_Tcl 4-137] Directive used for phys_opt_design is: Explore
+INFO: [Vivado_Tcl 4-383] Design worst setup slack (WNS) is greater than or equal to 0.000 ns. Skipping all physical synthesis optimizations.
+INFO: [Vivado_Tcl 4-232] No setup violation found. The netlist was not modified.
+INFO: [Common 17-83] Releasing license: Implementation
+5 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+## power_opt_design
+Command: power_opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+Begin power optimizations | Checksum: 2996e51ba
+INFO: [Pwropt 34-50] Optimizing power for module ZCU104FPGATestHarness ...
+INFO: [Pwropt 34-207] Design is in post-place state. Running in post-place mode.
+Pre-processing: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Pwropt 34-9] Applying IDT optimizations ...
+IDT: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Pwropt 34-10] Applying ODC optimizations ...
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=6.720 | TNS=0.000 |
+PSMgr Creation: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.541 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+INFO: [Pwropt 34-215] Skipped ODC enables for 0 nets in BRAM flops in bus-based analysis.
+INFO: [Pwropt 34-214] Skipped ODC enables for 0 nets in BRAM address flops in bus-based analysis.
+ODC: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Power optimization passes: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+INFO: [Pwropt 34-77] Creating clock enable groups ...
+INFO: [Pwropt 34-96] Including small groups for filtering based on enable probabilities.
+ Done
+Grouping enables: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+
+Starting PowerOpt Patch Enables Task
+INFO: [Pwropt 34-26] Patching clock gating enable signals for design ZCU104FPGATestHarness ...
+INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 0 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
+INFO: [Pwropt 34-201] Structural ODC has moved 0 WE to EN ports
+INFO: [Pwropt 34-100] Patcher adaptive clustering : original flop clusters 2 accepted clusters 1
+
+Number of Slice Registers augmented: 0 newly gated: 6 Total: 29
+Number of SRLs augmented: 0  newly gated: 0 Total: 0
+Number of BRAM Ports augmented: 0 newly gated: 0 Total Ports: 0
+Number of Flops added for Enable Generation: 0
+
+Flops dropped: 0/10 RAMS dropped: 0/0 Clusters dropped: 0/1 Enables dropped: 0
+
+Number of LUTs created for enable logic : 
+    LUT1 : 0
+    LUT2 : 0
+    LUT3 : 0
+    LUT4 : 0
+    LUT5 : 0
+    LUT6 : 1
+
+Patching clock gating enables finished successfully.
+Ending PowerOpt Patch Enables Task | Checksum: 13c53d91f
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.060 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Pwropt 34-30] Power optimization finished successfully.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+End power optimizations | Checksum: 1cd0cdc24
+Power optimization: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Pwropt 34-198] Malloced memory gain at end of power optimization: 0 bytes
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Ending Netlist Obfuscation Task | Checksum: 1cd0cdc24
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+17 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+power_opt_design completed successfully
+## write_checkpoint -force [file join $wrkdir post_place]
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.353 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_place.dcp' has been generated.
+# source [file join $scriptdir "route.tcl"]
+## route_design -directive Explore
+Command: route_design -directive Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command route_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-270] Using Router directive 'Explore'.
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: 1573d1c ConstDB: 0 ShapeSum: a278e360 RouteDB: 7c7d427b
+Nodegraph reading from file.  Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.708 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Post Restoration Checksum: NetGraph: 57e8750 NumContArr: 24ee01a5 Constraints: 2d32aa30 Timing: 0
+Phase 1 Build RT Design | Checksum: 579f3325
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2 Router Initialization
+
+Phase 2.1 Create Timer
+Phase 2.1 Create Timer | Checksum: 579f3325
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.2 Fix Topology Constraints
+Phase 2.2 Fix Topology Constraints | Checksum: 579f3325
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.3 Pre Route Cleanup
+Phase 2.3 Pre Route Cleanup | Checksum: 579f3325
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.4 Global Clock Net Routing
+ Number of Nodes with overlaps = 0
+Phase 2.4 Global Clock Net Routing | Checksum: b3d7edd5
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 2.5 Update Timing
+Phase 2.5 Update Timing | Checksum: 2195395b3
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.781  | TNS=0.000  | WHS=0.033  | THS=0.000  |
+
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0 %
+  Global Horizontal Routing Utilization  = 0 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 43
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 37
+  Number of Partially Routed Nets     = 6
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 20dcb6bb2
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 3 Initial Routing
+
+Phase 3.1 Global Routing
+Phase 3.1 Global Routing | Checksum: 20dcb6bb2
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 3 Initial Routing | Checksum: 2111d5808
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.475  | TNS=0.000  | WHS=0.046  | THS=0.000  |
+
+Phase 4.1 Global Iteration 0 | Checksum: 259f235e3
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 4.2 Additional Iteration for Hold
+Phase 4.2 Additional Iteration for Hold | Checksum: 1f20771e1
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 4 Rip-up And Reroute | Checksum: 1f20771e1
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 5 Delay and Skew Optimization
+
+Phase 5.1 Delay CleanUp
+Phase 5.1 Delay CleanUp | Checksum: 1f20771e1
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 5.2 Clock Skew Optimization
+Phase 5.2 Clock Skew Optimization | Checksum: 1f20771e1
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 5 Delay and Skew Optimization | Checksum: 1f20771e1
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 6 Post Hold Fix
+
+Phase 6.1 Hold Fix Iter
+
+Phase 6.1.1 Update Timing
+Phase 6.1.1 Update Timing | Checksum: 196a2e811
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.475  | TNS=0.000  | WHS=0.046  | THS=0.000  |
+
+Phase 6.1 Hold Fix Iter | Checksum: 196a2e811
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+Phase 6 Post Hold Fix | Checksum: 196a2e811
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 7 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.00108399 %
+  Global Horizontal Routing Utilization  = 0.000700937 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 7 Route finalize | Checksum: 20c41375c
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 8 Verifying routed nets
+
+ Verification completed successfully
+Phase 8 Verifying routed nets | Checksum: 20c41375c
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 9 Depositing Routes
+Phase 9 Depositing Routes | Checksum: 20c41375c
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 10 Resolve XTalk
+Phase 10 Resolve XTalk | Checksum: 20c41375c
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 11 Route finalize
+Phase 11 Route finalize | Checksum: 20c41375c
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Phase 12 Post Router Timing
+INFO: [Route 35-20] Post Routing Timing Summary | WNS=6.475  | TNS=0.000  | WHS=0.046  | THS=0.000  |
+
+Phase 12 Post Router Timing | Checksum: 1fdf426b7
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Route 35-61] The design met the timing requirement.
+INFO: [Route 35-16] Router Completed Successfully
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4062.176 ; gain = 0.000
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+16 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+## phys_opt_design -directive Explore
+Command: phys_opt_design -directive Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Vivado_Tcl 4-241] Physical synthesis in post route mode ( 100.0% nets are fully routed)
+INFO: [Vivado_Tcl 4-137] Directive used for phys_opt_design is: Explore
+INFO: [Vivado_Tcl 4-383] Design worst setup slack (WNS) is greater than or equal to 0.000 ns. Skipping all physical synthesis optimizations.
+INFO: [Vivado_Tcl 4-232] No setup violation found. The netlist was not modified.
+INFO: [Common 17-83] Releasing license: Implementation
+6 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+## write_checkpoint -force [file join $wrkdir post_route]
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.346 . Memory (MB): peak = 4062.176 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_route.dcp' has been generated.
+# source [file join $scriptdir "bitstream.tcl"]
+## set_property SEVERITY {Warning} [get_drc_checks UCIO-1]
+## write_bitstream -force [file join $wrkdir "${top}.bit"]
+Command: write_bitstream -force Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+Running DRC as a precondition to command write_bitstream
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado 12-3199] DRC finished with 0 Errors
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+INFO: [Designutils 20-2272] Running write_bitstream with 2 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Bitstream compression saved 118242560 bits.
+Writing bitstream Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Project 1-1876] WebTalk data collection is mandatory when using a ULT device. To see the specific WebTalk data collected for your design, open the usage_statistics_webtalk.html or usage_statistics_webtalk.xml file in the implementation directory.
+INFO: [Common 17-83] Releasing license: Implementation
+9 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 4062.176 ; gain = 0.000
+## write_sdf -force [file join $wrkdir "${top}.sdf"]
+## write_verilog -mode timesim -force [file join ${wrkdir} "${top}.v"]
+# if {[info exists post_impl_debug_tcl]} {
+#   source [file join $scriptdir $post_impl_debug_tcl]
+# }
+# source [file join $scriptdir "report.tcl"]
+## set rptdir [file join $wrkdir report]
+## file mkdir $rptdir
+## report_datasheet -file [file join $rptdir datasheet.txt]
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+## set rptutil [file join $rptdir utilization.txt]
+## report_utilization -hierarchical -file $rptutil
+## report_clock_utilization -file $rptutil -append
+## report_ram_utilization -file $rptutil -append -detail
+WARNING: [Common 17-576] 'detail' is deprecated. The '-detail' option is no longer required because all the data is enabled by default. Support for -detail will be removed in a future release.
+report_ram_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4062.176 ; gain = 0.000
+## report_timing_summary -file [file join $rptdir timing.txt] -max_paths 10
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: E, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+## report_high_fanout_nets -file [file join $rptdir fanout.txt] -timing -load_types -max_nets 25
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: E, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+report_high_fanout_nets: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 4062.176 ; gain = 0.000
+## report_drc -file [file join $rptdir drc.txt]
+Command: report_drc -file Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/report/drc.txt
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/report/drc.txt.
+report_drc completed successfully
+## report_io -file [file join $rptdir io.txt]
+report_io: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.105 . Memory (MB): peak = 4062.176 ; gain = 0.000
+## report_clocks -file [file join $rptdir clocks.txt]
+## set timing_slack [get_property SLACK [get_timing_paths]]
+## if {$timing_slack < 0} {
+##   puts "WARNING: Failed to meet timing by $timing_slack, see [file join $rptdir timing.txt]. Continuing anyway..."
+## }
+INFO: [Common 17-206] Exiting Vivado at Wed Mar 18 16:42:33 2026...

@@ -1,0 +1,170 @@
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /root/chipyard/fpga/fpga-shells/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:23:68: method ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val node = shell { ClockSourceNode(freqMHz = 125, jitterPS = 50)(ValName(name)) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:24:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:25:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(io.p, "F23")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:26:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(io.n, "E23")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:27:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(io.p, "LVDS")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:28:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(io.n, "LVDS")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:31:126: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass SysClockZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: ClockInputShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:34:98: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: ClockInputDesignInput) = new SysClockZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:34:90: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: ClockInputDesignInput) = new SysClockZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:42:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:44:20: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("K9", IOPin(io.rxd)),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:45:20: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("J9", IOPin(io.txd)))[0m
+[0m[[0m[33mwarn[0m] [0m[0m                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:52:116: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass UARTZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: UARTShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:55:88: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: UARTDesignInput) = new UARTZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:55:80: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: UARTDesignInput) = new UARTZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:64:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:67:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("E12", IOPin(io.spi_clk)),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:68:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("F11", IOPin(io.spi_cs)),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:69:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("D12", IOPin(io.spi_dat(0))),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:70:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("C12", IOPin(io.spi_dat(1))),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:71:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("B12", IOPin(io.spi_dat(2))),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:72:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("A12", IOPin(io.spi_dat(3))))[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:83:115: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass SDIOZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: SPIShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:86:87: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:86:79: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:94:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:95:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "H12")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:96:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:97:46: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK)) // prevent JTAG TCK from using dedicated clock routing[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:98:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "E10")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:99:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:100:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "D10")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:101:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:102:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "C11")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:103:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:106:126: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass JTAGDebugZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: JTAGDebugShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:109:98: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: JTAGDebugDesignInput) = new JTAGDebugZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:109:90: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: JTAGDebugDesignInput) = new JTAGDebugZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:117:114: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass DDRZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: DDRShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:125:17: type ModuleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val pllReset: ModuleValue[Bool][0m
+[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:144:18: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val pllReset = InModuleBody { Wire(Bool()) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m41 warnings found[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /root/chipyard/fpga/target/scala-2.13/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:4:28: object VecInit is not a member of package chisel3.util[0m
+[0m[[0m[31merror[0m] [0m[0mimport chisel3.util.{Fill, VecInit, log2Ceil}[0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:45:17: not found: value Cat[0m
+[0m[[0m[31merror[0m] [0m[0m    shiftReg := Cat(1.U(1.W), message(charIndex), 0.U(1.W))[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:50:17: not found: value Cat[0m
+[0m[[0m[31merror[0m] [0m[0m    shiftReg := Cat(1.U(1.W), shiftReg(9, 1))[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 9 s, completed Mar 18, 2026, 4:25:04 PM[0m
+[0Jmake: *** [/root/chipyard/common.mk:138: /root/chipyard/.classpath_cache/chipyard_fpga.jar] Error 1

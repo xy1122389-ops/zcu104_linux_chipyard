@@ -1,0 +1,160 @@
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source //wsl.localhost/Ubuntu-22.04/tmp/zcu104_g7_minclk_audit.tcl
+# set dcp [lindex $argv 0]
+# open_checkpoint $dcp
+Command: open_checkpoint //wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/post_route.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1604.246 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.521 . Memory (MB): peak = 1910.094 ; gain = 1.801
+INFO: [Netlist 29-17] Analyzing 3567 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2691.535 ; gain = 94.066
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2691.535 ; gain = 94.066
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 3161.133 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 529 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 5 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:26 ; elapsed = 00:00:33 . Memory (MB): peak = 3161.133 ; gain = 1556.887
+# puts "=== TARGET_PORT_BY_NAME ==="
+=== TARGET_PORT_BY_NAME ===
+# set p [get_ports -quiet pmod0_2_clkout]
+# puts "PORT=$p"
+PORT=pmod0_2_clkout
+# puts "PACKAGE_PIN=[get_property PACKAGE_PIN $p]"
+PACKAGE_PIN=G7
+# puts "IOSTANDARD=[get_property IOSTANDARD $p]"
+IOSTANDARD=LVCMOS33
+# puts "=== REPORT_IO_FOR_PORT ==="
+=== REPORT_IO_FOR_PORT ===
+# if {[catch {report_io $p} rio_err]} {
+#   puts "report_io_failed=$rio_err"
+# }
+report_io_failed=ERROR: [Common 17-165] Too many positional options when parsing 'pmod0_2_clkout', please type 'report_io -help' for usage info.
+
+# puts "=== ALL_FANIN_TO_PORT_FLAT ==="
+=== ALL_FANIN_TO_PORT_FLAT ===
+# foreach x [all_fanin -to $p -flat] { puts $x }
+pmod0_2_clkout
+pmod0_2_clkout_OBUF_inst/O
+pmod0_2_clkout_OBUF_inst/I
+REG_reg[25]/Q
+REG_reg[25]/C
+# puts "=== NET_OF_PORT ==="
+=== NET_OF_PORT ===
+# set pn [get_nets -of_objects $p]
+# puts "PORT_NET=$pn"
+PORT_NET=pmod0_2_clkout
+# puts "=== ALL_FANIN_TO_PORT_NET_FLAT ==="
+=== ALL_FANIN_TO_PORT_NET_FLAT ===
+# foreach x [all_fanin -to $pn -flat] { puts $x }
+pmod0_2_clkout_OBUF_inst/O
+pmod0_2_clkout_OBUF_inst/I
+REG_reg[25]/Q
+REG_reg[25]/C
+# puts "=== UNIQUE_CELL_REFS_IN_FANIN_CONE ==="
+=== UNIQUE_CELL_REFS_IN_FANIN_CONE ===
+# set fanin_objs [all_fanin -to $p -flat]
+# set refs {}
+# set cells_seen {}
+# foreach o $fanin_objs {
+#   set c [get_cells -quiet -of_objects $o]
+#   if {[llength $c] > 0} {
+#     if {[lsearch -exact $cells_seen $c] < 0} {
+#       lappend cells_seen $c
+#       set r [get_property REF_NAME $c]
+#       if {[lsearch -exact $refs $r] < 0} { lappend refs $r }
+#     }
+#   }
+# }
+# puts [join [lsort $refs] "\n"]
+FDRE
+OBUF
+# puts "=== TIMING_PATH_SYSCLKP_TO_G7PORT ==="
+=== TIMING_PATH_SYSCLKP_TO_G7PORT ===
+# if {[catch {report_timing -from [get_ports sys_clock_p] -to $p -max_paths 1 -nworst 1} tp_err]} {
+#   puts "report_timing_sysclkp_failed=$tp_err"
+# }
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: E, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 1 -nworst 1 -delay_type max -sort_by slack.
+WARNING: [Timing 38-164] This design has multiple clocks. Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+INFO: [Timing 38-72] No paths found.
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
+| Date              : Tue Mar 17 21:23:38 2026
+| Host              : YXY running 64-bit major release  (build 9200)
+| Command           : report_timing -from [get_ports sys_clock_p] -to [get_ports -quiet pmod0_2_clkout] -max_paths 1 -nworst 1
+| Design            : ZCU104FPGATestHarness
+| Device            : xczu7ev-ffvc1156
+| Speed File        : -2  PRODUCTION 1.29 08-03-2020
+| Temperature Grade : E
+-------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+No timing paths found.
+
+
+report_timing: Time (s): cpu = 00:00:14 ; elapsed = 00:00:08 . Memory (MB): peak = 3354.859 ; gain = 193.727
+# puts "=== TIMING_PATH_SYSCLKN_TO_G7PORT ==="
+=== TIMING_PATH_SYSCLKN_TO_G7PORT ===
+# if {[catch {report_timing -from [get_ports sys_clock_n] -to $p -max_paths 1 -nworst 1} tn_err]} {
+#   puts "report_timing_sysclkn_failed=$tn_err"
+# }
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Temperature grade: E, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 1 -nworst 1 -delay_type max -sort_by slack.
+WARNING: [Timing 38-164] This design has multiple clocks. Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+INFO: [Timing 38-72] No paths found.
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
+| Date              : Tue Mar 17 21:23:40 2026
+| Host              : YXY running 64-bit major release  (build 9200)
+| Command           : report_timing -from [get_ports sys_clock_n] -to [get_ports -quiet pmod0_2_clkout] -max_paths 1 -nworst 1
+| Design            : ZCU104FPGATestHarness
+| Device            : xczu7ev-ffvc1156
+| Speed File        : -2  PRODUCTION 1.29 08-03-2020
+| Temperature Grade : E
+-------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+No timing paths found.
+
+
+# close_design
+# puts "=== DONE ==="
+=== DONE ===
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 21:23:41 2026...
