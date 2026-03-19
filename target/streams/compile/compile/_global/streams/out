@@ -1,25 +1,26 @@
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/DirectUARTTestHarness.scala:66:18: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
-[0m[[0m[33mwarn[0m] [0m[0m  val pllReset = InModuleBody { Wire(Bool()) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/Configs.scala:32:29: method apply in class View is deprecated (since CDE 0.1): up(XYZ, site) is no longer necessary; remove the superfluous site argument[0m
+[0m[[0m[33mwarn[0m] [0m[0m  case BootROMLocated(x) => up(BootROMLocated(x), site).map { p =>[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/Configs.scala:38:18: method apply in class View is deprecated (since CDE 0.1): up(XYZ, site) is no longer necessary; remove the superfluous site argument[0m
+[0m[[0m[33mwarn[0m] [0m[0m  case ExtMem => up(ExtMem, site).map(x => x.copy(master = x.master.copy(size = site(ZCU104DDRSize))))[0m
 [0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/DirectUARTTestHarness.scala:76:83: type LazyRawModuleImp in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
-[0m[[0m[33mwarn[0m] [0m[0mclass ZCU104DirectUARTTestHarnessImp(_outer: ZCU104DirectUARTTestHarness) extends LazyRawModuleImp(_outer) {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                                                                  ^[0m
 [0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:34:18: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
 [0m[[0m[33mwarn[0m] [0m[0m  val pllReset = InModuleBody { Wire(Bool()) }[0m
 [0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:45:21: value LazyModule in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:46:21: value LazyModule in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
 [0m[[0m[33mwarn[0m] [0m[0m  val dutWrangler = LazyModule(new ResetWrangler)[0m
 [0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:49:20: value BundleBridgeSource in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:51:20: value BundleBridgeSource in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
 [0m[[0m[33mwarn[0m] [0m[0m  val io_uart_bb = BundleBridgeSource(() => (new UARTPortIO(dp(PeripheryUARTKey).head)))[0m
 [0m[[0m[33mwarn[0m] [0m[0m                   ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:52:19: value BundleBridgeSource in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:55:19: value BundleBridgeSource in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
 [0m[[0m[33mwarn[0m] [0m[0m  val io_spi_bb = BundleBridgeSource(() => (new SPIPortIO(dp(PeripherySPIKey).head)))[0m
 [0m[[0m[33mwarn[0m] [0m[0m                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:59:14: value LazyModule in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:63:14: value LazyModule in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
 [0m[[0m[33mwarn[0m] [0m[0m    val ps = LazyModule(new XilinxZCU104PS(psParams))[0m
 [0m[[0m[33mwarn[0m] [0m[0m             ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:73:71: type LazyRawModuleImp in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:79:71: type LazyRawModuleImp in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
 [0m[[0m[33mwarn[0m] [0m[0mclass ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawModuleImp(_outer) with HasHarnessInstantiators {[0m
 [0m[[0m[33mwarn[0m] [0m[0m                                                                      ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m8 warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0m4 feature warnings; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0m9 warnings found[0m

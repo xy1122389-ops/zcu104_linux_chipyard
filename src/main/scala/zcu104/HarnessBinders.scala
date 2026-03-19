@@ -19,6 +19,16 @@ class WithUART extends HarnessBinder({
   }
 })
 
+/*** GPIO LED ***/
+class WithLEDGPIO extends HarnessBinder({
+  case (th: ZCU104FPGATestHarnessImp, port: GPIOPinsPort, chipId: Int) if port.gpioId == 0 => {
+    val ledDrive = port.io.pins(0).o.oe && port.io.pins(0).o.oval
+    th.gpio_led_0_ls_drive := ledDrive
+    port.io.pins(0).i.ival := ledDrive
+    port.io.pins(0).i.po.foreach(_ := false.B)
+  }
+})
+
 /*** SPI/SD ***/
 class WithSPISDCard extends HarnessBinder({
   case (th: ZCU104FPGATestHarnessImp, port: SPIPort, chipId: Int) => {

@@ -42,10 +42,13 @@ class WithZCU104SystemModifications extends Config((site, here, up) => {
 // WithDDRMem config: uses PS AXI HP0 → PS DDR4 (2GB)
 // Requires FSBL to initialize PS DDR before PL bitstream is loaded
 class WithZCU104Tweaks extends Config(
+  new chipyard.iobinders.WithGPIOPunchthrough ++
   new chipyard.harness.WithAllClocksFromHarnessClockInstantiator ++
   new chipyard.clocking.WithPassthroughClockGenerator ++
   new chipyard.config.WithUniformBusFrequencies(50) ++
   new WithFPGAFrequency(50) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new WithLEDGPIO ++
   new WithUART ++
   new WithSPISDCard ++
   new WithPSDDRMem ++
@@ -64,10 +67,13 @@ class RocketZCU104Config extends Config(
 
 // No-DDR fallback: uses Rocket scratchpad TCM (for bring-up / no PS init required)
 class WithZCU104TweaksNoDDR extends Config(
+  new chipyard.iobinders.WithGPIOPunchthrough ++
   new chipyard.harness.WithAllClocksFromHarnessClockInstantiator ++
   new chipyard.clocking.WithPassthroughClockGenerator ++
   new chipyard.config.WithUniformBusFrequencies(50) ++
   new WithFPGAFrequency(50) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new WithLEDGPIO ++
   new WithUART ++
   new WithSPISDCard ++
   new WithJTAG ++

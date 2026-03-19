@@ -1,24 +1,24 @@
 [0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 6 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 3 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 69 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 34 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 436 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 143 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mProcess renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 31 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 18 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 373 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 174 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mBuilding assembly jar due to changed inputs...[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 4296 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 2523 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mReport merge results start:[0m
 [0m[[0m[0minfo[0m] [0m[0m26 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -56,15 +56,15 @@
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = vsrc/vortex/tests/opencl/bfs/README_radiance-0.1[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = radiance-0.1.jar, jar org = edu.berkeley.cs, entry target = vsrc/vortex/tests/opencl/bfs/README[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar entry = vsrc/vortex/third_party/fpnew/src/common_cells/LICENSE_radiance-0.1[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = radiance-0.1.jar, jar org = edu.berkeley.cs, entry target = vsrc/vortex/third_party/fpnew/src/common_cells/LICENSE[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = vsrc/vortex/tests/opencl/bfs/README_radiance-0.1[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = radiance-0.1.jar, jar org = edu.berkeley.cs, entry target = vsrc/vortex/tests/opencl/bfs/README[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -215,27 +215,27 @@
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/phases/Checks.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/phases/Checks.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/ChiselCircuitAnnotation.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/ChiselCircuitAnnotation.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/PrintFullStackTraceAnnotation.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/phases/Checks.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/PrintFullStackTraceAnnotation.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/phases/Checks.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/phases/Emitter.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/phases/Emitter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/PrintFullStackTraceAnnotation.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/PrintFullStackTraceAnnotation.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -413,21 +413,9 @@
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/CircuitSerializationAnnotation$Format.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/WarningConfigurationAnnotation$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/CircuitSerializationAnnotation$Format.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/ChiselOption.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/ChiselOption.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = firrtl/stage/FirrtlOptions.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = firrtl/stage/FirrtlOptions.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/WarningConfigurationAnnotation$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -437,9 +425,21 @@
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/WarningConfigurationAnnotation$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = firrtl/stage/FirrtlOptions.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/WarningConfigurationAnnotation$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = firrtl/stage/FirrtlOptions.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/ChiselOption.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/ChiselOption.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar entry = chisel3/stage/CircuitSerializationAnnotation$Format.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = chisel3/stage/CircuitSerializationAnnotation$Format.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Rename (Custom)[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -684,13 +684,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala-2.13/scalax/collection/mutable/EqHashSet.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-linux32/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/generator/RandomGraph.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -702,7 +696,13 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/generator/RandomGraph.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala-2.13/scalax/collection/mutable/EqHashSet.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-linux32/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -816,7 +816,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-windows32/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-databind-2.12.6.1.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -828,7 +828,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-databind-2.12.6.1.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-windows32/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -864,18 +864,6 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/annotations/LoadMemoryAnnotation.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = snappy-0.4.jar, jar org = org.iq80.snappy, entry target = META-INF/maven/org.iq80.snappy/snappy/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scala/collection/Util.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -883,6 +871,18 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/package.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/annotations/LoadMemoryAnnotation.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = snappy-0.4.jar, jar org = org.iq80.snappy, entry target = META-INF/maven/org.iq80.snappy/snappy/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -972,12 +972,6 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/StageOptions.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -985,6 +979,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = blas-3.0.1.jar, jar org = dev.ludovic.netlib, entry target = META-INF/maven/dev.ludovic.netlib/blas/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1116,13 +1116,13 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/OptionParser.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = firrtl2-1.6.jar, jar org = edu.berkeley.cs, entry target = META-INF/services/firrtl2.options.RegisteredTransform[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = firrtl2-1.6.jar, jar org = edu.berkeley.cs, entry target = META-INF/services/firrtl2.options.RegisteredTransform[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/OptionParser.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1260,6 +1260,12 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/generator/package.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/Stage.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -1267,12 +1273,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = plexus-utils-4.0.0.jar, jar org = org.codehaus.plexus, entry target = META-INF/versions/9/org/codehaus/plexus/util/BaseIOUtil.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/generator/package.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1315,12 +1315,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/annotations/MemoryInitAnnotation.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala-2.13/scalax/collection/mutable/EqHash.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1471,7 +1465,19 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/stage/phases/Checks.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala-2.13/scalax/collection/mutable/EqHash.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-linux64/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-windows32/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1492,13 +1498,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-windows32/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-linux64/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/stage/phases/Checks.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1564,7 +1564,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.12.6.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/services/com.fasterxml.jackson.core.JsonFactory[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = antlr4-runtime-4.9.3.jar, jar org = org.antlr, entry target = META-INF/maven/org.antlr/antlr4-runtime/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1576,7 +1576,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = antlr4-runtime-4.9.3.jar, jar org = org.antlr, entry target = META-INF/maven/org.antlr/antlr4-runtime/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jackson-core-2.12.6.jar, jar org = com.fasterxml.jackson.core, entry target = META-INF/services/com.fasterxml.jackson.core.JsonFactory[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1600,6 +1600,12 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/immutable/EqSet.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/annotations/AnnotationUtils.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -1607,12 +1613,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/Compiler.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/immutable/EqSet.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1714,13 +1714,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/mutable/Graph.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = coursier-util_2.13-2.1.8.jar, jar org = io.get-coursier, entry target = META-INF/CHANGES[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = coursier-util_2.13-2.1.8.jar, jar org = io.get-coursier, entry target = META-INF/README.md[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1732,21 +1726,19 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = coursier-util_2.13-2.1.8.jar, jar org = io.get-coursier, entry target = META-INF/README.md[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = coursier-util_2.13-2.1.8.jar, jar org = io.get-coursier, entry target = META-INF/CHANGES[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/mutable/Graph.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/passes/memlib/ReplaceMemTransform.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-io-2.15.0.jar, jar org = commons-io, entry target = META-INF/versions/9/module-info.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-compress-1.24.0.jar, jar org = org.apache.commons, entry target = META-INF/versions/9/module-info.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = xz-1.9.jar, jar org = org.tukaani, entry target = META-INF/versions/9/module-info.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1776,13 +1768,21 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/phases/WriteOutputAnnotations.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-io-2.15.0.jar, jar org = commons-io, entry target = META-INF/versions/9/module-info.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = commons-compress-1.24.0.jar, jar org = org.apache.commons, entry target = META-INF/versions/9/module-info.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = xz-1.9.jar, jar org = org.tukaani, entry target = META-INF/versions/9/module-info.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/Phase.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/phases/WriteOutputAnnotations.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1854,6 +1854,12 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-osx/pom.properties[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = plexus-archiver-4.9.0.jar, jar org = org.codehaus.plexus, entry target = META-INF/maven/org.codehaus.plexus/plexus-archiver/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -1861,12 +1867,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = JLargeArrays-1.5.jar, jar org = pl.edu.icm, entry target = META-INF/maven/pl.edu.icm/JLargeArrays/pom.properties[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/maven/org.fusesource.jansi/jansi-osx/pom.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -1999,6 +1999,18 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/mutable/AdjacencyListGraph.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/StageAnnotations.scala.semanticdb[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = plexus-archiver-4.9.0.jar, jar org = org.codehaus.plexus, entry target = META-INF/sisu/javax.inject.Named[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = plexus-io-3.4.1.jar, jar org = org.codehaus.plexus, entry target = META-INF/sisu/javax.inject.Named[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -2007,18 +2019,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/GraphTraversal.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala/scalax/collection/mutable/AdjacencyListGraph.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = chisel_2.13-6.7.0.jar, jar org = org.chipsalliance, entry target = META-INF/semanticdb/firrtl/src/main/scala/firrtl/options/StageAnnotations.scala.semanticdb[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -2054,6 +2054,18 @@
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/native/osx/libjansi.jnilib[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = arpack-3.0.1.jar, jar org = dev.ludovic.netlib, entry target = META-INF/maven/dev.ludovic.netlib/arpack/pom.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
+[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
+[0m[[0m[0mdebug[0m] [0m[0m  None[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = plexus-classworlds-2.6.0.jar, jar org = org.codehaus.plexus, entry target = META-INF/maven/org.codehaus.plexus/plexus-classworlds/pom.xml[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
@@ -2067,18 +2079,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = slf4j-api-1.7.36.jar, jar org = org.slf4j, entry target = META-INF/maven/org.slf4j/slf4j-api/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = arpack-3.0.1.jar, jar org = dev.ludovic.netlib, entry target = META-INF/maven/dev.ludovic.netlib/arpack/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
-[0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  None[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Jar name = jansi-1.18.jar, jar org = org.fusesource.jansi, entry target = META-INF/native/osx/libjansi.jnilib[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -2115,16 +2115,16 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = graph-core_2.13-1.13.5.jar, jar org = org.scala-graph, entry target = META-INF/semanticdb/core/src/main/scala-2.13/scalax/collection/mutable/SimpleArraySet.scala.semanticdb[0m
-[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 42 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 23 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 160 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 120 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 84 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 50 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 9123 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 6640 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 85 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 70 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mBuilt: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
-[0m[[0m[0minfo[0m] [0m[0mJar hash: d688237d35484a42c5a306d16e4117d323276e77[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 857d3573dd0fb64ab029cc65a0c4bbc623304413[0m
 [0m[[0m[0mdebug[0m] [0m[0mClose library jar references start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 21 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 24 ms[0m
