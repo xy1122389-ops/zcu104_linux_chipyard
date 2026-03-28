@@ -1,0 +1,213 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+MATRIX_BEGIN
+TARGET_BEGIN id=9 name=Cortex-A53 #0
+TARGET_SELECT id=9 name=Cortex-A53 #0 ok=1
+TARGET_HALT id=9 name=Cortex-A53 #0 ok=0 err=APU L2 cache is held in reset
+REG pass=pre target=Cortex-A53 #0 reg=pc val=pc: N/A
+
+REGERR pass=pre target=Cortex-A53 #0 reg=x30 err=no register match: x30
+REG pass=pre target=Cortex-A53 #0 reg=lr val=lr: N/A
+
+REGERR pass=pre target=Cortex-A53 #0 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=pre target=Cortex-A53 #0 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=pre target=Cortex-A53 #0 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=pre target=Cortex-A53 #0 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=pre target=Cortex-A53 #0 reg=sp val=sp: N/A
+
+REG pass=pre target=Cortex-A53 #0 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=pre target=Cortex-A53 #0 reg=pstate err=no register match: pstate
+TARGET_RESUME id=9 name=Cortex-A53 #0 ok=0 err=Already running
+TARGET_REHALT id=9 name=Cortex-A53 #0 ok=0 err=APU L2 cache is held in reset
+REG pass=post target=Cortex-A53 #0 reg=pc val=pc: N/A
+
+REGERR pass=post target=Cortex-A53 #0 reg=x30 err=no register match: x30
+REG pass=post target=Cortex-A53 #0 reg=lr val=lr: N/A
+
+REGERR pass=post target=Cortex-A53 #0 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=post target=Cortex-A53 #0 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=post target=Cortex-A53 #0 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=post target=Cortex-A53 #0 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=post target=Cortex-A53 #0 reg=sp val=sp: N/A
+
+REG pass=post target=Cortex-A53 #0 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=post target=Cortex-A53 #0 reg=pstate err=no register match: pstate
+TARGET_END id=9 name=Cortex-A53 #0
+TARGET_BEGIN id=10 name=Cortex-A53 #1
+TARGET_SELECT id=10 name=Cortex-A53 #1 ok=1
+TARGET_HALT id=10 name=Cortex-A53 #1 ok=0 err=APU L2 cache is held in reset
+REG pass=pre target=Cortex-A53 #1 reg=pc val=pc: N/A
+
+REGERR pass=pre target=Cortex-A53 #1 reg=x30 err=no register match: x30
+REG pass=pre target=Cortex-A53 #1 reg=lr val=lr: N/A
+
+REGERR pass=pre target=Cortex-A53 #1 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=pre target=Cortex-A53 #1 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=pre target=Cortex-A53 #1 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=pre target=Cortex-A53 #1 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=pre target=Cortex-A53 #1 reg=sp val=sp: N/A
+
+REG pass=pre target=Cortex-A53 #1 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=pre target=Cortex-A53 #1 reg=pstate err=no register match: pstate
+TARGET_RESUME id=10 name=Cortex-A53 #1 ok=0 err=Already running
+TARGET_REHALT id=10 name=Cortex-A53 #1 ok=0 err=APU L2 cache is held in reset
+REG pass=post target=Cortex-A53 #1 reg=pc val=pc: N/A
+
+REGERR pass=post target=Cortex-A53 #1 reg=x30 err=no register match: x30
+REG pass=post target=Cortex-A53 #1 reg=lr val=lr: N/A
+
+REGERR pass=post target=Cortex-A53 #1 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=post target=Cortex-A53 #1 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=post target=Cortex-A53 #1 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=post target=Cortex-A53 #1 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=post target=Cortex-A53 #1 reg=sp val=sp: N/A
+
+REG pass=post target=Cortex-A53 #1 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=post target=Cortex-A53 #1 reg=pstate err=no register match: pstate
+TARGET_END id=10 name=Cortex-A53 #1
+TARGET_BEGIN id=11 name=Cortex-A53 #2
+TARGET_SELECT id=11 name=Cortex-A53 #2 ok=1
+TARGET_HALT id=11 name=Cortex-A53 #2 ok=0 err=APU L2 cache is held in reset
+REG pass=pre target=Cortex-A53 #2 reg=pc val=pc: N/A
+
+REGERR pass=pre target=Cortex-A53 #2 reg=x30 err=no register match: x30
+REG pass=pre target=Cortex-A53 #2 reg=lr val=lr: N/A
+
+REGERR pass=pre target=Cortex-A53 #2 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=pre target=Cortex-A53 #2 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=pre target=Cortex-A53 #2 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=pre target=Cortex-A53 #2 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=pre target=Cortex-A53 #2 reg=sp val=sp: N/A
+
+REG pass=pre target=Cortex-A53 #2 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=pre target=Cortex-A53 #2 reg=pstate err=no register match: pstate
+TARGET_RESUME id=11 name=Cortex-A53 #2 ok=0 err=Already running
+TARGET_REHALT id=11 name=Cortex-A53 #2 ok=0 err=APU L2 cache is held in reset
+REG pass=post target=Cortex-A53 #2 reg=pc val=pc: N/A
+
+REGERR pass=post target=Cortex-A53 #2 reg=x30 err=no register match: x30
+REG pass=post target=Cortex-A53 #2 reg=lr val=lr: N/A
+
+REGERR pass=post target=Cortex-A53 #2 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=post target=Cortex-A53 #2 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=post target=Cortex-A53 #2 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=post target=Cortex-A53 #2 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=post target=Cortex-A53 #2 reg=sp val=sp: N/A
+
+REG pass=post target=Cortex-A53 #2 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=post target=Cortex-A53 #2 reg=pstate err=no register match: pstate
+TARGET_END id=11 name=Cortex-A53 #2
+TARGET_BEGIN id=12 name=Cortex-A53 #3
+TARGET_SELECT id=12 name=Cortex-A53 #3 ok=1
+TARGET_HALT id=12 name=Cortex-A53 #3 ok=0 err=APU L2 cache is held in reset
+REG pass=pre target=Cortex-A53 #3 reg=pc val=pc: N/A
+
+REGERR pass=pre target=Cortex-A53 #3 reg=x30 err=no register match: x30
+REG pass=pre target=Cortex-A53 #3 reg=lr val=lr: N/A
+
+REGERR pass=pre target=Cortex-A53 #3 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=pre target=Cortex-A53 #3 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=pre target=Cortex-A53 #3 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=pre target=Cortex-A53 #3 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=pre target=Cortex-A53 #3 reg=sp val=sp: N/A
+
+REG pass=pre target=Cortex-A53 #3 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=pre target=Cortex-A53 #3 reg=pstate err=no register match: pstate
+TARGET_RESUME id=12 name=Cortex-A53 #3 ok=0 err=Already running
+TARGET_REHALT id=12 name=Cortex-A53 #3 ok=0 err=APU L2 cache is held in reset
+REG pass=post target=Cortex-A53 #3 reg=pc val=pc: N/A
+
+REGERR pass=post target=Cortex-A53 #3 reg=x30 err=no register match: x30
+REG pass=post target=Cortex-A53 #3 reg=lr val=lr: N/A
+
+REGERR pass=post target=Cortex-A53 #3 reg=elr_el1 err=no register match: elr_el1
+REGERR pass=post target=Cortex-A53 #3 reg=elr_el3 err=no register match: elr_el3
+REGERR pass=post target=Cortex-A53 #3 reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=post target=Cortex-A53 #3 reg=spsr_el3 err=no register match: spsr_el3
+REG pass=post target=Cortex-A53 #3 reg=sp val=sp: N/A
+
+REG pass=post target=Cortex-A53 #3 reg=cpsr val=cpsr: N/A
+    n: N/A   z: N/A   c: N/A   v: N/A   q: N/A  it: N/A   j: N/A  ss: N/A
+   il: N/A  ge: N/A   e: N/A   a: N/A   i: N/A   f: N/A   t: N/A   m: N/A
+
+REGERR pass=post target=Cortex-A53 #3 reg=pstate err=no register match: pstate
+TARGET_END id=12 name=Cortex-A53 #3
+TARGET_BEGIN id=8 name=APU (L2 Cache Reset)
+TARGET_SELECT id=8 name=APU (L2 Cache Reset) ok=1
+TARGET_HALT id=8 name=APU (L2 Cache Reset) ok=1
+REGERR pass=pre target=APU (L2 Cache Reset) reg=pc err=no register match: pc
+REGERR pass=pre target=APU (L2 Cache Reset) reg=x30 err=no register match: x30
+REGERR pass=pre target=APU (L2 Cache Reset) reg=lr err=no register match: lr
+REGERR pass=pre target=APU (L2 Cache Reset) reg=elr_el1 err=no register match: elr_el1
+REGERR pass=pre target=APU (L2 Cache Reset) reg=elr_el3 err=no register match: elr_el3
+REGERR pass=pre target=APU (L2 Cache Reset) reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=pre target=APU (L2 Cache Reset) reg=spsr_el3 err=no register match: spsr_el3
+REGERR pass=pre target=APU (L2 Cache Reset) reg=sp err=no register match: sp
+REGERR pass=pre target=APU (L2 Cache Reset) reg=cpsr err=no register match: cpsr
+REGERR pass=pre target=APU (L2 Cache Reset) reg=pstate err=no register match: pstate
+TARGET_RESUME id=8 name=APU (L2 Cache Reset) ok=1
+TARGET_REHALT id=8 name=APU (L2 Cache Reset) ok=1
+REGERR pass=post target=APU (L2 Cache Reset) reg=pc err=no register match: pc
+REGERR pass=post target=APU (L2 Cache Reset) reg=x30 err=no register match: x30
+REGERR pass=post target=APU (L2 Cache Reset) reg=lr err=no register match: lr
+REGERR pass=post target=APU (L2 Cache Reset) reg=elr_el1 err=no register match: elr_el1
+REGERR pass=post target=APU (L2 Cache Reset) reg=elr_el3 err=no register match: elr_el3
+REGERR pass=post target=APU (L2 Cache Reset) reg=spsr_el1 err=no register match: spsr_el1
+REGERR pass=post target=APU (L2 Cache Reset) reg=spsr_el3 err=no register match: spsr_el3
+REGERR pass=post target=APU (L2 Cache Reset) reg=sp err=no register match: sp
+REGERR pass=post target=APU (L2 Cache Reset) reg=cpsr err=no register match: cpsr
+REGERR pass=post target=APU (L2 Cache Reset) reg=pstate err=no register match: pstate
+TARGET_END id=8 name=APU (L2 Cache Reset)
+MATRIX_END

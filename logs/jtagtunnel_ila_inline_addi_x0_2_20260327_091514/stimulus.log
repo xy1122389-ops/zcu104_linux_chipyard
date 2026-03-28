@@ -1,0 +1,21 @@
+
+Channel closed
+    invoked from within
+"::tcf::eval -progress {apply {{msg} {puts $msg}}} {tcf_send_command tcfchan#0 Jtag sequence {so{detect b type s}a{a{ssbio{value i state s bitswap b detect b compare b}}a{ssbio{value i state s bitswap b detect b compare b}}}B} eB {{jsn-HW-Z1-ZCU104 FT4232H-07198A-14730093-0} {} {{shift i 0 12 {}} {shift d 1 16 {}}} {&	
+}}}"
+    (procedure "::tcf::send_command" line 1)
+    invoked from within
+"::tcf::send_command $chan Jtag sequence $fmt "eB" [list $node $sparams $cmds $data]"
+    (body of "dict with")
+    invoked from within
+"dict with sequences {
+	    switch -- $cmd {
+		state {
+		    if { [llength $args] < 1 || [llength $args] > 2 } {
+			error "wrong # args: should be \"st..."
+    (procedure "::xsdb::jtag::_sequence_dispatch" line 21)
+    invoked from within
+"$seq run -hex"
+    invoked from within
+"puts "SEL=[$seq run -hex]""
+    (file "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\jtagtunnel_ila_inline_addi_x0_2_20260327_091511\xsdb_progbuf_exec.tcl" line 7)

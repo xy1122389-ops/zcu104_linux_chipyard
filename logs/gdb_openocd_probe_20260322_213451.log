@@ -1,0 +1,4 @@
+/root/chipyard/fpga/scripts/gdb_openocd_probe.cmds:3: Error in sourced command file:
+127.0.0.1:3333: Connection timed out.
+(gdb) 
+quit

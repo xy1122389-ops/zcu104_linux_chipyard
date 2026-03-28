@@ -1,0 +1,79 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\program_jtagtunnel_ila_zcu104.tcl}
+# array set options {
+#     -bitstream_path ""
+#     -probes_path    ""
+#     -target_index   "0"
+# }
+# for {set i 0} {$i < $argc} {incr i 2} {
+#     set arg [lindex $argv $i]
+#     set val [lindex $argv [expr $i+1]]
+#     if {[info exists options($arg)]} {
+#         set options($arg) $val
+#     }
+# }
+# set bitstream_path $options(-bitstream_path)
+# set probes_path    $options(-probes_path)
+# set target_index   $options(-target_index)
+# if {$bitstream_path eq "" || $probes_path eq ""} {
+#     puts "Usage: vivado -mode batch -source program_jtagtunnel_ila_zcu104.tcl -tclargs -bitstream_path <bit> -probes_path <ltx> ?-target_index 0?"
+#     exit 2
+# }
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:14 . Memory (MB): peak = 1603.578 ; gain = 0.000
+# catch {close_hw_target}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/07198A is already closed
+# set target [lindex [get_hw_targets] $target_index]
+# if {$target eq ""} {
+#     puts "ERROR: no hw_target at index $target_index"
+#     puts [get_hw_targets]
+#     exit 3
+# }
+# puts "TARGET=$target"
+TARGET=localhost:3121/xilinx_tcf/Xilinx/07198A
+# open_hw_target $target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+# set dev [lindex [get_hw_devices] 0]
+# if {$dev eq ""} {
+#     puts "ERROR: no hw_device found"
+#     exit 4
+# }
+# puts "DEVICE=$dev"
+DEVICE=xczu7_0
+# current_hw_device $dev
+# set_property PROBES.FILE $probes_path [current_hw_device]
+# set_property FULL_PROBES.FILE $probes_path [current_hw_device]
+# set_property PROGRAM.FILE $bitstream_path [current_hw_device]
+# program_hw_devices [current_hw_device]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+program_hw_devices: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1603.578 ; gain = 0.000
+# refresh_hw_device [current_hw_device]
+INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+# puts "=== HW_ILAS ==="
+=== HW_ILAS ===
+# foreach i [get_hw_ilas] {puts $i}
+hw_ila_1
+# close_hw_target
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+# exit
+INFO: [Common 17-206] Exiting Vivado at Wed Mar 25 15:07:54 2026...

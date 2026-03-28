@@ -1,0 +1,2 @@
+Sample in Buffer,Sample in Window,TRIGGER,uart_txd_OBUF,uart_rxd_IBUF,_dutWrangler_auto_out_reset,chiptop0/system/uartClockDomainWrapper/uart_0/txq/do_enq
+Radix - UNSIGNED,UNSIGNED,UNSIGNED,HEX,HEX,HEX,HEX

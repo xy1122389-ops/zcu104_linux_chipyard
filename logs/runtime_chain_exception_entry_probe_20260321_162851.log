@@ -1,0 +1,74 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== chain start ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+S1_EL_RAW=ERR:no register match: currentel
+S1_EL_DECODED=-1
+S1_SPSEL_RAW=ERR:no register match: spsel
+S1_SYNC_OFFSET=0x200
+S1_VBAR_RAW=
+S1_VECTOR_BP_ADDR=UNAVAILABLE
+S1_HIT=NO
+S1_HIT_COUNT=0
+S1_FIRST_HIT_PC=
+S1_FIRST_HIT_CPSR=
+S1_FIRST_HIT_EL=
+S1_ESR=
+S1_ELR=
+S1_FAR=
+S1_SPSR=
+S3_EXPECTED_ENTRY=0x0000000080000000
+
+==== step3 entry breakpoint ====
+S3_BP_ID=0
+S3_SAMPLE i=1 PC=pc: N/A
+S3_SAMPLE i=2 PC=pc: N/A
+S3_SAMPLE i=3 PC=pc: N/A
+S3_SAMPLE i=4 PC=pc: N/A
+S3_SAMPLE i=5 PC=pc: N/A
+S3_SAMPLE i=6 PC=pc: N/A
+S3_SAMPLE i=7 PC=pc: N/A
+S3_SAMPLE i=8 PC=pc: N/A
+S3_SAMPLE i=9 PC=pc: N/A
+S3_SAMPLE i=10 PC=pc: N/A
+S3_ENTRY_HIT=NO
+S3_ENTRY_HIT_COUNT=0
+S3_FIRST_ENTRY_HIT_PC=
+S3_PC_ACTIVITY_UNIQ={pc: N/A}
+STEP1_EXECUTED=NO
+STEP2_EXECUTED=NO
+STEP3_EXECUTED=YES
+RANK1=JUMP_NOT_COMPLETED
+RANK2=ENTRY_MISMATCH
+RANK3=EARLY_EXCEPTION_LOOP

@@ -1,0 +1,8 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_37_recheck_skip_20260327_132454
+LABEL=addi_x0_37_recheck_skip
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_37_recheck_skip_20260327_132454/xsdb_progbuf_exec.tcl
+JTAG_HZ=10000
+SKIP_PROGRAM=1
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_37_recheck_skip_20260327_132454/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_37_recheck_skip_20260327_132454/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_37_recheck_skip_20260327_132454/stimulus.log

@@ -1,0 +1,2 @@
+Sample in Buffer,Sample in Window,TRIGGER,uart_txd_OBUF_1,uart_rxd_IBUF,_dutWrangler_auto_out_reset,uart_txd_OBUF
+Radix - UNSIGNED,UNSIGNED,UNSIGNED,HEX,HEX,HEX,HEX

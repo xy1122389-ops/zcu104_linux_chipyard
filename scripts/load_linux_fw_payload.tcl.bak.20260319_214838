@@ -1,0 +1,80 @@
+proc step {label body} {
+  puts "\n==== $label ===="
+  flush stdout
+  if {[catch {uplevel 1 $body} err opts]} {
+    puts stderr "ERROR in $label: $err"
+    if {[dict exists $opts -errorinfo]} {
+      puts stderr [dict get $opts -errorinfo]
+    }
+    flush stderr
+    exit 1
+  }
+}
+
+if {![info exists ::env(FW_PAYLOAD_FLAT)]} {
+  puts stderr "ERROR: FW_PAYLOAD_FLAT is not set"
+  exit 1
+}
+
+set flat_file $::env(FW_PAYLOAD_FLAT)
+set bootaddr 0x80000000
+set bootaddr_reg_lo 0x1000
+set bootaddr_reg_hi 0x1004
+set msip_addr 0x2000000
+set flat_size [file size $flat_file]
+set flat_size_aligned [expr {($flat_size + 0xfff) & ~0xfff}]
+
+step "check payload file" {
+  if {![file exists $flat_file]} {
+    error "payload file not found: $flat_file"
+  }
+  puts "flat payload = $flat_file"
+}
+
+step "connect hw_server" {
+  connect -url tcp:127.0.0.1:3121
+}
+
+step "show targets" {
+  targets
+}
+
+step "select PSU/system target for DDR access" {
+  targets -set -nocase -filter {name =~ "*PSU*"}
+  targets
+}
+
+step "force XSDB memory accesses" {
+  configparams force-mem-accesses 1
+}
+
+step "add XSDB memmap entries for payload and boot registers" {
+  memmap -addr $bootaddr -size $flat_size_aligned -flags 0x7
+  memmap -addr $bootaddr_reg_lo -size 0x8 -flags 0x3
+  memmap -addr $msip_addr -size 0x4 -flags 0x3
+  puts [format "payload memmap: addr=0x%08x size=0x%x" $bootaddr $flat_size_aligned]
+}
+
+step "download flat payload to DDR 0x80000000" {
+  dow -data $flat_file $bootaddr
+}
+
+step "program boot-address-reg" {
+  mwr $bootaddr_reg_lo 0x80000000
+  mwr $bootaddr_reg_hi 0x00000000
+}
+
+step "trigger hart0 msip" {
+  mwr $msip_addr 0x1
+}
+
+step "final message" {
+  puts "fw_payload loaded to DDR and boot-address-reg/MSIP updated."
+  puts "Expected serial flow: bootrom banner -> OpenSBI -> Linux earlycon -> /#"
+}
+
+step "disconnect" {
+  disconnect
+}
+
+exit

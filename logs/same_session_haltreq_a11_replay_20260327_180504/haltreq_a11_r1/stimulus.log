@@ -1,0 +1,5 @@
+
+invalid command name "\::jtagseq#0"
+    while executing
+"\\$seq drshift -capture -integer 16 0x100a"
+    (file "Z:\root\chipyard\fpga\logs\same_session_haltreq_a11_replay_20260327_180504\haltreq_a11_r1\xsdb_replay.tcl" line 6)

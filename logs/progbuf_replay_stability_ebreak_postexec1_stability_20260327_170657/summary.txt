@@ -1,0 +1,12 @@
+LABEL=ebreak_postexec1_stability_r1
+MODE=inline
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_ebreak_postexec1_stability_r1_20260327_170700
+
+LABEL=ebreak_postexec1_stability_r2
+MODE=inline
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_ebreak_postexec1_stability_r2_20260327_170848
+
+LABEL=ebreak_postexec1_stability_r3
+MODE=recover
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_upload_only_ebreak_postexec1_stability_r3_recover_20260327_171158
+

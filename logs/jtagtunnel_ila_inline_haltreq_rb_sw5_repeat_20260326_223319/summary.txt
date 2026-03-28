@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_haltreq_rb_sw5_repeat_20260326_223319
+LABEL=haltreq_rb_sw5_repeat
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_haltreq_rb_sw5_repeat_20260326_223316/xsdb_dmcontrol_readback_case.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_haltreq_rb_sw5_repeat_20260326_223319/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_haltreq_rb_sw5_repeat_20260326_223319/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_haltreq_rb_sw5_repeat_20260326_223319/stimulus.log

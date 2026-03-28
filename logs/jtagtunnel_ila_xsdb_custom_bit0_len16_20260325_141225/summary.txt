@@ -1,0 +1,9 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_custom_bit0_len16_20260325_141225
+LABEL=bit0_len16
+DR_BITS=16
+DR_HEX=0x0001
+JTAG_HZ=10000
+ARM_STATE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_custom_bit0_len16_20260325_141225/arm_state.txt
+STIM_LOG=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_custom_bit0_len16_20260325_141225/stimulus.log
+UPLOAD_STATE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_custom_bit0_len16_20260325_141225/upload_state.txt
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_custom_bit0_len16_20260325_141225/jtagtunnel_ila.csv

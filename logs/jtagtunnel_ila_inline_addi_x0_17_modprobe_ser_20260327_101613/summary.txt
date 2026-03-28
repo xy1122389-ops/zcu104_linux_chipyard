@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_17_modprobe_ser_20260327_101613
+LABEL=addi_x0_17_modprobe_ser
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_17_modprobe_ser_20260327_101611/xsdb_progbuf_exec.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_17_modprobe_ser_20260327_101613/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_17_modprobe_ser_20260327_101613/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_17_modprobe_ser_20260327_101613/stimulus.log

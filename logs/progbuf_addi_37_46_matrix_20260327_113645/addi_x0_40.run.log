@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_40_20260327_114235
+LABEL=addi_x0_40
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_40_20260327_114232/xsdb_progbuf_exec.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_40_20260327_114235/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_40_20260327_114235/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_40_20260327_114235/stimulus.log

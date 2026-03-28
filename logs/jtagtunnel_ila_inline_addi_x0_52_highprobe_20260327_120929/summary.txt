@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_52_highprobe_20260327_120929
+LABEL=addi_x0_52_highprobe
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_52_highprobe_20260327_120927/xsdb_progbuf_exec.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_52_highprobe_20260327_120929/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_52_highprobe_20260327_120929/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_52_highprobe_20260327_120929/stimulus.log

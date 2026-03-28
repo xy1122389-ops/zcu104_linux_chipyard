@@ -1,0 +1,43 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+MRD_0X0=0:   C7818BA1
+       4:   17EA4785
+MRD_0X200=200:   008A3783
+     204:   B883CF95
+MRD_0X2000=2000:   C7818BA1
+    2004:   17EA4785
+MRD_0X80000000=ERR:Memory read error at 0x80000000. AXI AP transaction error, DAP status 0x3C000021
+MRD_0X80000200=ERR:Memory read error at 0x80000200. AXI AP transaction error, DAP status 0x30000021
+MRD_0X80002000=ERR:Memory read error at 0x80002000. AXI AP transaction error, DAP status 0x30000021
+MRD_0X80002200=ERR:Memory read error at 0x80002200. AXI AP transaction error, DAP status 0x30000021

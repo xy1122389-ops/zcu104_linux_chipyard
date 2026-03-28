@@ -1,0 +1,10 @@
+
+SEL=3b02
+DTMCS=3b02d0ad4900
+can't read "preclear": no such variable
+    while executing
+"if {$preclear} {
+set seq [jtag sequence]
+$seq irshift -integer 12 0x926
+}"
+    (file "Z:\root\chipyard\fpga\logs\same_session_haltreq_a11_replay_20260327_210210\haltreq_a11_r1\xsdb_replay.tcl" line 12)

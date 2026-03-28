@@ -1,0 +1,15 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Error: JTAG-DP STICKY ERROR
+Error: [uscale.a53.0] Examination failed
+Warn : target uscale.a53.0 examination failed
+echo [-n] string
+\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\openocd_ps_ir_sweep_20260323_174418\sweep.cfg:19: Error: 
+Traceback (most recent call last):
+  File "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\openocd_ps_ir_sweep_20260323_174418\sweep.cfg", line 19, in script
+    echo IR=0x8c0 {IRPKT=00...

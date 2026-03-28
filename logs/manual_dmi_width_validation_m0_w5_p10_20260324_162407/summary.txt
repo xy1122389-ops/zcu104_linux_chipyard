@@ -1,0 +1,158 @@
+OPENOCD_EXE=/tmp/riscv-collab-openocd/bin/openocd.exe
+OPENOCD_SCRIPTS=/tmp/riscv-collab-openocd/share/openocd/scripts
+MODE=0
+SEL_WIDTH=5
+SEL_PAYLOAD=0x10
+OUTER_IR=0x926
+=== READ 0x10 ===
+STATUS=EXIT:0
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Warn : gdb services need one or more targets defined
+SEL=00
+00
+00
+06
+DTMCS=01
+24
+01eed1c7e2
+07
+REQ_0x10=01
+02
+00038c000000
+00
+NOP1_0x10=00
+5b
+01b38c5faf5d
+00
+NOP2_0x10=00
+00
+00038c002e00
+04
+NOP3_0x10=01
+02
+00038c0000e0
+04
+shutdown command invoked
+
+=== READ 0x11 ===
+STATUS=EXIT:0
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Warn : gdb services need one or more targets defined
+SEL=00
+00
+00
+06
+DTMCS=01
+24
+01eed1c7e2
+07
+REQ_0x11=01
+02
+00038c000000
+00
+NOP1_0x11=00
+5b
+01b38c5faf5d
+00
+NOP2_0x11=00
+00
+00038c002efc
+04
+NOP3_0x11=01
+02
+00038c0000e0
+04
+shutdown command invoked
+
+=== READ 0x12 ===
+STATUS=EXIT:0
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Warn : gdb services need one or more targets defined
+SEL=00
+00
+00
+06
+DTMCS=01
+24
+01eed1c7e2
+07
+REQ_0x12=01
+02
+00038c000000
+00
+NOP1_0x12=00
+5b
+01b38c5faf5d
+00
+NOP2_0x12=00
+00
+00038c002efc
+04
+NOP3_0x12=01
+02
+00038c0000e0
+04
+shutdown command invoked
+
+=== READ 0x16 ===
+STATUS=EXIT:0
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Warn : gdb services need one or more targets defined
+SEL=00
+00
+00
+06
+DTMCS=01
+24
+01eed1c7e2
+07
+REQ_0x16=01
+02
+00038c000000
+00
+NOP1_0x16=00
+5b
+01b38c5faf5d
+00
+NOP2_0x16=00
+00
+00038c002efc
+04
+NOP3_0x16=01
+02
+00038c0000e0
+04
+shutdown command invoked
+

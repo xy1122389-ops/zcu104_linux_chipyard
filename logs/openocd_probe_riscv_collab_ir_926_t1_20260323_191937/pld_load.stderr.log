@@ -1,0 +1,15 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Error: JTAG-DP STICKY ERROR
+Error: [uscale.a53.0] Examination failed
+Warn : target uscale.a53.0 examination failed
+[uscale.axi] Target successfully examined.
+Warn : DEPRECATED: use pld name "uscale.pld" instead of number 0
+Error: JTAG-DP STICKY ERROR
+Error: [uscale.a53.0] Examination failed
+shutdown command invoked

@@ -1,0 +1,4 @@
+xori_x0_20 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_xori_x0_20_20260327_154704/jtagtunnel_ila.csv
+xori_x0_22 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_xori_x0_22_20260327_154852/jtagtunnel_ila.csv
+xori_x0_23 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_xori_x0_23_20260327_155057/jtagtunnel_ila.csv
+xori_x0_32 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_xori_x0_32_20260327_155253/jtagtunnel_ila.csv

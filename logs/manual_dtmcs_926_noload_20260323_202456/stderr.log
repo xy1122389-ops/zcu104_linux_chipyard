@@ -1,0 +1,10 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : [uscale.a53.0] Hardware thread awareness created
+Info : clock speed 1000 kHz
+Warn : Haven't made progress in mpsse_flush() for 2246ms.
+Warn : Haven't made progress in mpsse_flush() for 4031ms.
+Warn : Haven't made progress in mpsse_flush() for 8111ms.
+Warn : Haven't made progress in mpsse_flush() for 16016ms.

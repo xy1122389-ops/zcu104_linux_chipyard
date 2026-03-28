@@ -1,0 +1,8 @@
+SEL=3b02
+DTMCS=3b02d0ad4900
+WRITE_haltreq=3b02d0ad498019
+NOP1_haltreq=3b02d0ad498019
+NOP2_haltreq=3b02d0ad498019
+READ_0x16_haltreq=3b02d0ad498019
+NOPR1_0x16_haltreq=3b02d0ad498019
+NOPR2_0x16_haltreq=3b02d0ad498019

@@ -1,0 +1,8 @@
+addi_x0_0 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_0_20260327_092625/jtagtunnel_ila.csv
+addi_x0_1 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+addi_x0_2 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_2_20260327_093002/jtagtunnel_ila.csv
+addi_x0_3 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_3_20260327_093151/jtagtunnel_ila.csv
+addi_x0_4 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_4_20260327_093354/jtagtunnel_ila.csv
+addi_x0_5 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_5_20260327_093804/jtagtunnel_ila.csv
+addi_x0_7 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_7_20260327_094005/jtagtunnel_ila.csv
+addi_x0_m1 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_m1_20260327_094244/jtagtunnel_ila.csv

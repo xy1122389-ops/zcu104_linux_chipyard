@@ -1,0 +1,94 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9  Cortex-A53 #0 (Hardware Breakpoint, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+
+==== mrd default 4 words @0x10000 ====
+   10000:   A0211000
+   10004:   0C632705
+   10008:   439400C7
+   1000C:   9BE307C1
+
+
+==== mrd byte 16 @0x10000 ====
+   10000:   00
+   10001:   10
+   10002:   21
+   10003:   A0
+   10004:   05
+   10005:   27
+   10006:   63
+   10007:   0C
+   10008:   C7
+   10009:   00
+   1000A:   94
+   1000B:   43
+   1000C:   C1
+   1000D:   07
+   1000E:   E3
+   1000F:   9B
+
+
+==== mrd halfword 8 @0x10000 ====
+   10000:   1000
+   10002:   A021
+   10004:   2705
+   10006:   0C63
+   10008:   00C7
+   1000A:   4394
+   1000C:   07C1
+   1000E:   9BE3
+
+
+==== mrd word 4 @0x10000 ====
+   10000:   A0211000
+   10004:   0C632705
+   10008:   439400C7
+   1000C:   9BE307C1
+
+
+==== mrd dword 2 @0x10000 ====
+   10000:   00000000A0211000
+   10008:   00000000439400C7
+

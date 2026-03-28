@@ -1,0 +1,10 @@
+cd /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig; vivado \
+	-nojournal -mode batch \
+	-source /root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl \
+	-tclargs \
+		-top-module "ZCU104FPGATestHarness" \
+		-F "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.vsrcs.f" \
+		-board "zcu104" \
+		-ip-vivado-tcls "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.harnessSysPLL.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.zcu104ps.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.shell.vivado.tcl"
+/usr/bin/bash: line 2: vivado: command not found
+make: *** [Makefile:184: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/ZCU104FPGATestHarness.bit] Error 127

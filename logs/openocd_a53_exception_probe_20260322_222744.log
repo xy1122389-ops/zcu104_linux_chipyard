@@ -1,0 +1,109 @@
+OPENOCD_HOST=172.19.128.1
+OPENOCD_TELNET_PORT=4444
+==== PHASE 1: reset bits and EDPRSR before release ====
+ÿûÿûÿýÿþOpen On-Chip Debugger
+> targets
+    TargetName         Type       Endian TapName            State       
+--  ------------------ ---------- ------ ------------------ ------------
+ 0* uscale.a53.0       aarch64    little uscale.tap         halted
+ 1  uscale.a53.1       aarch64    little uscale.tap         examine deferred
+ 2  uscale.a53.2       aarch64    little uscale.tap         examine deferred
+ 3  uscale.a53.3       aarch64    little uscale.tap         examine deferred
+ 4  uscale.axi         mem_ap     little uscale.tap         running
+> uscale.axi read_memory 0xfd1a0104 32 1
+0x380e
+> uscale.dap apreg 1 4 0x80410314
+> uscale.dap apreg 1 0xc
+0x00000000
+> exit
+==== PHASE 2: release_apu and power-domain transition ====
+ÿûÿûÿýÿþOpen On-Chip Debugger
+> targets uscale.a53.0
+> uscale.a53.0 aarch64 smp off
+> uscale.axi write_memory 0xfd1a0104 32 {0x3d0f}
+> release_apu 0
+[uscale.a53.0] external reset detected
+> targets
+    TargetName         Type       Endian TapName            State       
+--  ------------------ ---------- ------ ------------------ ------------
+ 0* uscale.a53.0       aarch64    little uscale.tap         running
+ 1  uscale.a53.1       aarch64    little uscale.tap         examine deferred
+ 2  uscale.a53.2       aarch64    little uscale.tap         examine deferred
+ 3  uscale.a53.3       aarch64    little uscale.tap         examine deferred
+ 4  uscale.axi         mem_ap     little uscale.tap         running
+> uscale.axi read_memory 0xfd1a0104 32 1
+0x380e
+> uscale.dap apreg 1 4 0x80410314
+> uscale.dap apreg 1 0xc
+0x00000000
+> exit
+==== PHASE 3: pending debug-request + release_apu halt at reset vector ====
+ÿûÿûÿýÿþOpen On-Chip Debugger
+> targets uscale.a53.0
+> uscale.a53.0 aarch64 smp off
+> uscale.a53.0 arp_halt
+Timeout waiting for target uscale.a53.0 halt
+
+> uscale.axi write_memory 0xfd1a0104 32 {0x3d0f}
+> release_apu 0
+[uscale.a53.0] external reset detected
+uscale.a53.0 halted in AArch64 state due to debug-request, current mode: EL3H
+cpsr: 0x000003cd pc: 0xffff0000
+MMU: disabled, D-Cache: disabled, I-Cache: disabled
+> targets
+    TargetName         Type       Endian TapName            State       
+--  ------------------ ---------- ------ ------------------ ------------
+ 0* uscale.a53.0       aarch64    little uscale.tap         halted
+ 1  uscale.a53.1       aarch64    little uscale.tap         examine deferred
+ 2  uscale.a53.2       aarch64    little uscale.tap         examine deferred
+ 3  uscale.a53.3       aarch64    little uscale.tap         examine deferred
+ 4  uscale.axi         mem_ap     little uscale.tap         running
+> uscale.a53.0 curstate
+halted
+> uscale.a53.0 debug_reason
+debug-request
+> uscale.a53.0 get_reg {pc cpsr ELR_EL3 ESR_EL3 SPSR_EL3}
+pc 0x00000000ffff0000
+cpsr 0x000003cd
+ELR_EL3 0x00000000ffff0000
+ESR_EL3 0x0000000002000000
+SPSR_EL3 0x00000000000001cd
+> uscale.a53.0 mdw 0xffff0000 8
+0xffff0000: deadbeef deadbeef deadbeef deadbeef deadbeef deadbeef deadbeef deadbeef 
+> exit
+==== PHASE 4: exception catch on first stepped instruction ====
+ÿûÿûÿýÿþOpen On-Chip Debugger
+> targets uscale.a53.0
+> uscale.a53.0 aarch64 smp off
+> uscale.a53.0 arp_halt
+> uscale.axi write_memory 0xfd1a0104 32 {0x3d0f}
+> release_apu 0
+[uscale.a53.0] external reset detected
+uscale.a53.0 halted in AArch64 state due to debug-request, current mode: EL3H
+cpsr: 0x000003cd pc: 0xffff0000
+MMU: disabled, D-Cache: disabled, I-Cache: disabled
+> uscale.a53.0 catch_exc sec_el3
+> step
+uscale.a53.0 halted in AArch64 state due to exception-catch, current mode: EL3H
+cpsr: 0x000003cd pc: 0xffff0000
+MMU: disabled, D-Cache: disabled, I-Cache: disabled
+> targets
+    TargetName         Type       Endian TapName            State       
+--  ------------------ ---------- ------ ------------------ ------------
+ 0* uscale.a53.0       aarch64    little uscale.tap         halted
+ 1  uscale.a53.1       aarch64    little uscale.tap         examine deferred
+ 2  uscale.a53.2       aarch64    little uscale.tap         examine deferred
+ 3  uscale.a53.3       aarch64    little uscale.tap         examine deferred
+ 4  uscale.axi         mem_ap     little uscale.tap         running
+> uscale.a53.0 curstate
+halted
+> uscale.a53.0 debug_reason
+exception-catch
+> uscale.a53.0 get_reg {pc cpsr ELR_EL3 ESR_EL3 SPSR_EL3}
+pc 0x00000000ffff0000
+cpsr 0x000003cd
+ELR_EL3 0x00000000ffff0000
+ESR_EL3 0x0000000002000000
+SPSR_EL3 0x00000000000001cd
+> uscale.a53.0 catch_exc off
+> exit

@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmi10s10_sw5_20260326_220709
+LABEL=dmi10s10_sw5
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmi10s10_sw5_20260326_220706/xsdb_dmi_minimal.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmi10s10_sw5_20260326_220709/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmi10s10_sw5_20260326_220709/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmi10s10_sw5_20260326_220709/stimulus.log

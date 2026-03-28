@@ -1,0 +1,35 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : Bscan tunnel IR 0x926 selected
+Info : Nested Tap based Bscan Tunnel Selected
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.ps tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Warn : JTAG tap: uscale.ps       UNEXPECTED: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Error: JTAG tap: uscale.ps expected 1 of 11: 0x04711093 (mfg: 0x049 (Xilinx), part: 0x4711, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 2 of 11: 0x04710093 (mfg: 0x049 (Xilinx), part: 0x4710, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 3 of 11: 0x04721093 (mfg: 0x049 (Xilinx), part: 0x4721, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 4 of 11: 0x04720093 (mfg: 0x049 (Xilinx), part: 0x4720, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 5 of 11: 0x04739093 (mfg: 0x049 (Xilinx), part: 0x4739, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 6 of 11: 0x04730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 7 of 11: 0x04738093 (mfg: 0x049 (Xilinx), part: 0x4738, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 8 of 11: 0x04740093 (mfg: 0x049 (Xilinx), part: 0x4740, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 9 of 11: 0x04750093 (mfg: 0x049 (Xilinx), part: 0x4750, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 10 of 1: 0x04759093 (mfg: 0x049 (Xilinx), part: 0x4759, ver: 0x0)
+Error: JTAG tap: uscale.ps expected 11 of 1: 0x04758093 (mfg: 0x049 (Xilinx), part: 0x4758, ver: 0x0)
+Info : JTAG tap: auto0.tap tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Error: Trying to use configured scan chain anyway...
+Warn : AUTO auto0.tap - use "jtag newtap auto0 tap -irlen 2 -expected-id 0x14730093"
+Error: auto0.tap: IR capture error; saw 0x0000 not 0x0001
+Warn : Bypassing JTAG setup events due to errors
+Error: [riscv_bscan_ps] Can't access DMI because addrbits=0.
+Error: dbus_read(0x11) failed!
+Error: OpenOCD only supports Debug Module version 1, not 0 (dminfo=0x0)
+Error: [riscv_bscan_ps] Examination failed
+Warn : target riscv_bscan_ps examination failed
+Info : [riscv_bscan_ps] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+shutdown command invoked
+Error: [riscv_bscan_ps] Unsupported DTM version: -1
+Error: [riscv_bscan_ps] Could not identify target type.

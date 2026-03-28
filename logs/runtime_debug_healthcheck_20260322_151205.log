@@ -1,0 +1,96 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== connect ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+CONNECT_OK=YES
+CONNECT_VALUE=tcfchan#0
+FORCE_MEM_ACCESSES_OK=YES
+FORCE_MEM_ACCESSES_VALUE=
+
+==== INITIAL targets ====
+INITIAL_TARGETS_OK=YES
+1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9  Cortex-A53 #0 (Hardware Breakpoint, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+
+==== psu ====
+PSU_SELECT_OK=YES
+PSU_SELECT_VALUE=
+PSU_PROPS_OK=YES
+PSU_PROPS_VALUE={target_ctx {JTAG-jsn-HW-Z1-ZCU104 FT4232H-07198A-5ba00477-0} target_id 4 level 0 name PSU parent_ctx {} parent {} state_reason {} is_current 1 bscan {} jtag_device_id 3 jtag_device_ctx {jsn-HW-Z1-ZCU104 FT4232H-07198A-5ba00477-0} jtag_cable_id 1 jtag_cable_ctx {jsn-HW-Z1-ZCU104 FT4232H-07198A} jtag_cable_name {Xilinx HW-Z1-ZCU104 FT4232H 07198A} jtag_device_index 1 jtag_cable_manufacturer Xilinx jtag_cable_product {HW-Z1-ZCU104 FT4232H} jtag_cable_serial 07198A}
+PSU_MRD_0X1000_OK=YES
+PSU_MRD_0X1000_VALUE=1000:   80000000
+PSU_MRD_0X1004_OK=YES
+PSU_MRD_0X1004_VALUE=1004:   00000000
+PSU_MRD_0X2000000_OK=YES
+PSU_MRD_0X2000000_VALUE=2000000:   00000001
+
+==== apu ====
+APU_SELECT_OK=YES
+APU_SELECT_VALUE=
+APU_PROPS_OK=YES
+APU_PROPS_VALUE={target_ctx {JTAG-jsn-HW-Z1-ZCU104 FT4232H-07198A-5ba00477-0A} target_id 8 level 1 name APU parent_ctx {JTAG-jsn-HW-Z1-ZCU104 FT4232H-07198A-5ba00477-0} parent PSU state_reason {} is_current 1 bscan {} jtag_device_id 3 jtag_device_ctx {jsn-HW-Z1-ZCU104 FT4232H-07198A-5ba00477-0} jtag_cable_id 1 jtag_cable_ctx {jsn-HW-Z1-ZCU104 FT4232H-07198A} jtag_cable_name {Xilinx HW-Z1-ZCU104 FT4232H 07198A} jtag_device_index 1 jtag_cable_manufacturer Xilinx jtag_cable_product {HW-Z1-ZCU104 FT4232H} jtag_cable_serial 07198A}
+APU_REG_PC_OK=NO
+APU_REG_PC_VALUE=no register match: pc
+APU_REG_DBGDSCR_OK=NO
+APU_REG_DBGDSCR_VALUE=no register match: dbgdscr
+APU_MRD_0X1E0_OK=NO
+APU_MRD_0X1E0_VALUE=Channel closed
+APU_MRD_0X200_OK=NO
+APU_MRD_0X200_VALUE=channel "tcfchan#0" closed
+
+==== a53_0 ====
+A53_0_SELECT_OK=NO
+A53_0_SELECT_VALUE=channel "tcfchan#0" closed
+A53_0_PROPS_OK=NO
+A53_0_PROPS_VALUE=channel "tcfchan#0" closed
+
+==== a53_1 ====
+A53_1_SELECT_OK=NO
+A53_1_SELECT_VALUE=channel "tcfchan#0" closed
+A53_1_PROPS_OK=NO
+A53_1_PROPS_VALUE=channel "tcfchan#0" closed
+
+==== disconnect ====
+DISCONNECT_OK=NO
+DISCONNECT_VALUE=channel "tcfchan#0" closed

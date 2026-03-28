@@ -1,0 +1,609 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check input files ====
+psu_init.tcl = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl
+bitstream    = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ZCU104FPGATestHarness.bit
+chip_ddr_sentinel = 0x8FF00000
+ps_ddr_sentinel   = 0x0FF00000
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== select PSU target ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== system reset before psu_init ====
+
+==== reselect PSU target after system reset ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== source psu_init.tcl ====
+
+==== run psu_init ====
+
+==== program FPGA bitstream ====
+
+==== wait after FPGA program ====
+
+==== reselect PSU target ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== remove PS-PL isolation ====
+
+==== peek bootrom sentinel opcodes ====
+   10034:   8617C141
+
+   10040:   E84AEC26
+
+   10044:   D0EF84AA
+
+   10070:   861785CA
+
+   10074:   06130000
+
+
+==== switch to APU target for PS DDR access ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8* APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== add PS DDR memmap for sentinel window ====
+sentinel memmap: addr=0x0FF00000 size=0x1000
+
+==== clear DDR sentinel before reset release ====
+ FF00000:   00000000
+
+
+==== switch back to PSU target for reset release ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== peek reset GPIO regs before reset release ====
+FF0A0054:   00000000
+
+FF0A0344:   00000000
+
+FF0A0348:   00000000
+
+  100000:   00000001
+
+  110000:   00000000
+
+
+==== enable clock-gater bit0 ====
+  100000:   00000001
+
+
+==== apply PS-PL reset config ====
+
+==== pulse tile-reset-setter ====
+  110000:   00000000
+
+
+==== peek reset GPIO regs after reset release ====
+FF0A0054:   80000000
+
+FF0A0344:   80000000
+
+FF0A0348:   80000000
+
+  100000:   00000001
+
+  110000:   00000000
+
+
+==== switch to APU target for post-reset sampling ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8* APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== sample DDR sentinel after reset release ====
+watch PS DDR 0x0FF00000 after psu_ps_pl_reset_config (Chipyard 0x8FF00000)
+sample[00] =>  FF00000:   00000000
+
+sample[01] =>  FF00000:   00000000
+
+sample[02] =>  FF00000:   00000000
+
+sample[03] =>  FF00000:   00000000
+
+sample[04] =>  FF00000:   00000000
+
+sample[05] =>  FF00000:   00000000
+
+sample[06] =>  FF00000:   00000000
+
+sample[07] =>  FF00000:   00000000
+
+sample[08] =>  FF00000:   00000000
+
+sample[09] =>  FF00000:   00000000
+
+sample[10] =>  FF00000:   00000000
+
+sample[11] =>  FF00000:   00000000
+
+sample[12] =>  FF00000:   00000000
+
+sample[13] =>  FF00000:   00000000
+
+sample[14] =>  FF00000:   00000000
+
+sample[15] =>  FF00000:   00000000
+
+sample[16] =>  FF00000:   00000000
+
+sample[17] =>  FF00000:   00000000
+
+sample[18] =>  FF00000:   00000000
+
+sample[19] =>  FF00000:   00000000
+
+sample[20] =>  FF00000:   00000000
+
+sample[21] =>  FF00000:   00000000
+
+sample[22] =>  FF00000:   00000000
+
+sample[23] =>  FF00000:   00000000
+
+sample[24] =>  FF00000:   00000000
+
+sample[25] =>  FF00000:   00000000
+
+sample[26] =>  FF00000:   00000000
+
+sample[27] =>  FF00000:   00000000
+
+sample[28] =>  FF00000:   00000000
+
+sample[29] =>  FF00000:   00000000
+
+sample[30] =>  FF00000:   00000000
+
+sample[31] =>  FF00000:   00000000
+
+sample[32] =>  FF00000:   00000000
+
+sample[33] =>  FF00000:   00000000
+
+sample[34] =>  FF00000:   00000000
+
+sample[35] =>  FF00000:   00000000
+
+sample[36] =>  FF00000:   00000000
+
+sample[37] =>  FF00000:   00000000
+
+sample[38] =>  FF00000:   00000000
+
+sample[39] =>  FF00000:   00000000
+
+sample[40] =>  FF00000:   00000000
+
+sample[41] =>  FF00000:   00000000
+
+sample[42] =>  FF00000:   00000000
+
+sample[43] =>  FF00000:   00000000
+
+sample[44] =>  FF00000:   00000000
+
+sample[45] =>  FF00000:   00000000
+
+sample[46] =>  FF00000:   00000000
+
+sample[47] =>  FF00000:   00000000
+
+sample[48] =>  FF00000:   00000000
+
+sample[49] =>  FF00000:   00000000
+
+sample[50] =>  FF00000:   00000000
+
+sample[51] =>  FF00000:   00000000
+
+sample[52] =>  FF00000:   00000000
+
+sample[53] =>  FF00000:   00000000
+
+sample[54] =>  FF00000:   00000000
+
+sample[55] =>  FF00000:   00000000
+
+sample[56] =>  FF00000:   00000000
+
+sample[57] =>  FF00000:   00000000
+
+sample[58] =>  FF00000:   00000000
+
+sample[59] =>  FF00000:   00000000
+
+sample[60] =>  FF00000:   00000000
+
+sample[61] =>  FF00000:   00000000
+
+sample[62] =>  FF00000:   00000000
+
+sample[63] =>  FF00000:   00000000
+
+sample[64] =>  FF00000:   00000000
+
+sample[65] =>  FF00000:   00000000
+
+sample[66] =>  FF00000:   00000000
+
+sample[67] =>  FF00000:   00000000
+
+sample[68] =>  FF00000:   00000000
+
+sample[69] =>  FF00000:   00000000
+
+sample[70] =>  FF00000:   00000000
+
+sample[71] =>  FF00000:   00000000
+
+sample[72] =>  FF00000:   00000000
+
+sample[73] =>  FF00000:   00000000
+
+sample[74] =>  FF00000:   00000000
+
+sample[75] =>  FF00000:   00000000
+
+sample[76] =>  FF00000:   00000000
+
+sample[77] =>  FF00000:   00000000
+
+sample[78] =>  FF00000:   00000000
+
+sample[79] =>  FF00000:   00000000
+
+sample[80] =>  FF00000:   00000000
+
+sample[81] =>  FF00000:   00000000
+
+sample[82] =>  FF00000:   00000000
+
+sample[83] =>  FF00000:   00000000
+
+sample[84] =>  FF00000:   00000000
+
+sample[85] =>  FF00000:   00000000
+
+sample[86] =>  FF00000:   00000000
+
+sample[87] =>  FF00000:   00000000
+
+sample[88] =>  FF00000:   00000000
+
+sample[89] =>  FF00000:   00000000
+
+sample[90] =>  FF00000:   00000000
+
+sample[91] =>  FF00000:   00000000
+
+sample[92] =>  FF00000:   00000000
+
+sample[93] =>  FF00000:   00000000
+
+sample[94] =>  FF00000:   00000000
+
+sample[95] =>  FF00000:   00000000
+
+sample[96] =>  FF00000:   00000000
+
+sample[97] =>  FF00000:   00000000
+
+sample[98] =>  FF00000:   00000000
+
+sample[99] =>  FF00000:   00000000
+
+sample[100] =>  FF00000:   00000000
+
+sample[101] =>  FF00000:   00000000
+
+sample[102] =>  FF00000:   00000000
+
+sample[103] =>  FF00000:   00000000
+
+sample[104] =>  FF00000:   00000000
+
+sample[105] =>  FF00000:   00000000
+
+sample[106] =>  FF00000:   00000000
+
+sample[107] =>  FF00000:   00000000
+
+sample[108] =>  FF00000:   00000000
+
+sample[109] =>  FF00000:   00000000
+
+sample[110] =>  FF00000:   00000000
+
+sample[111] =>  FF00000:   00000000
+
+sample[112] =>  FF00000:   00000000
+
+sample[113] =>  FF00000:   00000000
+
+sample[114] =>  FF00000:   00000000
+
+sample[115] =>  FF00000:   00000000
+
+sample[116] =>  FF00000:   00000000
+
+sample[117] =>  FF00000:   00000000
+
+sample[118] =>  FF00000:   00000000
+
+sample[119] =>  FF00000:   00000000
+
+sample[120] =>  FF00000:   00000000
+
+sample[121] =>  FF00000:   00000000
+
+sample[122] =>  FF00000:   00000000
+
+sample[123] =>  FF00000:   00000000
+
+sample[124] =>  FF00000:   00000000
+
+sample[125] =>  FF00000:   00000000
+
+sample[126] =>  FF00000:   00000000
+
+sample[127] =>  FF00000:   00000000
+
+sample[128] =>  FF00000:   00000000
+
+sample[129] =>  FF00000:   00000000
+
+sample[130] =>  FF00000:   00000000
+
+sample[131] =>  FF00000:   00000000
+
+sample[132] =>  FF00000:   00000000
+
+sample[133] =>  FF00000:   00000000
+
+sample[134] =>  FF00000:   00000000
+
+sample[135] =>  FF00000:   00000000
+
+sample[136] =>  FF00000:   00000000
+
+sample[137] =>  FF00000:   00000000
+
+sample[138] =>  FF00000:   00000000
+
+sample[139] =>  FF00000:   00000000
+
+sample[140] =>  FF00000:   00000000
+
+sample[141] =>  FF00000:   00000000
+
+sample[142] =>  FF00000:   00000000
+
+sample[143] =>  FF00000:   00000000
+
+sample[144] =>  FF00000:   00000000
+
+sample[145] =>  FF00000:   00000000
+
+sample[146] =>  FF00000:   00000000
+
+sample[147] =>  FF00000:   00000000
+
+sample[148] =>  FF00000:   00000000
+
+sample[149] =>  FF00000:   00000000
+
+sample[150] =>  FF00000:   00000000
+
+sample[151] =>  FF00000:   00000000
+
+sample[152] =>  FF00000:   00000000
+
+sample[153] =>  FF00000:   00000000
+
+sample[154] =>  FF00000:   00000000
+
+sample[155] =>  FF00000:   00000000
+
+sample[156] =>  FF00000:   00000000
+
+sample[157] =>  FF00000:   00000000
+
+sample[158] =>  FF00000:   00000000
+
+sample[159] =>  FF00000:   00000000
+
+sample[160] =>  FF00000:   00000000
+
+sample[161] =>  FF00000:   00000000
+
+sample[162] =>  FF00000:   00000000
+
+sample[163] =>  FF00000:   00000000
+
+sample[164] =>  FF00000:   00000000
+
+sample[165] =>  FF00000:   00000000
+
+sample[166] =>  FF00000:   00000000
+
+sample[167] =>  FF00000:   00000000
+
+sample[168] =>  FF00000:   00000000
+
+sample[169] =>  FF00000:   00000000
+
+sample[170] =>  FF00000:   00000000
+
+sample[171] =>  FF00000:   00000000
+
+sample[172] =>  FF00000:   00000000
+
+sample[173] =>  FF00000:   00000000
+
+sample[174] =>  FF00000:   00000000
+
+sample[175] =>  FF00000:   00000000
+
+sample[176] =>  FF00000:   00000000
+
+sample[177] =>  FF00000:   00000000
+
+sample[178] =>  FF00000:   00000000
+
+sample[179] =>  FF00000:   00000000
+
+sample[180] =>  FF00000:   00000000
+
+sample[181] =>  FF00000:   00000000
+
+sample[182] =>  FF00000:   00000000
+
+sample[183] =>  FF00000:   00000000
+
+sample[184] =>  FF00000:   00000000
+
+sample[185] =>  FF00000:   00000000
+
+sample[186] =>  FF00000:   00000000
+
+sample[187] =>  FF00000:   00000000
+
+sample[188] =>  FF00000:   00000000
+
+sample[189] =>  FF00000:   00000000
+
+sample[190] =>  FF00000:   00000000
+
+sample[191] =>  FF00000:   00000000
+
+sample[192] =>  FF00000:   00000000
+
+sample[193] =>  FF00000:   00000000
+
+sample[194] =>  FF00000:   00000000
+
+sample[195] =>  FF00000:   00000000
+
+sample[196] =>  FF00000:   00000000
+
+sample[197] =>  FF00000:   00000000
+
+sample[198] =>  FF00000:   00000000
+
+sample[199] =>  FF00000:   00000000
+
+
+==== final targets ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8* APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== disconnect ====

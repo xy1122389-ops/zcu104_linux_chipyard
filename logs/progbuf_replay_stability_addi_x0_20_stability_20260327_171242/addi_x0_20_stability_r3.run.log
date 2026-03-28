@@ -1,0 +1,2 @@
+MODE=recover
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_upload_only_addi_x0_20_stability_r3_recover_20260327_171621

@@ -22,17 +22,25 @@ class WithUART extends HarnessBinder({
 /*** GPIO LED ***/
 class WithLEDGPIO extends HarnessBinder({
   case (th: ZCU104FPGATestHarnessImp, port: GPIOPinsPort, chipId: Int) if port.gpioId == 0 => {
-    val ledDrive = port.io.pins(0).o.oe && port.io.pins(0).o.oval
-    th.gpio_led_0_ls_drive := ledDrive
-    port.io.pins(0).i.ival := ledDrive
-    port.io.pins(0).i.po.foreach(_ := false.B)
+    val ledDrives = Seq(
+      th.gpio_led_0_ls_drive,
+      th.gpio_led_1_ls_drive,
+      th.gpio_led_2_ls_drive,
+      th.gpio_led_3_ls_drive
+    )
+    ledDrives.zipWithIndex.foreach { case (drive, idx) =>
+      val ledDrive = port.io.pins(idx).o.oe && port.io.pins(idx).o.oval
+      drive := ledDrive
+      port.io.pins(idx).i.ival := ledDrive
+      port.io.pins(idx).i.po.foreach(_ := false.B)
+    }
   }
 })
 
 /*** SPI/SD ***/
 class WithSPISDCard extends HarnessBinder({
   case (th: ZCU104FPGATestHarnessImp, port: SPIPort, chipId: Int) => {
-    th.zcu104Outer.io_spi_bb.bundle <> port.io
+    th.zcu104Outer.io_spi_bb.foreach(_.bundle <> port.io)
   }
 })
 
@@ -55,7 +63,7 @@ class WithJTAG extends HarnessBinder({
     port.io.TCK := jtag_io.TCK
     port.io.TMS := jtag_io.TMS
     port.io.TDI := jtag_io.TDI
-    port.io.reset.foreach(_ := th.referenceReset)
+    port.io.reset.foreach(_ := false.B)
     jtag_io.TDO.data    := port.io.TDO
     jtag_io.TDO.driven  := true.B
     jtag_io.srst_n      := DontCare

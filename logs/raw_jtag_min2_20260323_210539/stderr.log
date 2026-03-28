@@ -1,0 +1,7 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Error: libusb_open() failed with LIBUSB_ERROR_ACCESS
+Error: unable to open ftdi device with description '*', serial '07198' at bus location '*'
+

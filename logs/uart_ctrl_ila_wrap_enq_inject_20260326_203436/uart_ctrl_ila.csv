@@ -1,0 +1,2 @@
+Sample in Buffer,Sample in Window,TRIGGER,chiptop0/system/uartClockDomainWrapper/do_enq,chiptop0/system/uartClockDomainWrapper/uart_0/do_enq,chiptop0/system/uartClockDomainWrapper/uart_0/txq/do_enq,chiptop0/system/uartClockDomainWrapper/txen0
+Radix - UNSIGNED,UNSIGNED,UNSIGNED,HEX,HEX,HEX,HEX

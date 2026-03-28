@@ -1,0 +1,16 @@
+
+channel "tcfchan#0" closed
+    while executing
+"::tcf::cache_enter tcfchan#0 {tcf_cache_eval {get_jtag_nodes tcfchan#0}}"
+    (in namespace inscope "::tcfclient#0" script line 1)
+    invoked from within
+"::namespace inscope ::tcfclient#0 {::tcf::cache_enter tcfchan#0 {tcf_cache_eval {get_jtag_nodes tcfchan#0}}}"
+    invoked from within
+"::tcf::eval {::tcf::cache_enter tcfchan#0 {tcf_cache_eval {get_jtag_nodes tcfchan#0}}}"
+    (procedure "::tcf::cache_eval" line 1)
+    invoked from within
+"::tcf::cache_eval $chan [list get_jtag_nodes $chan]"
+    (procedure "::xsdb::jtag::targets" line 116)
+    invoked from within
+"jtag targets -set -filter {name == "xczu7"}"
+    (file "Z:\root\chipyard\fpga\logs\same_session_ebreak_replay_20260327_190803\ebreak_r2\xsdb_replay.tcl" line 2)

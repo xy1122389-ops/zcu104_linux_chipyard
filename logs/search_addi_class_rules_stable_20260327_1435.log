@@ -1,0 +1,52 @@
+BEST_PARTITIONS
+score=0 groups=63 features=('b0', 'b5', 'low5')
+
+score=0 groups=63 features=('b0', 'low5', 'popcnt6')
+
+score=0 groups=63 features=('b1', 'b5', 'low5')
+
+score=0 groups=63 features=('b1', 'low5', 'popcnt6')
+
+score=0 groups=63 features=('b2', 'b5', 'low5')
+
+score=0 groups=63 features=('b2', 'low5', 'popcnt6')
+
+score=0 groups=63 features=('b3', 'b5', 'low5')
+
+score=0 groups=63 features=('b3', 'low5', 'popcnt6')
+
+score=0 groups=63 features=('b4', 'b5', 'low4')
+
+score=0 groups=63 features=('b4', 'b5', 'low5')
+
+score=0 groups=63 features=('b4', 'b5', 'mod16')
+
+score=0 groups=63 features=('b4', 'low4', 'popcnt6')
+
+score=0 groups=63 features=('b4', 'low5', 'popcnt6')
+
+score=0 groups=63 features=('b4', 'mod16', 'popcnt6')
+
+score=0 groups=63 features=('b5', 'low2', 'low5')
+
+score=0 groups=63 features=('b5', 'low3', 'low5')
+
+score=0 groups=63 features=('b5', 'low4', 'low5')
+
+score=0 groups=63 features=('b5', 'low4', 'popcnt5')
+
+score=0 groups=63 features=('b5', 'low4', 'popcnt6')
+
+score=0 groups=63 features=('b5', 'low5')
+
+OBSERVED_CLASSES
+A0 [0]
+D15 [15]
+D20 [20, 29]
+D22 [22]
+D23 [23, 28]
+D32 [32]
+D33 [33]
+D4 [4, 26, 50]
+D63 [63]
+M [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 21, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56, 57, 59, 60, 61, 62]

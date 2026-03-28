@@ -1,0 +1,86 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+riscv
+  riscv authdata_read [index]
+  riscv authdata_write [index] value
+  riscv dmi_read address
+  riscv dmi_write address value
+  riscv expose_csrs n0[-m0|=name0][,n1[-m1|=name1]]...
+  riscv expose_custom n0[-m0|=name0][,n1[-m1|=name1]]...
+  riscv info
+  riscv reset_delays [wait]
+  riscv resume_order normal|reversed
+  riscv set_command_timeout_sec [sec]
+  riscv set_ebreakm on|off
+  riscv set_ebreaks on|off
+  riscv set_ebreaku on|off
+  riscv set_enable_virt2phys on|off
+  riscv set_enable_virtual on|off
+  riscv set_ir [idcode|dtmcs|dmi] value
+  riscv set_mem_access method1 [method2] [method3]
+  riscv set_reset_timeout_sec [sec]
+  riscv use_bscan_tunnel value [type]
+riscv_bscan_ps
+  riscv_bscan_ps arm
+    riscv_bscan_ps arm semihosting ['enable'|'disable']
+    riscv_bscan_ps arm semihosting_basedir [dir]
+    riscv_bscan_ps arm semihosting_cmdline arguments
+    riscv_bscan_ps arm semihosting_fileio ['enable'|'disable']
+    riscv_bscan_ps arm semihosting_read_user_param
+    riscv_bscan_ps arm semihosting_redirect (disable | tcp <port>
+              ['debug'|'stdio'|'all'])
+    riscv_bscan_ps arm semihosting_resexit ['enable'|'disable']
+  riscv_bscan_ps arp_examine ['allow-defer']
+  riscv_bscan_ps arp_halt
+  riscv_bscan_ps arp_halt_gdb
+  riscv_bscan_ps arp_poll
+  riscv_bscan_ps arp_reset 'assert'|'deassert' halt
+  riscv_bscan_ps arp_waitstate statename timeoutmsecs
+  riscv_bscan_ps cget target_attribute
+  riscv_bscan_ps configure [target_attribute ...]
+  riscv_bscan_ps curstate
+  riscv_bscan_ps debug_reason
+  riscv_bscan_ps eventlist
+  riscv_bscan_ps examine_deferred
+  riscv_bscan_ps get_reg [-force] list
+  riscv_bscan_ps invoke-event event_name
+  riscv_bscan_ps mdb address [count]
+  riscv_bscan_ps mdd address [count]
+  riscv_bscan_ps mdh address [count]
+  riscv_bscan_ps mdw address [count]
+  riscv_bscan_ps mwb address data [count]
+  riscv_bscan_ps mwd address data [count]
+  riscv_bscan_ps mwh address data [count]
+  riscv_bscan_ps mww address data [count]
+  riscv_bscan_ps read_memory address width count ['phys']
+  riscv_bscan_ps riscv
+    riscv_bscan_ps riscv authdata_read [index]
+    riscv_bscan_ps riscv authdata_write [index] value
+    riscv_bscan_ps riscv dmi_read address
+    riscv_bscan_ps riscv dmi_write address value
+    riscv_bscan_ps riscv expose_csrs n0[-m0|=name0][,n1[-m1|=name1]]...
+    riscv_bscan_ps riscv expose_custom n0[-m0|=name0][,n1[-m1|=name1]]...
+    riscv_bscan_ps riscv info
+    riscv_bscan_ps riscv reset_delays [wait]
+    riscv_bscan_ps riscv resume_order normal|reversed
+    riscv_bscan_ps riscv set_command_timeout_sec [sec]
+    riscv_bscan_ps riscv set_ebreakm on|off
+    riscv_bscan_ps riscv set_ebreaks on|off
+    riscv_bscan_ps riscv set_ebreaku on|off
+    riscv_bscan_ps riscv set_enable_virt2phys on|off
+    riscv_bscan_ps riscv set_enable_virtual on|off
+    riscv_bscan_ps riscv set_ir [idcode|dtmcs|dmi] value
+    riscv_bscan_ps riscv set_mem_access method1 [method2] [method3]
+    riscv_bscan_ps riscv set_reset_timeout_sec [sec]
+    riscv_bscan_ps riscv use_bscan_tunnel value [type]
+  riscv_bscan_ps set_reg dict
+  riscv_bscan_ps smp [on|off]
+  riscv_bscan_ps smp_gdb
+  riscv_bscan_ps was_examined
+  riscv_bscan_ps write_memory address width data ['phys']
+\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\openocd_set_bscan_ir_probe_20260323_180037\probe.cfg:17: Error: 
+Traceback (most recent call last):
+  File "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\openocd_set_bscan_ir_probe_20260323_180037\probe.cfg", line 17, in script
+    riscv set_bscan_tunnel_ir 0x923

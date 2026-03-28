@@ -34,13 +34,16 @@ class SysClockZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput:
   def place(designInput: ClockInputDesignInput) = new SysClockZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-// UART on PMOD1
+// UART on the board FT4232 channel D / UART2 path.
 class UARTZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: UARTDesignInput, val shellInput: UARTShellInput)
   extends UARTXilinxPlacedOverlay(name, designInput, shellInput, false)
 {
   shell { InModuleBody {
     val packagePinsWithPackageIOs = Seq(
+      // Route the FPGA UART to PMOD1 for direct cable access:
+      //   J9  -> PMOD1_0 -> FPGA TXD
+      //   K9  -> PMOD1_1 -> FPGA RXD
       ("K9", IOPin(io.rxd)),
       ("J9", IOPin(io.txd)))
     packagePinsWithPackageIOs foreach { case (pin, io) => {
@@ -86,27 +89,48 @@ class SDIOZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: SPI
   def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-// JTAG on PMOD J55 upper row
+// External Rocket/J-Link JTAG on PMOD0 / J55.
+// Pinout follows the ZCU104 master XDC PMOD0_4..7 entries:
+//   TDI -> PMOD0_4 -> G6
+//   TMS -> PMOD0_5 -> H6
+//   TCK -> PMOD0_6 -> J6
+//   TDO -> PMOD0_7 -> J7
 class JTAGDebugZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: JTAGDebugDesignInput, val shellInput: JTAGDebugShellInput)
   extends JTAGDebugXilinxPlacedOverlay(name, designInput, shellInput)
 {
   shell { InModuleBody {
-    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "H12")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS18")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "G6")
+    shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS33")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "H6")
+    shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS33")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "J6")
+    shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS33")
     shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK)) // prevent JTAG TCK from using dedicated clock routing
-    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "E10")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS18")
-    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "D10")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS18")
-    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "C11")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS18")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "J7")
+    shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS33")
   } }
 }
 class JTAGDebugZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: JTAGDebugShellInput)(implicit val valName: ValName)
   extends JTAGDebugShellPlacer[ZCU104ShellBasicOverlays]
 {
   def place(designInput: JTAGDebugDesignInput) = new JTAGDebugZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
+}
+
+class JTAGDebugBScanZCU104PlacedOverlay(
+  val shell: ZCU104ShellBasicOverlays,
+  name: String,
+  val designInput: JTAGDebugBScanDesignInput,
+  val shellInput: JTAGDebugBScanShellInput)
+  extends JTAGDebugBScanXilinxPlacedOverlay(name, designInput, shellInput)
+
+class JTAGDebugBScanZCU104ShellPlacer(
+  shell: ZCU104ShellBasicOverlays,
+  val shellInput: JTAGDebugBScanShellInput)(implicit val valName: ValName)
+  extends JTAGDebugBScanShellPlacer[ZCU104ShellBasicOverlays]
+{
+  def place(designInput: JTAGDebugBScanDesignInput) =
+    new JTAGDebugBScanZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
 // DDR: ZCU104 has no PL-side DDR4. Memory provided via PS AXI HP0 or scratchpad.
@@ -140,6 +164,9 @@ class ZCU104Shell()(implicit p: Parameters) extends ZCU104ShellBasicOverlays {
   val uart      = Overlay(UARTOverlayKey, new UARTZCU104ShellPlacer(this, UARTShellInput()))
   val sdio      = if (pmod_is_sdio) Some(Overlay(SPIOverlayKey, new SDIOZCU104ShellPlacer(this, SPIShellInput()))) else None
   val jtag      = Overlay(JTAGDebugOverlayKey, new JTAGDebugZCU104ShellPlacer(this, JTAGDebugShellInput()))
+  // Keep the BSCAN overlay available for alternate debug flows, but the
+  // Linux bringup test harness can choose to leave it unplaced.
+  val jtagBScan = Overlay(JTAGDebugBScanOverlayKey, new JTAGDebugBScanZCU104ShellPlacer(this, JTAGDebugBScanShellInput()))
 
   val pllReset = InModuleBody { Wire(Bool()) }
 }

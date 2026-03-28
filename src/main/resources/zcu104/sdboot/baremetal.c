@@ -10,6 +10,9 @@
 #define UART_BAUD 115200UL
 #define UART_DIV  ((TL_CLK * 1000000UL) / UART_BAUD)
 #define REG32(p, i) ((p)[(i) >> 2])
+// ZCU104 user LED DS38 is driven by GPIO_LED_0 / GPIO bit 0.
+#define DS38_LED_MASK 0x1u
+#define HEARTBEAT_DELAY_CYCLES (TL_CLK * 250000UL)
 #define DDR_FIXED_WORDS 4u
 #define DDR_LINEAR_WORDS 16u
 #define DDR_LINEAR_OFFSET_WORDS 16u
@@ -34,12 +37,12 @@ static inline void gpio_init(void)
   REG32(gpio0, GPIO_IOF_EN) = 0;
   REG32(gpio0, GPIO_OUTPUT_XOR) = 0;
   REG32(gpio0, GPIO_OUTPUT_VAL) = led_state;
-  REG32(gpio0, GPIO_OUTPUT_EN) = 1;
+  REG32(gpio0, GPIO_OUTPUT_EN) = DS38_LED_MASK;
 }
 
-static inline void led_toggle(void)
+static inline void ds38_toggle(void)
 {
-  led_state ^= 1u;
+  led_state ^= DS38_LED_MASK;
   REG32(gpio0, GPIO_OUTPUT_VAL) = led_state;
 }
 
@@ -168,7 +171,10 @@ int main(void)
 
   uart_init();
   gpio_init();
-  uart_puts("hello from baremetal\n");
+  uart_puts("zcu104 bit ok\n");
+  uart_puts("j9 tx / k9 rx uart active\n");
+  uart_puts("ds38 blink armed\n");
+  uart_puts("rocket cpu booted\n");
   uart_puts("ddr test start\n");
   if (ddr_test_fixed() != 0) {
     ddr_ok = 0;
@@ -183,11 +189,13 @@ int main(void)
   }
 
   while (1) {
-    uart_puts("count=");
+    uart_puts("rocket_alive heartbeat=");
     print_dec(count++);
+    uart_puts(" ds38=");
+    uart_puts((led_state & DS38_LED_MASK) ? "on" : "off");
     uart_puts("\n");
-    led_toggle();
-    delay_cycles(TL_CLK * 50000UL);
+    ds38_toggle();
+    delay_cycles(HEARTBEAT_DELAY_CYCLES);
   }
 
   return 0;

@@ -1,0 +1,11 @@
+CLASS 1
+HASH=b1c441606df8542beb09da94e1b66bc99f8e7dd3029550a5d8734aabc6efb310
+EVENT_COUNT=2
+/root/chipyard/fpga/logs/same_session_haltreq_a11_replay_20260327_200131/haltreq_a11_r2/jtagtunnel_ila.csv
+/root/chipyard/fpga/logs/same_session_haltreq_a11_replay_20260327_200131/haltreq_a11_r3/jtagtunnel_ila.csv
+
+CLASS 2
+HASH=9764e3e4253b19fd011d8a38295b6e039f0a6f91956a4fb2547679ce1d5522be
+EVENT_COUNT=577
+/root/chipyard/fpga/logs/same_session_haltreq_a11_replay_20260327_200131/haltreq_a11_r1/jtagtunnel_ila.csv
+

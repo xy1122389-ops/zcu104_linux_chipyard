@@ -1,0 +1,12 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Warn : Haven't made progress in mpsse_flush() for 2253ms.
+Warn : Haven't made progress in mpsse_flush() for 4038ms.
+Warn : Haven't made progress in mpsse_flush() for 8118ms.
+Warn : Haven't made progress in mpsse_flush() for 16023ms.
+Warn : Haven't made progress in mpsse_flush() for 32087ms.

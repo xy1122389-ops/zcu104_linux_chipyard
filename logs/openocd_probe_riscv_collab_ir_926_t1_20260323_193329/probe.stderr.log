@@ -1,0 +1,158 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Debug: 6 15 command.c:86 script_debug(): command - adapter driver ftdi
+Debug: 7 15 command.c:86 script_debug(): command - ftdi vid_pid 0x0403 0x6011
+Debug: 8 16 command.c:86 script_debug(): command - adapter serial 07198
+Debug: 9 16 command.c:86 script_debug(): command - ftdi channel 0
+Debug: 10 16 command.c:86 script_debug(): command - ftdi layout_init 0x00e8 0x60eb
+Debug: 11 16 command.c:86 script_debug(): command - transport select jtag
+Debug: 12 17 command.c:86 script_debug(): command - reset_config none
+Debug: 13 17 command.c:86 script_debug(): command - adapter speed 1000
+Debug: 14 17 adapter.c:252 adapter_config_khz(): handle adapter khz
+Debug: 15 17 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 16 17 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 17 17 command.c:86 script_debug(): command - jtag newtap uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477
+Debug: 18 18 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: tap, Dotted: uscale.tap, 8 params
+Debug: 19 18 core.c:1488 jtag_tap_init(): Created Tap: uscale.tap @ abs position 0, irlen 4, capture: 0x1 mask: 0xf
+Debug: 20 18 command.c:86 script_debug(): command - jtag newtap uscale ps -irlen 12 -ircapture 0x1 -irmask 0x03 -ignore-version -expected-id 0x04711093 -expected-id 0x04710093 -expected-id 0x04721093 -expected-id 0x04720093 -expected-id 0x04739093 -expected-id 0x04730093 -expected-id 0x04738093 -expected-id 0x04740093 -expected-id 0x04750093 -expected-id 0x04759093 -expected-id 0x04758093
+Debug: 21 19 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: ps, Dotted: uscale.ps, 29 params
+Debug: 22 19 core.c:1488 jtag_tap_init(): Created Tap: uscale.ps @ abs position 1, irlen 12, capture: 0x1 mask: 0x3
+Debug: 23 19 command.c:86 script_debug(): command - jtag configure uscale.ps -event setup 
+  global _CHIPNAME
+  global jtag_configured
+  if { $jtag_configured == 0 } {
+    irscan $_CHIPNAME.ps 0x824
+    drscan $_CHIPNAME.ps 32 0x00000003
+    runtest 100
+    set jtag_configured 1
+    jtag arp_init
+  }
+
+Debug: 24 19 command.c:86 script_debug(): command - target create riscv_bscan_ps riscv -chain-position uscale.ps
+Debug: 25 23 riscv.c:494 riscv_create_target(): [riscv_bscan_ps] riscv_create_target()
+Debug: 26 23 command.c:86 script_debug(): command - riscv set_bscan_tunnel_ir 0x926
+Info : 27 24 riscv.c:4872 riscv_set_bscan_tunnel_ir(): Bscan tunnel IR 0x926 selected
+Debug: 28 24 command.c:86 script_debug(): command - riscv use_bscan_tunnel 5 1
+Info : 29 24 riscv.c:4853 riscv_use_bscan_tunnel(): Simple Register based Bscan Tunnel Selected
+Debug: 30 24 command.c:86 script_debug(): command - init
+Debug: 31 24 command.c:86 script_debug(): command - target init
+Debug: 32 25 command.c:86 script_debug(): command - target names
+Debug: 33 25 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-flash-erase-start
+Debug: 34 25 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-flash-erase-start reset init
+Debug: 35 25 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-flash-write-end
+Debug: 36 25 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-flash-write-end reset halt
+Debug: 37 25 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-attach
+Debug: 38 26 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-attach halt 1000
+Debug: 39 26 target.c:1603 handle_target_init_command(): Initializing targets...
+Debug: 40 26 riscv.c:666 riscv_init_target(): [riscv_bscan_ps] riscv_init_target()
+Debug: 41 26 semihosting_common.c:109 semihosting_common_init():  
+Debug: 42 27 ftdi.c:731 ftdi_initialize(): ftdi interface using shortest path jtag state transitions
+Debug: 43 49 mpsse.c:429 mpsse_purge(): -
+Debug: 44 50 mpsse.c:710 mpsse_loopback_config(): off
+Debug: 45 50 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 46 50 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 47 50 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 48 50 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 49 50 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 50 51 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 51 51 adapter.c:219 adapter_khz_to_speed(): have adapter set up
+Debug: 52 51 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 53 51 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 54 51 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 55 51 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 56 51 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 57 51 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 58 51 adapter.c:219 adapter_khz_to_speed(): have adapter set up
+Info : 59 51 adapter.c:180 adapter_init(): clock speed 1000 kHz
+Debug: 60 51 openocd.c:133 handle_init_command(): Debug Adapter init complete
+Debug: 61 51 command.c:86 script_debug(): command - transport init
+Debug: 62 52 transport.c:274 handle_transport_init(): handle_transport_init
+Debug: 63 53 core.c:843 jtag_add_reset(): SRST line released
+Debug: 64 53 core.c:868 jtag_add_reset(): TRST line released
+Debug: 65 53 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 66 53 command.c:86 script_debug(): command - jtag arp_init
+Debug: 67 53 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 68 53 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 69 54 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 70 54 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Info : 71 55 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : 72 55 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Debug: 73 55 core.c:1378 jtag_validate_ircapture(): IR capture validation scan
+Debug: 74 55 core.c:1435 jtag_validate_ircapture(): uscale.tap: IR capture 0x01
+Debug: 75 56 core.c:1435 jtag_validate_ircapture(): uscale.ps: IR capture 0x75
+Debug: 76 56 tcl.c:546 jtag_tap_handle_event(): JTAG tap: uscale.ps event: 1 (setup)
+	action: 
+  global _CHIPNAME
+  global jtag_configured
+  if { $jtag_configured == 0 } {
+    irscan $_CHIPNAME.ps 0x824
+    drscan $_CHIPNAME.ps 32 0x00000003
+    runtest 100
+    set jtag_configured 1
+    jtag arp_init
+  }
+
+Debug: 77 56 command.c:86 script_debug(): command - irscan uscale.ps 0x824
+Debug: 78 56 command.c:86 script_debug(): command - drscan uscale.ps 32 0x00000003
+Debug: 79 57 command.c:86 script_debug(): command - runtest 100
+Debug: 80 57 command.c:86 script_debug(): command - jtag arp_init
+Debug: 81 57 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 82 57 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 83 57 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 84 57 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Info : 85 58 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : 86 58 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Debug: 87 58 core.c:1378 jtag_validate_ircapture(): IR capture validation scan
+Debug: 88 59 core.c:1435 jtag_validate_ircapture(): uscale.tap: IR capture 0x01
+Debug: 89 59 core.c:1435 jtag_validate_ircapture(): uscale.ps: IR capture 0x75
+Debug: 90 59 tcl.c:546 jtag_tap_handle_event(): JTAG tap: uscale.ps event: 1 (setup)
+	action: 
+  global _CHIPNAME
+  global jtag_configured
+  if { $jtag_configured == 0 } {
+    irscan $_CHIPNAME.ps 0x824
+    drscan $_CHIPNAME.ps 32 0x00000003
+    runtest 100
+    set jtag_configured 1
+    jtag arp_init
+  }
+
+Debug: 91 59 command.c:86 script_debug(): command - dap init
+Debug: 92 59 arm_dap.c:96 dap_init_all(): Initializing all DAPs ...
+Debug: 93 59 openocd.c:150 handle_init_command(): Examining targets...
+Debug: 94 59 target.c:684 target_examine_one(): [riscv_bscan_ps] Examination started
+Debug: 95 60 target.c:1789 target_call_event_callbacks(): target event 19 (examine-start) for core riscv_bscan_ps
+Debug: 96 60 riscv.c:2474 riscv_examine(): [riscv_bscan_ps] Starting examination
+Debug: 97 60 riscv.c:408 dtmcs_scan_via_bscan(): DTMCS: 0x0 -> 0xed1c7e24
+Debug: 98 60 riscv.c:2488 riscv_examine(): [riscv_bscan_ps] dtmcontrol=0xed1c7e24
+Debug: 99 60 riscv.c:2490 riscv_examine(): [riscv_bscan_ps] version=0x4
+Error: 100 60 riscv.c:472 get_target_type(): [riscv_bscan_ps] Unsupported DTM version: 4
+Error: 101 61 target.c:690 target_examine_one(): [riscv_bscan_ps] Examination failed
+Debug: 102 61 target.c:691 target_examine_one(): [riscv_bscan_ps] examine() returned error code -4
+Debug: 103 61 target.c:1789 target_call_event_callbacks(): target event 20 (examine-fail) for core riscv_bscan_ps
+Warn : 104 61 target.c:748 target_examine(): target riscv_bscan_ps examination failed
+Debug: 105 61 openocd.c:152 handle_init_command(): target examination failed
+Debug: 106 61 command.c:86 script_debug(): command - flash init
+Debug: 107 61 tcl.c:1365 handle_flash_init_command(): Initializing flash devices...
+Debug: 108 61 command.c:86 script_debug(): command - nand init
+Debug: 109 61 tcl.c:484 handle_nand_init_command(): Initializing NAND devices...
+Debug: 110 61 command.c:86 script_debug(): command - pld init
+Debug: 111 61 pld.c:337 handle_pld_init_command(): Initializing PLDs...
+Debug: 112 61 command.c:86 script_debug(): command - tpiu init
+Info : 113 61 gdb_server.c:3968 gdb_target_add_one(): [riscv_bscan_ps] gdb port disabled
+Debug: 114 62 command.c:86 script_debug(): command - target names
+Debug: 115 62 command.c:86 script_debug(): command - target names
+Debug: 116 62 command.c:86 script_debug(): command - riscv_bscan_ps cget -type
+Debug: 117 62 command.c:86 script_debug(): command - targets
+Debug: 118 62 command.c:86 script_debug(): command - shutdown
+User : 119 62 server.c:760 handle_shutdown_command(): shutdown command invoked
+Debug: 120 65 breakpoints.c:319 breakpoint_remove_all_internal(): [riscv_bscan_ps] Delete all breakpoints
+Debug: 121 65 riscv.c:718 riscv_deinit_target(): [riscv_bscan_ps] riscv_deinit_target()
+Error: 122 65 riscv.c:472 get_target_type(): [riscv_bscan_ps] Unsupported DTM version: -1
+Error: 123 65 riscv.c:725 riscv_deinit_target(): [riscv_bscan_ps] Could not identify target type.
+Debug: 124 65 target.c:2145 target_free_all_working_areas_restore(): freeing all working areas

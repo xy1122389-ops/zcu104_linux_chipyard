@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmactive_sw5_20260326_221636
+LABEL=dmactive_sw5
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmactive_sw5_20260326_221634/xsdb_dmcontrol_case.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmactive_sw5_20260326_221636/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmactive_sw5_20260326_221636/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_dmactive_sw5_20260326_221636/stimulus.log

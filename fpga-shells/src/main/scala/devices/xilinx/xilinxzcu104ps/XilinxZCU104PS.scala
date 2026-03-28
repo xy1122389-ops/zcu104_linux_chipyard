@@ -37,7 +37,8 @@ class XilinxZCU104PSIsland(c: XilinxZCU104PSParams)(implicit p: Parameters)
 
   lazy val module = new Impl
   class Impl extends LazyModuleImp(this) {
-    // No external IO — PS black box has no PL-visible pins
+    // Export the PS-driven fabric reset line so the harness can release fabric reset.
+    val pl_resetn0 = IO(Output(Bool()))
     val blackbox = Module(new zcu104ps)
     val (axi, _) = node.in(0)
 
@@ -46,6 +47,7 @@ class XilinxZCU104PSIsland(c: XilinxZCU104PSParams)(implicit p: Parameters)
 
     // AXI HP0 clock = island clock (set externally via island.module.clock)
     blackbox.io.saxihp0_fpd_aclk := clock
+    pl_resetn0                   := blackbox.io.pl_resetn0
 
     // Write address channel
     blackbox.io.saxigp2_awid    := axi.aw.bits.id
@@ -112,8 +114,11 @@ class XilinxZCU104PS(c: XilinxZCU104PSParams)(implicit p: Parameters) extends La
 
   lazy val module = new Impl
   class Impl extends LazyModuleImp(this) {
-    // No external IO — island clock driven from parent
+    val pl_resetn0 = IO(Output(Bool()))
+
+    // No external IO beyond the PS-driven reset release line.
     island.module.clock := clock
     island.module.reset := reset
+    pl_resetn0          := island.module.pl_resetn0
   }
 }

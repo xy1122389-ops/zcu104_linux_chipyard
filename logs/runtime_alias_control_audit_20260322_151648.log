@@ -1,0 +1,386 @@
+==== zcu104 linux bringup bootrom config ====
+package chipyard.fpga.zcu104
+
+import sys.process._
+
+import org.chipsalliance.cde.config.Config
+
+import freechips.rocketchip.devices.tilelink.BootROMLocated
+import freechips.rocketchip.resources.DTSTimebase
+import freechips.rocketchip.subsystem.SystemBusKey
+import freechips.rocketchip.util.SystemFileName
+
+/**
+  * Parallel Linux bringup config for ZCU104.
+  *
+  * This intentionally leaves RocketZCU104Config untouched. By placing this
+  * fragment to the left of WithZCU104Tweaks, it overrides the existing
+  * BootROM path and timebase while reusing the exact same peripheral, DDR,
+  * UART, GPIO, and JTAG topology as the working baremetal build.
+  */
+class WithZCU104LinuxBringupBootROM extends Config((site, here, up) => {
+  case DTSTimebase => BigInt((1e6).toLong)
+  case BootROMLocated(x) => up(BootROMLocated(x), site).map { p =>
+    val freqMHz = (site(SystemBusKey).dtsFrequency.get / (1000 * 1000)).toLong
+    val make = s"make -C fpga/src/main/resources/zcu104/sdboot-linux PBUS_CLK=${freqMHz} bin"
+    require(make.! == 0, "Failed to build ZCU104 Linux handoff bootrom")
+    p.copy(
+      hang = 0x10000,
+      contentFileName = SystemFileName("./fpga/src/main/resources/zcu104/sdboot-linux/build/sdboot.bin")
+    )
+  }
+})
+
+class RocketZCU104LinuxBringupConfig extends Config(
+  new WithZCU104LinuxBringupBootROM ++
+  new chipyard.config.WithNoDebug ++
+  new WithZCU104Tweaks ++
+  new chipyard.RocketConfig
+)
+
+==== zcu104 default bootrom config ====
+package chipyard.fpga.zcu104
+
+import sys.process._
+
+import org.chipsalliance.cde.config.{Config, Parameters}
+import freechips.rocketchip.subsystem.{SystemBusKey, PeripheryBusKey, ControlBusKey, ExtMem}
+import freechips.rocketchip.devices.debug.{DebugModuleKey, ExportDebug, JTAG}
+import freechips.rocketchip.devices.tilelink.{DevNullParams, BootROMLocated}
+import freechips.rocketchip.diplomacy.{RegionType, AddressSet}
+import freechips.rocketchip.resources.{DTSModel, DTSTimebase}
+import freechips.rocketchip.util.{SystemFileName}
+
+import sifive.blocks.devices.spi.{PeripherySPIKey, SPIParams}
+import sifive.blocks.devices.uart.{PeripheryUARTKey, UARTParams}
+
+import sifive.fpgashells.shell.{DesignKey}
+import sifive.fpgashells.shell.xilinx.{ZCU104ShellPMOD, ZCU104DDRSize}
+
+import testchipip.serdes.{SerialTLKey}
+
+import chipyard._
+import chipyard.harness._
+
+class WithZCU104DefaultPeripherals extends Config((site, here, up) => {
+  case PeripheryUARTKey => List(UARTParams(address = BigInt(0x64000000L)))
+  case PeripherySPIKey  => List(SPIParams(rAddress = BigInt(0x64001000L)))
+  case ZCU104ShellPMOD  => "SDIO"
+})
+
+class WithZCU104SystemModifications extends Config((site, here, up) => {
+  case DTSTimebase => BigInt((1e6).toLong)
+  case BootROMLocated(x) => up(BootROMLocated(x), site).map { p =>
+    val freqMHz = (site(SystemBusKey).dtsFrequency.get / (1000 * 1000)).toLong
+    val make = s"make -C fpga/src/main/resources/zcu104/sdboot PBUS_CLK=${freqMHz} bin"
+    require(make.! == 0, "Failed to build ZCU104 bootrom")
+    p.copy(hang = 0x10000, contentFileName = SystemFileName(s"./fpga/src/main/resources/zcu104/sdboot/build/sdboot.bin"))
+  }
+  case ExtMem => up(ExtMem, site).map(x => x.copy(master = x.master.copy(size = site(ZCU104DDRSize))))
+  case SerialTLKey => Nil
+})
+
+// WithDDRMem config: uses PS AXI HP0 → PS DDR4 (2GB)
+// Requires FSBL to initialize PS DDR before PL bitstream is loaded
+class WithZCU104Tweaks extends Config(
+  new chipyard.iobinders.WithGPIOPunchthrough ++
+  new chipyard.harness.WithAllClocksFromHarnessClockInstantiator ++
+  new chipyard.clocking.WithPassthroughClockGenerator ++
+  new chipyard.config.WithUniformBusFrequencies(50) ++
+  new WithFPGAFrequency(50) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new WithLEDGPIO ++
+  new WithUART ++
+  new WithSPISDCard ++
+  new WithPSDDRMem ++
+  new WithJTAG ++
+  new WithZCU104DefaultPeripherals ++
+  new chipyard.config.WithTLBackingMemory ++
+  new WithZCU104SystemModifications ++
+  new freechips.rocketchip.subsystem.WithoutTLMonitors ++
+  new freechips.rocketchip.subsystem.WithNMemoryChannels(1)
+)
+
+class RocketZCU104Config extends Config(
+  new WithZCU104Tweaks ++
+  new chipyard.RocketConfig
+)
+
+// No-DDR fallback: uses Rocket scratchpad TCM (for bring-up / no PS init required)
+class WithZCU104TweaksNoDDR extends Config(
+  new chipyard.iobinders.WithGPIOPunchthrough ++
+  new chipyard.harness.WithAllClocksFromHarnessClockInstantiator ++
+  new chipyard.clocking.WithPassthroughClockGenerator ++
+  new chipyard.config.WithUniformBusFrequencies(50) ++
+  new WithFPGAFrequency(50) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new WithLEDGPIO ++
+  new WithUART ++
+  new WithSPISDCard ++
+  new WithJTAG ++
+  new WithZCU104DefaultPeripherals ++
+
+==== generated address map excerpt ====
+			status = "okay";
+			timebase-frequency = <1000000>;
+			tlb-split;
+			L12: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+	};
+	L23: memory@8000000 {
+		device_type = "memory";
+		reg = <0x8000000 0x10000>;
+		status = "disabled";
+	};
+	L19: memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x80000000>;
+	};
+	L1: soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "ucb-bar,chipyard-soc", "simple-bus";
+		ranges;
+		L24: boot-address-reg@1000 {
+			reg = <0x1000 0x1000>;
+			reg-names = "control";
+		};
+		L11: cache-controller@2010000 {
+			cache-block-size = <64>;
+			cache-level = <2>;
+			cache-sets = <1024>;
+			cache-size = <524288>;
+			cache-unified;
+			compatible = "sifive,inclusivecache0", "cache";
+			next-level-cache = <&L19 &L23>;
+			reg = <0x2010000 0x1000>;
+			reg-names = "control";
+			sifive,mshr-count = <7>;
+		};
+		L8: cbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "cbus_clock";
+			compatible = "fixed-clock";
+		};
+		L15: clint@2000000 {
+			compatible = "riscv,clint0";
+			interrupts-extended = <&L12 3 &L12 7>;
+			reg = <0x2000000 0x10000>;
+			reg-names = "control";
+		};
+		L28: clock-gater@100000 {
+			reg = <0x100000 0x1000>;
+			reg-names = "control";
+		};
+		L9: error-device@3000 {
+			compatible = "sifive,error0";
+			reg = <0x3000 0x1000>;
+		};
+		L7: fbus_clock {
+			clock-frequency = <50000000>;
+			clock-output-names = "mbus_clock";
+			compatible = "fixed-clock";
+		};
+		L6: pbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "pbus_clock";
+			compatible = "fixed-clock";
+		};
+		L22: rom@10000 {
+			compatible = "sifive,rom0";
+			reg = <0x10000 0x10000>;
+			reg-names = "mem";
+		};
+		L5: sbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "sbus_clock";
+			compatible = "fixed-clock";
+		};
+		L25: serial@64000000 {
+			clocks = <&L6>;
+			compatible = "sifive,uart0";
+			interrupt-parent = <&L16>;
+			interrupts = <1>;
+			reg = <0x64000000 0x1000>;
+			reg-names = "control";
+		};
+		L27: spi@64001000 {
+			#address-cells = <1>;
+
+==== bootaddr regmap ====
+{
+  "peripheral" : {
+    "displayName" : "boot-address-reg.At0x1000",
+    "baseAddress" : "0x1000",
+    "regfields" : [ {
+      "unnamedRegField0_0" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 0,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_8" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 8,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_16" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 16,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_24" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 24,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_32" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 32,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_40" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 40,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_48" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 48,
+        "bitWidth" : 8
+      }
+    }, {
+      "unnamedRegField0_56" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 56,
+        "bitWidth" : 8
+      }
+    } ]
+  }
+}
+==== clint regmap head ====
+{
+  "peripheral" : {
+    "displayName" : "clint.At0x2000000",
+    "baseAddress" : "0x2000000",
+    "regfields" : [ {
+      "msip_0" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 0,
+        "bitWidth" : 1,
+        "name" : "msip_0",
+        "description" : "MSIP bit for Hart 0",
+        "resetValue" : 0,
+        "group" : "msip",
+        "groupDesc" : "MSIP Bits",
+        "accessType" : "RW"
+      }
+    }, {
+      "reserved" : {
+        "byteOffset" : "0x0",
+        "bitOffset" : 1,
+        "bitWidth" : 31,
+        "name" : "reserved",
+        "resetValue" : 0,
+        "group" : "msip",
+        "accessType" : "R"
+      }
+    }, {
+      "mtimecmp_0_0" : {
+        "byteOffset" : "0x4000",
+        "bitOffset" : 0,
+        "bitWidth" : 8,
+        "name" : "mtimecmp_0_0",
+        "group" : "mtimecmp_0",
+        "groupDesc" : "MTIMECMP for hart 0",
+        "accessType" : "RW"
+      }
+    }, {
+      "mtimecmp_0_1" : {
+        "byteOffset" : "0x4000",
+        "bitOffset" : 8,
+        "bitWidth" : 8,
+        "name" : "mtimecmp_0_1",
+        "group" : "mtimecmp_0",
+        "accessType" : "RW"
+      }
+    }, {
+      "mtimecmp_0_2" : {
+        "byteOffset" : "0x4000",
+        "bitOffset" : 16,
+        "bitWidth" : 8,
+        "name" : "mtimecmp_0_2",
+        "group" : "mtimecmp_0",
+        "accessType" : "RW"
+      }
+    }, {
+      "mtimecmp_0_3" : {
+        "byteOffset" : "0x4000",
+        "bitOffset" : 24,
+        "bitWidth" : 8,
+        "name" : "mtimecmp_0_3",
+        "group" : "mtimecmp_0",
+        "accessType" : "RW"
+      }
+    }, {
+      "mtimecmp_0_4" : {
+        "byteOffset" : "0x4000",
+        "bitOffset" : 32,
+        "bitWidth" : 8,
+        "name" : "mtimecmp_0_4",
+        "group" : "mtimecmp_0",
+        "accessType" : "RW"
+      }
+    }, {
+      "mtimecmp_0_5" : {
+        "byteOffset" : "0x4000",
+        "bitOffset" : 40,
+        "bitWidth" : 8,
+        "name" : "mtimecmp_0_5",
+        "group" : "mtimecmp_0",
+        "accessType" : "RW"
+
+==== bootrom build commands ====
+9:/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-objcopy -O binary --change-addresses=-0x10000 /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build/sdboot.elf /root/chipyard/fpga/src/main/resources/zcu104/sdboot//build/sdboot.bin
+15:/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-objcopy -O binary --change-addresses=-0x10000 /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.elf /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.bin
+
+==== search explicit low-address peripherals in generated map ====
+82:		reg = <0x8000000 0x10000>;
+87:		reg = <0x80000000 0x80000000>;
+95:			reg = <0x1000 0x1000>;
+119:			reg = <0x2000000 0x10000>;
+123:			reg = <0x100000 0x1000>;
+172:			reg = <0x10000 0x10000>;
+
+==== search bootrom / bootaddr generated modules ====
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/TLInterconnectCoupler_cbus_to_bootrom.sv
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/TLFragmenter_bootrom.sv
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/TLFragmenter_BootAddrReg.sv
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/TLROM.sv
+/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/bootromClockSinkDomain.sv
+
+==== prior low-window evidence summary ====
+2246:PARTIAL_MATCH_PLUS_2000_BASES=0x1000
+2247:NO_MATCH_PLUS_2000_BASES=0x2000
+2249:FULL_MATCH_PLUS_2000_RUNS=0x0-0xFC0,0x1040-0x1FC0
+2252:FIRST_FULL_SELF_BASE=0x2000
+2253:TRANSITION_INTERVAL=between 0x1FC0 and 0x2000
+2257:LIKELY_ALIAS_REMAP_WINDOW=YES
+
+==== prior bootrom mismatch evidence summary ====
+/root/chipyard/fpga/logs/runtime_bootrom_single_bit_probe_linux_20260322_135217.log:54:BOOTROM_10000=   10000:   A0211000
+/root/chipyard/fpga/logs/runtime_bootrom_single_bit_probe_linux_20260322_135217.log:59:BOOTROM_10020=   10020:   01414501
+/root/chipyard/fpga/logs/runtime_bootrom_single_bit_probe_baremetal_20260322_135252.log:54:BOOTROM_10000=   10000:   A0211000
+/root/chipyard/fpga/logs/runtime_bootrom_single_bit_probe_baremetal_20260322_135252.log:59:BOOTROM_10020=   10020:   01414501

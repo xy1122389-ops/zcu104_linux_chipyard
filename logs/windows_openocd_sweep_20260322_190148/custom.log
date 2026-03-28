@@ -1,0 +1,14 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'ftdi vid_pid' not 'ftdi_vid_pid'
+DEPRECATED! use 'ftdi channel' not 'ftdi_channel'
+DEPRECATED! use 'ftdi layout_init' not 'ftdi_layout_init'
+Info : [uscale.a53.0] Hardware thread awareness created
+Error: libusb_open() failed with LIBUSB_ERROR_NOT_FOUND
+Error: unable to open ftdi device with description '*', serial '*' at bus location '*'
+/root/chipyard/fpga/scripts/openocd_zcu104_win_custom.cfg:9: Error: 
+Traceback (most recent call last):
+  File "/root/chipyard/fpga/scripts/openocd_zcu104_win_custom.cfg", line 9, in script
+    init

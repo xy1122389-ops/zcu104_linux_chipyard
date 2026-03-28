@@ -1,0 +1,2 @@
+SEND_OK byte=0x5A
+LOG=/root/chipyard/fpga/logs/send_host_byte_COM7_20260326_192638.log

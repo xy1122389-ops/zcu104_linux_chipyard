@@ -1,0 +1,80 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Error: JTAG-DP STICKY ERROR
+Error: [uscale.a53.0] Examination failed
+Warn : target uscale.a53.0 examination failed
+IR=0x8c0 IRPKT=00
+28
+00
+04
+IR=0x8c0 DRPKT=00
+04
+0000000002
+00
+IR=0x902 IRPKT=00
+14
+00
+02
+IR=0x902 DRPKT=00
+02
+0000000001
+00
+IR=0x903 IRPKT=00
+14
+00
+02
+IR=0x903 DRPKT=00
+02
+0000000001
+00
+IR=0x922 IRPKT=00
+14
+00
+02
+IR=0x922 DRPKT=00
+02
+0000000001
+00
+IR=0x923 IRPKT=01
+7f
+1f
+07
+IR=0x923 DRPKT=01
+7f
+01ffffffff
+07
+IR=0x924 IRPKT=00
+0a
+00
+01
+IR=0x924 DRPKT=00
+41
+0000000000
+00
+IR=0x925 IRPKT=01
+49
+00
+05
+IR=0x925 DRPKT=01
+49
+008214a5a0
+00
+IR=0x926 IRPKT=00
+00
+00
+06
+IR=0x926 DRPKT=01
+24
+01eed1c7e2
+07
+IR=0x927 IRPKT=00
+14
+00
+02
+IR=0x927 DRPKT=00
+02
+0000000001
+00
+shutdown command invoked

@@ -1,0 +1,1 @@
+addi_x1_1 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x1_1_20260327_142654/jtagtunnel_ila.csv

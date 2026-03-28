@@ -55,6 +55,8 @@ class ZCU104PSIOBundle extends Bundle {
   val saxigp2_rready   = Input(Bool())
   // Clock for HP0
   val saxihp0_fpd_aclk = Input(Clock())
+  // PS-driven fabric reset exported by the Zynq PS wrapper.
+  val pl_resetn0       = Output(Bool())
 }
 
 // Black box wrapping zynq_ultra_ps_e with only AXI HP0 exposed
@@ -76,7 +78,7 @@ class zcu104ps(implicit val p: Parameters) extends BlackBox {
         CONFIG.PSU__USE__M_AXI_GP1 {0} \
         CONFIG.PSU__USE__M_AXI_GP2 {0} \
         CONFIG.PSU__UART1__PERIPHERAL__ENABLE {1} \
-        CONFIG.PSU__UART1__PERIPHERAL__IO {MIO 36 .. 37} \
+        CONFIG.PSU__UART1__PERIPHERAL__IO {MIO 20 .. 21} \
         CONFIG.PSU__SD1__PERIPHERAL__ENABLE {1} \
         CONFIG.PSU__SD1__PERIPHERAL__IO {MIO 46 .. 51} \
         CONFIG.PSU__SD1__SLOT_TYPE {SD 2.0} \

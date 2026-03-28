@@ -1,0 +1,4 @@
+ADDI_1=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+ADDI_4=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_4_20260327_093354/jtagtunnel_ila.csv
+ADDI_15=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_15_20260327_100857/jtagtunnel_ila.csv
+ADDI_20=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv

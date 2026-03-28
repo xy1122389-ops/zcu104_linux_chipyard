@@ -1,0 +1,12 @@
+LABEL=addi_x0_20_stability_r1
+MODE=recover
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_upload_only_addi_x0_20_stability_r1_recover_20260327_171330
+
+LABEL=addi_x0_20_stability_r2
+MODE=inline
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_stability_r2_20260327_171418
+
+LABEL=addi_x0_20_stability_r3
+MODE=recover
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_upload_only_addi_x0_20_stability_r3_recover_20260327_171621
+

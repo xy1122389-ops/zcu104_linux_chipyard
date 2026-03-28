@@ -1,0 +1,34 @@
++ set -euo pipefail
++++ dirname -- /root/chipyard/fpga/scripts/openocd_probe_riscv_bscan_abits.sh
+++ cd -- /root/chipyard/fpga/scripts
+++ pwd
++ SCRIPT_DIR=/root/chipyard/fpga/scripts
+++ cd -- /root/chipyard/fpga/scripts/..
+++ pwd
++ FPGA_DIR=/root/chipyard/fpga
++ BITFILE_DEFAULT=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit
++ BITFILE=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit
++ OPENOCD_EXE_DEFAULT=/mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/bin/openocd.exe
++ OPENOCD_SCRIPTS_DEFAULT=/mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/openocd/scripts
++ OPENOCD_EXE=/mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/bin/openocd.exe
++ OPENOCD_SCRIPTS=/mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/openocd/scripts
++ [[ ! -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit ]]
++ [[ ! -f /mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/bin/openocd.exe ]]
++ [[ ! -d /mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/openocd/scripts ]]
+++ date +%Y%m%d_%H%M%S
++ STAMP=20260323_171609
++ OUTDIR=/root/chipyard/fpga/logs/openocd_probe_riscv_bscan_abits_20260323_171609
++ mkdir -p /root/chipyard/fpga/logs/openocd_probe_riscv_bscan_abits_20260323_171609
++ WIN_TEMP_DIR=/mnt/c/Users/24242/AppData/Local/Temp
++ WIN_BIT=/mnt/c/Users/24242/AppData/Local/Temp/ZCU104FPGATestHarness_debug_chainpos1.bit
++ cp -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit /mnt/c/Users/24242/AppData/Local/Temp/ZCU104FPGATestHarness_debug_chainpos1.bit
++ WIN_LOAD_CFG=/mnt/c/Users/24242/AppData/Local/Temp/openocd_pld_load_debug_chainpos1.cfg
++ cat
++ WIN_PROBE_CFG=/mnt/c/Users/24242/AppData/Local/Temp/openocd_probe_riscv_bscan_abits_chainpos1.cfg
++ cat
++ LOAD_STDOUT=/root/chipyard/fpga/logs/openocd_probe_riscv_bscan_abits_20260323_171609/pld_load.stdout.log
++ LOAD_STDERR=/root/chipyard/fpga/logs/openocd_probe_riscv_bscan_abits_20260323_171609/pld_load.stderr.log
++ PROBE_STDOUT=/root/chipyard/fpga/logs/openocd_probe_riscv_bscan_abits_20260323_171609/probe.stdout.log
++ PROBE_STDERR=/root/chipyard/fpga/logs/openocd_probe_riscv_bscan_abits_20260323_171609/probe.stderr.log
+++ wslpath -w /mnt/c/Users/24242/AppData/Local/Temp/openocd_pld_load_debug_chainpos1.cfg
++ /mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/bin/openocd.exe -s /mnt/c/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/openocd/scripts -f 'C:\Users\24242\AppData\Local\Temp\openocd_pld_load_debug_chainpos1.cfg'

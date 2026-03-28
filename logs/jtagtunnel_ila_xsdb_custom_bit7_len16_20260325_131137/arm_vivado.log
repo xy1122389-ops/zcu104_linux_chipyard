@@ -1,0 +1,90 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\arm_jtagtunnel_ila_zcu104.tcl}
+# array set options {
+#     -bitstream_path ""
+#     -probes_path    ""
+#     -target_index   "0"
+#     -out_state      ""
+# }
+# for {set i 0} {$i < $argc} {incr i 2} {
+#     set arg [lindex $argv $i]
+#     set val [lindex $argv [expr $i+1]]
+#     if {[info exists options($arg)]} {
+#         set options($arg) $val
+#     }
+# }
+# if {$options(-bitstream_path) eq "" || $options(-probes_path) eq "" || $options(-out_state) eq ""} {
+#     puts "Usage: vivado -mode batch -source arm_jtagtunnel_ila_zcu104.tcl -tclargs -bitstream_path <bit> -probes_path <ltx> -out_state <state.txt> ?-target_index 0?"
+#     exit 2
+# }
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:13 . Memory (MB): peak = 1602.238 ; gain = 0.000
+# catch {close_hw_target}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/07198A is already closed
+# set target ""
+# for {set i 0} {$i < 10} {incr i} {
+#     catch {refresh_hw_server}
+#     set targets [get_hw_targets -quiet]
+#     if {[llength $targets] > $options(-target_index)} {
+#         set target [lindex $targets $options(-target_index)]
+#         break
+#     }
+#     after 1000
+# }
+# if {$target eq ""} {
+#     puts "ERROR: no hw_target at index $options(-target_index)"
+#     exit 5
+# }
+# open_hw_target $target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+# set dev [lindex [get_hw_devices] 0]
+# current_hw_device $dev
+# set_property PROBES.FILE $options(-probes_path) [current_hw_device]
+# set_property FULL_PROBES.FILE $options(-probes_path) [current_hw_device]
+# set_property PROGRAM.FILE $options(-bitstream_path) [current_hw_device]
+# program_hw_devices [current_hw_device]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+program_hw_devices: Time (s): cpu = 00:11:56 ; elapsed = 00:12:00 . Memory (MB): peak = 1602.238 ; gain = 0.000
+# refresh_hw_device [current_hw_device]
+INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+refresh_hw_device: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 2525.438 ; gain = 923.199
+# set ila [lindex [get_hw_ilas] 0]
+# if {$ila eq ""} {
+#     puts "ERROR: no hw_ila found"
+#     exit 3
+# }
+# set shift_probe [get_hw_probes u_ila_jtag__bscane2_SHIFT]
+# if {$shift_probe eq ""} {
+#     puts "ERROR: shift probe not found"
+#     exit 4
+# }
+# foreach p [get_hw_probes -of_objects $ila] {
+#     set width [get_property WIDTH $p]
+#     set xbits [string repeat X $width]
+#     set_property TRIGGER_COMPARE_VALUE "eq${width}'b${xbits}" $p
+#     set_property CAPTURE_COMPARE_VALUE "eq${width}'b${xbits}" $p
+# }
+# set_property TRIGGER_COMPARE_VALUE "eq1'b1" $shift_probe
+# set_property CONTROL.TRIGGER_POSITION 2048 $ila
+# set_property CONTROL.WINDOW_COUNT 1 $ila
+# run_hw_ila $ila
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+ERROR: [Labtools 27-3176] hw_server failed during internal command.
+Resolution: Check that the hw_server is running and the hardware connectivity to the target
+INFO: [Common 17-206] Exiting Vivado at Wed Mar 25 13:24:56 2026...

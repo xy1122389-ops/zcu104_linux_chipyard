@@ -1,0 +1,5 @@
+EXIT=0
+BITFILE=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit
+CFG=/mnt/c/Users/24242/AppData/Local/Temp/openocd_pld_load_after_init.cfg
+STDOUT_LOG=/root/chipyard/fpga/logs/openocd_pld_load_after_init_20260324_172552/stdout.log
+STDERR_LOG=/root/chipyard/fpga/logs/openocd_pld_load_after_init_20260324_172552/stderr.log

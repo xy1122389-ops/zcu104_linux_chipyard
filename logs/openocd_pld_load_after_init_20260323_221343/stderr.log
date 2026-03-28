@@ -1,0 +1,62 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Debug: 6 2 command.c:82 script_debug(): command - adapter driver ftdi
+Debug: 7 2 command.c:82 script_debug(): command - ftdi vid_pid 0x0403 0x6011
+Debug: 8 2 command.c:82 script_debug(): command - adapter serial 07198
+Debug: 9 2 command.c:82 script_debug(): command - ftdi channel 0
+Debug: 10 2 command.c:82 script_debug(): command - ftdi layout_init 0x00e8 0x60eb
+Debug: 11 2 command.c:82 script_debug(): command - transport select jtag
+Debug: 12 3 command.c:82 script_debug(): command - reset_config none
+Debug: 13 3 command.c:82 script_debug(): command - adapter speed 1000
+Debug: 14 3 adapter.c:254 adapter_config_khz(): handle adapter khz
+Debug: 15 3 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 16 3 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 17 3 command.c:82 script_debug(): command - jtag newtap uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477
+Debug: 18 3 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: tap, Dotted: uscale.tap, 8 params
+Debug: 19 3 core.c:1488 jtag_tap_init(): Created Tap: uscale.tap @ abs position 0, irlen 4, capture: 0x1 mask: 0xf
+Debug: 20 3 command.c:82 script_debug(): command - jtag newtap uscale ps -irlen 12 -ircapture 0x1 -irmask 0x03 -ignore-version -expected-id 0x14730093 -expected-id 0x04730093
+Debug: 21 3 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: ps, Dotted: uscale.ps, 11 params
+Debug: 22 4 core.c:1488 jtag_tap_init(): Created Tap: uscale.ps @ abs position 1, irlen 12, capture: 0x1 mask: 0x3
+Debug: 23 4 command.c:82 script_debug(): command - init
+Debug: 24 4 command.c:82 script_debug(): command - target init
+Debug: 25 4 command.c:82 script_debug(): command - target names
+Debug: 26 4 target.c:1598 handle_target_init_command(): Initializing targets...
+Debug: 27 4 ftdi.c:654 ftdi_initialize(): ftdi interface using shortest path jtag state transitions
+Debug: 28 21 mpsse.c:429 mpsse_purge(): -
+Debug: 29 22 mpsse.c:710 mpsse_loopback_config(): off
+Debug: 30 22 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 31 22 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 32 22 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 33 22 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 34 22 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 35 22 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 36 22 adapter.c:221 adapter_khz_to_speed(): have adapter set up
+Debug: 37 22 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 38 22 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 39 22 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 40 22 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 41 23 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 42 23 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 43 23 adapter.c:221 adapter_khz_to_speed(): have adapter set up
+Info : 44 23 adapter.c:182 adapter_init(): clock speed 1000 kHz
+Debug: 45 23 openocd.c:133 handle_init_command(): Debug Adapter init complete
+Debug: 46 23 command.c:82 script_debug(): command - transport init
+Debug: 47 23 transport.c:274 handle_transport_init(): handle_transport_init
+Debug: 48 23 core.c:843 jtag_add_reset(): SRST line released
+Debug: 49 23 core.c:868 jtag_add_reset(): TRST line released
+Debug: 50 23 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 51 23 command.c:82 script_debug(): command - jtag arp_init
+Debug: 52 23 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 53 23 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 54 24 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 55 24 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Warn : 56 2244 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 2220ms.
+Warn : 57 4029 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 4005ms.
+Warn : 58 8109 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 8085ms.
+Warn : 59 16269 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 16245ms.
+Warn : 60 32078 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 32054ms.

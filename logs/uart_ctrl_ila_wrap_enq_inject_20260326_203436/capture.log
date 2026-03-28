@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/uart_ctrl_ila_wrap_enq_inject_20260326_203436
+ILA_DIR=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ctrl_ila_20260326_202316
+TRIGGER_PROBE=wrap_enq
+TRIGGER_VALUE=1
+BITFILE=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ctrl_ila_20260326_202316/ZCU104FPGATestHarness_uart_ctrl_ila.bit
+LTXFILE=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ctrl_ila_20260326_202316/uart_ctrl_ila.ltx
+CSV_OUT=/root/chipyard/fpga/logs/uart_ctrl_ila_wrap_enq_inject_20260326_203436/uart_ctrl_ila.csv

@@ -1,0 +1,72 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\arm_jtagtunnel_ila_zcu104.tcl}
+# array set options {
+#     -bitstream_path ""
+#     -probes_path    ""
+#     -target_index   "0"
+#     -out_state      ""
+# }
+# for {set i 0} {$i < $argc} {incr i 2} {
+#     set arg [lindex $argv $i]
+#     set val [lindex $argv [expr $i+1]]
+#     if {[info exists options($arg)]} {
+#         set options($arg) $val
+#     }
+# }
+# if {$options(-bitstream_path) eq "" || $options(-probes_path) eq "" || $options(-out_state) eq ""} {
+#     puts "Usage: vivado -mode batch -source arm_jtagtunnel_ila_zcu104.tcl -tclargs -bitstream_path <bit> -probes_path <ltx> -out_state <state.txt> ?-target_index 0?"
+#     exit 2
+# }
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:15 . Memory (MB): peak = 1560.516 ; gain = 0.000
+# catch {close_hw_target}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/07198A is already closed
+# set target [lindex [get_hw_targets] $options(-target_index)]
+# open_hw_target $target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+# set dev [lindex [get_hw_devices] 0]
+# current_hw_device $dev
+# set_property PROBES.FILE $options(-probes_path) [current_hw_device]
+# set_property FULL_PROBES.FILE $options(-probes_path) [current_hw_device]
+# set_property PROGRAM.FILE $options(-bitstream_path) [current_hw_device]
+# program_hw_devices [current_hw_device]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+program_hw_devices: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1560.516 ; gain = 0.000
+# refresh_hw_device [current_hw_device]
+INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+# set ila [lindex [get_hw_ilas] 0]
+# if {$ila eq ""} {
+#     puts "ERROR: no hw_ila found"
+#     exit 3
+# }
+# set shift_probe [get_hw_probes u_ila_jtag__bscane2_SHIFT]
+# if {$shift_probe eq ""} {
+#     puts "ERROR: shift probe not found"
+#     exit 4
+# }
+# foreach p [get_hw_probes -of_objects $ila] {
+#     set_property TRIGGER_COMPARE_VALUE "eq1'bX" $p
+#     set_property CAPTURE_COMPARE_VALUE "eq1'bX" $p
+# }
+ERROR: [Designutils 20-1478] The hw_probe compare_value has wrong bit count [eq1'bX] specified. Correct bit count for the hw_probe is 8.
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 24 21:09:14 2026...

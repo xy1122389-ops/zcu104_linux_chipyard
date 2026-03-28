@@ -1,0 +1,243 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+WARNING: If the reset is being triggered after powering on the device,
+          write bootloop at reset vector address (0xffff0000), or use
+          -clear-registers option, to avoid unpredictable behavior.
+          Further warnings will be suppressed
+
+==== target ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9* Cortex-A53 #0 (Breakpoint, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+
+==== core regs ====
+PC=pc: 0000000000000200
+CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+R0=r0: 00000000f0000002
+R14=r14: 8c223e42a8560129
+R30=r30: 870b870909004401
+SP=sp: d08609a221400281
+PC_HEX=0000000000000200
+
+==== rrd defs ====
+r0: (RW)        r1: (RW)        r2: (RW)        r3: (RW)        r4: (RW)
+      r5: (RW)        r6: (RW)        r7: (RW)        r8: (RW)        r9: (RW)
+     r10: (RW)       r11: (RW)       r12: (RW)       r13: (RW)       r14: (RW)
+     r15: (RW)       r16: (RW)       r17: (RW)       r18: (RW)       r19: (RW)
+     r20: (RW)       r21: (RW)       r22: (RW)       r23: (RW)       r24: (RW)
+     r25: (RW)       r26: (RW)       r27: (RW)       r28: (RW)       r29: (RW)
+     r30: (RW)        sp: (RW)        pc: (RW)      cpsr: (RW)       vfp      
+     sys             dbg        acpu_gic
+
+==== rrd sys ====
+0   1   2   3   4   5   6   7   9  10  12  13  14
+
+==== rrd dbg ====
+mdccint_el1:         00000000          mdscr_el1:         00004000
+       oseccr_el1:         00000000        breakpoints                  
+      watchpoints                            mdrar_el1:         fe800003
+        oslar_el1                            oslsr_el1:         00000008
+        osdlr_el1:         00000000        dbgprcr_el1:         00000000
+  dbgclaimset_el1:         000000ff    dbgclaimclr_el1:         00000001
+dbgauthstatus_el1:         000000ff         mdccsr_el0:         00000000
+       dbgdtr_el0: 0000000000000000       dbgdtrrx_el0:         00000000
+     dbgdtrtx_el0                         dbgvcr32_el2:         00000000
+
+==== rrd acpu_gic ====
+gicd_ctlr: 00000000         gicd_typer: 0000fc65
+        gicd_iidr: 0200143b      gicd_igroupr0: 00000000
+    gicd_igroupr1: 00000000      gicd_igroupr2: 00000000
+    gicd_igroupr3: 00000000      gicd_igroupr4: 00000000
+    gicd_igroupr5: 00000000    gicd_isenabler0: 0000ffff
+  gicd_isenabler1: 00000000    gicd_isenabler2: 00000000
+  gicd_isenabler3: 00000000    gicd_isenabler4: 00000000
+  gicd_isenabler5: 00000000    gicd_icenabler0: 0000ffff
+  gicd_icenabler1: 00000000    gicd_icenabler2: 00000000
+  gicd_icenabler3: 00000000    gicd_icenabler4: 00000000
+  gicd_icenabler5: 00000000      gicd_ispendr0: 00000000
+    gicd_ispendr1: 00000000      gicd_ispendr2: 00000000
+    gicd_ispendr3: 00000000      gicd_ispendr4: 00000000
+    gicd_ispendr5: 00000000      gicd_icpendr0: 00000000
+    gicd_icpendr1: 00000000      gicd_icpendr2: 00000000
+    gicd_icpendr3: 00000000      gicd_icpendr4: 00000000
+    gicd_icpendr5: 00000000    gicd_isactiver0: 00000000
+  gicd_isactiver1: 00000000    gicd_isactiver2: 00000000
+  gicd_isactiver3: 00000000    gicd_isactiver4: 00000000
+  gicd_isactiver5: 00000000    gicd_icactiver0: 00000000
+  gicd_icactiver1: 00000000    gicd_icactiver2: 00000000
+  gicd_icactiver3: 00000000    gicd_icactiver4: 00000000
+  gicd_icactiver5: 00000000   gicd_ipriorityr0: 00000000
+ gicd_ipriorityr1: 00000000   gicd_ipriorityr2: 00000000
+ gicd_ipriorityr3: 00000000   gicd_ipriorityr4: 00000000
+ gicd_ipriorityr5: 00000000   gicd_ipriorityr6: 00000000
+ gicd_ipriorityr7: 00000000   gicd_ipriorityr8: 00000000
+ gicd_ipriorityr9: 00000000  gicd_ipriorityr10: 00000000
+gicd_ipriorityr11: 00000000  gicd_ipriorityr12: 00000000
+gicd_ipriorityr13: 00000000  gicd_ipriorityr14: 00000000
+gicd_ipriorityr15: 00000000  gicd_ipriorityr16: 00000000
+gicd_ipriorityr17: 00000000  gicd_ipriorityr18: 00000000
+gicd_ipriorityr19: 00000000  gicd_ipriorityr20: 00000000
+gicd_ipriorityr21: 00000000  gicd_ipriorityr22: 00000000
+gicd_ipriorityr23: 00000000  gicd_ipriorityr24: 00000000
+gicd_ipriorityr25: 00000000  gicd_ipriorityr26: 00000000
+gicd_ipriorityr27: 00000000  gicd_ipriorityr28: 00000000
+gicd_ipriorityr29: 00000000  gicd_ipriorityr30: 00000000
+gicd_ipriorityr31: 00000000  gicd_ipriorityr32: 00000000
+gicd_ipriorityr33: 00000000  gicd_ipriorityr34: 00000000
+gicd_ipriorityr35: 00000000  gicd_ipriorityr36: 00000000
+gicd_ipriorityr37: 00000000  gicd_ipriorityr38: 00000000
+gicd_ipriorityr39: 00000000  gicd_ipriorityr40: 00000000
+gicd_ipriorityr41: 00000000  gicd_ipriorityr42: 00000000
+gicd_ipriorityr43: 00000000  gicd_ipriorityr44: 00000000
+gicd_ipriorityr45: 00000000  gicd_ipriorityr46: 00000000
+gicd_ipriorityr47: 00000000    gicd_itargetsr0: 01010101
+  gicd_itargetsr1: 01010101    gicd_itargetsr2: 01010101
+  gicd_itargetsr3: 01010101    gicd_itargetsr4: 00000000
+  gicd_itargetsr5: 00000000    gicd_itargetsr6: 01010100
+  gicd_itargetsr7: 01010101    gicd_itargetsr8: 00000000
+  gicd_itargetsr9: 00000000   gicd_itargetsr10: 00000000
+ gicd_itargetsr11: 00000000   gicd_itargetsr12: 00000000
+ gicd_itargetsr13: 00000000   gicd_itargetsr14: 00000000
+ gicd_itargetsr15: 00000000   gicd_itargetsr16: 00000000
+ gicd_itargetsr17: 00000000   gicd_itargetsr18: 00000000
+ gicd_itargetsr19: 00000000   gicd_itargetsr20: 00000000
+ gicd_itargetsr21: 00000000   gicd_itargetsr22: 00000000
+ gicd_itargetsr23: 00000000   gicd_itargetsr24: 00000000
+ gicd_itargetsr25: 00000000   gicd_itargetsr26: 00000000
+ gicd_itargetsr27: 00000000   gicd_itargetsr28: 00000000
+ gicd_itargetsr29: 00000000   gicd_itargetsr30: 00000000
+ gicd_itargetsr31: 00000000   gicd_itargetsr32: 00000000
+ gicd_itargetsr33: 00000000   gicd_itargetsr34: 00000000
+ gicd_itargetsr35: 00000000   gicd_itargetsr36: 00000000
+ gicd_itargetsr37: 00000000   gicd_itargetsr38: 00000000
+ gicd_itargetsr39: 00000000   gicd_itargetsr40: 00000000
+ gicd_itargetsr41: 00000000   gicd_itargetsr42: 00000000
+ gicd_itargetsr43: 00000000   gicd_itargetsr44: 00000000
+ gicd_itargetsr45: 00000000   gicd_itargetsr46: 00000000
+ gicd_itargetsr47: 00000000        gicd_icfgr0: aaaaaaaa
+      gicd_icfgr1: 55540000        gicd_icfgr2: 55555555
+      gicd_icfgr3: 55555555        gicd_icfgr4: 55555555
+      gicd_icfgr5: 55555555        gicd_icfgr6: 55555555
+      gicd_icfgr7: 55555555        gicd_icfgr8: 55555555
+      gicd_icfgr9: 55555555       gicd_icfgr10: 55555555
+     gicd_icfgr11: 55555555         gicd_ppisr: 00000000
+      gicd_spisr0: 00000000        gicd_spisr1: 00000000
+      gicd_spisr2: 00000000        gicd_spisr3: 00000000
+      gicd_spisr4: 00000000          gicd_sgir          
+  gicd_cpendsgir0: 00000000    gicd_cpendsgir1: 00000000
+  gicd_cpendsgir2: 00000000    gicd_cpendsgir3: 00000000
+  gicd_spendsgir0: 00000000    gicd_spendsgir1: 00000000
+  gicd_spendsgir2: 00000000    gicd_spendsgir3: 00000000
+       gicd_pidr4: 00000004         gicd_pidr5: 00000000
+       gicd_pidr6: 00000000         gicd_pidr7: 00000000
+       gicd_pidr0: 00000090         gicd_pidr1: 000000b4
+       gicd_pidr2: 0000002b         gicd_pidr3: 00000000
+       gicd_cidr0: 0000000d         gicd_cidr1: 000000f0
+       gicd_cidr2: 00000005         gicd_cidr3: 000000b1
+        gicc_ctlr: 00000000           gicc_pmr: 00000000
+         gicc_bpr: 00000002           gicc_iar:      N/A
+        gicc_eoir                     gicc_rpr: 000000ff
+       gicc_hppir: 000003ff          gicc_abpr: 00000003
+        gicc_aiar:      N/A         gicc_aeoir          
+      gicc_ahppir: 000003ff          gicc_apr0: 00000000
+      gicc_nsapr0: 00000000          gicc_iidr: 0202143b
+         gicc_dir                     gich_hcr: 00000000
+         gich_vtr: 90000003          gich_vmcr: 004c0000
+        gich_misr: 00000000         gich_eisr0: 00000000
+       gich_elsr0: 0000000f          gich_apr0: 00000000
+         gich_lr0: 00000000           gich_lr1: 00000000
+         gich_lr2: 00000000           gich_lr3: 00000000
+  gich_hcr_alias0: 00000000    gich_vtr_alias0: 90000003
+ gich_vmcr_alias0: 004c0000   gich_misr_alias0: 00000000
+gich_eisr0_alias0: 00000000  gich_elsr0_alias0: 0000000f
+ gich_apr0_alias0: 00000000    gich_lr0_alias0: 00000000
+  gich_lr1_alias0: 00000000    gich_lr2_alias0: 00000000
+  gich_lr3_alias0: 00000000    gich_hcr_alias1: 00000000
+  gich_vtr_alias1: 90000003   gich_vmcr_alias1: 004c0000
+ gich_misr_alias1: 00000000  gich_eisr0_alias1: 00000000
+gich_elsr0_alias1: 0000000f   gich_apr0_alias1: 00000000
+  gich_lr0_alias1: 00000000    gich_lr1_alias1: 00000000
+  gich_lr2_alias1: 00000000    gich_lr3_alias1: 00000000
+  gich_hcr_alias2: 00000000    gich_vtr_alias2: 90000003
+ gich_vmcr_alias2: 004c0000   gich_misr_alias2: 00000000
+gich_eisr0_alias2: 00000000  gich_elsr0_alias2: 0000000f
+ gich_apr0_alias2: 00000000    gich_lr0_alias2: 00000000
+  gich_lr1_alias2: 00000000    gich_lr2_alias2: 00000000
+  gich_lr3_alias2: 00000000    gich_hcr_alias3: 00000000
+  gich_vtr_alias3: 90000003   gich_vmcr_alias3: 004c0000
+ gich_misr_alias3: 00000000  gich_eisr0_alias3: 00000000
+gich_elsr0_alias3: 0000000f   gich_apr0_alias3: 00000000
+  gich_lr0_alias3: 00000000    gich_lr1_alias3: 00000000
+  gich_lr2_alias3: 00000000    gich_lr3_alias3: 00000000
+  gich_hcr_alias4: 00000000    gich_vtr_alias4: 00000000
+ gich_vmcr_alias4: 00000000   gich_misr_alias4: 00000000
+gich_eisr0_alias4: 00000000  gich_elsr0_alias4: 00000000
+ gich_apr0_alias4: 00000000    gich_lr0_alias4: 00000000
+  gich_lr1_alias4: 00000000    gich_lr2_alias4: 00000000
+  gich_lr3_alias4: 00000000    gich_hcr_alias5: 00000000
+  gich_vtr_alias5: 00000000   gich_vmcr_alias5: 00000000
+ gich_misr_alias5: 00000000  gich_eisr0_alias5: 00000000
+gich_elsr0_alias5: 00000000   gich_apr0_alias5: 00000000
+  gich_lr0_alias5: 00000000    gich_lr1_alias5: 00000000
+  gich_lr2_alias5: 00000000    gich_lr3_alias5: 00000000
+  gich_hcr_alias6: 00000000    gich_vtr_alias6: 00000000
+ gich_vmcr_alias6: 00000000   gich_misr_alias6: 00000000
+gich_eisr0_alias6: 00000000  gich_elsr0_alias6: 00000000
+ gich_apr0_alias6: 00000000    gich_lr0_alias6: 00000000
+  gich_lr1_alias6: 00000000    gich_lr2_alias6: 00000000
+  gich_lr3_alias6: 00000000    gich_hcr_alias7: 00000000
+  gich_vtr_alias7: 00000000   gich_vmcr_alias7: 00000000
+ gich_misr_alias7: 00000000  gich_eisr0_alias7: 00000000
+gich_elsr0_alias7: 00000000   gich_apr0_alias7: 00000000
+  gich_lr0_alias7: 00000000    gich_lr1_alias7: 00000000
+  gich_lr2_alias7: 00000000    gich_lr3_alias7: 00000000
+        gicv_ctlr: 00000000           gicv_pmr: 00000000
+         gicv_bpr: 00000002           gicv_iar:      N/A
+        gicv_eoir                     gicv_rpr: 000000ff
+       gicv_hppir: 000003ff          gicv_abpr: 00000003
+        gicv_aiar:      N/A         gicv_aeoir          
+      gicv_ahppir: 000003ff          gicv_apr0: 00000000
+        gicv_iidr: 0202143b           gicv_dir

@@ -1,0 +1,5 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+newtap: eval.uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477 missing IR length

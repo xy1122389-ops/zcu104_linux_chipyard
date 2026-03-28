@@ -1,0 +1,29 @@
+SUB_PROJECT=zcu104
+CONFIG=RocketZCU104LinuxBringupDebugConfig
+LOG=/root/chipyard/fpga/logs/zcu104_linuxbringup_make_bitstream_20260328_122128.log
+FIRTOOL_BIN=/root/chipyard/.oclaw-env/bin/firtool
+PATH_HEAD=/root/chipyard/fpga/scripts/toolwrap
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+java.io.FileNotFoundException: /root/chipyard/.sbt/boot/sbt.boot.lock (Read-only file system)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:187)
+	at xsbt.boot.Locks$GlobalLock.ignoringDeadlockAvoided(Locks.scala:60)
+	at xsbt.boot.Locks$GlobalLock.withLock(Locks.scala:50)
+	at xsbt.boot.Locks$.apply0(Locks.scala:31)
+	at xsbt.boot.Locks$.apply(Locks.scala:28)
+	at xsbt.boot.Launch.locked(Launch.scala:238)
+	at xsbt.boot.Launch.app(Launch.scala:147)
+	at xsbt.boot.Launch.app(Launch.scala:145)
+	at xsbt.boot.Launch$.run(Launch.scala:102)
+	at xsbt.boot.Launch$$anonfun$apply$1.apply(Launch.scala:35)
+	at xsbt.boot.Launch$.launch(Launch.scala:117)
+	at xsbt.boot.Launch$.apply(Launch.scala:18)
+	at xsbt.boot.Boot$.runImpl(Boot.scala:41)
+	at xsbt.boot.Boot$.main(Boot.scala:17)
+	at xsbt.boot.Boot.main(Boot.scala)
+Error during sbt execution: java.io.FileNotFoundException: /root/chipyard/.sbt/boot/sbt.boot.lock (Read-only file system)
+make: *** [/root/chipyard/common.mk:138: /root/chipyard/.classpath_cache/chipyard_fpga.jar] Error 1

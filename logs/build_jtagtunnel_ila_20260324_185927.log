@@ -1,0 +1,172 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\insert_ila_jtagtunnel_zcu104.tcl}
+# if { $argc < 2 } {
+#   puts "Usage: vivado -mode batch -source scripts/insert_ila_jtagtunnel_zcu104.tcl -tclargs <in_post_synth_dcp> <out_dir>"
+#   exit 2
+# }
+# set in_dcp [lindex $argv 0]
+# set out_dir [lindex $argv 1]
+# file mkdir $out_dir
+# open_checkpoint $in_dcp
+Command: open_checkpoint {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig\obj\post_synth.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 1604.523 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.832 . Memory (MB): peak = 1911.094 ; gain = 1.391
+INFO: [Netlist 29-17] Analyzing 3600 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.238 . Memory (MB): peak = 2600.125 ; gain = 0.000
+Restored from archive | CPU: 0.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.239 . Memory (MB): peak = 2600.125 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.025 . Memory (MB): peak = 3038.449 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 526 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 2 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 28 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 362 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 2 instances
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:31 ; elapsed = 00:00:40 . Memory (MB): peak = 3038.449 ; gain = 1433.926
+# proc qnet {cell_name} {
+#   set pin [get_pins -quiet ${cell_name}/Q]
+#   if { $pin eq "" } { return "" }
+#   return [get_nets -quiet -of_objects $pin]
+# }
+# set clk_net         [get_nets -quiet inst_jtag_tunnel/_inst_jtag_tunnel_jtag_tck]
+# set shift_net       [get_nets -quiet inst_jtag_tunnel/_bscane2_SHIFT]
+# set tdi_net         [get_nets -quiet _inst_jtag_tunnel_jtag_tdi]
+# set tms_net         [get_nets -quiet inst_jtag_tunnel/_inst_jtag_tunnel_jtag_tms]
+# set tdo_net         [get_nets -quiet inst_jtag_tunnel/_system_debug_systemjtag_jtag_TDO_data]
+# set tdi_reg_net     [qnet inst_jtag_tunnel/tdiRegister_reg]
+# set shift_counter_nets [list \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[0]}] \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[1]}] \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[2]}] \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[3]}] \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[4]}] \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[5]}] \
+#   [qnet {inst_jtag_tunnel/shiftCounter_reg[6]}] \
+# ]
+# set pos_counter_nets [list \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[0]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[1]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[2]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[3]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[4]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[5]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[6]}] \
+#   [qnet {inst_jtag_tunnel/posCounter_reg[7]}] \
+# ]
+# set neg_counter_nets [list \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[0]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[1]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[2]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[3]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[4]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[5]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[6]}] \
+#   [qnet {inst_jtag_tunnel/negCounter_reg[7]}] \
+# ]
+# set missing {}
+# foreach {name netobj} [list \
+#   clk_net $clk_net \
+#   shift_net $shift_net \
+#   tdi_net $tdi_net \
+#   tms_net $tms_net \
+#   tdo_net $tdo_net \
+#   tdi_reg_net $tdi_reg_net \
+# ] {
+#   if { $netobj eq "" } { lappend missing $name }
+# }
+# for {set i 0} {$i < 7} {incr i} {
+#   if { [lindex $shift_counter_nets $i] eq "" } { lappend missing "shift_counter_$i" }
+# }
+# for {set i 0} {$i < 8} {incr i} {
+#   if { [lindex $pos_counter_nets $i] eq "" } { lappend missing "pos_counter_$i" }
+#   if { [lindex $neg_counter_nets $i] eq "" } { lappend missing "neg_counter_$i" }
+# }
+# if { [llength $missing] > 0 } {
+#   puts "ERROR: missing required nets: $missing"
+#   exit 3
+# }
+# create_debug_core u_ila_jtag ila
+# set dbg [get_debug_cores u_ila_jtag]
+# set_property C_DATA_DEPTH 4096 $dbg
+# set_property C_INPUT_PIPE_STAGES 0 $dbg
+# for {set i 0} {$i < 8} {incr i} {
+#   create_debug_port u_ila_jtag probe
+# }
+# set_property port_width 1 [get_debug_ports u_ila_jtag/probe0]
+# set_property port_width 1 [get_debug_ports u_ila_jtag/probe1]
+# set_property port_width 1 [get_debug_ports u_ila_jtag/probe2]
+# set_property port_width 1 [get_debug_ports u_ila_jtag/probe3]
+# set_property port_width 1 [get_debug_ports u_ila_jtag/probe4]
+# set_property port_width 7 [get_debug_ports u_ila_jtag/probe5]
+# set_property port_width 8 [get_debug_ports u_ila_jtag/probe6]
+# set_property port_width 8 [get_debug_ports u_ila_jtag/probe7]
+# connect_debug_port u_ila_jtag/clk    $clk_net
+# connect_debug_port u_ila_jtag/probe0 $shift_net
+# connect_debug_port u_ila_jtag/probe1 $tdi_net
+# connect_debug_port u_ila_jtag/probe2 $tms_net
+# connect_debug_port u_ila_jtag/probe3 $tdo_net
+# connect_debug_port u_ila_jtag/probe4 $tdi_reg_net
+# connect_debug_port u_ila_jtag/probe5 $shift_counter_nets
+# connect_debug_port u_ila_jtag/probe6 $pos_counter_nets
+# connect_debug_port u_ila_jtag/probe7 $neg_counter_nets
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_clk expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_cs expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_dat_0 expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_dat_3 expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port uart_rxd expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port uart_txd expects both input and output buffering but the buffers are incomplete.
+INFO: [Project 1-461] DRC finished with 0 Errors, 6 Warnings
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 3048.531 ; gain = 10.082
+
+Starting Cache Timing Information Task
+Ending Cache Timing Information Task | Checksum: 22b79d8e2
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.216 . Memory (MB): peak = 3048.531 ; gain = 0.000
+
+Starting Logic Optimization Task
+INFO: [Common 17-83] Releasing license: Implementation
+5 Infos, 6 Warnings, 0 Critical Warnings and 1 Errors encountered.
+opt_design failed
+ERROR: [Chipscope 16-213] The debug port 'u_ila_jtag/probe8' has 1 unconnected channels (bits). This will cause errors during implementation.
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 24 19:00:16 2026...

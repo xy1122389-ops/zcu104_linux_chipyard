@@ -1,0 +1,15 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'adapter driver' not 'interface'
+DEPRECATED! use 'ftdi vid_pid' not 'ftdi_vid_pid'
+DEPRECATED! use 'adapter serial' not 'ftdi_serial'
+DEPRECATED! use 'ftdi channel' not 'ftdi_channel'
+DEPRECATED! use 'ftdi layout_init' not 'ftdi_layout_init'
+DEPRECATED! use 'adapter speed' not 'adapter_khz'
+Info : clock speed 1000 kHz
+Warn : Haven't made progress in mpsse_flush() for 2221ms.
+Warn : Haven't made progress in mpsse_flush() for 4006ms.
+Warn : Haven't made progress in mpsse_flush() for 8086ms.
+Warn : Haven't made progress in mpsse_flush() for 16246ms.

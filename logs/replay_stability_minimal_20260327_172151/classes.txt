@@ -1,0 +1,22 @@
+CLASS 1
+HASH=8f70dce344c6d7fb40bf11f5dd5ee0c636c51187d0d3d318a6747c640171a570
+EVENT_COUNT=566
+/root/chipyard/fpga/logs/jtagtunnel_ila_inline_ebreak_postexec1_stable_2_20260327_172327/jtagtunnel_ila.csv
+/root/chipyard/fpga/logs/jtagtunnel_ila_inline_ebreak_postexec1_stable_3_20260327_172518/jtagtunnel_ila.csv
+/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_stable_1_20260327_172716/jtagtunnel_ila.csv
+
+CLASS 2
+HASH=945646ad588b104dae9b0dc08a63d2c3ee01180c58b508d35b6ca01e73b31cc2
+EVENT_COUNT=609
+/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_stable_2_20260327_172919/jtagtunnel_ila.csv
+
+CLASS 3
+HASH=bca58502b1d6af7e05b4a1d1de46797b839a357c07de069ef5d857649319ad68
+EVENT_COUNT=569
+/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_stable_3_20260327_173116/jtagtunnel_ila.csv
+
+CLASS 4
+HASH=373d8e8c675d32f8fb8f10f6990daf028f1158eedbab8481493fc47a94d957b6
+EVENT_COUNT=567
+/root/chipyard/fpga/logs/jtagtunnel_ila_upload_only_ebreak_postexec1_stable_1_recover_20260327_172235/jtagtunnel_ila.csv
+

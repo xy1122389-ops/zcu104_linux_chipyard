@@ -1,0 +1,48 @@
+==== send host byte to COM7 ====
+SEND_OK
+
+==== probe DUT uart rx ====
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== select PSU ====
+
+==== configure uart ====
+RXDATA_BEFORE=64000004:   33333333
+
+
+==== poll rxdata ====
+RXDATA_WORD=0x33333333
+RXDATA_BYTE=0x33
+
+==== disconnect ====

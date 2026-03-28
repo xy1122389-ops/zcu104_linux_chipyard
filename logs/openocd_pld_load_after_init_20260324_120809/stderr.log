@@ -1,0 +1,82 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Debug: 6 3 command.c:82 script_debug(): command - adapter driver ftdi
+Debug: 7 3 command.c:82 script_debug(): command - ftdi vid_pid 0x0403 0x6011
+Debug: 8 3 command.c:82 script_debug(): command - adapter serial 07198
+Debug: 9 3 command.c:82 script_debug(): command - ftdi channel 0
+Debug: 10 3 command.c:82 script_debug(): command - ftdi layout_init 0x00e8 0x60eb
+Debug: 11 3 command.c:82 script_debug(): command - transport select jtag
+Debug: 12 3 command.c:82 script_debug(): command - reset_config none
+Debug: 13 3 command.c:82 script_debug(): command - adapter speed 1000
+Debug: 14 3 adapter.c:254 adapter_config_khz(): handle adapter khz
+Debug: 15 4 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 16 4 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 17 4 command.c:82 script_debug(): command - jtag newtap uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477
+Debug: 18 4 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: tap, Dotted: uscale.tap, 8 params
+Debug: 19 4 core.c:1488 jtag_tap_init(): Created Tap: uscale.tap @ abs position 0, irlen 4, capture: 0x1 mask: 0xf
+Debug: 20 4 command.c:82 script_debug(): command - jtag newtap uscale ps -irlen 12 -ircapture 0x1 -irmask 0x03 -ignore-version -expected-id 0x14730093 -expected-id 0x04730093
+Debug: 21 4 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: ps, Dotted: uscale.ps, 11 params
+Debug: 22 4 core.c:1488 jtag_tap_init(): Created Tap: uscale.ps @ abs position 1, irlen 12, capture: 0x1 mask: 0x3
+Debug: 23 4 command.c:82 script_debug(): command - pld create uscale.pld virtex2 -chain-position uscale.ps -no_jstart
+Debug: 24 5 command.c:82 script_debug(): command - init
+Debug: 25 5 command.c:82 script_debug(): command - target init
+Debug: 26 5 command.c:82 script_debug(): command - target names
+Debug: 27 5 target.c:1598 handle_target_init_command(): Initializing targets...
+Debug: 28 5 ftdi.c:654 ftdi_initialize(): ftdi interface using shortest path jtag state transitions
+Debug: 29 21 mpsse.c:429 mpsse_purge(): -
+Debug: 30 22 mpsse.c:710 mpsse_loopback_config(): off
+Debug: 31 22 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 32 22 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 33 22 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 34 22 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 35 22 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 36 22 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 37 22 adapter.c:221 adapter_khz_to_speed(): have adapter set up
+Debug: 38 22 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 39 22 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 40 22 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 41 23 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 42 23 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 43 23 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 44 23 adapter.c:221 adapter_khz_to_speed(): have adapter set up
+Info : 45 23 adapter.c:182 adapter_init(): clock speed 1000 kHz
+Debug: 46 23 openocd.c:133 handle_init_command(): Debug Adapter init complete
+Debug: 47 23 command.c:82 script_debug(): command - transport init
+Debug: 48 23 transport.c:274 handle_transport_init(): handle_transport_init
+Debug: 49 23 core.c:843 jtag_add_reset(): SRST line released
+Debug: 50 23 core.c:868 jtag_add_reset(): TRST line released
+Debug: 51 23 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 52 23 command.c:82 script_debug(): command - jtag arp_init
+Debug: 53 23 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 54 23 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 55 24 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 56 24 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Info : 57 25 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : 58 25 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Debug: 59 25 core.c:1378 jtag_validate_ircapture(): IR capture validation scan
+Debug: 60 25 core.c:1435 jtag_validate_ircapture(): uscale.tap: IR capture 0x01
+Debug: 61 25 core.c:1435 jtag_validate_ircapture(): uscale.ps: IR capture 0x51
+Debug: 62 25 command.c:82 script_debug(): command - dap init
+Debug: 63 25 arm_dap.c:96 dap_init_all(): Initializing all DAPs ...
+Debug: 64 26 openocd.c:150 handle_init_command(): Examining targets...
+Debug: 65 26 command.c:82 script_debug(): command - flash init
+Debug: 66 26 tcl.c:1489 handle_flash_init_command(): Initializing flash devices...
+Debug: 67 26 command.c:82 script_debug(): command - nand init
+Debug: 68 26 tcl.c:485 handle_nand_init_command(): Initializing NAND devices...
+Debug: 69 26 command.c:82 script_debug(): command - pld init
+Debug: 70 26 pld.c:337 handle_pld_init_command(): Initializing PLDs...
+Debug: 71 26 command.c:82 script_debug(): command - tpiu init
+Warn : 72 26 gdb_server.c:3942 gdb_target_add_all(): gdb services need one or more targets defined
+Debug: 73 26 command.c:82 script_debug(): command - target names
+Debug: 74 26 command.c:82 script_debug(): command - target names
+Debug: 75 26 command.c:82 script_debug(): command - scan_chain
+Debug: 76 26 command.c:82 script_debug(): command - pld load uscale.pld C:/Users/24242/AppData/Local/Temp/ZCU104FPGATestHarness_debug_after_init.bit
+Debug: 77 29 xilinx_bit.c:116 xilinx_read_bit_file(): bit_file: ZCU104FPGATestHarness;COMPRESS=TRUE;UserID=0XFFFFFFFF;Version=2021.2 xczu7ev-ffvc1156-2-e 2026/03/23,18:57:00 10831932
+Debug: 78 87061 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 79 87062 command.c:82 script_debug(): command - shutdown
+User : 80 87063 server.c:761 handle_shutdown_command(): shutdown command invoked

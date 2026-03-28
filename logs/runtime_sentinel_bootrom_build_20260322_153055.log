@@ -1,0 +1,9 @@
+make: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux'
+rm -rf /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build
+mkdir -p /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build
+/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-gcc -march=rv64ima_zicsr_zifencei -mcmodel=medany -O2 -std=gnu11 -Wall -nostartfiles -fno-common -g -DENTROPY=0 -mabi=lp64 -DNONSMP_HART=0 -I /root/chipyard/fpga/src/main/resources/zcu104/sdboot/include -I /root/chipyard/fpga/src/main/resources/zcu104/sdboot -I /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/ -DTL_CLK="50UL" -static -nostdlib -L /root/chipyard/fpga/src/main/resources/zcu104/sdboot/linker -T /root/chipyard/fpga/src/main/resources/zcu104/sdboot/linker/sdboot.elf.lds -o /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.elf head.S linux_handoff.c /root/chipyard/fpga/src/main/resources/zcu104/sdboot/kprintf.c
+/root/chipyard/.oclaw-env/riscv-tools/bin/../lib/gcc/riscv64-unknown-elf/14.2.0/../../../../riscv64-unknown-elf/bin/ld: warning: cannot find entry symbol _prog_start; defaulting to 0000000000010000
+mkdir -p /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build
+/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-objcopy -O binary --change-addresses=-0x10000 /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.elf /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.bin
+/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-objdump -D -S /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.elf > /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build/sdboot.dump
+make: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux'

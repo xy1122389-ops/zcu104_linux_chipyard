@@ -1,0 +1,264 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+==== osa help text ====
+NAME
+    osa - Configure OS awareness for a symbol file.
+
+SYNOPSIS
+    osa -file <file-name> [options]
+        Configure OS awareness for the symbol file <file-name> specified.
+        If no symbol file is specifed and only one symbol file exists in
+        target's memory map, then that symbol file is used.
+        If no symbol file is specifed and multiple symbol files exist in
+        target's memory map, then an error is thrown.
+
+OPTIONS
+    -disable
+        Disable OS awareness for a symbol file. If this option is not specified,
+        OS awareness is enabled.
+
+    -fast-exec
+        Enable fast process start. New processes will not be tracked for debug
+        and are not visible in the debug targets view.
+
+    -fast-step
+        Enable fast stepping. Only the current process will be re-synced after
+        stepping. All other processes will not be re-synced when this flag is
+	turned on.
+
+NOTE
+    fast-exec and fast-step options are not valid with disable option.
+
+EXAMPLE
+    osa -file <symbol-file> -fast-step -fast-exec
+        Enable OSA for <symbole-file> and turn on fast-exec and fast-step modes.
+
+    osa -disable -file <symbol-file>
+        Disable OSA for <symbol-file>.
+
+RETURNS
+    Nothing, if OSA is configured successfully.
+    Error, if ambiguous options are specified.
+
+
+==== gdbremote connect help text ====
+NAME
+    gdbremote connect - Connect to GDB remote server.
+
+SYNOPSIS
+    gdbremote connect [options] server
+        Connect to a GDB remote server, for example qemu.
+        xrt_server is used to connect to remote GDB server.
+
+OPTIONS
+    -architecture <name>
+        Specify default architecture is remote server does not provide it.
+
+RETURNS
+    Nothing, if the connection is successful.
+    Error string, if the connection failed.
+
+
+==== xsdbserver start help text ====
+NAME
+    xsdbserver start - Start XSDB command server.
+
+SYNOPSIS
+    xsdbserver start [options]
+        Start XSDB command server listener.  XSDB command server
+        allows external processes to connect to XSDB to evaluate
+        commands.  The XSDB server reads commands from the
+        connected socket one line at the time.  After evaluation, a
+        line is sent back starting with 'okay' or 'error' followed
+        by the result or error as a backslash quoted string.
+
+OPTIONS
+    -host <addr>
+        Limits the network interface on which to listen for incomming
+        connections.
+
+    -port <port>
+        Specifies port to listen on.  If this option is not specified
+        or if the port is zero then a dynamically allocated port
+        number is used.
+
+EXAMPLE
+    xsdbserver start
+        Start XSDB server listener using dynamically allocated port.
+
+    xsdbserver start -host localhost -port 2000
+        Start XSDB server listener using port 2000 and only allow
+        incomming connections on this host.
+
+RETURNS
+    Server details are disaplayed on the console if server is started.
+    successfully, or error string, if a server has been already started.
+
+
+==== jtag sequence help text ====
+NAME
+    jtag sequence - Create JTAG sequence object.
+
+SYNOPSIS
+    jtag sequence
+        Create JTAG sequence object.
+
+DESCRIPTION
+    The jtag sequence command creates a new sequence object.  After
+    creation the sequence is empty.  The following sequence object
+    commands are available:
+
+    sequence state new-state [count]
+        Move JTAG state machine to <new-state> and then generate
+        <count> JTAG clocks.  If <clock> is given and <new-state> is
+        not a looping state (RESET, IDLE, IRSHIFT, IRPAUSE, DRSHIFT or
+        DRPAUSE) then state machine will move towards RESET state.
+
+    sequence irshift [options] [bits [data]]
+    sequence drshift [options] bits [data]
+        Shift data in IRSHIFT or DRSHIFT state.  Data is either given
+        as the last argument or if -tdi option is given then data will
+        be all zeros or all ones depending on the argument given to
+        -tdi.  The <bits> and <data> arguments are not used for
+        irshift when the -register option is specified.  Available
+        options:
+
+        -register <name>
+            Select instruction register by name.  This option is only
+            supported for irshift.
+        -tdi <value>
+            TDI value to use for all clocks in SHIFT state.
+        -binary
+            Format of <data> is binary, for example data from a file
+            or from binary format.
+        -integer
+            Format of <data> is an integer.  The least significant bit
+            of data is shifted first.
+        -bits
+            Format of <data> is a binary text string.  The first bit
+            in the string is shifted first.
+        -hex
+            Format of <data> is a hexadecimal text string.  The least
+            significant bit of the first byte in the string is shifted
+            first.
+        -capture
+            Cature TDO data during shift and return from sequence run
+            command.
+        -state <new-state>
+            State to enter after shift is complete.  The default is RESET.
+
+    sequence delay usec
+        Generate delay between sequence commands.  No JTAG clocks will
+        be generated during the delay.  The delay is guaranteed to be
+        at least <usec> microseconds, but can be longer for cables
+        that do not support delays without generating JTAG clocks.
+
+    sequence get_pin pin
+        Get value of <pin>.  Supported pins is cable specific.
+
+    sequence set_pin pin value
+        Set value of <pin> to <value>.  Supported pins is cable
+        specific.
+
+    sequence atomic enable
+        Set or clear atomic sequences.  This is useful to creating
+        sequences that are guaranteed to run with precise timing or
+        fail.  Atomic sequences should be as short as possible to
+        minimize the risk of failure.
+
+    sequence run [options]
+        Run JTAG operations in sequence for the currently selected
+        jtag target.  This command will return the result from shift
+        commands using -capture option and from get_pin commands.
+        Available options:
+
+        -binary
+            Format return value(s) as binary.  The first bit shifted
+            out is the least significant bit in the first byte
+            returned.
+        -integer
+            Format return values(s) as integer.  The first bit shifted
+            out is the least significant bit of the integer.
+        -bits
+            Format return value(s) as binary text string.  The first
+            bit shifted out is the first character in the string.
+        -hex
+            Format return value(s) as hexadecimal text string.  The
+            first bit shifted out is the least significant bit of the
+            first byte of the in the string.
+        -single
+            Combine all return values as a single piece of data.
+            Without this option the return value is a list with one
+            entry for every shift with -capture and every get_pin.
+
+    sequence clear
+        Remove all commands from sequence.
+
+    sequence delete
+        Delete sequence.
+
+EXAMPLE
+    set seqname [jtag sequence]
+    $seqname state RESET
+    $seqname drshift -capture -tdi 0 256
+    set result [$seqname run]
+    $seqname delete
+
+RETURNS
+    Jtag sequence object.
+
+
+==== jtag device_properties help text ====
+NAME
+    jtag device_properties - Get/set device properties.
+
+SYNOPSIS
+    jtag device_properties idcode
+        Get JTAG device properties associated with <idcode>.
+
+    jtag device_properties key value ...
+        Set JTAG device properties.
+
+EXAMPLE
+    jtag device_properties 0x4ba00477
+        Return Tcl dict containing device properties for idcode 0x4ba00477.
+
+    jtag device_properties {idcode 0x4ba00477 mask 0xffffffff name dap irlen 4}
+        Set device properties for idcode 0x4ba00477.
+
+RETURNS
+    Jtag device properties for the given idcode, or nothing, if the idcode is
+    unknown.
+
+

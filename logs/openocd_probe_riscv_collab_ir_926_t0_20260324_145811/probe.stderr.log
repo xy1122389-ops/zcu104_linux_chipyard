@@ -1,0 +1,1 @@
+./scripts/openocd_probe_riscv_collab_ir.sh: line 125: /tmp/riscv-collab-openocd/bin/openocd_shift2_both.exe: Permission denied

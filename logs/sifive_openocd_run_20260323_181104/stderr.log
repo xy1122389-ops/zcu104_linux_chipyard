@@ -1,0 +1,14 @@
+Open On-Chip Debugger 0.10.0+dev (SiFive OpenOCD 0.10.0-2020.04.6)
+Licensed under GNU GPL v2
+For bug reports:
+	https://github.com/sifive/freedom-tools/issues
+Info : Nested Tap based Bscan Tunnel Selected
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Error: JTAG-DP STICKY ERROR
+Info : Listening on port 3333 for gdb connections
+Info : Listening on port 3334 for gdb connections
+shutdown command invoked

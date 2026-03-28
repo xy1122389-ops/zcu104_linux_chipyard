@@ -1,0 +1,28 @@
+LOG=/root/chipyard/fpga/scripts/../logs/runtime_0200_instruction_evidence_20260326_171605.log
+TASK=instruction_evidence_0x200
+WINDOW_MATCH_COUNT=32/32
+WINDOW_FULL_MATCH=YES
+PARK_PC=pc: 0000000000000200
+PARK_CPSR=cpsr: 000003cd
+PSTATE_MODE=EL3h
+PARK_STATE_REASON=Breakpoint, EL3(S)/A64
+RAW_WORD_0x1FC=0537F263
+RAW_WORD_0x200=008A3783
+RAW_WORD_0x204=B883CF95
+RAW_WORD_0x208=8B630387
+A64_WORD_0x1FC=sel z3.b, p12, z19.b, z23.b
+A64_WORD_0x200=invalid-a64
+A64_WORD_0x204=ldrsw x21, [x28, #0x3c]!
+A64_WORD_0x208=invalid-a64
+INSTR_0x1FC=0537f263 :: bgeu	a5,s3,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+INSTR_0x200=008a3783 :: ld	a5,8(s4)
+INSTR_0x204=cf95 :: beqz	a5,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+INSTR_0x206=0387b883 :: ld	a7,56(a5)
+INSTR_0x20A=02088b63 :: beqz	a7,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+NOTE_0x208=0x208 is a raw 32-bit word slice, not an instruction boundary; it straddles the tail of ld a7,56(a5) at 0x206 and the head of beqz a7,0x240 at 0x20A.
+LOCAL_FLOW_SHAPE=0x1FC branches forward to 0x240; 0x200 is a load; 0x204 and 0x20A are forward null-check branches; later 0x2234 is jalr a7. There is no backward branch, no self-loop, and no wfi in 0x1FC..0x240.
+EL3_VECTOR_NOTE=In AArch64, offset 0x200 is the synchronous exception vector slot for CurrentEL using SPx. So PC=0x200 with PSTATE=EL3h is architecturally consistent with falling into the EL3 sync vector if VBAR_EL3 base is zero.
+STEP_CHAIN_STABILITY=pc=True cpsr=True r0=True sp=True pc_values=pc: 0000000000000200 | pc: 0000000000000200 | pc: 0000000000000200 | pc: 0000000000000200 | pc: 0000000000000200 | pc: 0000000000000200
+CONCLUSION_PRIMARY=The mirrored low-address bytes are ordinary fw_payload text and do not encode a software self-loop at 0x200.
+CONCLUSION_SECONDARY=If interpreted as the mirrored RISC-V payload stream, 0x200 is ld a5,8(s4), so the only stall-like explanation nearby would be a load that never retires, not a branch loop. The observed five-step chain keeps PC/CPSR/R0/SP frozen at 0x200. In A64 view, the first word at 0x200 is not a valid AArch64 instruction, and 0x1FC/0x208 are not a sane A53 vector stub either. So the best fit is not a software branch loop but a synchronous-exception path landing on bad bytes in a low-address alias window, likely re-entering or re-presenting at the EL3 0x200 vector slot.
+BEST_FIT=el3_sync_vector_entry_on_invalid_alias_bytes_not_branch_self_loop

@@ -1,0 +1,8 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_w5_inline_20260325_152342
+LABEL=w5_inline
+DR_BITS=16
+DR_HEX=0x100A
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_w5_inline_20260325_152342/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_w5_inline_20260325_152342/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_w5_inline_20260325_152342/stimulus.log

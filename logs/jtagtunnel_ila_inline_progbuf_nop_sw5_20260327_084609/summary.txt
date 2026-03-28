@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_progbuf_nop_sw5_20260327_084609
+LABEL=progbuf_nop_sw5
+XSDB_SCRIPT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_progbuf_nop_sw5_20260327_084606/xsdb_progbuf_exec.tcl
+JTAG_HZ=10000
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_progbuf_nop_sw5_20260327_084609/jtagtunnel_ila.csv
+STATE_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_progbuf_nop_sw5_20260327_084609/state.txt
+STIM_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_progbuf_nop_sw5_20260327_084609/stimulus.log

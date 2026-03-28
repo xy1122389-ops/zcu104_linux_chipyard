@@ -1,0 +1,11 @@
+
+Channel closed
+    invoked from within
+"::tcf::eval -progress {apply {{msg} {puts $msg}}} {tcf_send_command tcfchan#0 Jtag getOption ss ei {{jsn-HW-Z1-ZCU104 FT4232H-07198A-14730093-0} frequency}}"
+    (procedure "::tcf::send_command" line 1)
+    invoked from within
+"::tcf::send_command $chan Jtag getOption ss ei [list $node frequency]"
+    (procedure "::xsdb::jtag::frequency" line 104)
+    invoked from within
+"jtag frequency 10000"
+    (file "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\jtagtunnel_ila_inline_addi_x0_20_stability_r1_20260327_171244\xsdb_progbuf_exec.tcl" line 3)

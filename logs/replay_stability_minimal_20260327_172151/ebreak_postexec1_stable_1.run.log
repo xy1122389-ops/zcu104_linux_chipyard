@@ -1,0 +1,2 @@
+MODE=recover
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_upload_only_ebreak_postexec1_stable_1_recover_20260327_172235

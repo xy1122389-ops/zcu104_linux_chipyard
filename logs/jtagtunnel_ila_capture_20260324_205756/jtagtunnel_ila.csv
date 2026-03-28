@@ -1,0 +1,2 @@
+Sample in Buffer,Sample in Window,TRIGGER,u_ila_jtag__bscane2_SHIFT,_inst_jtag_tunnel_jtag_tdi,inst_jtag_tunnel/_inst_jtag_tunnel_jtag_tms,inst_jtag_tunnel/_system_debug_systemjtag_jtag_TDO_data,inst_jtag_tunnel/tdiRegister_reg_n_0,inst_jtag_tunnel/shiftCounter_reg_n_0_[0:0],inst_jtag_tunnel/p_1_in[5:0],inst_jtag_tunnel/posCounter_reg[7:0],inst_jtag_tunnel/negCounter_reg[7:0]
+Radix - UNSIGNED,UNSIGNED,UNSIGNED,HEX,HEX,HEX,HEX,HEX,HEX,HEX,HEX,HEX

@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/orthogonal_width_payloadlen_probe_20260324_163303
+mode0_w5_len7.stderr SEL=00/00/40/01 DTMCS=00/49/018c6d7d04/01
+mode0_w6_len5.stderr SEL=00/00/00/06 DTMCS=01/24/01eed1c7e2/07
+mode0_w8_len5.stderr SEL=00/00/00/06 DTMCS=01/24/01eed1c7e2/07
+mode1_w5_len7.stderr SEL=00/00/30/00 DTMCS=00/49/018c6d7d04/01
+mode1_w6_len5.stderr SEL=00/00/40/01 DTMCS=01/24/01eed1c7e2/07
+mode1_w8_len5.stderr SEL=00/00/40/01 DTMCS=01/24/01eed1c7e2/07

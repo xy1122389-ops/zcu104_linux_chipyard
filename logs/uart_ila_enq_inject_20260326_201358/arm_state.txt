@@ -1,0 +1,10 @@
+TARGET=127.0.0.1:3121/xilinx_tcf/Xilinx/07198A
+DEVICE=xczu7_0
+ILA=hw_ila_1
+TRIGGER_PROBE=enq
+TRIGGER_VALUE=0
+ALL_PROBES=_dutWrangler_auto_out_reset chiptop0/system/uartClockDomainWrapper/uart_0/txq/do_enq uart_rxd_IBUF uart_txd_OBUF
+TX_PROBE=uart_txd_OBUF
+RX_PROBE=uart_rxd_IBUF
+RST_PROBE=_dutWrangler_auto_out_reset
+ENQ_PROBE=chiptop0/system/uartClockDomainWrapper/uart_0/txq/do_enq

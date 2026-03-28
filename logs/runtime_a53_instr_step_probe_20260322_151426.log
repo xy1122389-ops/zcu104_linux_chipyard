@@ -1,0 +1,207 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== initial ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9* Cortex-A53 #0 (Hardware Breakpoint, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+STABLE_REASON=Hardware Breakpoint, EL3(S)/A64
+STABLE_PC=pc: 0000000000000200
+STABLE_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STABLE_R0=r0: 0000000000c52838
+STABLE_SP=sp: d08609a221400281
+STABLE_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+
+==== stpi chain ====
+STPI_1_RUNNING_REASON=Running
+STPI_1_RUNNING_PC=pc: 0000000000000200
+STPI_1_RUNNING_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STPI_1_RUNNING_R0=r0: 0000000000c52838
+STPI_1_RUNNING_SP=sp: d08609a221400281
+STPI_1_RUNNING_DIS_ERR=cannot read PC. current target state is "Running"
+STPI_1_STOPPED_REASON=Halting Step, EL3(S)/A64
+STPI_1_STOPPED_PC=pc: 0000000000000200
+STPI_1_STOPPED_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STPI_1_STOPPED_R0=r0: 0000000000c52838
+STPI_1_STOPPED_SP=sp: d08609a221400281
+STPI_1_STOPPED_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+STPI_2_RUNNING_REASON=Running
+STPI_2_RUNNING_PC=pc: 0000000000000200
+STPI_2_RUNNING_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STPI_2_RUNNING_R0=r0: 0000000000c52838
+STPI_2_RUNNING_SP=sp: d08609a221400281
+STPI_2_RUNNING_DIS_ERR=cannot read PC. current target state is "Running"
+STPI_2_STOPPED_REASON=Halting Step, EL3(S)/A64
+STPI_2_STOPPED_PC=pc: 0000000000000200
+STPI_2_STOPPED_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STPI_2_STOPPED_R0=r0: 0000000000c52838
+STPI_2_STOPPED_SP=sp: d08609a221400281
+STPI_2_STOPPED_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+STPI_3_RUNNING_REASON=Running
+STPI_3_RUNNING_PC=pc: 0000000000000200
+STPI_3_RUNNING_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STPI_3_RUNNING_R0=r0: 0000000000c52838
+STPI_3_RUNNING_SP=sp: d08609a221400281
+STPI_3_RUNNING_DIS_ERR=cannot read PC. current target state is "Running"
+STPI_3_STOPPED_REASON=Halting Step, EL3(S)/A64
+STPI_3_STOPPED_PC=pc: 0000000000000200
+STPI_3_STOPPED_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STPI_3_STOPPED_R0=r0: 0000000000c52838
+STPI_3_STOPPED_SP=sp: d08609a221400281
+STPI_3_STOPPED_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+
+==== reset back to 0x200 ====
+WARNING: If the reset is being triggered after powering on the device,
+          write bootloop at reset vector address (0xffff0000), or use
+          -clear-registers option, to avoid unpredictable behavior.
+          Further warnings will be suppressed
+RESET_BACK_REASON=Breakpoint, EL3(S)/A64
+RESET_BACK_PC=pc: 0000000000000200
+RESET_BACK_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+RESET_BACK_R0=r0: 0000000000c52838
+RESET_BACK_SP=sp: d08609a221400281
+RESET_BACK_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+
+==== nxti chain ====
+NXTI_1_RUNNING_REASON=Running
+NXTI_1_RUNNING_PC=pc: 0000000000000200
+NXTI_1_RUNNING_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+NXTI_1_RUNNING_R0=r0: 0000000000c52838
+NXTI_1_RUNNING_SP=sp: d08609a221400281
+NXTI_1_RUNNING_DIS_ERR=cannot read PC. current target state is "Running"
+NXTI_1_STOPPED_REASON=Halting Step, EL3(S)/A64
+NXTI_1_STOPPED_PC=pc: 0000000000000200
+NXTI_1_STOPPED_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+NXTI_1_STOPPED_R0=r0: 0000000000c52838
+NXTI_1_STOPPED_SP=sp: d08609a221400281
+NXTI_1_STOPPED_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+NXTI_2_RUNNING_REASON=Running
+NXTI_2_RUNNING_PC=pc: 0000000000000200
+NXTI_2_RUNNING_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+NXTI_2_RUNNING_R0=r0: 0000000000c52838
+NXTI_2_RUNNING_SP=sp: d08609a221400281
+NXTI_2_RUNNING_DIS_ERR=cannot read PC. current target state is "Running"
+NXTI_2_STOPPED_REASON=Halting Step, EL3(S)/A64
+NXTI_2_STOPPED_PC=pc: 0000000000000200
+NXTI_2_STOPPED_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+NXTI_2_STOPPED_R0=r0: 0000000000c52838
+NXTI_2_STOPPED_SP=sp: d08609a221400281
+NXTI_2_STOPPED_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208
+NXTI_3_RUNNING_REASON=Running
+NXTI_3_RUNNING_PC=pc: 0000000000000200
+NXTI_3_RUNNING_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+NXTI_3_RUNNING_R0=r0: 0000000000c52838
+NXTI_3_RUNNING_SP=sp: d08609a221400281
+NXTI_3_RUNNING_DIS_ERR=cannot read PC. current target state is "Running"
+NXTI_3_STOPPED_REASON=Halting Step, EL3(S)/A64
+NXTI_3_STOPPED_PC=pc: 0000000000000200
+NXTI_3_STOPPED_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+NXTI_3_STOPPED_R0=r0: 0000000000c52838
+NXTI_3_STOPPED_SP=sp: d08609a221400281
+NXTI_3_STOPPED_DIS=00000200: .word 0x008a3783
+00000204: ldrsw   x21, [x28, #60]!
+00000208: add     x7, x28, w3, uxtb
+0000020c: .word 0x873b0208

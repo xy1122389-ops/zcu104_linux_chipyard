@@ -1,0 +1,13 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check inputs ====
+STEP_ERR_LABEL=check inputs
+STEP_ERR_VALUE=missing bit file: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/ZCU104FPGATestHarness.pre_sentinel_20260322_153417.bit
+missing bit file: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/ZCU104FPGATestHarness.pre_sentinel_20260322_153417.bit
+    while executing
+"error "missing bit file: $bit_file" "
+    ("uplevel" body line 3)
+    invoked from within
+"uplevel 1 $body"

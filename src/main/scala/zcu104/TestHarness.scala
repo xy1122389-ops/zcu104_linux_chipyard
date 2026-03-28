@@ -30,6 +30,7 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
   val uart = Overlay(UARTOverlayKey, new UARTZCU104ShellPlacer(this, UARTShellInput()))
   val sdio = if (pmod_is_sdio) Some(Overlay(SPIOverlayKey, new SDIOZCU104ShellPlacer(this, SPIShellInput()))) else None
   val jtag = Overlay(JTAGDebugOverlayKey, new JTAGDebugZCU104ShellPlacer(this, JTAGDebugShellInput()))
+  val jtagBScan = Overlay(JTAGDebugBScanOverlayKey, new JTAGDebugBScanZCU104ShellPlacer(this, JTAGDebugBScanShellInput()))
 
   val pllReset = InModuleBody { Wire(Bool()) }
 
@@ -52,8 +53,13 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
   dp(UARTOverlayKey).head.place(UARTDesignInput(io_uart_bb))
 
   // SPI/SD
-  val io_spi_bb = BundleBridgeSource(() => (new SPIPortIO(dp(PeripherySPIKey).head)))
-  dp(SPIOverlayKey).head.place(SPIDesignInput(dp(PeripherySPIKey).head, io_spi_bb))
+  val io_spi_bb = if (pmod_is_sdio && dp(PeripherySPIKey).nonEmpty && dp(SPIOverlayKey).nonEmpty) {
+    val spiBb = BundleBridgeSource(() => (new SPIPortIO(dp(PeripherySPIKey).head)))
+    dp(SPIOverlayKey).head.place(SPIDesignInput(dp(PeripherySPIKey).head, spiBb))
+    Some(spiBb)
+  } else {
+    None
+  }
 
   // PS DDR memory (via Zynq UltraScale+ AXI HP0): no external pins, all internal to PS
   val ddrClient = dp(ExtTLMem).map { m =>
@@ -71,6 +77,9 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
   }
 
   // JTAG
+  // Route Rocket debug out through the external PMOD JTAG overlay.
+  // Leave the internal BSCAN overlay unplaced so the harness no longer
+  // elaborates the JTAGTUNNEL path for the DUT debug port.
   val jtagPlacedOverlay = dp(JTAGDebugOverlayKey).head.place(JTAGDebugDesignInput())
 
   override lazy val module = new ZCU104FPGATestHarnessImp(this)
@@ -80,10 +89,25 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   override def provideImplicitClockToLazyChildren = true
   val zcu104Outer = _outer
   val gpio_led_0_ls = IO(Output(Bool())).suggestName("gpio_led_0_ls")
+  val gpio_led_1_ls = IO(Output(Bool())).suggestName("gpio_led_1_ls")
+  val gpio_led_2_ls = IO(Output(Bool())).suggestName("gpio_led_2_ls")
+  val gpio_led_3_ls = IO(Output(Bool())).suggestName("gpio_led_3_ls")
   val gpio_led_0_ls_drive = WireDefault(false.B)
+  val gpio_led_1_ls_drive = WireDefault(false.B)
+  val gpio_led_2_ls_drive = WireDefault(false.B)
+  val gpio_led_3_ls_drive = WireDefault(false.B)
   gpio_led_0_ls := gpio_led_0_ls_drive
+  gpio_led_1_ls := gpio_led_1_ls_drive
+  gpio_led_2_ls := gpio_led_2_ls_drive
+  gpio_led_3_ls := gpio_led_3_ls_drive
   _outer.xdc.addPackagePin(IOPin(gpio_led_0_ls), "D5")
   _outer.xdc.addIOStandard(IOPin(gpio_led_0_ls), "LVCMOS33")
+  _outer.xdc.addPackagePin(IOPin(gpio_led_1_ls), "D6")
+  _outer.xdc.addIOStandard(IOPin(gpio_led_1_ls), "LVCMOS33")
+  _outer.xdc.addPackagePin(IOPin(gpio_led_2_ls), "A5")
+  _outer.xdc.addIOStandard(IOPin(gpio_led_2_ls), "LVCMOS33")
+  _outer.xdc.addPackagePin(IOPin(gpio_led_3_ls), "B5")
+  _outer.xdc.addIOStandard(IOPin(gpio_led_3_ls), "LVCMOS33")
 
   val sysclk: Clock = _outer.sysClkNode.out.head._1.clock
 
@@ -92,8 +116,12 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
 
   _outer.pllReset := powerOnReset
 
+  val baseReset = _outer.dutClock.in.head._1.reset.asBool
+  val psFabricReleased = WireDefault(true.B)
   val hReset = Wire(Reset())
-  hReset := _outer.dutClock.in.head._1.reset
+  // Hold the fabric in reset until the PS fabric reset line is configured high.
+  // This matches psu_ps_pl_reset_config's final high level after its reset pulse.
+  hReset := (baseReset || !psFabricReleased).asAsyncReset
 
   def referenceClockFreqMHz = _outer.dutFreqMHz
   def referenceClock        = _outer.dutClock.in.head._1.clock
@@ -106,7 +134,8 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   // Set PS module clock = system clock
   _outer.ddrClient.foreach { case (ps, _) =>
     ps.module.clock := referenceClock
-    ps.module.reset := referenceReset
+    ps.module.reset := baseReset.asAsyncReset
+    psFabricReleased := ps.module.pl_resetn0
   }
 
   instantiateChipTops()

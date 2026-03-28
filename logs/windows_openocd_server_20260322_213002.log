@@ -1,0 +1,318 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use 'gdb port', not 'gdb_port'
+DEPRECATED! use 'telnet port', not 'telnet_port'
+DEPRECATED! use 'tcl port' not 'tcl_port'
+Debug: 6 19 command.c:82 script_debug(): command - adapter driver ftdi
+Debug: 7 20 command.c:82 script_debug(): command - ftdi vid_pid 0x0403 0x6011
+Debug: 8 20 command.c:82 script_debug(): command - adapter serial 07198
+Debug: 9 20 command.c:82 script_debug(): command - ftdi channel 0
+Debug: 10 20 command.c:82 script_debug(): command - ftdi layout_init 0x00e8 0x60eb
+Debug: 11 20 command.c:82 script_debug(): command - reset_config none
+Debug: 12 20 command.c:82 script_debug(): command - transport select jtag
+Debug: 13 20 command.c:82 script_debug(): command - adapter speed 1000
+Debug: 14 20 adapter.c:254 adapter_config_khz(): handle adapter khz
+Debug: 15 20 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 16 20 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 17 20 command.c:82 script_debug(): command - ocd_find target/xilinx_zynqmp.cfg
+Debug: 18 22 configuration.c:89 find_file(): found C:/Users/24242/AppData/Local/Microsoft/WinGet/Packages/xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe/xpack-openocd-0.12.0-7/bin/../openocd/scripts/target/xilinx_zynqmp.cfg
+Debug: 19 22 command.c:82 script_debug(): command - jtag newtap uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477
+Debug: 20 23 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: tap, Dotted: uscale.tap, 8 params
+Debug: 21 23 core.c:1488 jtag_tap_init(): Created Tap: uscale.tap @ abs position 0, irlen 4, capture: 0x1 mask: 0xf
+Debug: 22 23 command.c:82 script_debug(): command - dap create uscale.dap -chain-position uscale.tap
+Debug: 23 23 command.c:82 script_debug(): command - jtag newtap uscale ps -irlen 12 -ircapture 0x1 -irmask 0x03 -ignore-version -expected-id 0x04711093 -expected-id 0x04710093 -expected-id 0x04721093 -expected-id 0x04720093 -expected-id 0x04739093 -expected-id 0x04730093 -expected-id 0x04738093 -expected-id 0x04740093 -expected-id 0x04750093 -expected-id 0x04759093 -expected-id 0x04758093
+Debug: 24 23 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: ps, Dotted: uscale.ps, 29 params
+Debug: 25 23 core.c:1488 jtag_tap_init(): Created Tap: uscale.ps @ abs position 1, irlen 12, capture: 0x1 mask: 0x3
+Debug: 26 24 command.c:82 script_debug(): command - jtag configure uscale.ps -event setup 
+    global _CHIPNAME
+    global jtag_configured
+
+    if { $jtag_configured == 0 } {
+        # add the DAP tap to the chain
+        # See https://forums.xilinx.com/t5/UltraScale-Architecture/JTAG-Chain-Configuration-for-Zynq-UltraScale-MPSoC/td-p/758924
+        irscan $_CHIPNAME.ps 0x824
+        drscan $_CHIPNAME.ps 32 0x00000003
+        runtest 100
+
+        # setup event will be re-entered through jtag arp_init
+        # break the recursion
+        set jtag_configured 1
+        # re-initialized the jtag chain
+        jtag arp_init
+    }
+
+Debug: 27 24 command.c:82 script_debug(): command - cti create uscale.cti.0 -dap uscale.dap -ap-num 1 -baseaddr 0x80420000
+Debug: 28 24 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x1 get 1
+Debug: 29 24 command.c:82 script_debug(): command - target create uscale.a53.0 aarch64 -dap uscale.dap -dbgbase 0x80410000 -cti uscale.cti.0 -rtos hwthread
+Info : 30 24 hwthread.c:410 hwthread_create(): [uscale.a53.0] Hardware thread awareness created
+Debug: 31 25 command.c:82 script_debug(): command - cti create uscale.cti.1 -dap uscale.dap -ap-num 1 -baseaddr 0x80520000
+Debug: 32 25 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x1 get 2
+Debug: 33 25 command.c:82 script_debug(): command - target create uscale.a53.1 aarch64 -dap uscale.dap -dbgbase 0x80510000 -cti uscale.cti.1 -defer-examine
+Debug: 34 25 command.c:187 register_command(): command 'arm' is already registered
+Debug: 35 25 command.c:187 register_command(): command 'arm semihosting' is already registered
+Debug: 36 25 command.c:187 register_command(): command 'arm semihosting_redirect' is already registered
+Debug: 37 25 command.c:187 register_command(): command 'arm semihosting_cmdline' is already registered
+Debug: 38 26 command.c:187 register_command(): command 'arm semihosting_fileio' is already registered
+Debug: 39 26 command.c:187 register_command(): command 'arm semihosting_resexit' is already registered
+Debug: 40 26 command.c:187 register_command(): command 'arm semihosting_read_user_param' is already registered
+Debug: 41 26 command.c:187 register_command(): command 'arm semihosting_basedir' is already registered
+Debug: 42 26 command.c:187 register_command(): command 'catch_exc' is already registered
+Debug: 43 26 command.c:187 register_command(): command 'pauth' is already registered
+Debug: 44 26 command.c:187 register_command(): command 'aarch64' is already registered
+Debug: 45 26 command.c:187 register_command(): command 'aarch64 cache_info' is already registered
+Debug: 46 26 command.c:187 register_command(): command 'aarch64 dbginit' is already registered
+Debug: 47 26 command.c:187 register_command(): command 'aarch64 disassemble' is already registered
+Debug: 48 26 command.c:187 register_command(): command 'aarch64 maskisr' is already registered
+Debug: 49 27 command.c:187 register_command(): command 'aarch64 mcr' is already registered
+Debug: 50 27 command.c:187 register_command(): command 'aarch64 mrc' is already registered
+Debug: 51 27 command.c:187 register_command(): command 'aarch64 smp' is already registered
+Debug: 52 27 command.c:187 register_command(): command 'aarch64 smp_gdb' is already registered
+Debug: 53 27 command.c:82 script_debug(): command - cti create uscale.cti.2 -dap uscale.dap -ap-num 1 -baseaddr 0x80620000
+Debug: 54 27 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x1 get 3
+Debug: 55 27 command.c:82 script_debug(): command - target create uscale.a53.2 aarch64 -dap uscale.dap -dbgbase 0x80610000 -cti uscale.cti.2 -defer-examine
+Debug: 56 27 command.c:187 register_command(): command 'arm' is already registered
+Debug: 57 28 command.c:187 register_command(): command 'arm semihosting' is already registered
+Debug: 58 28 command.c:187 register_command(): command 'arm semihosting_redirect' is already registered
+Debug: 59 28 command.c:187 register_command(): command 'arm semihosting_cmdline' is already registered
+Debug: 60 28 command.c:187 register_command(): command 'arm semihosting_fileio' is already registered
+Debug: 61 28 command.c:187 register_command(): command 'arm semihosting_resexit' is already registered
+Debug: 62 28 command.c:187 register_command(): command 'arm semihosting_read_user_param' is already registered
+Debug: 63 28 command.c:187 register_command(): command 'arm semihosting_basedir' is already registered
+Debug: 64 28 command.c:187 register_command(): command 'catch_exc' is already registered
+Debug: 65 28 command.c:187 register_command(): command 'pauth' is already registered
+Debug: 66 29 command.c:187 register_command(): command 'aarch64' is already registered
+Debug: 67 29 command.c:187 register_command(): command 'aarch64 cache_info' is already registered
+Debug: 68 29 command.c:187 register_command(): command 'aarch64 dbginit' is already registered
+Debug: 69 29 command.c:187 register_command(): command 'aarch64 disassemble' is already registered
+Debug: 70 29 command.c:187 register_command(): command 'aarch64 maskisr' is already registered
+Debug: 71 29 command.c:187 register_command(): command 'aarch64 mcr' is already registered
+Debug: 72 29 command.c:187 register_command(): command 'aarch64 mrc' is already registered
+Debug: 73 29 command.c:187 register_command(): command 'aarch64 smp' is already registered
+Debug: 74 30 command.c:187 register_command(): command 'aarch64 smp_gdb' is already registered
+Debug: 75 30 command.c:82 script_debug(): command - cti create uscale.cti.3 -dap uscale.dap -ap-num 1 -baseaddr 0x80720000
+Debug: 76 30 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x1 get 4
+Debug: 77 31 command.c:82 script_debug(): command - target create uscale.a53.3 aarch64 -dap uscale.dap -dbgbase 0x80710000 -cti uscale.cti.3 -defer-examine
+Debug: 78 31 command.c:187 register_command(): command 'arm' is already registered
+Debug: 79 31 command.c:187 register_command(): command 'arm semihosting' is already registered
+Debug: 80 31 command.c:187 register_command(): command 'arm semihosting_redirect' is already registered
+Debug: 81 31 command.c:187 register_command(): command 'arm semihosting_cmdline' is already registered
+Debug: 82 31 command.c:187 register_command(): command 'arm semihosting_fileio' is already registered
+Debug: 83 31 command.c:187 register_command(): command 'arm semihosting_resexit' is already registered
+Debug: 84 32 command.c:187 register_command(): command 'arm semihosting_read_user_param' is already registered
+Debug: 85 32 command.c:187 register_command(): command 'arm semihosting_basedir' is already registered
+Debug: 86 32 command.c:187 register_command(): command 'catch_exc' is already registered
+Debug: 87 32 command.c:187 register_command(): command 'pauth' is already registered
+Debug: 88 32 command.c:187 register_command(): command 'aarch64' is already registered
+Debug: 89 32 command.c:187 register_command(): command 'aarch64 cache_info' is already registered
+Debug: 90 32 command.c:187 register_command(): command 'aarch64 dbginit' is already registered
+Debug: 91 32 command.c:187 register_command(): command 'aarch64 disassemble' is already registered
+Debug: 92 32 command.c:187 register_command(): command 'aarch64 maskisr' is already registered
+Debug: 93 33 command.c:187 register_command(): command 'aarch64 mcr' is already registered
+Debug: 94 33 command.c:187 register_command(): command 'aarch64 mrc' is already registered
+Debug: 95 33 command.c:187 register_command(): command 'aarch64 smp' is already registered
+Debug: 96 33 command.c:187 register_command(): command 'aarch64 smp_gdb' is already registered
+Debug: 97 33 command.c:82 script_debug(): command - target create uscale.axi mem_ap -dap uscale.dap -ap-num 0
+Debug: 98 33 command.c:82 script_debug(): command - target smp uscale.a53.0 uscale.a53.1 uscale.a53.2 uscale.a53.3
+Debug: 99 33 target.c:6019 handle_target_smp(): 4
+Debug: 100 33 target.c:5978 create_target_list_node(): uscale.a53.0 
+Debug: 101 34 target.c:5978 create_target_list_node(): uscale.a53.1 
+Debug: 102 34 target.c:5978 create_target_list_node(): uscale.a53.2 
+Debug: 103 34 target.c:5978 create_target_list_node(): uscale.a53.3 
+Debug: 104 34 hwthread.c:209 hwthread_update_threads(): [uscale.a53.0] current_thread=-1, threads_found=0
+Debug: 105 34 command.c:82 script_debug(): command - targets uscale.a53.0
+Debug: 106 34 command.c:82 script_debug(): command - add_help_text halt_pmu Halt the PMU in preparation for loading new firmware. This should be matched with a call to resume_pmu.
+Debug: 107 34 command.c:82 script_debug(): command - add_help_text resume_pmu Resume the PMU after loading new firmware. This should be matched with a call to halt_pmu.
+Debug: 108 35 command.c:82 script_debug(): command - add_usage_text release_apu apu
+Debug: 109 35 command.c:82 script_debug(): command - add_help_text release_apu Release an APU from reset. It will start executing at RVBARADDR. You probably want resume_apu or start_apu instead.
+Debug: 110 35 command.c:82 script_debug(): command - add_usage_text resume_apu apu addr
+Debug: 111 35 command.c:82 script_debug(): command - add_help_text resume_apu Resume an APU at a given address.
+Debug: 112 35 command.c:82 script_debug(): command - add_usage_text start_apu apu
+Debug: 113 35 command.c:82 script_debug(): command - add_help_text start_apu Start an APU and put it into an infinite loop at RVBARADDR. This can be convenient if you just want to halt the APU (since it won't execute anything unusual).
+Debug: 114 35 command.c:82 script_debug(): command - add_usage_text boot_pmu image
+Debug: 115 35 command.c:82 script_debug(): command - add_help_text boot_pmu Boot the PMU with a given firmware image, loading it to the beginning of PMU RAM. The PMU ROM will jump to this location after we resume it.
+Debug: 116 35 command.c:82 script_debug(): command - add_usage_text boot_apu image [apu=0 [addr=0xfffc0000]]
+Debug: 117 36 command.c:82 script_debug(): command - add_help_text boot_apu Boot an APU with a given firmware image. The default address is the beginning of OCM RAM. Upon success, the default target will be changed to the (running) apu.
+Debug: 118 36 command.c:82 script_debug(): command - init
+Debug: 119 36 command.c:82 script_debug(): command - target init
+Debug: 120 36 command.c:82 script_debug(): command - target names
+Debug: 121 36 command.c:82 script_debug(): command - uscale.a53.0 cget -event gdb-flash-erase-start
+Debug: 122 36 command.c:82 script_debug(): command - uscale.a53.0 configure -event gdb-flash-erase-start reset init
+Debug: 123 36 command.c:82 script_debug(): command - uscale.a53.0 cget -event gdb-flash-write-end
+Debug: 124 36 command.c:82 script_debug(): command - uscale.a53.0 configure -event gdb-flash-write-end reset halt
+Debug: 125 36 command.c:82 script_debug(): command - uscale.a53.0 cget -event gdb-attach
+Debug: 126 36 command.c:82 script_debug(): command - uscale.a53.0 configure -event gdb-attach halt 1000
+Debug: 127 36 command.c:82 script_debug(): command - uscale.a53.1 cget -event gdb-flash-erase-start
+Debug: 128 36 command.c:82 script_debug(): command - uscale.a53.1 configure -event gdb-flash-erase-start reset init
+Debug: 129 37 command.c:82 script_debug(): command - uscale.a53.1 cget -event gdb-flash-write-end
+Debug: 130 37 command.c:82 script_debug(): command - uscale.a53.1 configure -event gdb-flash-write-end reset halt
+Debug: 131 37 command.c:82 script_debug(): command - uscale.a53.1 cget -event gdb-attach
+Debug: 132 37 command.c:82 script_debug(): command - uscale.a53.1 configure -event gdb-attach halt 1000
+Debug: 133 37 command.c:82 script_debug(): command - uscale.a53.2 cget -event gdb-flash-erase-start
+Debug: 134 37 command.c:82 script_debug(): command - uscale.a53.2 configure -event gdb-flash-erase-start reset init
+Debug: 135 37 command.c:82 script_debug(): command - uscale.a53.2 cget -event gdb-flash-write-end
+Debug: 136 37 command.c:82 script_debug(): command - uscale.a53.2 configure -event gdb-flash-write-end reset halt
+Debug: 137 37 command.c:82 script_debug(): command - uscale.a53.2 cget -event gdb-attach
+Debug: 138 37 command.c:82 script_debug(): command - uscale.a53.2 configure -event gdb-attach halt 1000
+Debug: 139 37 command.c:82 script_debug(): command - uscale.a53.3 cget -event gdb-flash-erase-start
+Debug: 140 37 command.c:82 script_debug(): command - uscale.a53.3 configure -event gdb-flash-erase-start reset init
+Debug: 141 37 command.c:82 script_debug(): command - uscale.a53.3 cget -event gdb-flash-write-end
+Debug: 142 38 command.c:82 script_debug(): command - uscale.a53.3 configure -event gdb-flash-write-end reset halt
+Debug: 143 38 command.c:82 script_debug(): command - uscale.a53.3 cget -event gdb-attach
+Debug: 144 38 command.c:82 script_debug(): command - uscale.a53.3 configure -event gdb-attach halt 1000
+Debug: 145 38 command.c:82 script_debug(): command - uscale.axi cget -event gdb-flash-erase-start
+Debug: 146 38 command.c:82 script_debug(): command - uscale.axi configure -event gdb-flash-erase-start reset init
+Debug: 147 38 command.c:82 script_debug(): command - uscale.axi cget -event gdb-flash-write-end
+Debug: 148 38 command.c:82 script_debug(): command - uscale.axi configure -event gdb-flash-write-end reset halt
+Debug: 149 38 command.c:82 script_debug(): command - uscale.axi cget -event gdb-attach
+Debug: 150 38 command.c:82 script_debug(): command - uscale.axi configure -event gdb-attach halt 1000
+Debug: 151 39 target.c:1598 handle_target_init_command(): Initializing targets...
+Debug: 152 39 semihosting_common.c:109 semihosting_common_init():  
+Debug: 153 39 semihosting_common.c:109 semihosting_common_init():  
+Debug: 154 39 semihosting_common.c:109 semihosting_common_init():  
+Debug: 155 39 semihosting_common.c:109 semihosting_common_init():  
+Debug: 156 39 mem_ap.c:61 mem_ap_init_target(): [uscale.axi] mem_ap_init_target
+Debug: 157 39 ftdi.c:654 ftdi_initialize(): ftdi interface using shortest path jtag state transitions
+Debug: 158 60 mpsse.c:429 mpsse_purge(): -
+Debug: 159 61 mpsse.c:710 mpsse_loopback_config(): off
+Debug: 160 61 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 161 61 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 162 61 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 163 61 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 164 62 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 165 62 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 166 62 adapter.c:221 adapter_khz_to_speed(): have adapter set up
+Debug: 167 62 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 168 62 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 169 62 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 170 62 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 171 62 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 172 62 adapter.c:217 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 173 63 adapter.c:221 adapter_khz_to_speed(): have adapter set up
+Info : 174 63 adapter.c:182 adapter_init(): clock speed 1000 kHz
+Debug: 175 63 openocd.c:133 handle_init_command(): Debug Adapter init complete
+Debug: 176 63 command.c:82 script_debug(): command - transport init
+Debug: 177 63 transport.c:274 handle_transport_init(): handle_transport_init
+Debug: 178 63 core.c:843 jtag_add_reset(): SRST line released
+Debug: 179 63 core.c:868 jtag_add_reset(): TRST line released
+Debug: 180 63 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 181 63 command.c:82 script_debug(): command - jtag arp_init
+Debug: 182 63 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 183 63 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 184 64 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 185 64 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Info : 186 65 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : 187 65 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Debug: 188 65 core.c:1378 jtag_validate_ircapture(): IR capture validation scan
+Debug: 189 65 core.c:1435 jtag_validate_ircapture(): uscale.tap: IR capture 0x01
+Debug: 190 65 core.c:1435 jtag_validate_ircapture(): uscale.ps: IR capture 0x51
+Debug: 191 65 tcl.c:546 jtag_tap_handle_event(): JTAG tap: uscale.ps event: 1 (setup)
+	action: 
+    global _CHIPNAME
+    global jtag_configured
+
+    if { $jtag_configured == 0 } {
+        # add the DAP tap to the chain
+        # See https://forums.xilinx.com/t5/UltraScale-Architecture/JTAG-Chain-Configuration-for-Zynq-UltraScale-MPSoC/td-p/758924
+        irscan $_CHIPNAME.ps 0x824
+        drscan $_CHIPNAME.ps 32 0x00000003
+        runtest 100
+
+        # setup event will be re-entered through jtag arp_init
+        # break the recursion
+        set jtag_configured 1
+        # re-initialized the jtag chain
+        jtag arp_init
+    }
+
+Debug: 192 66 command.c:82 script_debug(): command - irscan uscale.ps 0x824
+Debug: 193 68 command.c:82 script_debug(): command - drscan uscale.ps 32 0x00000003
+Debug: 194 68 command.c:82 script_debug(): command - runtest 100
+Debug: 195 68 command.c:82 script_debug(): command - jtag arp_init
+Debug: 196 68 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 197 68 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 198 68 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 199 68 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Info : 200 69 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : 201 70 core.c:1146 jtag_examine_chain_display(): JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Debug: 202 70 core.c:1378 jtag_validate_ircapture(): IR capture validation scan
+Debug: 203 70 core.c:1435 jtag_validate_ircapture(): uscale.tap: IR capture 0x01
+Debug: 204 70 core.c:1435 jtag_validate_ircapture(): uscale.ps: IR capture 0x51
+Debug: 205 70 tcl.c:546 jtag_tap_handle_event(): JTAG tap: uscale.ps event: 1 (setup)
+	action: 
+    global _CHIPNAME
+    global jtag_configured
+
+    if { $jtag_configured == 0 } {
+        # add the DAP tap to the chain
+        # See https://forums.xilinx.com/t5/UltraScale-Architecture/JTAG-Chain-Configuration-for-Zynq-UltraScale-MPSoC/td-p/758924
+        irscan $_CHIPNAME.ps 0x824
+        drscan $_CHIPNAME.ps 32 0x00000003
+        runtest 100
+
+        # setup event will be re-entered through jtag arp_init
+        # break the recursion
+        set jtag_configured 1
+        # re-initialized the jtag chain
+        jtag arp_init
+    }
+
+Debug: 206 71 command.c:82 script_debug(): command - dap init
+Debug: 207 71 arm_dap.c:96 dap_init_all(): Initializing all DAPs ...
+Debug: 208 71 arm_dap.c:120 dap_init_all(): DAP uscale.tap configured by default to use ADIv5 protocol
+Debug: 209 71 arm_adi_v5.c:791 dap_dp_init(): uscale.dap
+Debug: 210 71 arm_adi_v5.c:824 dap_dp_init(): DAP: wait CDBGPWRUPACK
+Debug: 211 71 arm_adi_v5.h:682 dap_dp_poll_register(): DAP: poll 4, mask 0x20000000, value 0x20000000
+Debug: 212 72 arm_adi_v5.c:832 dap_dp_init(): DAP: wait CSYSPWRUPACK
+Debug: 213 72 arm_adi_v5.h:682 dap_dp_poll_register(): DAP: poll 4, mask 0x80000000, value 0x80000000
+Debug: 214 73 openocd.c:150 handle_init_command(): Examining targets...
+Debug: 215 73 target.c:684 target_examine_one(): [uscale.a53.0] Examination started
+Debug: 216 73 target.c:1784 target_call_event_callbacks(): target event 19 (examine-start) for core uscale.a53.0
+Debug: 217 73 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x0 get 1
+Debug: 218 74 arm_adi_v5.c:1226 dap_put_ap(): refcount AP#0x0 put 0
+Debug: 219 74 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x1 get 5
+Debug: 220 75 arm_adi_v5.c:1144 dap_find_get_ap(): Found MEM-AP APB2 or APB3 at AP index: 1 (IDR=0x44770002)
+Debug: 221 76 arm_adi_v5.c:942 mem_ap_init(): MEM_AP CFG: large data 0, long address 0, big-endian 0
+Debug: 222 77 adi_v5_jtag.c:671 jtagdp_transaction_endcheck(): jtag-dp: CTRL/STAT 0xf0000021
+Error: 223 77 adi_v5_jtag.c:682 jtagdp_transaction_endcheck(): JTAG-DP STICKY ERROR
+Debug: 224 77 aarch64.c:2672 aarch64_examine_first(): Examine oslock failed
+Error: 225 77 target.c:690 target_examine_one(): [uscale.a53.0] Examination failed
+Debug: 226 77 target.c:691 target_examine_one(): [uscale.a53.0] examine() returned error code -107
+Debug: 227 77 target.c:1784 target_call_event_callbacks(): target event 20 (examine-fail) for core uscale.a53.0
+Warn : 228 78 target.c:739 target_examine(): target uscale.a53.0 examination failed
+Debug: 229 78 target.c:684 target_examine_one(): [uscale.axi] Examination started
+Debug: 230 78 target.c:1784 target_call_event_callbacks(): target event 19 (examine-start) for core uscale.axi
+Debug: 231 78 arm_adi_v5.c:1201 dap_get_ap(): refcount AP#0x0 get 1
+Debug: 232 79 arm_adi_v5.c:942 mem_ap_init(): MEM_AP CFG: large data 0, long address 1, big-endian 0
+Debug: 233 79 target.c:1784 target_call_event_callbacks(): target event 21 (examine-end) for core uscale.axi
+Info : 234 79 target.c:700 target_examine_one(): [uscale.axi] Examination succeed
+Debug: 235 80 openocd.c:152 handle_init_command(): target examination failed
+Debug: 236 80 command.c:82 script_debug(): command - flash init
+Debug: 237 80 tcl.c:1489 handle_flash_init_command(): Initializing flash devices...
+Debug: 238 80 command.c:82 script_debug(): command - nand init
+Debug: 239 80 tcl.c:485 handle_nand_init_command(): Initializing NAND devices...
+Debug: 240 80 command.c:82 script_debug(): command - pld init
+Debug: 241 80 pld.c:337 handle_pld_init_command(): Initializing PLDs...
+Debug: 242 80 command.c:82 script_debug(): command - tpiu init
+Info : 243 80 gdb_server.c:3862 gdb_target_start(): [uscale.a53.0] starting gdb server on 3333
+Info : 244 86 server.c:298 add_service(): Listening on port 3333 for gdb connections
+Info : 245 86 gdb_server.c:3896 gdb_target_add_one(): [uscale.axi] gdb port disabled
+Debug: 246 86 command.c:82 script_debug(): command - target names
+Debug: 247 86 command.c:82 script_debug(): command - target names
+Debug: 248 86 command.c:82 script_debug(): command - uscale.a53.0 cget -type
+Debug: 249 86 command.c:82 script_debug(): command - uscale.a53.1 cget -type
+Debug: 250 86 command.c:82 script_debug(): command - uscale.a53.2 cget -type
+Debug: 251 87 command.c:82 script_debug(): command - uscale.a53.3 cget -type
+Debug: 252 87 command.c:82 script_debug(): command - uscale.axi cget -type
+Debug: 253 87 command.c:82 script_debug(): command - targets
+User : 254 87 options.c:52 configuration_output_handler():     TargetName         Type       Endian TapName            State       
+--  ------------------ ---------- ------ ------------------ ------------
+ 0* uscale.a53.0       aarch64    little uscale.tap         unknown
+ 1  uscale.a53.1       aarch64    little uscale.tap         examine deferred
+ 2  uscale.a53.2       aarch64    little uscale.tap         examine deferred
+ 3  uscale.a53.3       aarch64    little uscale.tap         examine deferred
+ 4  uscale.axi         mem_ap     little uscale.tap         unknownUser : 255 88 options.c:52 configuration_output_handler(): 
+Info : 256 88 server.c:298 add_service(): Listening on port 6666 for tcl connections
+Info : 257 88 server.c:298 add_service(): Listening on port 4444 for telnet connections
+Debug: 258 88 command.c:82 script_debug(): command - init

@@ -1,0 +1,23 @@
+LOG=/root/chipyard/fpga/scripts/../logs/runtime_payload_offset_evidence_20260326_165754.log
+TASK=low_address_alias_window
+PAYLOAD_FILE=\\wsl.localhost\Ubuntu-22.04\root\chipyard\software\firemarshal\boards\default\firmware\opensbi\build\platform\generic\firmware\fw_payload.bin
+BOOTADDR=0x80000000
+SAMPLE_START=0x0
+SAMPLE_END=0x2000
+SAMPLE_STEP=0x40
+WINDOW_WORDS=16
+WINDOW_BYTES=0x40
+FULL_PLUS_RUNS=0x0-0xFC0,0x1040-0x1FC0
+FULL_SELF_RUNS=0x2000-0x2000
+PARTIAL_PLUS_BASES=0x1000
+PARTIAL_PLUS_DETAIL=base=0x1000 matched_words=14/16 mismatch_addrs=0x1000,0x1004
+PARTIAL_PLUS_WORD=base=0x1000 addr=0x1000 target=80000000 payload_plus_0x2000=07939782
+PARTIAL_PLUS_WORD=base=0x1000 addr=0x1004 target=00000000 payload_plus_0x2000=B0730200
+PARTIAL_PLUS_INTERPRETATION=LIKELY_BOOTADDR_REG_OVERLAY_AT_0x1000_0x1004
+TRANSITION_PREV_FULL_PLUS=0x1FC0
+TRANSITION_FIRST_FULL_SELF=0x2000
+BOUNDARY_BEST_FIT=0x2000
+CONTINUITY=continuous_alias_except_local_overlay_or_hole
+MIRROR_WINDOW_RANGE=0x0-0x1FC0
+MIRROR_WINDOW_CLASSIFICATION=looks_like_early_boot_alias_or_remap_window
+SUMMARY_TEXT=Low addresses sample as fw_payload.bin@(addr+0x2000) from 0x0 through 0x1FC0; 0x2000 switches to fw_payload.bin@0x2000. The only sampled discontinuity is at 0x1000, where two words diverge from the +0x2000 mirror and line up with the programmed bootaddr registers, so the window looks like an alias/remap region with a small MMIO/register overlay rather than a flat copy.

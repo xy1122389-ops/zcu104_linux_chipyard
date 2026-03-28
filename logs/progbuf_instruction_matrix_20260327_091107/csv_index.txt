@@ -1,0 +1,2 @@
+nop /root/chipyard/fpga/logs/jtagtunnel_ila_inline_nop_20260327_091110/jtagtunnel_ila.csv
+addi_x0_1 /root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_091311/jtagtunnel_ila.csv

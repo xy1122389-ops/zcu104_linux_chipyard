@@ -1,0 +1,381 @@
+OUTDIR=/root/chipyard/fpga/logs/progbuf_addi_50_59_matrix_20260327_123125
+ILA_DIR=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/debug_obj/jtagtunnel_ila_20260326_213703
+
+### addi_x0_50 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_50_20260327_123128/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=580
+FIRST_DIFF_INDEX=13
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '01', '00')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '00', '00')
+
+
+### addi_x0_50 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_50_20260327_123128/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=580
+FIRST_DIFF_INDEX=13
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '01', '00')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '00', '00')
+
+
+### addi_x0_50 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_50_20260327_123128/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=580
+FIRST_DIFF_INDEX=13
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '01', '00')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '00', '00')
+
+
+### addi_x0_50 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_50_20260327_123128/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=580
+FIRST_DIFF_INDEX=13
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '01', '00')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '00', '00')
+
+
+### addi_x0_51 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_51_20260327_123327/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+
+### addi_x0_51 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_51_20260327_123327/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_51 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_51_20260327_123327/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_51 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_51_20260327_123327/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+
+### addi_x0_53 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_53_20260327_123509/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=577
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_53 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_53_20260327_123509/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=577
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_53 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_53_20260327_123509/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=577
+FIRST_DIFF_INDEX=416
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '08', '08')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '08', '08')
+
+
+### addi_x0_53 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_53_20260327_123509/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=577
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+
+### addi_x0_54 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_54_20260327_123653/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+
+### addi_x0_54 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_54_20260327_123653/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_54 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_54_20260327_123653/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_54 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_54_20260327_123653/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+
+### addi_x0_55 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_55_20260327_123834/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+
+### addi_x0_55 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_55_20260327_123834/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_55 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_55_20260327_123834/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_55 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_55_20260327_123834/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+
+### addi_x0_56 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_56_20260327_124021/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+
+### addi_x0_56 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_56_20260327_124021/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_56 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_56_20260327_124021/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_56 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_56_20260327_124021/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+
+### addi_x0_57 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_57_20260327_124225/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+
+### addi_x0_57 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_57_20260327_124225/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_57 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_57_20260327_124225/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_57 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_57_20260327_124225/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+
+### addi_x0_58 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_58_20260327_124424/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=598
+FIRST_DIFF_INDEX=16
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '02')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '03')
+
+
+### addi_x0_58 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_58_20260327_124424/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=598
+FIRST_DIFF_INDEX=16
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '02')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '03')
+
+
+### addi_x0_58 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_58_20260327_124424/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=598
+FIRST_DIFF_INDEX=16
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '02')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '03')
+
+
+### addi_x0_58 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_58_20260327_124424/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=598
+FIRST_DIFF_INDEX=16
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '02')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '02', '03')
+
+
+### addi_x0_59 vs ADDI_1
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_1_20260327_092813/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_59_20260327_124611/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+
+### addi_x0_59 vs ADDI_20
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_20_outlierprobe_20260327_102844/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_59_20260327_124611/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=54
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '15', '15')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '15', '15')
+
+
+### addi_x0_59 vs ADDI_23
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_23_20260327_104325/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=577
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_59_20260327_124611/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=67
+BASE_VALUES=('0', '1', '0', '0', '1', '1', '00', '1b', '1b')
+OTHER_VALUES=('0', '1', '1', '0', '1', '1', '00', '1b', '1b')
+
+
+### addi_x0_59 vs ADDI_63
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_63_highprobe_20260327_121129/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=587
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_addi_x0_59_20260327_124611/jtagtunnel_ila.csv
+SAME_VALUES=False
+EVENT_COUNT=566
+FIRST_DIFF_INDEX=24
+BASE_VALUES=('0', '1', '0', '1', '1', '1', '00', '06', '06')
+OTHER_VALUES=('0', '1', '0', '0', '1', '1', '00', '06', '06')
+
+

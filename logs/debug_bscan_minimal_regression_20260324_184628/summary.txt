@@ -1,0 +1,19 @@
+BITFILE=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit
+START=2026-03-24T18:46:28+08:00
+[1/3] PLD load
+PLD_LOG=/root/chipyard/fpga/logs/debug_bscan_minimal_regression_20260324_184628/pld_load.log
+[2/3] minimal DMI validation
+DMI_LOG=/root/chipyard/fpga/logs/debug_bscan_minimal_regression_20260324_184628/manual_dmi_width_validation.log
+[3/3] single-field raw packet probe
+RAW_LOG=/root/chipyard/fpga/logs/debug_bscan_minimal_regression_20260324_184628/single_field_raw_packet_probe.log
+== DMI ==
+READ 0x10
+READ 0x11
+READ 0x12
+READ 0x16
+== RAW ==
+OUTDIR=/root/chipyard/fpga/logs/single_field_raw_packet_probe_20260324_184759
+mode0_w5_p10.stderr SEL=c000 DTMCS=0feed1c7e249 REQ=00038c50000000 NOP1=01b38c5f805db6
+mode0_w8_p10.stderr SEL=04c000 DTMCS=03ec5a38e249 REQ=00038c0a000000 NOP1=0c3f8c0bf05db6
+mode1_w5_p10.stderr SEL=c000 DTMCS=0feed1c7e249 REQ=00038c5a000000 NOP1=01b38c5f805db6
+mode1_w8_p10.stderr SEL=04c000 DTMCS=03ec5a38e249 REQ=00038c0a000000 NOP1=0c3f8c0bf05db6

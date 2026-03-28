@@ -1,0 +1,27 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : [uscale.a53.0] Hardware thread awareness created
+Info : clock speed 1000 kHz
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Info : JTAG tap: uscale.tap tap/device found: 0x5ba00477 (mfg: 0x23b (ARM Ltd), part: 0xba00, ver: 0x5)
+Info : JTAG tap: uscale.ps tap/device found: 0x14730093 (mfg: 0x049 (Xilinx), part: 0x4730, ver: 0x1)
+Error: JTAG-DP STICKY ERROR
+Error: [uscale.a53.0] Examination failed
+Warn : target uscale.a53.0 examination failed
+Info : [uscale.axi] Examination succeed
+Info : [uscale.a53.0] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+Info : [uscale.axi] gdb port disabled
+  ipdbg create-hub name.ipdbghub (-tap device.tap -ir ir_value [dr_length]
+            | -pld name.pld [user]) [-vir [vir_value [length
+            [instr_code]]]]
+pld
+  pld create name.pld driver_name [driver_args ... ]
+  pld init
+C:\Users\24242\AppData\Local\Temp\openocd_pld_load_debug_chainpos1.cfg:11: Error: 
+Traceback (most recent call last):
+  File "C:\Users\24242\AppData\Local\Temp\openocd_pld_load_debug_chainpos1.cfg", line 11, in script
+    pld load 0 C:/Users/24242/AppData/Local/Temp/ZCU104FPGATestHarness_debug_chainpos1.bit

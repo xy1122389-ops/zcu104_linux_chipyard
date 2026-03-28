@@ -1,0 +1,23 @@
+Open On-Chip Debugger 0.10.0+dev (SiFive OpenOCD 0.10.0-2020.04.6)
+Licensed under GNU GPL v2
+For bug reports:
+	https://github.com/sifive/freedom-tools/issues
+adapter
+  adapter usb
+    adapter usb location [<bus>-port[.port]...]
+adapter_khz [khz]
+adapter_name
+adapter_nsrst_assert_width [milliseconds]
+adapter_nsrst_delay [milliseconds]
+interface driver_name
+interface_list
+reset_config [none|trst_only|srst_only|trst_and_srst]
+          [srst_pulls_trst|trst_pulls_srst|combined|separate]
+          [srst_gates_jtag|srst_nogate] [trst_push_pull|trst_open_drain]
+          [srst_push_pull|srst_open_drain]
+          [connect_deassert_srst|connect_assert_srst]
+Error: invalid subcommand "driver ftdi"
+/root/chipyard/fpga/logs/sifive_openocd_cmdprobe_20260323_181021/probe.cfg:1: Error: 
+in procedure 'script' 
+at file "embedded:startup.tcl", line 26
+at file "/root/chipyard/fpga/logs/sifive_openocd_cmdprobe_20260323_181021/probe.cfg", line 1

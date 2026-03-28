@@ -1,0 +1,8 @@
+OUTDIR=/root/chipyard/fpga/logs/uart_ila_tx_level_1_20260326_195026
+ILA_DIR=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ila_20260326_191447
+PROBE=tx
+VALUE=1
+CAPTURE_LOG=/root/chipyard/fpga/logs/uart_ila_tx_level_1_20260326_195026/capture.log
+ARM_STATE=/root/chipyard/fpga/logs/uart_ila_tx_level_1_20260326_195026/arm_state.txt
+UPLOAD_STATE=/root/chipyard/fpga/logs/uart_ila_tx_level_1_20260326_195026/upload_state.txt
+CSV_OUT=/root/chipyard/fpga/logs/uart_ila_tx_level_1_20260326_195026/uart_ila.csv

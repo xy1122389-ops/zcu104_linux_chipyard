@@ -1,0 +1,83 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== bp target ====
+BP_TARGET sym=sbi_putc addr=0x80006550
+
+==== connect ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== select PS TAP ====
+
+==== rst por ====
+
+==== wait after por ====
+
+==== select PSU ====
+
+==== source psu_init ====
+
+==== run psu_init ====
+
+==== program fpga ====
+
+==== wait after fpga ====
+
+==== remove isolation ====
+
+==== apply reset config ====
+
+==== select APU ====
+
+==== force mem ====
+
+==== memmap payload ====
+
+==== download payload ====
+
+==== select PSU for bootaddr ====
+
+==== program bootaddr + msip ====
+
+==== select A53#0 ====
+
+==== set breakpoint ====
+BP_ID=0
+
+==== run-stop samples ====
+PC_SAMPLE i=1 val=pc: N/A
+
+PC_SAMPLE i=2 val=pc: N/A
+
+PC_SAMPLE i=3 val=pc: N/A
+

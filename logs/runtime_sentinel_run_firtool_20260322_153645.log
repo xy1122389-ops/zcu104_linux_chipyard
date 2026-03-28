@@ -1,0 +1,352 @@
+make: Entering directory '/root/chipyard/fpga'
+rm -rf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral
+(set -o pipefail && firtool \
+		--format=fir \
+		--export-module-hierarchy \
+		--verify-each=true \
+		--warn-on-unprocessed-annotations \
+		--disable-annotation-classless \
+		--disable-annotation-unknown \
+		--mlir-timing \
+		--lowering-options=emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket \
+		--repl-seq-mem \
+		--repl-seq-mem-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.mems.conf \
+		--annotation-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.appended.anno.json \
+		--split-verilog \
+		 \
+		-o /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral \
+		/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.fir |& tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.firtool.log)
+generators/rocket-chip/src/main/scala/tilelink/ToAXI4.scala:103:9: warning: module contains 32 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/ToAXI4.scala:280:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/ToAXI4.scala:103:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/amba/axi4/Deinterleaver.scala:48:9: warning: module contains 80 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/amba/axi4/Deinterleaver.scala:80:19: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/amba/axi4/Deinterleaver.scala:48:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/amba/axi4/UserYanker.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/amba/axi4/UserYanker.scala:69:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/amba/axi4/UserYanker.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:77:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:77:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:34:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceA.scala:33:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Parameters.scala:222:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceA.scala:33:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceB.scala:33:7: warning: module contains 4 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceB.scala:59:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceB.scala:33:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceC.scala:35:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceC.scala:64:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceC.scala:35:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceD.scala:48:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceD.scala:123:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceD.scala:48:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkC.scala:41:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkC.scala:90:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkC.scala:41:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkD.scala:34:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkD.scala:82:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkD.scala:34:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Directory.scala:56:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Directory.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Directory.scala:56:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Scheduler.scala:27:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Scheduler.scala:291:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Scheduler.scala:27:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/util/IDPool.scala:8:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/util/IDPool.scala:44:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/util/IDPool.scala:8:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/CacheCork.scala:42:9: warning: module contains 6 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/CacheCork.scala:116:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/CacheCork.scala:42:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:719:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:118:32: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:719:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:118:32: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:99:7: warning: module contains 10 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:1184:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:99:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:251:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:413:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:251:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:719:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:82:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:96:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:82:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tile/FPU.scala:735:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tile/FPU.scala:823:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tile/FPU.scala:735:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:219:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:395:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:219:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:21:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:79:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:21:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:377:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:1022:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:377:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:58:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:64:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:58:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:158:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:884:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:158:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:132:9: warning: module contains 4 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:249:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:132:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/SRAM.scala:63:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/SRAM.scala:231:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/SRAM.scala:63:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+===-------------------------------------------------------------------------===
+                         ... Execution time report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 4.0775 seconds
+
+  ----User Time----  ----Wall Time----  ----Name----
+    0.4914 (  3.3%)    0.4914 ( 12.1%)  FIR Parser
+    0.0092 (  0.1%)    0.0092 (  0.2%)    Parse annotations
+    0.0000 (  0.0%)    0.0000 (  0.0%)    Parse OMIR
+    0.4028 (  2.7%)    0.4028 (  9.9%)    Parse modules
+    0.0459 (  0.3%)    0.0459 (  1.1%)    Verify circuit
+   10.6771 ( 72.2%)    2.2253 ( 54.6%)  'firrtl.circuit' Pipeline
+    0.0026 (  0.0%)    0.0026 (  0.1%)    LowerOpenAggs
+    0.0589 (  0.4%)    0.0589 (  1.4%)    ResolvePaths
+    0.0036 (  0.0%)    0.0036 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0476 (  0.3%)    0.0476 (  1.2%)    LowerFIRRTLAnnotations
+    0.0032 (  0.0%)    0.0032 (  0.1%)    LowerIntmodules
+    0.0032 (  0.0%)    0.0032 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.1354 (  0.9%)    0.0074 (  0.2%)    'firrtl.module' Pipeline
+    0.0840 (  0.6%)    0.0062 (  0.2%)      LowerIntrinsics
+    0.0671 (  0.5%)    0.0671 (  1.6%)    LowerSignatures
+    0.0000 (  0.0%)    0.0000 (  0.0%)    InjectDUTHierarchy
+    3.6912 ( 24.9%)    0.1901 (  4.7%)    'firrtl.module' Pipeline
+    0.2419 (  1.6%)    0.0245 (  0.6%)      PassiveWires
+    2.9387 ( 19.9%)    0.1529 (  3.7%)      DropName
+    0.2677 (  1.8%)    0.0250 (  0.6%)      CSE
+    0.0068 (  0.0%)    0.0008 (  0.0%)        (A) DominanceInfo
+    0.0635 (  0.4%)    0.0074 (  0.2%)      LowerCHIRRTLPass
+    0.1369 (  0.9%)    0.0113 (  0.3%)      LowerMatches
+    0.1254 (  0.8%)    0.1254 (  3.1%)    InferWidths
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0028 (  0.0%)    0.0028 (  0.1%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0451 (  0.3%)    0.0451 (  1.1%)    MemToRegOfVec
+    0.0766 (  0.5%)    0.0766 (  1.9%)    InferResets
+    0.0033 (  0.0%)    0.0033 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0593 (  0.4%)    0.0593 (  1.5%)    DropConst
+    0.0006 (  0.0%)    0.0006 (  0.0%)    HoistPassthrough
+    0.0884 (  0.6%)    0.0884 (  2.2%)    Dedup
+    0.0001 (  0.0%)    0.0001 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.1430 (  1.0%)    0.0135 (  0.3%)    'firrtl.module' Pipeline
+    0.1411 (  1.0%)    0.0134 (  0.3%)      FlattenMemory
+    0.2087 (  1.4%)    0.2087 (  5.1%)    LowerFIRRTLTypes
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.2367 (  1.6%)    0.0235 (  0.6%)    'any' Pipeline
+    0.2348 (  1.6%)    0.0235 (  0.6%)      ExpandWhens
+    0.5341 (  3.6%)    0.0463 (  1.1%)    'firrtl.module' Pipeline
+    0.2394 (  1.6%)    0.0246 (  0.6%)      SFCCompat
+    0.1487 (  1.0%)    0.0119 (  0.3%)      LayerMerge
+    0.1377 (  0.9%)    0.0093 (  0.2%)      LayerSink
+    0.0018 (  0.0%)    0.0002 (  0.0%)        (A) DominanceInfo
+    0.1116 (  0.8%)    0.1116 (  2.7%)    LowerLayers
+    0.1744 (  1.2%)    0.1744 (  4.3%)    Inliner
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.3033 (  2.1%)    0.0346 (  0.8%)    'firrtl.module' Pipeline
+    0.3013 (  2.0%)    0.0346 (  0.8%)      RandomizeRegisterInit
+    0.1103 (  0.7%)    0.1103 (  2.7%)    CheckCombLoops
+    0.0033 (  0.0%)    0.0033 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    3.4080 ( 23.0%)    0.2107 (  5.2%)    'firrtl.module' Pipeline
+    3.3272 ( 22.5%)    0.1977 (  4.8%)      Canonicalizer
+    0.0786 (  0.5%)    0.0130 (  0.3%)      InferReadWrite
+    0.0697 (  0.5%)    0.0697 (  1.7%)    LowerMemory
+    0.0024 (  0.0%)    0.0024 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0001 (  0.0%)    0.0001 (  0.0%)      (A) SymbolTable
+    0.0340 (  0.2%)    0.0340 (  0.8%)    PrefixModules
+    0.0033 (  0.0%)    0.0033 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.1906 (  1.3%)    0.1906 (  4.7%)    IMConstProp
+    0.0035 (  0.0%)    0.0035 (  0.1%)    HoistPassthrough
+    0.0026 (  0.0%)    0.0026 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.1467 (  1.0%)    0.1467 (  3.6%)  IMDeadCodeElim
+    0.0020 (  0.0%)    0.0020 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0025 (  0.0%)    0.0025 (  0.1%)    (A) circt::hw::InnerSymbolTableCollection
+    0.0019 (  0.0%)    0.0019 (  0.0%)  'firrtl.circuit' Pipeline
+    0.0019 (  0.0%)    0.0019 (  0.0%)    AddSeqMemPorts
+    0.0018 (  0.0%)    0.0018 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0295 (  0.2%)    0.0295 (  0.7%)  CreateSiFiveMetadata
+    0.0014 (  0.0%)    0.0014 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.1008 (  0.7%)    0.1008 (  2.5%)  'firrtl.circuit' Pipeline
+    0.0066 (  0.0%)    0.0066 (  0.2%)    ExtractInstances
+    0.0014 (  0.0%)    0.0014 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)    GrandCentral
+    0.0253 (  0.2%)    0.0253 (  0.6%)    BlackBoxReader
+    0.0688 (  0.5%)    0.0688 (  1.7%)    SymbolDCE
+    0.0533 (  0.4%)    0.0533 (  1.3%)  InnerSymbolDCE
+    0.3823 (  2.6%)    0.1625 (  4.0%)  'firrtl.circuit' Pipeline
+    0.2199 (  1.5%)    0.0207 (  0.5%)    'firrtl.module' Pipeline
+    0.1687 (  1.1%)    0.0200 (  0.5%)      Canonicalizer
+    0.0423 (  0.3%)    0.0023 (  0.1%)      RegisterOptimizer
+    0.1238 (  0.8%)    0.1238 (  3.0%)    IMConstProp
+    0.0019 (  0.0%)    0.0019 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.1148 (  0.8%)    0.1148 (  2.8%)  IMDeadCodeElim
+    0.0020 (  0.0%)    0.0020 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0015 (  0.0%)    0.0015 (  0.0%)    (A) circt::hw::InnerSymbolTableCollection
+    0.3666 (  2.5%)    0.1676 (  4.1%)  'firrtl.circuit' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)    EmitOMIR
+    0.1550 (  1.0%)    0.0161 (  0.4%)    'firrtl.module' Pipeline
+    0.0181 (  0.1%)    0.0019 (  0.0%)      MergeConnections
+    0.1270 (  0.9%)    0.0147 (  0.4%)      Vectorization
+    0.0086 (  0.1%)    0.0086 (  0.2%)    ResolveTraces
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0015 (  0.0%)    0.0015 (  0.0%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0387 (  0.3%)    0.0387 (  0.9%)    LowerXMR
+    0.0017 (  0.0%)    0.0017 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0631 (  0.4%)    0.0631 (  1.5%)    LowerClasses
+    0.0016 (  0.0%)    0.0016 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0033 (  0.0%)    0.0033 (  0.1%)    VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0440 (  0.3%)    0.0021 (  0.1%)    'firrtl.module' Pipeline
+    0.0222 (  0.1%)    0.0014 (  0.0%)      Lint
+    0.1668 (  1.1%)    0.1668 (  4.1%)  LowerFIRRTLToHW
+    0.0018 (  0.0%)    0.0018 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0001 (  0.0%)    0.0001 (  0.0%)    (A) circt::firrtl::NLATable
+    1.1879 (  8.0%)    0.0503 (  1.2%)  'hw.module' Pipeline
+    0.1012 (  0.7%)    0.0153 (  0.4%)    CSE
+    0.0026 (  0.0%)    0.0002 (  0.0%)      (A) DominanceInfo
+    1.0796 (  7.3%)    0.0423 (  1.0%)    Canonicalizer
+    0.0028 (  0.0%)    0.0028 (  0.1%)  VerifyInnerRefNamespace
+    0.0044 (  0.0%)    0.0044 (  0.1%)  VerifyObjectFields
+    0.0001 (  0.0%)    0.0001 (  0.0%)    (A) SymbolTable
+    0.0042 (  0.0%)    0.0042 (  0.1%)  ExternalizeClockGate
+    0.0086 (  0.1%)    0.0086 (  0.2%)  LowerSimToSV
+    0.0476 (  0.3%)    0.0476 (  1.2%)  LowerSeqToSV
+    0.0547 (  0.4%)    0.0042 (  0.1%)  'hw.module' Pipeline
+    0.0468 (  0.3%)    0.0040 (  0.1%)    LowerVerifToSV
+    0.0092 (  0.1%)    0.0092 (  0.2%)  HWMemSimImpl
+    0.2521 (  1.7%)    0.0175 (  0.4%)  'hw.module' Pipeline
+    0.0843 (  0.6%)    0.0066 (  0.2%)    CSE
+    0.0076 (  0.1%)    0.0006 (  0.0%)      (A) DominanceInfo
+    0.0763 (  0.5%)    0.0053 (  0.1%)    Canonicalizer
+    0.0381 (  0.3%)    0.0032 (  0.1%)    CSE
+    0.0041 (  0.0%)    0.0005 (  0.0%)      (A) DominanceInfo
+    0.0161 (  0.1%)    0.0017 (  0.0%)    HWCleanup
+    0.0024 (  0.0%)    0.0024 (  0.1%)  VerifyInnerRefNamespace
+    0.0031 (  0.0%)    0.0031 (  0.1%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0846 (  0.6%)    0.0047 (  0.1%)  'hw.module' Pipeline
+    0.0127 (  0.1%)    0.0007 (  0.0%)    HWLegalizeModules
+    0.0486 (  0.3%)    0.0036 (  0.1%)    PrettifyVerilog
+    0.0129 (  0.1%)    0.0129 (  0.3%)  StripDebugInfoWithPred
+    0.0113 (  0.1%)    0.0113 (  0.3%)  HWExportModuleHierarchy
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0033 (  0.0%)    0.0033 (  0.1%)  VerifyInnerRefNamespace
+    0.0034 (  0.0%)    0.0034 (  0.1%)  VerifyObjectFields
+    0.1755 (  1.2%)    0.1755 (  4.3%)  ExportSplitVerilog
+    0.3178 (  2.1%)    0.0488 (  1.2%)  'builtin.module' Pipeline
+    0.0152 (  0.1%)    0.0152 (  0.4%)    HWLowerInstanceChoices
+    0.2690 (  1.8%)    0.0184 (  0.5%)    'hw.module' Pipeline
+    0.2623 (  1.8%)    0.0181 (  0.4%)      PrepareForEmission
+   -0.0311 ( -0.2%)   -0.0311 ( -0.8%)  Rest
+   14.7965 (100.0%)    4.0775 (100.0%)  Total
+sed -i 's/.*/& /' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.mems.conf # need trailing space for SFC macrocompiler
+# If there are no BB's then the file might not be generated; ensure it exists
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/firrtl_black_box_resource_files.f
+[run-firtool] Generated: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.mems.conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/metadata/seq_mems.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/top_module_hierarchy.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/model_module_hierarchy.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/filelist.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral/firrtl_black_box_resource_files.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/gen-collateral /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.firtool.log
+make: Leaving directory '/root/chipyard/fpga'

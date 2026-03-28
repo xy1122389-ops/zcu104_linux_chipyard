@@ -1,0 +1,13 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : [uscale.a53.0] Hardware thread awareness created
+Info : clock speed 1000 kHz
+Warn : Haven't made progress in mpsse_flush() for 2037ms.
+Warn : Haven't made progress in mpsse_flush() for 4077ms.
+Warn : Haven't made progress in mpsse_flush() for 8157ms.
+Warn : Haven't made progress in mpsse_flush() for 16062ms.
+Warn : Haven't made progress in mpsse_flush() for 32127ms.
+Warn : Haven't made progress in mpsse_flush() for 64001ms.
+Warn : Haven't made progress in mpsse_flush() for 128006ms.

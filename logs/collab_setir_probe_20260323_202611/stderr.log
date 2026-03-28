@@ -1,0 +1,84 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Debug: 3 33 command.c:86 script_debug(): command - adapter driver ftdi
+Debug: 4 33 command.c:86 script_debug(): command - ftdi vid_pid 0x0403 0x6011
+Debug: 5 33 command.c:86 script_debug(): command - adapter serial 07198
+Debug: 6 34 command.c:86 script_debug(): command - ftdi channel 0
+Debug: 7 34 command.c:86 script_debug(): command - ftdi layout_init 0x00e8 0x60eb
+Debug: 8 34 command.c:86 script_debug(): command - transport select jtag
+Debug: 9 34 command.c:86 script_debug(): command - reset_config none
+Debug: 10 34 command.c:86 script_debug(): command - adapter speed 1000
+Debug: 11 34 adapter.c:252 adapter_config_khz(): handle adapter khz
+Debug: 12 35 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 13 35 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 14 35 command.c:86 script_debug(): command - jtag newtap uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477
+Debug: 15 36 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: tap, Dotted: uscale.tap, 8 params
+Debug: 16 36 core.c:1488 jtag_tap_init(): Created Tap: uscale.tap @ abs position 0, irlen 4, capture: 0x1 mask: 0xf
+Debug: 17 36 command.c:86 script_debug(): command - jtag newtap uscale ps -irlen 12 -ircapture 0x1 -irmask 0x03 -ignore-version -expected-id 0x04711093 -expected-id 0x04710093 -expected-id 0x04721093 -expected-id 0x04720093 -expected-id 0x04739093 -expected-id 0x04730093 -expected-id 0x04738093 -expected-id 0x04740093 -expected-id 0x04750093 -expected-id 0x04759093 -expected-id 0x04758093
+Debug: 18 37 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: ps, Dotted: uscale.ps, 29 params
+Debug: 19 37 core.c:1488 jtag_tap_init(): Created Tap: uscale.ps @ abs position 1, irlen 12, capture: 0x1 mask: 0x3
+Debug: 20 37 command.c:86 script_debug(): command - jtag configure uscale.ps -event setup 
+  global _CHIPNAME
+  global jtag_configured
+  if { $jtag_configured == 0 } {
+    irscan $_CHIPNAME.ps 0x824
+    drscan $_CHIPNAME.ps 32 0x00000003
+    runtest 100
+    set jtag_configured 1
+    jtag arp_init
+  }
+
+Debug: 21 38 command.c:86 script_debug(): command - target create riscv_bscan_ps riscv -chain-position uscale.ps
+Debug: 22 41 riscv.c:494 riscv_create_target(): [riscv_bscan_ps] riscv_create_target()
+Debug: 23 42 command.c:86 script_debug(): command - riscv set_bscan_tunnel_ir 0x926
+Info : 24 42 riscv.c:4872 riscv_set_bscan_tunnel_ir(): Bscan tunnel IR 0x926 selected
+Debug: 25 42 command.c:86 script_debug(): command - riscv set_ir dmi 0x10
+Debug: 26 43 command.c:86 script_debug(): command - riscv use_bscan_tunnel 5 0
+Info : 27 43 riscv.c:4851 riscv_use_bscan_tunnel(): Nested Tap based Bscan Tunnel Selected
+Debug: 28 43 command.c:86 script_debug(): command - init
+Debug: 29 43 command.c:86 script_debug(): command - target init
+Debug: 30 43 command.c:86 script_debug(): command - target names
+Debug: 31 43 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-flash-erase-start
+Debug: 32 43 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-flash-erase-start reset init
+Debug: 33 43 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-flash-write-end
+Debug: 34 43 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-flash-write-end reset halt
+Debug: 35 44 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-attach
+Debug: 36 44 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-attach halt 1000
+Debug: 37 44 target.c:1603 handle_target_init_command(): Initializing targets...
+Debug: 38 44 riscv.c:666 riscv_init_target(): [riscv_bscan_ps] riscv_init_target()
+Debug: 39 44 semihosting_common.c:109 semihosting_common_init():  
+Debug: 40 45 ftdi.c:731 ftdi_initialize(): ftdi interface using shortest path jtag state transitions
+Debug: 41 68 mpsse.c:429 mpsse_purge(): -
+Debug: 42 69 mpsse.c:710 mpsse_loopback_config(): off
+Debug: 43 69 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 44 69 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 45 69 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 46 69 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 47 69 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 48 70 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 49 70 adapter.c:219 adapter_khz_to_speed(): have adapter set up
+Debug: 50 70 mpsse.c:755 mpsse_set_frequency(): target 1000000 Hz
+Debug: 51 70 mpsse.c:747 mpsse_rtck_config(): off
+Debug: 52 70 mpsse.c:736 mpsse_divide_by_5_config(): off
+Debug: 53 70 mpsse.c:716 mpsse_set_divisor(): 29
+Debug: 54 70 mpsse.c:779 mpsse_set_frequency(): actually 1000000 Hz
+Debug: 55 70 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 56 70 adapter.c:219 adapter_khz_to_speed(): have adapter set up
+Info : 57 71 adapter.c:180 adapter_init(): clock speed 1000 kHz
+Debug: 58 71 openocd.c:133 handle_init_command(): Debug Adapter init complete
+Debug: 59 71 command.c:86 script_debug(): command - transport init
+Debug: 60 71 transport.c:274 handle_transport_init(): handle_transport_init
+Debug: 61 72 core.c:843 jtag_add_reset(): SRST line released
+Debug: 62 73 core.c:868 jtag_add_reset(): TRST line released
+Debug: 63 73 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 64 73 command.c:86 script_debug(): command - jtag arp_init
+Debug: 65 73 core.c:1522 jtag_init_inner(): Init JTAG chain
+Debug: 66 73 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Debug: 67 73 core.c:1248 jtag_examine_chain(): DR scan interrogation for IDCODE/BYPASS
+Debug: 68 73 core.c:334 jtag_call_event_callbacks(): jtag event: TAP reset
+Warn : 69 2197 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 2124ms.
+Warn : 70 4237 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 4164ms.
+Warn : 71 8317 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 8244ms.
+Warn : 72 16222 mpsse.c:909 mpsse_flush(): Haven't made progress in mpsse_flush() for 16149ms.

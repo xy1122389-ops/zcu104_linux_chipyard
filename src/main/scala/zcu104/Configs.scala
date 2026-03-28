@@ -47,7 +47,7 @@ class WithZCU104Tweaks extends Config(
   new chipyard.clocking.WithPassthroughClockGenerator ++
   new chipyard.config.WithUniformBusFrequencies(50) ++
   new WithFPGAFrequency(50) ++
-  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 4) ++
   new WithLEDGPIO ++
   new WithUART ++
   new WithSPISDCard ++
@@ -72,7 +72,7 @@ class WithZCU104TweaksNoDDR extends Config(
   new chipyard.clocking.WithPassthroughClockGenerator ++
   new chipyard.config.WithUniformBusFrequencies(50) ++
   new WithFPGAFrequency(50) ++
-  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 4) ++
   new WithLEDGPIO ++
   new WithUART ++
   new WithSPISDCard ++
@@ -83,6 +83,31 @@ class WithZCU104TweaksNoDDR extends Config(
 )
 
 class RocketZCU104NoDDRConfig extends Config(
+  new WithZCU104TweaksNoDDR ++
+  new testchipip.soc.WithNoScratchpads ++
+  new freechips.rocketchip.subsystem.WithIncoherentBusTopology ++
+  new freechips.rocketchip.subsystem.WithNBanks(0) ++
+  new freechips.rocketchip.subsystem.WithNoMemPort ++
+  new freechips.rocketchip.rocket.With1TinyCore ++
+  new chipyard.config.AbstractConfig
+)
+
+class WithZCU104NoDDRHelloBootROM extends Config((site, here, up) => {
+  case DTSTimebase => BigInt((1e6).toLong)
+  case BootROMLocated(x) => up(BootROMLocated(x), site).map { p =>
+    val freqMHz = (site(SystemBusKey).dtsFrequency.get / (1000 * 1000)).toLong
+    val make = s"make -C fpga/src/main/resources/zcu104/sdboot-noddr PBUS_CLK=${freqMHz} bin"
+    require(make.! == 0, "Failed to build ZCU104 no-DDR hello bootrom")
+    p.copy(
+      hang = 0x10000,
+      contentFileName = SystemFileName("./fpga/src/main/resources/zcu104/sdboot-noddr/build/sdboot.bin")
+    )
+  }
+})
+
+class RocketZCU104NoDDRHelloConfig extends Config(
+  new WithZCU104NoDDRHelloBootROM ++
+  new WithZCU104DisableSDIO ++
   new WithZCU104TweaksNoDDR ++
   new testchipip.soc.WithNoScratchpads ++
   new freechips.rocketchip.subsystem.WithIncoherentBusTopology ++

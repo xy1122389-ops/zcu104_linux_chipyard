@@ -1,0 +1,2 @@
+[1/5] Build ILA from /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/post_synth.dcp
+failed to parse ILA dir from /root/chipyard/fpga/logs/shiftwindow_ila_validation_20260325_145333/build_ila.log

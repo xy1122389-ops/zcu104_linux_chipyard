@@ -1,0 +1,4 @@
+make: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux'
+rm -rf /root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux//build
+make: *** No rule to make target 'all'.  Stop.
+make: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux'

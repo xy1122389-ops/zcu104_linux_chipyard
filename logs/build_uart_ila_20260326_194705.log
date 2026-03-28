@@ -1,0 +1,131 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\insert_ila_uart_zcu104.tcl}
+# if { $argc < 2 } {
+#   puts "Usage: vivado -mode batch -source scripts/insert_ila_uart_zcu104.tcl -tclargs <in_post_synth_dcp> <out_dir>"
+#   exit 2
+# }
+# set in_dcp [lindex $argv 0]
+# set out_dir [lindex $argv 1]
+# file mkdir $out_dir
+# open_checkpoint $in_dcp
+Command: open_checkpoint {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\post_synth.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.022 . Memory (MB): peak = 1603.781 ; gain = 0.000
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.692 . Memory (MB): peak = 1895.727 ; gain = 0.387
+INFO: [Netlist 29-17] Analyzing 3530 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2021.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.240 . Memory (MB): peak = 2571.062 ; gain = 0.000
+Restored from archive | CPU: 1.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.241 . Memory (MB): peak = 2571.062 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 3012.656 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 510 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 25 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 2 instances
+  IBUFDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM256X1D => RAM256X1D (MUXF7(x4), MUXF8(x2), RAMD64E(x8)): 2 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 27 instances
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 347 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 8 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 1 instance 
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 66 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 9 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2021.2 (64-bit) build 3367213
+open_checkpoint: Time (s): cpu = 00:00:30 ; elapsed = 00:00:39 . Memory (MB): peak = 3012.656 ; gain = 1408.875
+# set clk_net [get_nets -quiet _dutWrangler_auto_out_clock]
+# if { $clk_net eq "" } {
+#   set clk_net [get_nets -quiet clk_out1]
+# }
+# set rst_net [get_nets -quiet _dutWrangler_auto_out_reset]
+# set tx_net  [get_nets -quiet uart_txd_OBUF]
+# set rx_net  [get_nets -quiet uart_rxd_IBUF]
+# set enq_net [get_nets -quiet {\uart_0/txq/do_enq }]
+# set missing {}
+# foreach {name netobj} [list \
+#   clk_net $clk_net \
+#   rst_net $rst_net \
+#   tx_net $tx_net \
+#   rx_net $rx_net \
+# ] {
+#   if { $netobj eq "" } { lappend missing $name }
+# }
+# if { [llength $missing] > 0 } {
+#   puts "ERROR: missing required nets: $missing"
+#   exit 3
+# }
+# create_debug_core u_ila_uart ila
+# set dbg [get_debug_cores u_ila_uart]
+# set_property C_DATA_DEPTH 16384 $dbg
+# set_property C_INPUT_PIPE_STAGES 0 $dbg
+# create_debug_port u_ila_uart probe
+# create_debug_port u_ila_uart probe
+# create_debug_port u_ila_uart probe
+# set_property port_width 1 [get_debug_ports u_ila_uart/probe0]
+# set_property port_width 1 [get_debug_ports u_ila_uart/probe1]
+# set_property port_width 1 [get_debug_ports u_ila_uart/probe2]
+# set_property port_width 1 [get_debug_ports u_ila_uart/probe3]
+# connect_debug_port u_ila_uart/clk    $clk_net
+# connect_debug_port u_ila_uart/probe0 $tx_net
+# connect_debug_port u_ila_uart/probe1 $rx_net
+# connect_debug_port u_ila_uart/probe2 $rst_net
+# if { $enq_net ne "" } {
+#   connect_debug_port u_ila_uart/probe3 $enq_net
+# } else {
+#   connect_debug_port u_ila_uart/probe3 $tx_net
+# }
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xczu7ev'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_clk expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_cs expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_dat_0 expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port sdio_spi_dat_3 expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port uart_rxd expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port uart_txd expects both input and output buffering but the buffers are incomplete.
+INFO: [Project 1-461] DRC finished with 0 Errors, 6 Warnings
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 3026.527 ; gain = 13.871
+
+Starting Cache Timing Information Task
+Ending Cache Timing Information Task | Checksum: 109b4f297
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.192 . Memory (MB): peak = 3026.527 ; gain = 0.000
+
+Starting Logic Optimization Task
+
+Phase 1 Generate And Synthesize Debug Cores
+INFO: [Chipscope 16-329] Generating Script for core instance : dbg_hub 
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'E:/PRO_APP/xilinx/Vivado/2021.2/data/ip'.
+INFO: [IP_Flow 19-3806] Processing IP xilinx.com:ip:xsdbm:3.0 for cell dbg_hub_CV.
+INFO: [Chipscope 16-329] Generating Script for core instance : u_ila_uart 
+INFO: [IP_Flow 19-3806] Processing IP xilinx.com:ip:ila:6.2 for cell u_ila_uart_CV.

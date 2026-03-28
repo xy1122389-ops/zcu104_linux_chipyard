@@ -1,0 +1,9 @@
+TARGET=127.0.0.1:3121/xilinx_tcf/Xilinx/07198A
+DEVICE=xczu7_0
+ILA=hw_ila_1
+TRIGGER_PROBE=tx
+TRIGGER_VALUE=0
+ALL_PROBES=_dutWrangler_auto_out_reset uart_rxd_IBUF uart_txd_OBUF uart_txd_OBUF_1
+TX_PROBE=uart_txd_OBUF
+RX_PROBE=uart_rxd_IBUF
+RST_PROBE=_dutWrangler_auto_out_reset

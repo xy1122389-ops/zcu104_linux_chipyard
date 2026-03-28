@@ -1,4 +1,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/linux_handoff.c,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-linux/linux_handoff.c)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/head.S,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-linux/head.S)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/Makefile,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-linux/Makefile)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/sd.c,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/sd.c)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/head.S,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/head.S)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/kprintf.c,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/kprintf.c)[0m
@@ -7,6 +10,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/baremetal.c,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/baremetal.c)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/Makefile,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/Makefile)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/common.h,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/common.h)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr/rocket_noddr.c,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-noddr/rocket_noddr.c)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr/Makefile,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-noddr/Makefile)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vcu118/sdboot/sd.c,/root/chipyard/fpga/target/scala-2.13/classes/vcu118/sdboot/sd.c)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vcu118/sdboot/head.S,/root/chipyard/fpga/target/scala-2.13/classes/vcu118/sdboot/head.S)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vcu118/sdboot/kprintf.c,/root/chipyard/fpga/target/scala-2.13/classes/vcu118/sdboot/kprintf.c)[0m
@@ -26,6 +31,9 @@
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vc707/sdboot/kprintf.h,/root/chipyard/fpga/target/scala-2.13/classes/vc707/sdboot/kprintf.h)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vc707/sdboot/Makefile,/root/chipyard/fpga/target/scala-2.13/classes/vc707/sdboot/Makefile)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vc707/sdboot/common.h,/root/chipyard/fpga/target/scala-2.13/classes/vc707/sdboot/common.h)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/build/sdboot.elf,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-linux/build/sdboot.elf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/build/sdboot.bin,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-linux/build/sdboot.bin)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux/build/sdboot.dump,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-linux/build/sdboot.dump)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/include/const.h,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/include/const.h)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/include/sections.h,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/include/sections.h)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/include/bits.h,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/include/bits.h)[0m
@@ -36,6 +44,9 @@
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/build/sdboot.dump,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/build/sdboot.dump)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/linker/memory.lds,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/linker/memory.lds)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot/linker/sdboot.elf.lds,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot/linker/sdboot.elf.lds)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr/build/sdboot.elf,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-noddr/build/sdboot.elf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr/build/sdboot.bin,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-noddr/build/sdboot.bin)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr/build/sdboot.dump,/root/chipyard/fpga/target/scala-2.13/classes/zcu104/sdboot-noddr/build/sdboot.dump)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vcu118/sdboot/include/const.h,/root/chipyard/fpga/target/scala-2.13/classes/vcu118/sdboot/include/const.h)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vcu118/sdboot/include/sections.h,/root/chipyard/fpga/target/scala-2.13/classes/vcu118/sdboot/include/sections.h)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(/root/chipyard/fpga/src/main/resources/vcu118/sdboot/include/bits.h,/root/chipyard/fpga/target/scala-2.13/classes/vcu118/sdboot/include/bits.h)[0m

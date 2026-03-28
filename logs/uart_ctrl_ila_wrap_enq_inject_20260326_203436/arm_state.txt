@@ -1,0 +1,10 @@
+TARGET=127.0.0.1:3121/xilinx_tcf/Xilinx/07198A
+DEVICE=xczu7_0
+ILA=hw_ila_1
+TRIGGER_PROBE=wrap_enq
+TRIGGER_VALUE=1
+ALL_PROBES=chiptop0/system/uartClockDomainWrapper/do_enq chiptop0/system/uartClockDomainWrapper/txen0 chiptop0/system/uartClockDomainWrapper/uart_0/do_enq chiptop0/system/uartClockDomainWrapper/uart_0/txq/do_enq
+WRAP_ENQ_PROBE=chiptop0/system/uartClockDomainWrapper/do_enq
+UART_ENQ_PROBE=chiptop0/system/uartClockDomainWrapper/uart_0/do_enq
+TXQ_ENQ_PROBE=chiptop0/system/uartClockDomainWrapper/uart_0/txq/do_enq
+TXEN_PROBE=chiptop0/system/uartClockDomainWrapper/txen0

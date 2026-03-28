@@ -1,0 +1,78 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check inputs ====
+PSU_INIT=\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl
+BIT_FILE=\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ZCU104FPGATestHarness.bit
+BASEADDR=0x18720
+WORDS=32
+
+==== connect and recover ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== psu init and fpga ====
+
+==== read bootrom region ====
+   18720:   776F6C6C
+   18724:   00006465
+   18728:   6E65706F
+   1872C:   2D696273
+   18730:   616D6F64
+   18734:   00006E69
+   18738:   63736972
+   1873C:   6D702C76
+   18740:   00000075
+   18744:   00000000
+   18748:   63736972
+   1874C:   76652C76
+   18750:   2D746E65
+   18754:   6D2D6F74
+   18758:   636D7068
+   1875C:   746E756F
+   18760:   00737265
+   18764:   00000000
+   18768:   63736972
+   1876C:   76652C76
+   18770:   2D746E65
+   18774:   6D2D6F74
+   18778:   656D7068
+   1877C:   746E6576
+   18780:   00000000
+   18784:   00000000
+   18788:   63736972
+   1878C:   61722C76
+   18790:   76652D77
+   18794:   2D746E65
+   18798:   6D2D6F74
+   1879C:   636D7068
+

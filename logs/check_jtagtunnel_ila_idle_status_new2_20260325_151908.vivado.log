@@ -1,0 +1,47 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\check_jtagtunnel_ila_idle_status.tcl}
+# array set options {
+#     -probes_path    ""
+#     -target_index   "0"
+#     -seconds        "5"
+#     -out_log        ""
+# }
+# for {set i 0} {$i < $argc} {incr i 2} {
+#     set arg [lindex $argv $i]
+#     set val [lindex $argv [expr $i+1]]
+#     if {[info exists options($arg)]} {
+#         set options($arg) $val
+#     }
+# }
+# if {$options(-probes_path) eq "" || $options(-out_log) eq ""} {
+#     puts "Usage: vivado -mode batch -source check_jtagtunnel_ila_idle_status.tcl -tclargs -probes_path <ltx> -out_log <log> ?-target_index 0? ?-seconds 5?"
+#     exit 2
+# }
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.: Socket bind error. 閫氬父姣忎釜濂楁帴瀛楀湴鍧�(鍗忚/缃戠粶鍦板潃/绔彛)
+
+ERROR: [Labtools 27-2220] Launch Error:
+Unable to launch local hw_server executable.
+
+ERROR: [Common 17-39] 'connect_hw_server' failed due to earlier errors.
+
+    while executing
+"connect_hw_server -allow_non_jtag"
+    (file "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\check_jtagtunnel_ila_idle_status.tcl" line 23)
+INFO: [Common 17-206] Exiting Vivado at Wed Mar 25 15:19:17 2026...

@@ -1,0 +1,189 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\logs\same_session_ebreak_replay_20260327_202059\replay.tcl}
+# set outdir [file normalize "/root/chipyard/fpga/logs/same_session_ebreak_replay_20260327_202059"]
+# set ltxfile [file normalize "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/debug_obj/jtagtunnel_ila_20260326_213703/jtagtunnel_ila.ltx"]
+# set repeats 1
+# set jtag_hz 10000
+# set reopen_target 0
+# proc write_state {path target dev ila} {
+#   set fp [open $path w]
+#   puts $fp "TARGET=$target"
+#   puts $fp "DEVICE=$dev"
+#   puts $fp "ILA=$ila"
+#   puts $fp "STATUS_PRE.CORE_STATUS=[get_property STATUS.CORE_STATUS $ila]"
+#   puts $fp "STATUS_PRE.SAMPLE_COUNT=[get_property STATUS.SAMPLE_COUNT $ila]"
+#   close $fp
+# }
+# proc append_state {path ila stim_rc} {
+#   set fp [open $path a]
+#   puts $fp "STATUS_POST.CORE_STATUS=[get_property STATUS.CORE_STATUS $ila]"
+#   puts $fp "STATUS_POST.SAMPLE_COUNT=[get_property STATUS.SAMPLE_COUNT $ila]"
+#   puts $fp "STIM_RC=$stim_rc"
+#   close $fp
+# }
+# proc bind_hw {ltxfile} {
+#   set dev [lindex [get_hw_devices] 0]
+#   current_hw_device $dev
+#   set_property PROBES.FILE $ltxfile [current_hw_device]
+#   set_property FULL_PROBES.FILE $ltxfile [current_hw_device]
+#   refresh_hw_device [current_hw_device]
+#   set ila [lindex [get_hw_ilas] 0]
+#   if {$ila eq ""} {
+#     puts "ERROR: no hw_ila found"
+#     exit 3
+#   }
+#   set pos_probe [get_hw_probes inst_jtag_tunnel/posCounter_reg]
+#   if {$pos_probe eq ""} {
+#     puts "ERROR: posCounter probe not found"
+#     exit 4
+#   }
+#   return [list $dev $ila $pos_probe]
+# }
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -url TCP:127.0.0.1:3121
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:127.0.0.1:3121
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:12 . Memory (MB): peak = 1603.543 ; gain = 0.000
+# catch {close_hw_target}
+INFO: [Labtoolstcl 44-464] Closing hw_target 127.0.0.1:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtoolstcl 44-468] Target hw_target 127.0.0.1:3121/xilinx_tcf/Xilinx/07198A is already closed
+# set target ""
+# for {set i 0} {$i < 10} {incr i} {
+#   catch {refresh_hw_server}
+#   set targets [get_hw_targets -quiet]
+#   if {[llength $targets] > 0} {
+#     set target [lindex $targets 0]
+#     break
+#   }
+#   after 1000
+# }
+# if {$target eq ""} {
+#   puts "ERROR: no hw_target"
+#   exit 5
+# }
+# open_hw_target $target
+INFO: [Labtoolstcl 44-466] Opening hw_target 127.0.0.1:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+# lassign [bind_hw $ltxfile] dev ila pos_probe
+# set xsdb_bat "E:\\PRO_APP\\xilinx\\Vivado\\2021.2\\bin\\xsdb.bat"
+# for {set idx 1} {$idx <= $repeats} {incr idx} {
+#   if {$idx > 1 && $reopen_target} {
+#     catch {close_hw_target}
+#     open_hw_target $target
+#     lassign [bind_hw $ltxfile] dev ila pos_probe
+#   }
+#   set label "ebreak_r$idx"
+#   set sampleDir [file join $outdir $label]
+#   file mkdir $sampleDir
+#   set csvOut [file join $sampleDir jtagtunnel_ila.csv]
+#   set stateOut [file join $sampleDir state.txt]
+#   set stimOut [file join $sampleDir stimulus.log]
+#   set xsdbTcl [file nativename [file join $sampleDir xsdb_replay.tcl]]
+# 
+#   reset_hw_ila $ila
+#   foreach p [get_hw_probes -of_objects $ila] {
+#     set width [get_property WIDTH $p]
+#     set xbits [string repeat X $width]
+#     set_property TRIGGER_COMPARE_VALUE "eq${width}'b${xbits}" $p
+#     set_property CAPTURE_COMPARE_VALUE "eq${width}'b${xbits}" $p
+#   }
+#   set_property TRIGGER_COMPARE_VALUE "eq8'h08" $pos_probe
+#   set_property CONTROL.TRIGGER_POSITION 2048 $ila
+#   set_property CONTROL.WINDOW_COUNT 1 $ila
+#   run_hw_ila $ila
+# 
+#   set fp_xsdb [open $xsdbTcl w]
+#   puts $fp_xsdb "connect -url tcp:127.0.0.1:3121"
+#   puts $fp_xsdb "jtag targets -set -filter {name == \"xczu7\"}"
+#   puts $fp_xsdb "jtag frequency $jtag_hz"
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 16 0x100a]
+#   puts $fp_xsdb {puts "SEL=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 44 0x41]
+#   puts $fp_xsdb {puts "DTMCS=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x420000000653]
+#   puts $fp_xsdb {puts "WRITE_HALTREQ=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP1_HALTREQ=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x80004001ce53]
+#   puts $fp_xsdb {puts "WRITE_PROGBUF0=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP1_PROGBUF0=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x5c0090400253]
+#   puts $fp_xsdb {puts "WRITE_COMMAND=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP1_COMMAND=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP2_COMMAND=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x580000000153]
+#   puts $fp_xsdb {puts "READ_ABSTRACTCS=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP1_ABSTRACTCS=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x100000000153]
+#   puts $fp_xsdb {puts "READ_DATA0=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP1_DATA0=[$seq run -hex]"}
+#   puts $fp_xsdb {set seq [jtag sequence]}
+#   puts $fp_xsdb {$seq irshift -integer 12 0x926}
+#   puts $fp_xsdb [format {$seq drshift -capture -integer %d 0x%x} 53 0x53]
+#   puts $fp_xsdb {puts "NOP2_DATA0=[$seq run -hex]"}
+#   puts $fp_xsdb {exit}
+#   close $fp_xsdb
+# 
+#   write_state $stateOut $target $dev $ila
+#   set stim_cmd [list cmd /c $xsdb_bat $xsdbTcl]
+#   set stim_out ""
+#   set stim_rc [catch {set stim_out [eval exec $stim_cmd]} stim_err]
+#   set fp_stim [open $stimOut w]
+#   puts $fp_stim $stim_out
+#   if {$stim_rc != 0} {
+#     puts $fp_stim $stim_err
+#   }
+#   close $fp_stim
+# 
+#   wait_on_hw_ila $ila
+#   set ilaData [upload_hw_ila_data $ila]
+#   write_hw_ila_data -force -csv_file $csvOut $ilaData
+#   append_state $stateOut $ila $stim_rc
+# }
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2026-Mar-27 20:21:24
+wait_on_hw_ila: Time (s): cpu = 00:00:00 ; elapsed = 00:00:10 . Memory (MB): peak = 2522.109 ; gain = 0.000
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2026-Mar-27 20:21:24
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:00:38 . Memory (MB): peak = 2522.230 ; gain = 0.121
+# close_hw_target
+INFO: [Labtoolstcl 44-464] Closing hw_target 127.0.0.1:3121/xilinx_tcf/Xilinx/07198A
+# exit
+INFO: [Common 17-206] Exiting Vivado at Fri Mar 27 20:22:41 2026...

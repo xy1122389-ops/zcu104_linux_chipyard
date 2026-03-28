@@ -1,0 +1,57 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== short chain setup ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== reset vector breakpoint ====
+RESET_BP_ID=0
+RESET_SAMPLE i=1 PC=pc: N/A
+RESET_SAMPLE i=2 PC=pc: N/A
+RESET_SAMPLE i=3 PC=pc: N/A
+RESET_SAMPLE i=4 PC=pc: N/A
+RESET_SAMPLE i=5 PC=pc: N/A
+RESET_SAMPLE i=6 PC=pc: N/A
+RESET_SAMPLE i=7 PC=pc: N/A
+RESET_SAMPLE i=8 PC=pc: N/A
+RESET_SAMPLE i=9 PC=pc: N/A
+RESET_SAMPLE i=10 PC=pc: N/A
+RESET_BP_HIT=NO
+RESET_BP_COUNT=0
+RESET_FIRST_PC=
+POST_RESET_PC_READABLE=NO
+POST_RESET_PC_PROGRESS=NO
+RESET_PC_ACTIVITY_UNIQ={pc: N/A}
+POST_RESET_STEPS_UNIQ=
+STEP2_FLOW=
+STEP3_CONCLUSION=DEBUG_CONTEXT_OR_CPU_OBSERVABILITY_FAILED

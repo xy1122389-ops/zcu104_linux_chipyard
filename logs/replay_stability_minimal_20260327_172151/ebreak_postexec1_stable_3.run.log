@@ -1,0 +1,2 @@
+MODE=inline
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_ebreak_postexec1_stable_3_20260327_172518

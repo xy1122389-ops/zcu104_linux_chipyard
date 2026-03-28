@@ -1,0 +1,2 @@
+ILA_DIR=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/debug_obj/jtagtunnel_ila_20260325_205240
+LABEL=allzeros CAPDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_inline_allzeros_20260326_131133

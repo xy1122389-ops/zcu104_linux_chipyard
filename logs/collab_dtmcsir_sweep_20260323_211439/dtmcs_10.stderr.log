@@ -1,0 +1,61 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Debug: 3 22 command.c:86 script_debug(): command - adapter driver ftdi
+Debug: 4 23 command.c:86 script_debug(): command - ftdi vid_pid 0x0403 0x6011
+Debug: 5 23 command.c:86 script_debug(): command - adapter serial 07198
+Debug: 6 23 command.c:86 script_debug(): command - ftdi channel 0
+Debug: 7 23 command.c:86 script_debug(): command - ftdi layout_init 0x00e8 0x60eb
+Debug: 8 23 command.c:86 script_debug(): command - transport select jtag
+Debug: 9 23 command.c:86 script_debug(): command - reset_config none
+Debug: 10 23 command.c:86 script_debug(): command - adapter speed 1000
+Debug: 11 23 adapter.c:252 adapter_config_khz(): handle adapter khz
+Debug: 12 23 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 13 23 adapter.c:215 adapter_khz_to_speed(): convert khz to adapter specific speed value
+Debug: 14 23 command.c:86 script_debug(): command - jtag newtap uscale tap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x5ba00477
+Debug: 15 24 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: tap, Dotted: uscale.tap, 8 params
+Debug: 16 24 core.c:1488 jtag_tap_init(): Created Tap: uscale.tap @ abs position 0, irlen 4, capture: 0x1 mask: 0xf
+Debug: 17 24 command.c:86 script_debug(): command - jtag newtap uscale ps -irlen 12 -ircapture 0x1 -irmask 0x03 -ignore-version -expected-id 0x04711093 -expected-id 0x04710093 -expected-id 0x04721093 -expected-id 0x04720093 -expected-id 0x04739093 -expected-id 0x04730093 -expected-id 0x04738093 -expected-id 0x04740093 -expected-id 0x04750093 -expected-id 0x04759093 -expected-id 0x04758093
+Debug: 18 24 tcl.c:404 handle_jtag_newtap_args(): Creating New Tap, Chip: uscale, Tap: ps, Dotted: uscale.ps, 29 params
+Debug: 19 24 core.c:1488 jtag_tap_init(): Created Tap: uscale.ps @ abs position 1, irlen 12, capture: 0x1 mask: 0x3
+Debug: 20 25 command.c:86 script_debug(): command - jtag configure uscale.ps -event setup 
+  global _CHIPNAME
+  global jtag_configured
+  if { $jtag_configured == 0 } {
+    irscan $_CHIPNAME.ps 0x824
+    drscan $_CHIPNAME.ps 32 0x00000003
+    runtest 100
+    set jtag_configured 1
+    jtag arp_init
+  }
+
+Debug: 21 25 command.c:86 script_debug(): command - target create riscv_bscan_ps riscv -chain-position uscale.ps
+Debug: 22 27 riscv.c:494 riscv_create_target(): [riscv_bscan_ps] riscv_create_target()
+Debug: 23 27 command.c:86 script_debug(): command - riscv set_bscan_tunnel_ir 0x926
+Info : 24 28 riscv.c:4872 riscv_set_bscan_tunnel_ir(): Bscan tunnel IR 0x926 selected
+Debug: 25 28 command.c:86 script_debug(): command - riscv set_ir dtmcs 0x10
+Debug: 26 28 command.c:86 script_debug(): command - riscv use_bscan_tunnel 5 0
+Info : 27 28 riscv.c:4851 riscv_use_bscan_tunnel(): Nested Tap based Bscan Tunnel Selected
+Debug: 28 28 command.c:86 script_debug(): command - init
+Debug: 29 28 command.c:86 script_debug(): command - target init
+Debug: 30 28 command.c:86 script_debug(): command - target names
+Debug: 31 28 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-flash-erase-start
+Debug: 32 28 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-flash-erase-start reset init
+Debug: 33 28 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-flash-write-end
+Debug: 34 28 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-flash-write-end reset halt
+Debug: 35 29 command.c:86 script_debug(): command - riscv_bscan_ps cget -event gdb-attach
+Debug: 36 29 command.c:86 script_debug(): command - riscv_bscan_ps configure -event gdb-attach halt 1000
+Debug: 37 29 target.c:1603 handle_target_init_command(): Initializing targets...
+Debug: 38 29 riscv.c:666 riscv_init_target(): [riscv_bscan_ps] riscv_init_target()
+Debug: 39 29 semihosting_common.c:109 semihosting_common_init():  
+Debug: 40 30 ftdi.c:731 ftdi_initialize(): ftdi interface using shortest path jtag state transitions
+Error: 41 47 mpsse.c:180 open_matching_device(): libusb_open() failed with LIBUSB_ERROR_ACCESS
+Error: 42 48 mpsse.c:369 mpsse_open(): unable to open ftdi device with description '*', serial '07198' at bus location '*'
+Debug: 43 49 command.c:461 exec_command(): Command 'init' failed with error code -100
+User : 44 49 command.c:534 command_run_line(): 
+Debug: 45 50 breakpoints.c:319 breakpoint_remove_all_internal(): [riscv_bscan_ps] Delete all breakpoints
+Debug: 46 50 riscv.c:718 riscv_deinit_target(): [riscv_bscan_ps] riscv_deinit_target()
+Error: 47 50 riscv.c:472 get_target_type(): [riscv_bscan_ps] Unsupported DTM version: -1
+Error: 48 50 riscv.c:725 riscv_deinit_target(): [riscv_bscan_ps] Could not identify target type.
+Debug: 49 51 target.c:2145 target_free_all_working_areas_restore(): freeing all working areas

@@ -1,0 +1,8 @@
+SEL=3b02
+DTMCS=3b02d0ad4900
+WRITE_resumereq=3b02d0ad498019
+PRENOP1_resumereq=3b02d0ad498019
+PRENOP2_resumereq=3b02d0ad498019
+READ_0x11_resumereq=3b02d0ad498019
+POSTNOP1_0x11_resumereq=3b02d0ad498019
+POSTNOP2_0x11_resumereq=3b02d0ad498019

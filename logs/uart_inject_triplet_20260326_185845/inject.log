@@ -1,0 +1,87 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+Cannot create listening port tcp:127.0.0.1:3121: Socket bind error. 閫氬父姣忎釜濂楁帴瀛楀湴鍧�(鍗忚??/缃戠粶鍦板潃/绔?鍙?)
+
+
+==== select PSU ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9  Cortex-A53 #0 (External Debug Request, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+
+==== configure uart ====
+UART_TXCTRL=64000008:   00000001
+
+UART_DIV=64000018:   000001B1
+
+UART_TXDATA_BEFORE=64000000:   00000055
+
+UART_RXDATA_BEFORE=64000004:   33333333
+
+UART_IP_BEFORE=64000014:   33333333
+
+
+==== write test string ====
+ERROR in write test string: Memory read error at 0x64000000. AP transaction timeout
+Memory read error at 0x64000000. AP transaction timeout
+    invoked from within
+"::tcf::eval -progress {apply {{msg} {puts $msg}}} {tcf_send_command tcfchan#0 Memory get siiii {Bea{o{msg o{} A}}} {{JTAG-jsn-HW-Z1-ZCU104 FT4232H-07198A-5ba00477-0} 1677721600 4 4 3}}"
+    (procedure "::tcf::send_command" line 4)
+    invoked from within
+"::tcf::send_command $chan Memory get "siiii" "Bea{o{msg o{} A}}" [list $ctx $start_addr $size $nbytes $mode]"
+    (procedure "mrd" line 87)
+    invoked from within
+"mrd $addr"
+    (procedure "mrd_word" line 2)
+    invoked from within
+"mrd_word $addr"
+    (procedure "wait_tx_ready" line 3)
+    invoked from within
+"wait_tx_ready $txdata"
+    ("foreach" body line 3)
+    invoked from within
+"foreach b $bytes {
+    set v [expr {$b & 0xff}]
+    wait_tx_ready $txdata
+    mwr $txdata $v
+    after 10
+  }"
+    ("uplevel" body line 3)
+    invoked from within
+"uplevel 1 $body"

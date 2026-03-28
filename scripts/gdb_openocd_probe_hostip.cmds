@@ -1,0 +1,10 @@
+set pagination off
+set confirm off
+target extended-remote 172.19.128.1:3333
+monitor targets
+monitor reg pc
+monitor reg cpsr
+info registers
+x/8i $pc
+detach
+quit

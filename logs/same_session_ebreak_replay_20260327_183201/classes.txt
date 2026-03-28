@@ -1,0 +1,11 @@
+CLASS 1
+HASH=b8d5389691135086ded97d4bdebd9c64043996b28e53e19a0dd157219c0ec4f0
+EVENT_COUNT=3
+/root/chipyard/fpga/logs/same_session_ebreak_replay_20260327_183201/ebreak_r2/jtagtunnel_ila.csv
+/root/chipyard/fpga/logs/same_session_ebreak_replay_20260327_183201/ebreak_r3/jtagtunnel_ila.csv
+
+CLASS 2
+HASH=8f70dce344c6d7fb40bf11f5dd5ee0c636c51187d0d3d318a6747c640171a570
+EVENT_COUNT=566
+/root/chipyard/fpga/logs/same_session_ebreak_replay_20260327_183201/ebreak_r1/jtagtunnel_ila.csv
+

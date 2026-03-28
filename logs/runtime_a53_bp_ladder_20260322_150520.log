@@ -1,0 +1,313 @@
+==== setup psu_init + bit + payload ====
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check input files ====
+psu_init.tcl = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl
+bitstream    = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ZCU104FPGATestHarness.bit
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== show targets ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== select PSU target ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== source psu_init.tcl ====
+
+==== run psu_init (PS DDR init first) ====
+
+==== program FPGA bitstream ====
+
+==== wait after FPGA program ====
+
+==== reselect PSU target ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== remove PS-PL isolation ====
+
+==== wait after isolation removal ====
+
+==== apply PS-PL reset config ====
+
+==== final message ====
+PS DDR init + Linux bringup bitstream download completed.
+Next step: run load_linux_fw_payload.sh to push fw_payload into DDR.
+
+==== disconnect ====
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check payload file ====
+flat payload = \\wsl.localhost\Ubuntu-22.04\root\chipyard\software\firemarshal\boards\default\firmware\opensbi\build\platform\generic\firmware\fw_payload.bin
+flat_size = 0x1ad4808 aligned = 0x1ad5000
+payload_psddr_addr = 0x00000000
+bootaddr = 0x80000000
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== show targets ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== force XSDB memory accesses ====
+
+==== select APU target for PS DDR payload access ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8* APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== add XSDB memmap entry for PS DDR payload window ====
+payload memmap: addr=0x00000000 size=0x1ad5000
+
+==== download flat payload to PS DDR physical 0x00000000 ====
+       0:   C7818BA1
+
+
+==== select PSU target for boot-address-reg and MSIP ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== program boot-address-reg for chip-visible DDR 0x80000000 ====
+    1000:   80000000
+
+    1004:   00000000
+
+
+==== trigger hart0 msip ====
+ 2000000:   00000001
+
+
+==== final message ====
+fw_payload loaded to PS DDR physical 0x00000000.
+boot-address-reg points chip boot flow at 0x80000000 and MSIP is asserted.
+Expected serial flow: bootrom banner -> OpenSBI -> Linux earlycon -> /#
+
+==== disconnect ====
+
+==== ladder probe ====
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== connect and baseline recover ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== ladder ====
+BP_ADDR_0x1F0_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x1F0_PC=pc: 0000000000000200
+BP_ADDR_0x1F0_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x1F0_EXACT_HIT=NO
+BP_ADDR_0x1F8_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x1F8_PC=pc: 0000000000000200
+BP_ADDR_0x1F8_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x1F8_EXACT_HIT=NO
+BP_ADDR_0x1FC_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x1FC_PC=pc: 0000000000000200
+BP_ADDR_0x1FC_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x1FC_EXACT_HIT=NO
+BP_ADDR_0x200_REASON=Breakpoint, EL3(S)/A64
+BP_ADDR_0x200_PC=pc: 0000000000000200
+BP_ADDR_0x200_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x200_EXACT_HIT=YES
+BP_ADDR_0x204_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x204_PC=pc: 0000000000000200
+BP_ADDR_0x204_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x204_EXACT_HIT=NO
+BP_ADDR_0x208_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x208_PC=pc: 0000000000000200
+BP_ADDR_0x208_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x208_EXACT_HIT=NO
+BP_ADDR_0x20C_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x20C_PC=pc: 0000000000000200
+BP_ADDR_0x20C_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x20C_EXACT_HIT=NO
+BP_ADDR_0x210_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x210_PC=pc: 0000000000000200
+BP_ADDR_0x210_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x210_EXACT_HIT=NO
+BP_ADDR_0x220_REASON=External Debug Request, EL3(S)/A64
+BP_ADDR_0x220_PC=pc: 0000000000000200
+BP_ADDR_0x220_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+BP_ADDR_0x220_EXACT_HIT=NO

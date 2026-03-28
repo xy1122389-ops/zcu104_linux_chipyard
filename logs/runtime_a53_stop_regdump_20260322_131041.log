@@ -1,0 +1,80 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+==== BEFORE STOP ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9* Cortex-A53 #0 (Running)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+==== AFTER STOP ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9* Cortex-A53 #0 (External Debug Request, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+==== A53_0 RRD ALL AFTER STOP ====
+      r0: 0000000000c52838        r1: 00e2101382440943
+      r2: 391282c06401c80a        r3: c78501882ca0641d
+      r4: 068194020240a8a1        r5: a204120049c28048
+      r6: 810d029828500211        r7: c88e414820142558
+      r8: 420800705ce1029f        r9: 43180d2040108329
+     r10: d85f4ca62280dc0f       r11: 90c0b97a1602a246
+     r12: 30d311204d9a000a       r13: b0365b3405f2d1c5
+     r14: 8c223e42a8560129       r15: 35cc996b008000a1
+     r16: a200650002200dc7       r17: 9d26898d84581980
+     r18: 424807500404116e       r19: 021340644891350a
+     r20: 118d530740401936       r21: 7a1810a508e60102
+     r22: 52cda47e88bd787c       r23: 86010a2a18e0086a
+     r24: 1400793b4062c048       r25: 82197a418380010e
+     r26: 0261c9a08c849320       r27: f04dc1a4025282c9
+     r28: f610a0a000008cdc       r29: ac9f15a802421440
+     r30: 870b870909004401        sp: d08609a221400281
+      pc: 0000000000000200      cpsr:         000003cd
+     vfp                         sys                  
+     dbg                    acpu_gic                  
+

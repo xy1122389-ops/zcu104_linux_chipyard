@@ -1,0 +1,10 @@
+BASE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260325_125007/jtagtunnel_ila.csv
+BASE_EVENT_COUNT=566
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260325_125256/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+
+COMPARE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_custom_bit1_len16_20260325_130947/jtagtunnel_ila.csv
+SAME_VALUES=True
+EVENT_COUNT=566
+

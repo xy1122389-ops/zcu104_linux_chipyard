@@ -1,0 +1,9 @@
+BITFILE=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/obj/ZCU104FPGATestHarness.bit
+OUTER_IR=0x926
+TUNNEL_TYPE=1
+CLASSIFICATION=UNSUPPORTED_DTM
+DTMCS=
+VERSION=0x4
+ABITS=
+LOAD_STDERR=/root/chipyard/fpga/logs/openocd_probe_riscv_collab_ir_926_t1_20260323_192211/pld_load.stderr.log
+PROBE_STDERR=/root/chipyard/fpga/logs/openocd_probe_riscv_collab_ir_926_t1_20260323_192211/probe.stderr.log

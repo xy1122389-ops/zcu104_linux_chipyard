@@ -1,0 +1,5 @@
+OUTDIR=/root/chipyard/fpga/logs/uart_ila_rx_hostsend_20260326_193258
+ILA_DIR=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ila_20260326_191447
+CAPTURE_LOG=/root/chipyard/fpga/logs/uart_ila_rx_hostsend_20260326_193258/capture.log
+SEND_LOG=/root/chipyard/fpga/logs/uart_ila_rx_hostsend_20260326_193258/send.log
+CSV_OUT=/root/chipyard/fpga/logs/uart_ila_rx_hostsend_20260326_193258/uart_ila.csv

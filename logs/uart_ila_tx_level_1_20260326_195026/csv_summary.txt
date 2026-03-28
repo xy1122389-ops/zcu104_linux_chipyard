@@ -1,0 +1,7 @@
+CSV=logs/uart_ila_tx_level_1_20260326_195026/uart_ila.csv
+SAMPLES=16384
+TRIGGER: uniq=0,1 transitions=2 head=0,0,0,0,0,0,0,0 tail=0,0,0,0,0,0,0,0
+uart_txd_OBUF_1: uniq=1 transitions=0 head=1,1,1,1,1,1,1,1 tail=1,1,1,1,1,1,1,1
+uart_rxd_IBUF: uniq=1 transitions=0 head=1,1,1,1,1,1,1,1 tail=1,1,1,1,1,1,1,1
+_dutWrangler_auto_out_reset: uniq=0 transitions=0 head=0,0,0,0,0,0,0,0 tail=0,0,0,0,0,0,0,0
+uart_txd_OBUF: uniq=1 transitions=0 head=1,1,1,1,1,1,1,1 tail=1,1,1,1,1,1,1,1

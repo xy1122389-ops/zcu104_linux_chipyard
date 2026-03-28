@@ -1,0 +1,334 @@
+FW=/root/chipyard/fpga/src/main/resources/zcu104/sdboot/build/sdboot.bin
+==== load baremetal bin ====
+
+==== check payload file ====
+flat payload = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\src\main\resources\zcu104\sdboot\build\sdboot.bin
+flat_size = 0x868 aligned = 0x1000
+payload_psddr_addr = 0x00000000
+bootaddr = 0x80000000
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== show targets ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== force XSDB memory accesses ====
+
+==== select APU target for PS DDR payload access ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8* APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== add XSDB memmap entry for PS DDR payload window ====
+payload memmap: addr=0x00000000 size=0x1000
+
+==== download flat payload to PS DDR physical 0x00000000 ====
+       0:   08000117
+
+
+==== select PSU target for boot-address-reg and MSIP ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== program boot-address-reg for chip-visible DDR 0x80000000 ====
+    1000:   80000000
+
+    1004:   00000000
+
+
+==== trigger hart0 msip ====
+ 2000000:   00000001
+
+
+==== final message ====
+fw_payload loaded to PS DDR physical 0x00000000.
+boot-address-reg points chip boot flow at 0x80000000 and MSIP is asserted.
+Expected serial flow: bootrom banner -> OpenSBI -> Linux earlycon -> /#
+
+==== disconnect ====
+
+==== pulse tile reset and kick ====
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== select PSU ====
+  1  PS TAP
+     2  PMU
+     3  PL
+  4* PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU (L2 Cache Reset)
+        9  Cortex-A53 #0 (APU Reset)
+       10  Cortex-A53 #1 (APU Reset)
+       11  Cortex-A53 #2 (APU Reset)
+       12  Cortex-A53 #3 (APU Reset)
+
+==== enable tile clock ====
+
+==== pulse tile reset and retrigger boot ====
+
+==== readback ====
+CLOCK_GATER=  100000:   00000001
+
+BOOTADDR_LO=    1000:   80000000
+
+BOOTADDR_HI=    1004:   00000000
+
+TILE_RESET=  110000:   00000000
+
+MSIP= 2000000:   00000001
+
+
+==== disconnect ====
+
+==== gpio toggle probe ====
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== select PSU ====
+
+==== sample gpio registers ====
+SAMPLE_0 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_0 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_0 IOF_EN=64002038:   37337133
+
+SAMPLE_1 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_1 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_1 IOF_EN=64002038:   37337133
+
+SAMPLE_2 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_2 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_2 IOF_EN=64002038:   37337133
+
+SAMPLE_3 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_3 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_3 IOF_EN=64002038:   37337133
+
+SAMPLE_4 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_4 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_4 IOF_EN=64002038:   37337133
+
+SAMPLE_5 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_5 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_5 IOF_EN=64002038:   37337133
+
+SAMPLE_6 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_6 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_6 IOF_EN=64002038:   37337133
+
+SAMPLE_7 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_7 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_7 IOF_EN=64002038:   37337133
+
+SAMPLE_8 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_8 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_8 IOF_EN=64002038:   37337133
+
+SAMPLE_9 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_9 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_9 IOF_EN=64002038:   37337133
+
+SAMPLE_10 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_10 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_10 IOF_EN=64002038:   37337133
+
+SAMPLE_11 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_11 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_11 IOF_EN=64002038:   37337133
+
+SAMPLE_12 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_12 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_12 IOF_EN=64002038:   37337133
+
+SAMPLE_13 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_13 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_13 IOF_EN=64002038:   37337133
+
+SAMPLE_14 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_14 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_14 IOF_EN=64002038:   37337133
+
+SAMPLE_15 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_15 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_15 IOF_EN=64002038:   37337133
+
+SAMPLE_16 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_16 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_16 IOF_EN=64002038:   37337133
+
+SAMPLE_17 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_17 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_17 IOF_EN=64002038:   37337133
+
+SAMPLE_18 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_18 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_18 IOF_EN=64002038:   37337133
+
+SAMPLE_19 OUTPUT_EN=64002008:   00000001
+
+SAMPLE_19 OUTPUT_VAL=6400200C:   00000001
+
+SAMPLE_19 IOF_EN=64002038:   37337133
+
+
+==== disconnect ====

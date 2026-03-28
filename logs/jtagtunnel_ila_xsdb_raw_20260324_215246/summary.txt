@@ -1,0 +1,9 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260324_215246
+LABEL=mode0_w5
+DR_BITS=16
+DR_HEX=0x100A
+JTAG_HZ=10000
+ARM_STATE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260324_215246/arm_state.txt
+STIM_LOG=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260324_215246/stimulus.log
+UPLOAD_STATE=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260324_215246/upload_state.txt
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_xsdb_raw_20260324_215246/jtagtunnel_ila.csv

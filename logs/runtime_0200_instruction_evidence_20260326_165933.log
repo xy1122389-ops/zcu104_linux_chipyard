@@ -1,0 +1,248 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check inputs ====
+PAYLOAD_FILE=\\wsl.localhost\Ubuntu-22.04\root\chipyard\software\firemarshal\boards\default\firmware\opensbi\build\platform\generic\firmware\fw_payload.bin
+BOOTADDR=0x80000000
+
+==== connect and recover ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== psu init and fpga ====
+
+==== payload download and bootaddr ====
+POST_BOOTADDR_LO=1000:   80000000
+POST_MSIP=2000000:   00000001
+
+==== target vs payload compare ====
+TARGET_WINDOW_BASE=0x1C0
+PAYLOAD_WINDOW_BASE=0x21C0
+OFFSET_RELATION=target +0x2000 -> payload
+TARGET_WINDOW_WORDS=8B89F784,2703C395,9793000A,073B004D,170240E9,97BA9301,0717078E,07130004,97BA47E7,0007B023,F7843783,8CE38B91,47D5CC07,000A2703,0009049B,0537F263,008A3783,B883CF95,8B630387,873B0208,169340E4,92810207,004D9793,078E97B6,00040697,43868693,639097B6,85CE4685,0007051B,C5099882,6DE669EA,B949892A
+PAYLOAD_WINDOW_WORDS=8B89F784,2703C395,9793000A,073B004D,170240E9,97BA9301,0717078E,07130004,97BA47E7,0007B023,F7843783,8CE38B91,47D5CC07,000A2703,0009049B,0537F263,008A3783,B883CF95,8B630387,873B0208,169340E4,92810207,004D9793,078E97B6,00040697,43868693,639097B6,85CE4685,0007051B,C5099882,6DE669EA,B949892A
+CMP_WORD_00=target=8B89F784 payload=8B89F784 match=YES
+CMP_WORD_01=target=2703C395 payload=2703C395 match=YES
+CMP_WORD_02=target=9793000A payload=9793000A match=YES
+CMP_WORD_03=target=073B004D payload=073B004D match=YES
+CMP_WORD_04=target=170240E9 payload=170240E9 match=YES
+CMP_WORD_05=target=97BA9301 payload=97BA9301 match=YES
+CMP_WORD_06=target=0717078E payload=0717078E match=YES
+CMP_WORD_07=target=07130004 payload=07130004 match=YES
+CMP_WORD_08=target=97BA47E7 payload=97BA47E7 match=YES
+CMP_WORD_09=target=0007B023 payload=0007B023 match=YES
+CMP_WORD_10=target=F7843783 payload=F7843783 match=YES
+CMP_WORD_11=target=8CE38B91 payload=8CE38B91 match=YES
+CMP_WORD_12=target=47D5CC07 payload=47D5CC07 match=YES
+CMP_WORD_13=target=000A2703 payload=000A2703 match=YES
+CMP_WORD_14=target=0009049B payload=0009049B match=YES
+CMP_WORD_15=target=0537F263 payload=0537F263 match=YES
+CMP_WORD_16=target=008A3783 payload=008A3783 match=YES
+CMP_WORD_17=target=B883CF95 payload=B883CF95 match=YES
+CMP_WORD_18=target=8B630387 payload=8B630387 match=YES
+CMP_WORD_19=target=873B0208 payload=873B0208 match=YES
+CMP_WORD_20=target=169340E4 payload=169340E4 match=YES
+CMP_WORD_21=target=92810207 payload=92810207 match=YES
+CMP_WORD_22=target=004D9793 payload=004D9793 match=YES
+CMP_WORD_23=target=078E97B6 payload=078E97B6 match=YES
+CMP_WORD_24=target=00040697 payload=00040697 match=YES
+CMP_WORD_25=target=43868693 payload=43868693 match=YES
+CMP_WORD_26=target=639097B6 payload=639097B6 match=YES
+CMP_WORD_27=target=85CE4685 payload=85CE4685 match=YES
+CMP_WORD_28=target=0007051B payload=0007051B match=YES
+CMP_WORD_29=target=C5099882 payload=C5099882 match=YES
+CMP_WORD_30=target=6DE669EA payload=6DE669EA match=YES
+CMP_WORD_31=target=B949892A payload=B949892A match=YES
+WINDOW_MATCH_COUNT=32/32
+WINDOW_FULL_MATCH=YES
+
+==== park a53 at 0x200 ====
+PRE_PARK_PC=pc: N/A
+PRE_PARK_STATE_REASON=APU Reset
+PARK_RECOVERY_USED=YES
+WARNING: If the reset is being triggered after powering on the device,
+          write bootloop at reset vector address (0xffff0000), or use
+          -clear-registers option, to avoid unpredictable behavior.
+          Further warnings will be suppressed
+PARK_STATE_REASON=Breakpoint, EL3(S)/A64
+PARK_PC=pc: 0000000000000200
+PARK_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+
+==== single-step chain ====
+STEP0_STATE_REASON=Breakpoint, EL3(S)/A64
+STEP0_PC=pc: 0000000000000200
+STEP0_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STEP0_R0=r0: 6c868301029658c2
+STEP0_SP=sp: d88602a2254000ad
+STEP0_NEIGHBOR_WORDS=1FC:   0537F263
+     200:   008A3783
+     204:   B883CF95
+     208:   8B630387
+STEP1_STATE_REASON=Running
+STEP1_PC=pc: 0000000000000200
+STEP1_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STEP1_R0=r0: 6c868301029658c2
+STEP1_SP=sp: d88602a2254000ad
+STEP1_NEIGHBOR_WORDS=1FC:   0537F263
+     200:   008A3783
+     204:   B883CF95
+     208:   8B630387
+STEP2_STATE_REASON=Running
+STEP2_PC=pc: 0000000000000200
+STEP2_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STEP2_R0=r0: 6c868301029658c2
+STEP2_SP=sp: d88602a2254000ad
+STEP2_NEIGHBOR_WORDS=1FC:   0537F263
+     200:   008A3783
+     204:   B883CF95
+     208:   8B630387
+STEP3_STATE_REASON=Running
+STEP3_PC=pc: 0000000000000200
+STEP3_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STEP3_R0=r0: 6c868301029658c2
+STEP3_SP=sp: d88602a2254000ad
+STEP3_NEIGHBOR_WORDS=1FC:   0537F263
+     200:   008A3783
+     204:   B883CF95
+     208:   8B630387
+STEP4_STATE_REASON=Running
+STEP4_PC=pc: 0000000000000200
+STEP4_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STEP4_R0=r0: 6c868301029658c2
+STEP4_SP=sp: d88602a2254000ad
+STEP4_NEIGHBOR_WORDS=1FC:   0537F263
+     200:   008A3783
+     204:   B883CF95
+     208:   8B630387
+STEP5_STATE_REASON=Running
+STEP5_PC=pc: 0000000000000200
+STEP5_CPSR=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+STEP5_R0=r0: 6c868301029658c2
+STEP5_SP=sp: d88602a2254000ad
+STEP5_NEIGHBOR_WORDS=1FC:   0537F263
+     200:   008A3783
+     204:   B883CF95
+     208:   8B630387
+
+==== payload file window raw ====
+ 8b89f784 2703c395 9793000a 073b004d
+ 170240e9 97ba9301 0717078e 07130004
+ 97ba47e7 0007b023 f7843783 8ce38b91
+ 47d5cc07 000a2703 0009049b 0537f263
+ 008a3783 b883cf95 8b630387 873b0208
+ 169340e4 92810207 004d9793 078e97b6
+ 00040697 43868693 639097b6 85ce4685
+ 0007051b c5099882 6de669ea b949892a
+
+==== fw_payload disassembly 0x800021c0..0x80002240 ====
+
+/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+00000000800021c0 <sbi_pmu_ctr_cfg_match+0x582>:
+    800021c0:	f784                	sd	s1,40(a5)
+    800021c2:	8b89                	andi	a5,a5,2
+    800021c4:	c395                	beqz	a5,800021e8 <sbi_pmu_ctr_cfg_match+0x5aa>
+    800021c6:	000a2703          	lw	a4,0(s4)
+    800021ca:	004d9793          	slli	a5,s11,0x4
+    800021ce:	40e9073b          	subw	a4,s2,a4
+    800021d2:	1702                	slli	a4,a4,0x20
+    800021d4:	9301                	srli	a4,a4,0x20
+    800021d6:	97ba                	add	a5,a5,a4
+    800021d8:	078e                	slli	a5,a5,0x3
+    800021da:	00040717          	auipc	a4,0x40
+    800021de:	47e70713          	addi	a4,a4,1150 # 80042658 <fw_counters_value>
+    800021e2:	97ba                	add	a5,a5,a4
+    800021e4:	0007b023          	sd	zero,0(a5)
+    800021e8:	f7843783          	ld	a5,-136(s0)
+    800021ec:	8b91                	andi	a5,a5,4
+    800021ee:	cc078ce3          	beqz	a5,80001ec6 <sbi_pmu_ctr_cfg_match+0x288>
+    800021f2:	47d5                	li	a5,21
+    800021f4:	000a2703          	lw	a4,0(s4)
+    800021f8:	0009049b          	sext.w	s1,s2
+    800021fc:	0537f263          	bgeu	a5,s3,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+    80002200:	008a3783          	ld	a5,8(s4)
+    80002204:	cf95                	beqz	a5,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+    80002206:	0387b883          	ld	a7,56(a5)
+    8000220a:	02088b63          	beqz	a7,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+    8000220e:	40e4873b          	subw	a4,s1,a4
+    80002212:	02071693          	slli	a3,a4,0x20
+    80002216:	9281                	srli	a3,a3,0x20
+    80002218:	004d9793          	slli	a5,s11,0x4
+    8000221c:	97b6                	add	a5,a5,a3
+    8000221e:	078e                	slli	a5,a5,0x3
+    80002220:	00040697          	auipc	a3,0x40
+    80002224:	43868693          	addi	a3,a3,1080 # 80042658 <fw_counters_value>
+    80002228:	97b6                	add	a5,a5,a3
+    8000222a:	6390                	ld	a2,0(a5)
+    8000222c:	4685                	li	a3,1
+    8000222e:	85ce                	mv	a1,s3
+    80002230:	0007051b          	sext.w	a0,a4
+    80002234:	9882                	jalr	a7
+    80002236:	c509                	beqz	a0,80002240 <sbi_pmu_ctr_cfg_match+0x602>
+    80002238:	69ea                	ld	s3,152(sp)
+    8000223a:	6de6                	ld	s11,88(sp)
+    8000223c:	892a                	mv	s2,a0
+    8000223e:	b949                	j	80001ed0 <sbi_pmu_ctr_cfg_match+0x292>
+
+==== addr2line focus 0x800021fc/2200/2204/2208 ====
+sbi_pmu_ctr_cfg_match
+/home/user006/project/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_pmu.c:716
+sbi_pmu_ctr_cfg_match
+/home/user006/project/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_pmu.c:716 (discriminator 1)
+sbi_pmu_ctr_cfg_match
+/home/user006/project/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_pmu.c:716 (discriminator 1)
+sbi_pmu_ctr_cfg_match
+/home/user006/project/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_pmu.c:717

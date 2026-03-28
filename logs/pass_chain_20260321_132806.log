@@ -1,0 +1,8 @@
+LOG:/root/chipyard/fpga/scripts/../logs/runtime_signature_check_20260321_132808.log
+SIG_PC:
+SIG_SP:
+SIG_W_01E0:
+SIG_W_01E4:
+SIG_W_0200:
+SIG_W_0204:
+RUNTIME_SIGNATURE:FAIL

@@ -1,0 +1,5 @@
+OUTDIR=/root/chipyard/fpga/logs/single_field_raw_packet_probe_20260324_180355
+mode0_w5_p10.stderr SEL=c000 DTMCS=0feed1c7e249 REQ=00038c50000000 NOP1=01b38c5f805db6
+mode0_w8_p10.stderr SEL=04c000 DTMCS=03ec5a38e249 REQ=00038c0a000000 NOP1=0c3f8c0bf05db6
+mode1_w5_p10.stderr SEL=c000 DTMCS=0feed1c7e249 REQ=00038c5a000000 NOP1=01b38c5f805db6
+mode1_w8_p10.stderr SEL=04c000 DTMCS=03ec5a38e249 REQ=00038c0a000000 NOP1=0c3f8c0bf05db6

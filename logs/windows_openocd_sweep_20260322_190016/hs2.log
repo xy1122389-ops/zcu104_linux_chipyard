@@ -1,0 +1,10 @@
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : [uscale.a53.0] Hardware thread awareness created
+Error: unable to open ftdi device with description 'Digilent Adept USB Device', serial '*' at bus location '*'
+/root/chipyard/fpga/scripts/openocd_zcu104_win_hs2.cfg:5: Error: 
+Traceback (most recent call last):
+  File "/root/chipyard/fpga/scripts/openocd_zcu104_win_hs2.cfg", line 5, in script
+    init

@@ -1,0 +1,83 @@
+Open On-Chip Debugger 0.10.0+dev (SiFive OpenOCD 0.10.0-2020.04.6)
+Licensed under GNU GPL v2
+For bug reports:
+	https://github.com/sifive/freedom-tools/issues
+riscv
+  riscv authdata_read riscv authdata_read
+  riscv authdata_write riscv authdata_write value
+  riscv dmi_read riscv dmi_read address
+  riscv dmi_write riscv dmi_write address value
+  riscv expose_csrs riscv expose_csrs n0[-m0][,n1[-m1]]...
+  riscv expose_custom riscv expose_custom n0[-m0][,n1[-m1]]...
+  riscv reset_delays reset_delays [wait]
+  riscv resume_order resume_order normal|reversed
+  riscv set_command_timeout_sec riscv set_command_timeout_sec [sec]
+  riscv set_ebreakm riscv set_ebreakm on|off
+  riscv set_ebreaks riscv set_ebreaks on|off
+  riscv set_ebreaku riscv set_ebreaku on|off
+  riscv set_enable_virt2phys riscv set_enable_virt2phys on|off
+  riscv set_enable_virtual riscv set_enable_virtual on|off
+  riscv set_ir riscv set_ir_idcode [idcode|dtmcs|dmi] value
+  riscv set_prefer_sba riscv set_prefer_sba on|off
+  riscv set_reset_timeout_sec riscv set_reset_timeout_sec [sec]
+  riscv test_compliance riscv test_compliance
+  riscv test_sba_config_reg riscv test_sba_config_reg legal_address num_wordsillegal_address
+            run_sbbusyerror_test[on/off]
+  riscv use_bscan_tunnel riscv use_bscan_tunnel value [type]
+riscv_bscan_ps
+  riscv_bscan_ps arm
+    riscv_bscan_ps arm semihosting ['enable'|'disable']
+    riscv_bscan_ps arm semihosting_cmdline arguments
+    riscv_bscan_ps arm semihosting_fileio ['enable'|'disable']
+    riscv_bscan_ps arm semihosting_resexit ['enable'|'disable']
+  riscv_bscan_ps arp_examine ['allow-defer']
+  riscv_bscan_ps arp_halt
+  riscv_bscan_ps arp_halt_gdb
+  riscv_bscan_ps arp_poll
+  riscv_bscan_ps arp_reset
+  riscv_bscan_ps arp_waitstate
+  riscv_bscan_ps array2mem arrayname bitwidth address count
+  riscv_bscan_ps cget target_attribute
+  riscv_bscan_ps configure [target_attribute ...]
+  riscv_bscan_ps curstate
+  riscv_bscan_ps eventlist
+  riscv_bscan_ps examine_deferred
+  riscv_bscan_ps invoke-event event_name
+  riscv_bscan_ps mdb address [count]
+  riscv_bscan_ps mdd address [count]
+  riscv_bscan_ps mdh address [count]
+  riscv_bscan_ps mdw address [count]
+  riscv_bscan_ps mem2array arrayname bitwidth address count
+  riscv_bscan_ps mwb address data [count]
+  riscv_bscan_ps mwd address data [count]
+  riscv_bscan_ps mwh address data [count]
+  riscv_bscan_ps mww address data [count]
+  riscv_bscan_ps riscv
+    riscv_bscan_ps riscv authdata_read riscv authdata_read
+    riscv_bscan_ps riscv authdata_write riscv authdata_write value
+    riscv_bscan_ps riscv dmi_read riscv dmi_read address
+    riscv_bscan_ps riscv dmi_write riscv dmi_write address value
+    riscv_bscan_ps riscv expose_csrs riscv expose_csrs n0[-m0][,n1[-m1]]...
+    riscv_bscan_ps riscv expose_custom riscv expose_custom n0[-m0][,n1[-m1]]...
+    riscv_bscan_ps riscv reset_delays reset_delays [wait]
+    riscv_bscan_ps riscv resume_order resume_order normal|reversed
+    riscv_bscan_ps riscv set_command_timeout_sec riscv set_command_timeout_sec [sec]
+    riscv_bscan_ps riscv set_ebreakm riscv set_ebreakm on|off
+    riscv_bscan_ps riscv set_ebreaks riscv set_ebreaks on|off
+    riscv_bscan_ps riscv set_ebreaku riscv set_ebreaku on|off
+    riscv_bscan_ps riscv set_enable_virt2phys riscv set_enable_virt2phys on|off
+    riscv_bscan_ps riscv set_enable_virtual riscv set_enable_virtual on|off
+    riscv_bscan_ps riscv set_ir riscv set_ir_idcode [idcode|dtmcs|dmi] value
+    riscv_bscan_ps riscv set_prefer_sba riscv set_prefer_sba on|off
+    riscv_bscan_ps riscv set_reset_timeout_sec riscv set_reset_timeout_sec [sec]
+    riscv_bscan_ps riscv test_compliance riscv test_compliance
+    riscv_bscan_ps riscv test_sba_config_reg riscv test_sba_config_reg legal_address num_wordsillegal_address
+              run_sbbusyerror_test[on/off]
+    riscv_bscan_ps riscv use_bscan_tunnel riscv use_bscan_tunnel value [type]
+  riscv_bscan_ps was_examined
+Error: invalid subcommand "set_bscan_tunnel_ir 0x923"
+/root/chipyard/fpga/logs/sifive_openocd_cmdprobe2_20260323_181044/probe.cfg:11: Error: 
+in procedure 'script' 
+at file "embedded:startup.tcl", line 26
+at file "/root/chipyard/fpga/logs/sifive_openocd_cmdprobe2_20260323_181044/probe.cfg", line 11
+Error: Target has not been initialized

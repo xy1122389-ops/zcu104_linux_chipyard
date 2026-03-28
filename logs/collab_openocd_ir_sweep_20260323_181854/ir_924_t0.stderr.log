@@ -1,0 +1,10 @@
+Open On-Chip Debugger 0.12.0+dev-geb01c63 (2025-10-09-10:12)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Error: [riscv_bscan_ps] Could not read dtmcontrol. Check JTAG connectivity/board power.
+Error: [riscv_bscan_ps] Examination failed
+Warn : target riscv_bscan_ps examination failed
+shutdown command invoked
+Error: [riscv_bscan_ps] Unsupported DTM version: -1
+Error: [riscv_bscan_ps] Could not identify target type.

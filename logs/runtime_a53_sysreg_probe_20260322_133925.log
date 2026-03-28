@@ -1,0 +1,76 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+TARGET=  1  PS TAP
+     2  PMU
+     3  PL
+  4  PSU
+     5  RPU (Reset)
+        6  Cortex-R5 #0 (RPU Reset)
+        7  Cortex-R5 #1 (RPU Reset)
+     8  APU
+        9* Cortex-A53 #0 (Hardware Breakpoint, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+REG_pc=pc: 0000000000000200
+REG_cpsr=cpsr: 000003cd
+    n (Bits [31]): 0   z (Bits [30]): 0   c (Bits [29]): 0   v (Bits [28]): 0
+   ss (Bits [21]): 0  il (Bits [20]): 0    d (Bits [9]): 1    a (Bits [8]): 1
+     i (Bits [7]): 1    f (Bits [6]): 1  m (Bits [4:0]): d
+REG_r0=r0: 00000000f0000002
+REG_r14=r14: 8c223e42a8560129
+REG_r30=r30: 870b870909004401
+REG_sp=sp: d08609a221400281
+REG_currentel=ERR:no register match: currentel
+REG_spsr_el3=ERR:no register match: spsr_el3
+REG_elr_el3=ERR:no register match: elr_el3
+REG_esr_el3=ERR:no register match: esr_el3
+REG_far_el3=ERR:no register match: far_el3
+REG_vbar_el3=ERR:no register match: vbar_el3
+REG_scr_el3=ERR:no register match: scr_el3
+REG_sctlr_el3=ERR:no register match: sctlr_el3
+REG_ttbr0_el3=ERR:no register match: ttbr0_el3
+REG_tcr_el3=ERR:no register match: tcr_el3
+REG_spsr_el1=ERR:no register match: spsr_el1
+REG_elr_el1=ERR:no register match: elr_el1
+REG_esr_el1=ERR:no register match: esr_el1
+REG_far_el1=ERR:no register match: far_el1
+REG_vbar_el1=ERR:no register match: vbar_el1
+REG_sctlr_el1=ERR:no register match: sctlr_el1
+REG_ttbr0_el1=ERR:no register match: ttbr0_el1
+REG_tcr_el1=ERR:no register match: tcr_el1
+REG_mpidr_el1=ERR:no register match: mpidr_el1
+REG_midr_el1=ERR:no register match: midr_el1
+REG_dbgdscr=ERR:no register match: dbgdscr
+REG_mdscr_el1=ERR:no register match: mdscr_el1

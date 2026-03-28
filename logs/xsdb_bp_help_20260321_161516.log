@@ -1,0 +1,144 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+NAME
+    bpadd - Set a Breakpoint/Watchpoint.
+
+SYNOPSIS
+    bpadd <options>
+        Set a software or hardware breakpoint at address, function or
+        <file>:<line>, or set a read/write watchpoint, or set a cross-trigger
+        breakpoint.
+
+OPTIONS
+    -addr <breakpoint-address>
+        Specify the address at which the Breakpoint should be set.
+
+    -file <file-name>
+        Specify the <file-name> in which the Breakpoint should be set.
+
+    -line <line-number>
+        Specify the <line-number> within the file, where Breakpoint should be
+        set.
+
+    -type <breakpoint-type>
+        Specify the Breakpoint type
+        <breakpoint-type> can be one of the values below:
+        auto = Auto - Breakpoint type is chosen by hw_server/TCF agent.
+               This is the default type
+        hw   = Hardware Breakpoint
+        sw   = Software Breakpoint
+
+    -mode <breakpoint-mode>
+        Specify the access mode that will trigger the breakpoint.
+        <breakpoint-mode> can be a bitwise OR of the values below:
+        0x1  = Triggered by a read from the breakpoint location
+        0x2  = Triggered by a write to the breakpoint location
+        0x4  = Triggered by an instruction execution at the breakpoint location
+               This is the default for Line and Address breakpoints
+        0x8  = Triggered by a data change (not an explicit write) at the
+               breakpoint location
+
+    -enable <mode>
+        Specify initial enablement state of breakpoint.  When <mode>
+        is 0 the breakpoint is disabled, otherwise the breakpoint is
+        enabled.  The default is enabled.
+
+    -ct-input <list> -ct-output <list>
+        Specify input and output cross triggers.  <list> is a list of
+        numbers identifying the cross trigger pin.  For Zynq 0-7 is
+        CTI for core 0, 8-15 is CTI for core 1, 16-23 is CTI ETB and
+        TPIU, and 24-31 is CTI for FTM.
+
+    -skip-on-step <value>
+        Specify the trigger behaviour on stepping. This option is only
+        applicable for cross trigger breakpoints and when DBGACK is
+        used as breakpoint input.
+        0 = trigger every time core is stopped (default).
+        1 = supress trigger on stepping over a code breakpoint.
+        2 = supress trigger on any kind of stepping.
+
+    -properties <dict>
+        Specify advanced breakpoint properties.
+
+    -meta-data <dict>
+        Specify meta-data of advanced breakpoint properties.
+
+    -target-id <id>
+        Specify a target id for which the breakpoint should be set. A breakpoint
+        can be set for all the targets by specifying the <id> as "all".
+        If this option is not used, then the breakpoint is set for the active
+        target selected through targets command. If there is no active target,
+        then the breakpoint is set for all targets.
+
+NOTE
+    Breakpoints can be set in XSDB before connecting to hw_server/TCF agent.
+    If there is an active target when a Breakpoint is set, the Breakpoint
+    will be enabled only for that active target. If there is no active target,
+    the Breakpoint will be enabled for all the targets. target-id option can be
+    used to set a breakpoint for a specific target, or all targets.
+    An address breakpoint or a file:line breakpoint can also be set without the
+    options -addr, -file or -line. For address breakpoints, specify the address
+    as an argument, after all other options. For file:line breakpoints, specify
+    the file name and line number in the format <file>:<line>, as an argument,
+    after all other options.
+
+EXAMPLE
+    bpadd -addr 0x100000
+        Set a Breakpoint at address 0x100000.
+        Breakpoint type is chosen by hw_server/TCF agent.
+
+    bpadd -addr &main
+        Set a function Breakpoint at main.
+        Breakpoint type is chosen by hw_server/TCF agent.
+
+    bpadd -file test.c -line 23 -type hw
+        Set a Hardware Breakpoint at test.c:23.
+
+    bpadd -target-id all 0x100
+        Set a breakpoint for all targets, at address 0x100.
+
+    bpadd -target-id 2 test.c:23
+        Set a breakpoint for target 2, at line 23 in test.c.
+
+    bpadd -addr &fooVar -type hw -mode 0x3
+        Set a Read_Write Watchpoint on variable fooVar.
+
+    bpadd -ct-input 0 -ct-output 8
+        Set a cross trigger to stop Zynq core 1 when core 0 stops.
+
+RETURNS
+    Breakpoint id or an error if invalid target id is specified.
+
+
+

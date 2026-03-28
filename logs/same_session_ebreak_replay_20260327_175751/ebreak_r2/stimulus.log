@@ -1,0 +1,5 @@
+
+invalid command name "$seq"
+    while executing
+"\$seq irshift -integer 12 0x926"
+    (file "Z:\root\chipyard\fpga\logs\same_session_ebreak_replay_20260327_175751\ebreak_r2\xsdb_replay.tcl" line 5)

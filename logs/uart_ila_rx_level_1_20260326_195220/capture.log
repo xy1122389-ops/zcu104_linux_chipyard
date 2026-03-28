@@ -1,0 +1,7 @@
+OUTDIR=/root/chipyard/fpga/logs/uart_ila_rx_level_1_20260326_195220
+ILA_DIR=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ila_20260326_191447
+TRIGGER_PROBE=rx
+TRIGGER_VALUE=1
+BITFILE=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ila_20260326_191447/ZCU104FPGATestHarness_uart_ila.bit
+LTXFILE=generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/debug_obj/uart_ila_20260326_191447/uart_ila.ltx
+CSV_OUT=/root/chipyard/fpga/logs/uart_ila_rx_level_1_20260326_195220/uart_ila.csv

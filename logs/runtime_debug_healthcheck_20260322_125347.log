@@ -1,0 +1,90 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== connect ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+CONNECT_OK=YES
+CONNECT_VALUE=tcfchan#0
+FORCE_MEM_ACCESSES_OK=YES
+FORCE_MEM_ACCESSES_VALUE=
+
+==== INITIAL targets ====
+INITIAL_TARGETS_OK=YES
+1  PS TAP
+     2  PMU
+     3  PL
+  4  DAP (AXI AP transaction error, DAP status 0x30000021)
+
+==== psu ====
+PSU_SELECT_OK=NO
+PSU_SELECT_VALUE=no targets found with "name =~ "*PSU*"". available targets:
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  DAP (AXI AP transaction error, DAP status 0x30000021)
+PSU_PROPS_OK=YES
+PSU_PROPS_VALUE=
+
+==== apu ====
+APU_SELECT_OK=NO
+APU_SELECT_VALUE=no targets found with "name =~ "*APU*"". available targets:
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  DAP (AXI AP transaction error, DAP status 0x30000021)
+APU_PROPS_OK=YES
+APU_PROPS_VALUE=
+
+==== a53_0 ====
+A53_0_SELECT_OK=NO
+A53_0_SELECT_VALUE=no targets found with "name =~ "*Cortex-A53 #0*"". available targets:
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  DAP (AXI AP transaction error, DAP status 0x30000021)
+A53_0_PROPS_OK=YES
+A53_0_PROPS_VALUE=
+
+==== a53_1 ====
+A53_1_SELECT_OK=NO
+A53_1_SELECT_VALUE=no targets found with "name =~ "*Cortex-A53 #1*"". available targets:
+  1  PS TAP
+     2  PMU
+     3  PL
+  4  DAP (AXI AP transaction error, DAP status 0x30000021)
+A53_1_PROPS_OK=YES
+A53_1_PROPS_VALUE=
+
+==== disconnect ====
+DISCONNECT_OK=YES
+DISCONNECT_VALUE=

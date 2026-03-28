@@ -1,0 +1,17 @@
+OUTDIR=/root/chipyard/fpga/logs/manual_ir_select_plus1_probe_20260324_163002
+mode0_dbus_lshift0.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dbus_lshift1.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dbus_raw.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dbus_raw_hi1.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dtmcs_lshift0.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dtmcs_lshift1.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dtmcs_raw.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode0_dtmcs_raw_hi1.stderr SEL=00/00/00/03 DTMCS=00/12/01dc01f759/01
+mode1_dbus_lshift0.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dbus_lshift1.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dbus_raw.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dbus_raw_hi1.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dtmcs_lshift0.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dtmcs_lshift1.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dtmcs_raw.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01
+mode1_dtmcs_raw_hi1.stderr SEL=00/00/60/00 DTMCS=00/12/01dc01f759/01

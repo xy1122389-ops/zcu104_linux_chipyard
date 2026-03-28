@@ -1,0 +1,9 @@
+SEL=3b02
+DTMCS=3b02d0ad4900
+WRITE1_haltreq_then_resumereq=3b02d0ad498019
+NOP1_haltreq_then_resumereq=3b02d0ad498019
+WRITE2_haltreq_then_resumereq=3b02d0ad498019
+NOP2_haltreq_then_resumereq=3b02d0ad498019
+READ_0x40_haltreq_then_resumereq=3b02d0ad498019
+NOPR1_0x40_haltreq_then_resumereq=3b02d0ad498019
+NOPR2_0x40_haltreq_then_resumereq=3b02d0ad498019

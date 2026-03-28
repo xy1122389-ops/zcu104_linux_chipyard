@@ -1,0 +1,729 @@
+SUB_PROJECT=zcu104
+CONFIG=RocketZCU104LinuxBringupDebugConfig
+LOG=/root/chipyard/fpga/logs/zcu104_linuxbringup_make_bitstream_20260328_123455.log
+FIRTOOL_BIN=/root/chipyard/.oclaw-env/bin/firtool
+PATH_HEAD=/root/chipyard/fpga/scripts/toolwrap
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /root/chipyard/fpga/fpga-shells/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:23:68: method ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val node = shell { ClockSourceNode(freqMHz = 125, jitterPS = 50)(ValName(name)) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:24:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:25:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(io.p, "F23")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:26:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(io.n, "E23")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:27:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(io.p, "LVDS")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:28:29: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(io.n, "LVDS")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:31:126: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass SysClockZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: ClockInputShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:34:98: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: ClockInputDesignInput) = new SysClockZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:34:90: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: ClockInputDesignInput) = new SysClockZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:42:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:47:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("A20", IOPin(io.rxd)),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:48:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("C19", IOPin(io.txd)))[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:55:116: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass UARTZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: UARTShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:58:88: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: UARTDesignInput) = new UARTZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:58:80: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: UARTDesignInput) = new UARTZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:67:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:70:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("E12", IOPin(io.spi_clk)),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:71:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("F11", IOPin(io.spi_cs)),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:72:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("D12", IOPin(io.spi_dat(0))),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:73:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("C12", IOPin(io.spi_dat(1))),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:74:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("B12", IOPin(io.spi_dat(2))),[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:75:21: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ("A12", IOPin(io.spi_dat(3))))[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:86:115: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass SDIOZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: SPIShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:89:87: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:89:79: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:99:11: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  shell { InModuleBody {[0m
+[0m[[0m[33mwarn[0m] [0m[0m          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:100:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "H12")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:101:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:102:46: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK)) // prevent JTAG TCK from using dedicated clock routing[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:103:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "E10")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:104:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:105:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "D10")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:106:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:107:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "C11")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:108:35: method moduleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS18")[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:111:126: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass JTAGDebugZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: JTAGDebugShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:114:98: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: JTAGDebugDesignInput) = new JTAGDebugZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:114:90: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def place(designInput: JTAGDebugDesignInput) = new JTAGDebugZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:126:67: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val shellInput: JTAGDebugBScanShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:130:58: method name in class SourcecodeNameExt is deprecated (since diplomacy 1.0.0): Name method has been removed in transition to sourcecode library.[0m
+[0m[[0m[33mwarn[0m] [0m[0m    new JTAGDebugBScanZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:130:50: method SourcecodeNameExt in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    new JTAGDebugBScanZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:138:114: type ValName in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass DDRZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: DDRShellInput)(implicit val valName: ValName)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                                                                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:146:17: type ModuleValue in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val pllReset: ModuleValue[Bool][0m
+[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/fpga-shells/src/main/scala/shell/xilinx/ZCU104NewShell.scala:168:18: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val pllReset = InModuleBody { Wire(Bool()) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m44 warnings found[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /root/chipyard/fpga/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:35:18: value InModuleBody in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val pllReset = InModuleBody { Wire(Bool()) }[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:47:21: value LazyModule in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val dutWrangler = LazyModule(new ResetWrangler)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:52:20: value BundleBridgeSource in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val io_uart_bb = BundleBridgeSource(() => (new UARTPortIO(dp(PeripheryUARTKey).head)))[0m
+[0m[[0m[33mwarn[0m] [0m[0m                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:56:19: value BundleBridgeSource in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m  val io_spi_bb = BundleBridgeSource(() => (new SPIPortIO(dp(PeripherySPIKey).head)))[0m
+[0m[[0m[33mwarn[0m] [0m[0m                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:64:14: value LazyModule in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0m    val ps = LazyModule(new XilinxZCU104PS(psParams))[0m
+[0m[[0m[33mwarn[0m] [0m[0m             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/root/chipyard/fpga/src/main/scala/zcu104/TestHarness.scala:83:71: type LazyRawModuleImp in package diplomacy is deprecated (since rocketchip 2.0.0): Diplomacy has been split to a standalone library[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawModuleImp(_outer) with HasHarnessInstantiators {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m4 feature warnings; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0m7 warnings found[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0m26 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m68 file(s) merged using strategy 'Rename (Custom)' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m391 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 8a382d55e2186745bfe65a9bed97a5357cad87d5[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 23 s, completed Mar 28, 2026, 12:35:28 PM[0m
+[0Jmkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig
+(set -o pipefail && 	cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/chipyard_fpga.jar chipyard.Generator  --target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig --name chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig --top-module chipyard.fpga.zcu104.ZCU104FPGATestHarness --legacy-configs chipyard.fpga.zcu104:RocketZCU104LinuxBringupDebugConfig   | tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.chisel.log)
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/root/chipyard/.java_tmp
+ZCU104 FPGA Base Clock Freq: 50 MHz
+mem AXI4-ID <= TL-Source mapping:
+	[ 0, 16) <= [ 0, 16) "chip_ddr"
+
+make[1]: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+make[1]: Nothing to be done for 'bin'.
+make[1]: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+make[1]: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux'
+make[1]: Nothing to be done for 'bin'.
+make[1]: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-linux'
+L2 InclusiveCache Client Map:
+	0 <= debug
+	1 <= Core 0 DCache
+	2 <= Core 0 ICache
+
+Interrupt map (2 harts 3 interrupts):
+  [1, 1] => uart_0
+  [2, 2] => gpio_0
+  [3, 3] => spi_0
+
+<stdin>:79.18-84.5: Warning (simple_bus_reg): /soc/cbus_clock: missing or empty reg/ranges property
+<stdin>:106.18-111.5: Warning (simple_bus_reg): /soc/fbus_clock: missing or empty reg/ranges property
+<stdin>:134.19-139.5: Warning (simple_bus_reg): /soc/mbus_clock: missing or empty reg/ranges property
+<stdin>:140.18-145.5: Warning (simple_bus_reg): /soc/pbus_clock: missing or empty reg/ranges property
+<stdin>:151.18-156.5: Warning (simple_bus_reg): /soc/sbus_clock: missing or empty reg/ranges property
+<stdin>:42.30-46.6: Warning (interrupt_provider): /cpus/cpu@0/interrupt-controller: Missing #address-cells in interrupt provider
+<stdin>:112.22-123.5: Warning (interrupt_provider): /soc/gpio@64002000: Missing #address-cells in interrupt provider
+<stdin>:124.37-133.5: Warning (interrupt_provider): /soc/interrupt-controller@c000000: Missing #address-cells in interrupt provider
+Clock sbus_0: using diplomatically specified frequency of 50.0.
+Clock pbus_0: using diplomatically specified frequency of 50.0.
+Clock fbus_0: using diplomatically specified frequency of 50.0.
+Clock mbus_0: using diplomatically specified frequency of 50.0.
+Clock cbus_0: using diplomatically specified frequency of 50.0.
+Leaving clock group uncore with synchronous reset
+/dts-v1/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "ucb-bar,chipyard-dev";
+	model = "ucb-bar,chipyard";
+	L3: aliases {
+		serial0 = &L27;
+	};
+	L19: chosen {
+		stdout-path = &L27;
+	};
+	L2: cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		timebase-frequency = <1000000>;
+		L14: cpu@0 {
+			clock-frequency = <0>;
+			compatible = "sifive,rocket0", "riscv";
+			d-cache-block-size = <64>;
+			d-cache-sets = <64>;
+			d-cache-size = <32768>;
+			d-tlb-sets = <1>;
+			d-tlb-size = <32>;
+			device_type = "cpu";
+			hardware-exec-breakpoint-count = <1>;
+			i-cache-block-size = <64>;
+			i-cache-sets = <64>;
+			i-cache-size = <32768>;
+			i-tlb-sets = <1>;
+			i-tlb-size = <32>;
+			mmu-type = "riscv,sv39";
+			next-level-cache = <&L11>;
+			reg = <0x0>;
+			riscv,isa = "rv64imafdcbzicsr_zifencei_zihpm_zfh_zba_zbb_zbs_xrocket";
+			riscv,pmpgranularity = <4>;
+			riscv,pmpregions = <8>;
+			status = "okay";
+			timebase-frequency = <1000000>;
+			tlb-split;
+			L12: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+	};
+	L25: memory@8000000 {
+		device_type = "memory";
+		reg = <0x8000000 0x10000>;
+		status = "disabled";
+	};
+	L21: memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x80000000>;
+	};
+	L1: soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "ucb-bar,chipyard-soc", "simple-bus";
+		ranges;
+		L26: boot-address-reg@1000 {
+			reg = <0x1000 0x1000>;
+			reg-names = "control";
+		};
+		L11: cache-controller@2010000 {
+			cache-block-size = <64>;
+			cache-level = <2>;
+			cache-sets = <1024>;
+			cache-size = <524288>;
+			cache-unified;
+			compatible = "sifive,inclusivecache0", "cache";
+			next-level-cache = <&L21 &L25>;
+			reg = <0x2010000 0x1000>;
+			reg-names = "control";
+			sifive,mshr-count = <7>;
+		};
+		L8: cbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "cbus_clock";
+			compatible = "fixed-clock";
+		};
+		L15: clint@2000000 {
+			compatible = "riscv,clint0";
+			interrupts-extended = <&L12 3 &L12 7>;
+			reg = <0x2000000 0x10000>;
+			reg-names = "control";
+		};
+		L30: clock-gater@100000 {
+			reg = <0x100000 0x1000>;
+			reg-names = "control";
+		};
+		L17: debug-controller@0 {
+			compatible = "sifive,debug-013", "riscv,debug-013";
+			debug-attach = "jtag";
+			interrupts-extended = <&L12 65535>;
+			reg = <0x0 0x1000>;
+			reg-names = "control";
+		};
+		L9: error-device@3000 {
+			compatible = "sifive,error0";
+			reg = <0x3000 0x1000>;
+		};
+		L7: fbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "fbus_clock";
+			compatible = "fixed-clock";
+		};
+		L28: gpio@64002000 {
+			#gpio-cells = <2>;
+			#interrupt-cells = <2>;
+			clocks = <&L6>;
+			compatible = "sifive,gpio0", "sifive,gpio1";
+			gpio-controller;
+			interrupt-controller;
+			interrupt-parent = <&L16>;
+			interrupts = <2>;
+			reg = <0x64002000 0x1000>;
+			reg-names = "control";
+		};
+		L16: interrupt-controller@c000000 {
+			#interrupt-cells = <1>;
+			compatible = "riscv,plic0";
+			interrupt-controller;
+			interrupts-extended = <&L12 11 &L12 9>;
+			reg = <0xc000000 0x4000000>;
+			reg-names = "control";
+			riscv,max-priority = <3>;
+			riscv,ndev = <3>;
+		};
+		L10: mbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "mbus_clock";
+			compatible = "fixed-clock";
+		};
+		L6: pbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "pbus_clock";
+			compatible = "fixed-clock";
+		};
+		L24: rom@10000 {
+			compatible = "sifive,rom0";
+			reg = <0x10000 0x10000>;
+			reg-names = "mem";
+		};
+		L5: sbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "sbus_clock";
+			compatible = "fixed-clock";
+		};
+		L27: serial@64000000 {
+			clocks = <&L6>;
+			compatible = "sifive,uart0";
+			interrupt-parent = <&L16>;
+			interrupts = <1>;
+			reg = <0x64000000 0x1000>;
+			reg-names = "control";
+		};
+		L29: spi@64001000 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&L6>;
+			compatible = "sifive,spi0";
+			interrupt-parent = <&L16>;
+			interrupts = <3>;
+			reg = <0x64001000 0x1000>;
+			reg-names = "control";
+			L32: mmc@0 {
+				compatible = "mmc-spi-slot";
+				disable-wp;
+				reg = <0x0>;
+				spi-max-frequency = <1000000>;
+				voltage-ranges = <3300 3300>;
+			};
+		};
+		L31: tile-reset-setter@110000 {
+			reg = <0x110000 0x1000>;
+			reg-names = "control";
+		};
+	};
+};
+
+Generated Address Map
+	       0 -     1000 ARWX  debug-controller@0
+	    1000 -     2000 ARW   boot-address-reg@1000
+	    3000 -     4000 ARWX  error-device@3000
+	   10000 -    20000  R X  rom@10000
+	  100000 -   101000 ARW   clock-gater@100000
+	  110000 -   111000 ARW   tile-reset-setter@110000
+	 2000000 -  2010000 ARW   clint@2000000
+	 2010000 -  2011000 ARW   cache-controller@2010000
+	 8000000 -  8010000 ARWXC memory@8000000
+	 c000000 - 10000000 ARW   interrupt-controller@c000000
+	64000000 - 64001000 ARW   serial@64000000
+	64001000 - 64002000 ARW   spi@64001000
+	64002000 - 64003000 ARW   gpio@64002000
+	80000000 - 100000000 ARWXC memory@80000000
+
+IOCells generated by IOBinders:
+  IOBinder for interface sifive.blocks.devices.uart.HasPeripheryUART generated:
+    1 X GenericDigitalInIOCell
+    1 X GenericDigitalOutIOCell
+  IOBinder for interface testchipip.boot.CanHavePeripheryCustomBootPin generated:
+    1 X GenericDigitalInIOCell
+  IOBinder for interface freechips.rocketchip.devices.debug.HasPeripheryDebug generated:
+    4 X GenericDigitalInIOCell
+    1 X GenericDigitalOutIOCell
+  IOBinder for interface chipyard.clocking.CanHaveClockTap generated:
+    1 X GenericDigitalOutIOCell
+
+  Total generated 9 IOCells:
+    6 X GenericDigitalInIOCell
+    3 X GenericDigitalOutIOCell
+Harness binder clock is 50.0
+[warn] generators/rocket-chip/src/main/scala/tilelink/FIFOFixer.scala 80:43: [W004] Dynamic index with width 1 is too wide for Vec of size 1 (expected index width 0).
+[warn]       when (a_first && in.a.fire) { flight(in.a.bits.source) := !a_notFIFO }
+[warn]                                           ^
+[warn] generators/rocket-chip/src/main/scala/tilelink/FIFOFixer.scala 81:43: [W004] Dynamic index with width 1 is too wide for Vec of size 1 (expected index width 0).
+[warn]       when (d_first && in.d.fire) { flight(in.d.bits.source) := false.B }
+[warn]                                           ^
+[warn] There were 2 warning(s) during hardware elaboration.
+echo "$mfc_extra_anno_contents" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.extrafirtool.anno.json
+jq -s '[.[][]]' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.anno.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.extrafirtool.anno.json > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.appended.anno.json
+rm -rf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/gen-collateral
+(set -o pipefail && /root/chipyard/.oclaw-env/bin/firtool \
+		--format=fir \
+		--export-module-hierarchy \
+		--verify-each=true \
+		--warn-on-unprocessed-annotations \
+		--disable-annotation-classless \
+		--disable-annotation-unknown \
+		--mlir-timing \
+		--lowering-options=emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket \
+		--repl-seq-mem \
+		--repl-seq-mem-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.mems.conf \
+		--annotation-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.appended.anno.json \
+		--split-verilog \
+		 \
+		-o /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/gen-collateral \
+		/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.fir |& tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig.firtool.log)
+generators/rocket-chip/src/main/scala/tilelink/ToAXI4.scala:103:9: warning: module contains 32 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/ToAXI4.scala:280:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/ToAXI4.scala:103:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/amba/axi4/Deinterleaver.scala:48:9: warning: module contains 80 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/amba/axi4/Deinterleaver.scala:80:19: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/amba/axi4/Deinterleaver.scala:48:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/amba/axi4/UserYanker.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/amba/axi4/UserYanker.scala:69:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/amba/axi4/UserYanker.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 12 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:77:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:77:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:34:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceA.scala:33:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Parameters.scala:222:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceA.scala:33:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceB.scala:33:7: warning: module contains 4 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceB.scala:59:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceB.scala:33:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceC.scala:35:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceC.scala:64:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceC.scala:35:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceD.scala:48:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceD.scala:123:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SourceD.scala:48:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkC.scala:41:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkC.scala:90:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkC.scala:41:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkD.scala:34:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkD.scala:82:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/SinkD.scala:34:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Directory.scala:56:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Directory.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Directory.scala:56:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:86:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/ListBuffer.scala:36:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: warning: module contains 70 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:105:14: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/MSHR.scala:84:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Scheduler.scala:27:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Scheduler.scala:291:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip-inclusive-cache/design/craft/inclusivecache/src/Scheduler.scala:27:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/util/IDPool.scala:8:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/util/IDPool.scala:44:10: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/util/IDPool.scala:8:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/CacheCork.scala:42:9: warning: module contains 6 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/CacheCork.scala:116:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/CacheCork.scala:42:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:719:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:118:32: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:719:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:118:32: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:99:7: warning: module contains 10 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:1184:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:99:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:251:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:413:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:251:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:719:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/TLB.scala:318:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:82:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:96:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:82:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tile/FPU.scala:735:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tile/FPU.scala:823:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tile/FPU.scala:735:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:219:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:395:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:219:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:21:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:79:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:21:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:377:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:1022:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:377:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:58:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:64:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:58:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:158:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:884:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:158:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:132:9: warning: module contains 4 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:249:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:132:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:34:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/debug/SBA.scala:273:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/debug/SBA.scala:373:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/debug/SBA.scala:273:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/debug/Debug.scala:790:9: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/debug/Debug.scala:1505:15: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/debug/Debug.scala:790:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/SRAM.scala:63:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/SRAM.scala:231:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/SRAM.scala:63:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:185:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:185:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:89:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:118:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:89:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:185:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:56:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:72:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:56:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/debug/DebugTransport.scala:73:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/debug/DebugTransport.scala:203:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/debug/DebugTransport.scala:73:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+fpga/src/main/scala/zcu104/TestHarness.scala:104:46: error: reset network simultaneously connected to async and sync resets
+fpga/src/main/scala/zcu104/TestHarness.scala:104:46: note: majority of connections to this reset are async
+fpga/src/main/scala/zcu104/HarnessBinders.scala:58:29: note: sync drive here:
+===-------------------------------------------------------------------------===
+                         ... Execution time report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 1.5862 seconds
+
+  ----User Time----  ----Wall Time----  ----Name----
+    0.5721 ( 10.3%)    0.5721 ( 36.1%)  FIR Parser
+    0.0086 (  0.2%)    0.0086 (  0.5%)    Parse annotations
+    0.0000 (  0.0%)    0.0000 (  0.0%)    Parse OMIR
+    0.4717 (  8.5%)    0.4717 ( 29.7%)    Parse modules
+    0.0806 (  1.4%)    0.0806 (  5.1%)    Verify circuit
+    4.8786 ( 87.7%)    0.9037 ( 57.0%)  'firrtl.circuit' Pipeline
+    0.0058 (  0.1%)    0.0058 (  0.4%)    LowerOpenAggs
+    0.1002 (  1.8%)    0.1002 (  6.3%)    ResolvePaths
+    0.0051 (  0.1%)    0.0051 (  0.3%)      (A) circt::firrtl::InstanceGraph
+    0.0787 (  1.4%)    0.0787 (  5.0%)    LowerFIRRTLAnnotations
+    0.0049 (  0.1%)    0.0049 (  0.3%)    LowerIntmodules
+    0.0048 (  0.1%)    0.0048 (  0.3%)      (A) circt::firrtl::InstanceGraph
+    0.1999 (  3.6%)    0.0136 (  0.9%)    'firrtl.module' Pipeline
+    0.1241 (  2.2%)    0.0118 (  0.7%)      LowerIntrinsics
+    0.0926 (  1.7%)    0.0926 (  5.8%)    LowerSignatures
+    0.0000 (  0.0%)    0.0000 (  0.0%)    InjectDUTHierarchy
+    3.7750 ( 67.9%)    0.2885 ( 18.2%)    'firrtl.module' Pipeline
+    0.2454 (  4.4%)    0.0448 (  2.8%)      PassiveWires
+    2.9687 ( 53.4%)    0.1619 ( 10.2%)      DropName
+    0.2818 (  5.1%)    0.0497 (  3.1%)      CSE
+    0.0097 (  0.2%)    0.0007 (  0.0%)        (A) DominanceInfo
+    0.0579 (  1.0%)    0.0049 (  0.3%)      LowerCHIRRTLPass
+    0.1544 (  2.8%)    0.0263 (  1.7%)      LowerMatches
+    0.1528 (  2.7%)    0.1528 (  9.6%)    InferWidths
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0051 (  0.1%)    0.0051 (  0.3%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0741 (  1.3%)    0.0741 (  4.7%)    MemToRegOfVec
+    0.0148 (  0.3%)    0.0148 (  0.9%)    InferResets
+    0.0051 (  0.1%)    0.0051 (  0.3%)      (A) circt::firrtl::InstanceGraph
+    0.1102 (  2.0%)    0.1102 (  6.9%)  Rest
+    5.5611 (100.0%)    1.5862 (100.0%)  Total
+make: *** [/root/chipyard/common.mk:221: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupDebugConfig/model_module_hierarchy.json] Error 1

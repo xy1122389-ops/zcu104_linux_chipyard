@@ -1,0 +1,5 @@
+OUTDIR=/root/chipyard/fpga/logs/jtagtunnel_ila_capture_20260324_205756
+ARM_STATE=/root/chipyard/fpga/logs/jtagtunnel_ila_capture_20260324_205756/arm_state.txt
+STIM_LOG=/root/chipyard/fpga/logs/jtagtunnel_ila_capture_20260324_205756/stimulus.log
+UPLOAD_STATE=/root/chipyard/fpga/logs/jtagtunnel_ila_capture_20260324_205756/upload_state.txt
+CSV_OUT=/root/chipyard/fpga/logs/jtagtunnel_ila_capture_20260324_205756/jtagtunnel_ila.csv

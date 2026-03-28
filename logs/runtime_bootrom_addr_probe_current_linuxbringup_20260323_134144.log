@@ -1,0 +1,78 @@
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check inputs ====
+PSU_INIT=\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl
+BIT_FILE=\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ZCU104FPGATestHarness.bit
+BASEADDR=0x10000
+WORDS=32
+
+==== connect and recover ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+
+==== psu init and fpga ====
+
+==== read bootrom region ====
+   10000:   A0211000
+   10004:   0C632705
+   10008:   439400C7
+   1000C:   9BE307C1
+   10010:   6422FEA6
+   10014:   95BA0712
+   10018:   01416588
+   1001C:   64228082
+   10020:   01414501
+   10024:   71798082
+   10028:   F406F022
+   1002C:   1800E44E
+   10030:   340029F3
+   10034:   8617C141
+   10038:   06130000
+   1003C:   55FD7026
+   10040:   E84AEC26
+   10044:   D0EF84AA
+   10048:   892A9EBF
+   1004C:   06054063
+   10050:   861785AA
+   10054:   06130000
+   10058:   85266F66
+   1005C:   44A050EF
+   10060:   00008617
+   10064:   70860613
+   10068:   852685CA
+   1006C:   43A050EF
+   10070:   861785CA
+   10074:   06130000
+   10078:   85267166
+   1007C:   42A050EF
+

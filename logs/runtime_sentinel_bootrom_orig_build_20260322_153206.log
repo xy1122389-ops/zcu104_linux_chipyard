@@ -1,0 +1,4 @@
+make: Entering directory '/tmp/zcu104_sdboot_linux_orig'
+rm -rf /tmp/zcu104_sdboot_linux_orig//build
+make: *** No rule to make target '/tmp/sdboot/kprintf.c', needed by '/tmp/zcu104_sdboot_linux_orig//build/sdboot.elf'.  Stop.
+make: Leaving directory '/tmp/zcu104_sdboot_linux_orig'

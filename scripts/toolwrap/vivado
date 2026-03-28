@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+VIVADO_BAT_WIN='E:\PRO_APP\xilinx\Vivado\2021.2\bin\vivado.bat'
+TMP_DIR_WIN='/mnt/e/PRO_APP'
+
+quote_bat_arg() {
+  local s="$1"
+  s=${s//\"/\"\"}
+  printf '"%s"' "$s"
+}
+
+win_pwd="$(wslpath -w "$PWD")"
+tmp_cmd="$(mktemp "${TMP_DIR_WIN}/codex-vivado-XXXXXX.cmd")"
+
+cleanup() {
+  rm -f "$tmp_cmd"
+}
+trap cleanup EXIT
+
+{
+  printf '@echo off\r\n'
+  printf 'pushd %s\r\n' "$(quote_bat_arg "$win_pwd")"
+  printf '%s' "$VIVADO_BAT_WIN"
+  for arg in "$@"; do
+    printf ' %s' "$(quote_bat_arg "$arg")"
+  done
+  printf '\r\n'
+  printf 'set _EC=%%errorlevel%%\r\n'
+  printf 'popd\r\n'
+  printf 'exit /b %%_EC%%\r\n'
+} > "$tmp_cmd"
+
+exec cmd.exe /c "$(wslpath -w "$tmp_cmd")"
