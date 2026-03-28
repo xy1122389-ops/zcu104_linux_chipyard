@@ -1,0 +1,793 @@
+mkdir -p /root/chipyard/.classpath_cache/
+cd /root/chipyard && java -jar /root/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/root/chipyard/.ivy2 -Dsbt.global.base=/root/chipyard/.sbt -Dsbt.boot.directory=/root/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard_fpga; set assembly / assemblyOutputPath := file(\"/root/chipyard/.classpath_cache/chipyard_fpga.jar\"); assembly" && touch /root/chipyard/.classpath_cache/chipyard_fpga.jar
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (Ubuntu Java 11.0.30)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /root/chipyard/project[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[33mwarn[0m] [0m[0mMultiple resolvers having different access mechanism configured with same name 'sbt-plugin-releases'. To avoid conflict, Remove duplicate project resolvers (`resolvers`) or rename publishing resolver (`publishTo`).[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard_fpga (in build file:/root/chipyard/)[0m
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /root/chipyard/fpga/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m4 feature warnings; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0m26 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m68 file(s) merged using strategy 'Rename (Custom)' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m391 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /root/chipyard/.classpath_cache/chipyard_fpga.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 242658b8bd943b5554152d8a83f4af73a6bc1994[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 18 s, completed Mar 28, 2026, 8:19:26 PM[0m
+[0Jmkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig
+(set -o pipefail && 	cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/chipyard_fpga.jar chipyard.Generator  --target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig --name chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig --top-module chipyard.fpga.zcu104.ZCU104FPGATestHarness --legacy-configs chipyard.fpga.zcu104:RocketZCU104NoDDRHelloConfig   | tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.chisel.log)
+ZCU104 FPGA Base Clock Freq: 50 MHz
+make[1]: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+make[1]: Nothing to be done for 'bin'.
+make[1]: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot'
+make[1]: Entering directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr'
+make[1]: Nothing to be done for 'bin'.
+make[1]: Leaving directory '/root/chipyard/fpga/src/main/resources/zcu104/sdboot-noddr'
+Interrupt map (1 harts 5 interrupts):
+  [1, 1] => uart_0
+  [2, 5] => gpio_0
+
+Clock sbus_0: using diplomatically specified frequency of 50.0.
+Clock pbus_0: using diplomatically specified frequency of 50.0.
+Clock fbus_0: using diplomatically specified frequency of 50.0.
+Clock cbus_0: using diplomatically specified frequency of 50.0.
+Leaving clock group uncore with synchronous reset
+/dts-v1/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "ucb-bar,chipyard-dev";
+	model = "ucb-bar,chipyard";
+	L3: aliases {
+		serial0 = &L24;
+	};
+	L17: chosen {
+		stdout-path = &L24;
+	};
+	L2: cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		timebase-frequency = <1000000>;
+		L12: cpu@0 {
+			clock-frequency = <0>;
+			compatible = "sifive,rocket0", "riscv";
+			device_type = "cpu";
+			hardware-exec-breakpoint-count = <1>;
+			i-cache-block-size = <64>;
+			i-cache-sets = <64>;
+			i-cache-size = <4096>;
+			reg = <0x0>;
+			riscv,isa = "rv32imaczicsr_zifencei_zihpm_xrocket";
+			riscv,pmpgranularity = <4>;
+			riscv,pmpregions = <8>;
+			sifive,dtim = <&L11>;
+			status = "okay";
+			timebase-frequency = <1000000>;
+			L9: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+	};
+	L1: soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "ucb-bar,chipyard-soc", "simple-bus";
+		ranges;
+		L23: boot-address-reg@1000 {
+			reg = <0x1000 0x1000>;
+			reg-names = "control";
+		};
+		L7: cbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "cbus_clock";
+			compatible = "fixed-clock";
+		};
+		L13: clint@2000000 {
+			compatible = "riscv,clint0";
+			interrupts-extended = <&L9 3 &L9 7>;
+			reg = <0x2000000 0x10000>;
+			reg-names = "control";
+		};
+		L26: clock-gater@100000 {
+			reg = <0x100000 0x1000>;
+			reg-names = "control";
+		};
+		L15: debug-controller@0 {
+			compatible = "sifive,debug-013", "riscv,debug-013";
+			debug-attach = "jtag";
+			interrupts-extended = <&L9 65535>;
+			reg = <0x0 0x1000>;
+			reg-names = "control";
+		};
+		L11: dtim@80000000 {
+			compatible = "sifive,dtim0";
+			reg = <0x80000000 0x4000>;
+			reg-names = "mem";
+		};
+		L8: error-device@3000 {
+			compatible = "sifive,error0";
+			reg = <0x3000 0x1000>;
+		};
+		L6: fbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "fbus_clock";
+			compatible = "fixed-clock";
+		};
+		L25: gpio@64002000 {
+			#gpio-cells = <2>;
+			#interrupt-cells = <2>;
+			clocks = <&L5>;
+			compatible = "sifive,gpio0", "sifive,gpio1";
+			gpio-controller;
+			interrupt-controller;
+			interrupt-parent = <&L14>;
+			interrupts = <2 3 4 5>;
+			reg = <0x64002000 0x1000>;
+			reg-names = "control";
+		};
+		L14: interrupt-controller@c000000 {
+			#interrupt-cells = <1>;
+			compatible = "riscv,plic0";
+			interrupt-controller;
+			interrupts-extended = <&L9 11>;
+			reg = <0xc000000 0x4000000>;
+			reg-names = "control";
+			riscv,max-priority = <7>;
+			riscv,ndev = <5>;
+		};
+		L5: pbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "pbus_clock";
+			compatible = "fixed-clock";
+		};
+		L22: rom@10000 {
+			compatible = "sifive,rom0";
+			reg = <0x10000 0x10000>;
+			reg-names = "mem";
+		};
+		L4: sbus_clock {
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+			clock-output-names = "sbus_clock";
+			compatible = "fixed-clock";
+		};
+		L24: serial@64000000 {
+			clocks = <&L5>;
+			compatible = "sifive,uart0";
+			interrupt-parent = <&L14>;
+			interrupts = <1>;
+			reg = <0x64000000 0x1000>;
+			reg-names = "control";
+		};
+		L27: tile-reset-setter@110000 {
+			reg = <0x110000 0x1000>;
+			reg-names = "control";
+		};
+	};
+};
+
+Generated Address Map
+	       0 -     1000 ARWX  debug-controller@0
+	    1000 -     2000 ARW   boot-address-reg@1000
+	    3000 -     4000 ARWX  error-device@3000
+	   10000 -    20000  R X  rom@10000
+	  100000 -   101000 ARW   clock-gater@100000
+	  110000 -   111000 ARW   tile-reset-setter@110000
+	 2000000 -  2010000 ARW   clint@2000000
+	 c000000 - 10000000 ARW   interrupt-controller@c000000
+	64000000 - 64001000 ARW   serial@64000000
+	64002000 - 64003000 ARW   gpio@64002000
+	80000000 - 80004000 ARWX  dtim@80000000
+
+IOCells generated by IOBinders:
+  IOBinder for interface sifive.blocks.devices.uart.HasPeripheryUART generated:
+    1 X GenericDigitalInIOCell
+    1 X GenericDigitalOutIOCell
+  IOBinder for interface testchipip.boot.CanHavePeripheryCustomBootPin generated:
+    1 X GenericDigitalInIOCell
+  IOBinder for interface freechips.rocketchip.devices.debug.HasPeripheryDebug generated:
+    4 X GenericDigitalInIOCell
+    1 X GenericDigitalOutIOCell
+  IOBinder for interface chipyard.clocking.CanHaveClockTap generated:
+    1 X GenericDigitalOutIOCell
+
+  Total generated 9 IOCells:
+    6 X GenericDigitalInIOCell
+    3 X GenericDigitalOutIOCell
+Harness binder clock is 50.0
+[warn] generators/rocket-chip/src/main/scala/tilelink/FIFOFixer.scala 80:43: [W004] Dynamic index with width 1 is too wide for Vec of size 1 (expected index width 0).
+[warn]       when (a_first && in.a.fire) { flight(in.a.bits.source) := !a_notFIFO }
+[warn]                                           ^
+[warn] generators/rocket-chip/src/main/scala/tilelink/FIFOFixer.scala 81:43: [W004] Dynamic index with width 1 is too wide for Vec of size 1 (expected index width 0).
+[warn]       when (d_first && in.d.fire) { flight(in.d.bits.source) := false.B }
+[warn]                                           ^
+[warn] generators/rocket-chip/src/main/scala/rocket/ICache.scala 508:25: [W002] Dynamic index with width 7 is too large for extractee of width 64
+[warn]     val s1_vb = vb_array(Cat(i.U, s1_idx).pad(log2Ceil(nSets*nWays))) && !s1_slaveValid
+[warn]                         ^
+[warn] There were 3 warning(s) during hardware elaboration.
+echo "$mfc_extra_anno_contents" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.extrafirtool.anno.json
+jq -s '[.[][]]' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.anno.json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.extrafirtool.anno.json > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.appended.anno.json
+mkdir -p /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/
+echo "emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket" > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/.mfc_lowering_options
+rm -rf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral
+(set -o pipefail && /root/chipyard/.oclaw-env/bin/firtool \
+		--format=fir \
+		--export-module-hierarchy \
+		--verify-each=true \
+		--warn-on-unprocessed-annotations \
+		--disable-annotation-classless \
+		--disable-annotation-unknown \
+		--mlir-timing \
+		--lowering-options=emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket \
+		--repl-seq-mem \
+		--repl-seq-mem-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.mems.conf \
+		--annotation-file=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.appended.anno.json \
+		--split-verilog \
+		 \
+		-o /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral \
+		/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.fir |& tee /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.firtool.log)
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:77:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:77:13: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/AtomicAutomata.scala:36:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:34:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:99:7: warning: module contains 11 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:1184:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/DCache.scala:99:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:251:7: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:521:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/ICache.scala:251:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:82:7: warning: module contains 2 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:96:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/Frontend.scala:82:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:219:7: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:395:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/PTW.scala:219:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:21:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:79:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/IBuf.scala:21:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:377:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:1022:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/CSR.scala:377:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:58:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:64:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/util/PlusArg.scala:58:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:158:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:884:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/rocket/RocketCore.scala:158:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:132:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:249:11: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Plic.scala:132:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:34:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/tilelink/Error.scala:21:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/debug/SBA.scala:273:9: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/debug/SBA.scala:373:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/debug/SBA.scala:273:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/debug/Debug.scala:790:9: warning: module contains 5 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/debug/Debug.scala:1505:15: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/debug/Debug.scala:790:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Arbiter.scala:22:12: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Xbar.scala:74:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:214:16: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/tilelink/Fragmenter.scala:92:9: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:185:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:185:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:89:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:118:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:89:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:185:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:137:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:56:7: warning: module contains 1 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:72:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/jtag/JtagShifter.scala:56:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+generators/rocket-chip/src/main/scala/devices/debug/DebugTransport.scala:73:7: warning: module contains 3 printf-encoded verification operation(s), which are deprecated and will be removed in the future
+generators/rocket-chip/src/main/scala/devices/debug/DebugTransport.scala:203:9: note: example printf here, will just be a printf in the future
+generators/rocket-chip/src/main/scala/devices/debug/DebugTransport.scala:73:7: note: For more information, see https://github.com/llvm/circt/issues/6970
+===-------------------------------------------------------------------------===
+                         ... Execution time report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 2.8634 seconds
+
+  ----User Time----  ----Wall Time----  ----Name----
+    0.3533 (  4.6%)    0.3533 ( 12.3%)  FIR Parser
+    0.0048 (  0.1%)    0.0048 (  0.2%)    Parse annotations
+    0.0000 (  0.0%)    0.0000 (  0.0%)    Parse OMIR
+    0.2803 (  3.6%)    0.2803 (  9.8%)    Parse modules
+    0.0612 (  0.8%)    0.0612 (  2.1%)    Verify circuit
+    5.6597 ( 73.3%)    1.9529 ( 68.2%)  'firrtl.circuit' Pipeline
+    0.0047 (  0.1%)    0.0047 (  0.2%)    LowerOpenAggs
+    0.0726 (  0.9%)    0.0726 (  2.5%)    ResolvePaths
+    0.0042 (  0.1%)    0.0042 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0624 (  0.8%)    0.0624 (  2.2%)    LowerFIRRTLAnnotations
+    0.0038 (  0.0%)    0.0038 (  0.1%)    LowerIntmodules
+    0.0038 (  0.0%)    0.0038 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0999 (  1.3%)    0.0091 (  0.3%)    'firrtl.module' Pipeline
+    0.0652 (  0.8%)    0.0084 (  0.3%)      LowerIntrinsics
+    0.0732 (  0.9%)    0.0732 (  2.6%)    LowerSignatures
+    0.0000 (  0.0%)    0.0000 (  0.0%)    InjectDUTHierarchy
+    1.3996 ( 18.1%)    0.1763 (  6.2%)    'firrtl.module' Pipeline
+    0.1255 (  1.6%)    0.0399 (  1.4%)      PassiveWires
+    1.0435 ( 13.5%)    0.0697 (  2.4%)      DropName
+    0.1306 (  1.7%)    0.0409 (  1.4%)      CSE
+    0.0028 (  0.0%)    0.0003 (  0.0%)        (A) DominanceInfo
+    0.0164 (  0.2%)    0.0031 (  0.1%)      LowerCHIRRTLPass
+    0.0661 (  0.9%)    0.0219 (  0.8%)      LowerMatches
+    0.1141 (  1.5%)    0.1141 (  4.0%)    InferWidths
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0048 (  0.1%)    0.0048 (  0.2%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0552 (  0.7%)    0.0552 (  1.9%)    MemToRegOfVec
+    0.0889 (  1.2%)    0.0889 (  3.1%)    InferResets
+    0.0051 (  0.1%)    0.0051 (  0.2%)      (A) circt::firrtl::InstanceGraph
+    0.0666 (  0.9%)    0.0666 (  2.3%)    DropConst
+    0.0004 (  0.0%)    0.0004 (  0.0%)    HoistPassthrough
+    0.1069 (  1.4%)    0.1069 (  3.7%)    Dedup
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.1334 (  1.7%)    0.0459 (  1.6%)    'firrtl.module' Pipeline
+    0.1283 (  1.7%)    0.0458 (  1.6%)      FlattenMemory
+    0.1616 (  2.1%)    0.1616 (  5.6%)    LowerFIRRTLTypes
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.1842 (  2.4%)    0.0476 (  1.7%)    'any' Pipeline
+    0.1806 (  2.3%)    0.0476 (  1.7%)      ExpandWhens
+    0.3636 (  4.7%)    0.0984 (  3.4%)    'firrtl.module' Pipeline
+    0.1706 (  2.2%)    0.0459 (  1.6%)      SFCCompat
+    0.0953 (  1.2%)    0.0285 (  1.0%)      LayerMerge
+    0.0895 (  1.2%)    0.0239 (  0.8%)      LayerSink
+    0.0007 (  0.0%)    0.0001 (  0.0%)        (A) DominanceInfo
+    0.0975 (  1.3%)    0.0975 (  3.4%)    LowerLayers
+    0.1207 (  1.6%)    0.1207 (  4.2%)    Inliner
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.1697 (  2.2%)    0.0360 (  1.3%)    'firrtl.module' Pipeline
+    0.1636 (  2.1%)    0.0360 (  1.3%)      RandomizeRegisterInit
+    0.0696 (  0.9%)    0.0696 (  2.4%)    CheckCombLoops
+    0.0040 (  0.1%)    0.0040 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    1.3564 ( 17.6%)    0.1473 (  5.1%)    'firrtl.module' Pipeline
+    1.3225 ( 17.1%)    0.1426 (  5.0%)      Canonicalizer
+    0.0310 (  0.4%)    0.0044 (  0.2%)      InferReadWrite
+    0.0245 (  0.3%)    0.0245 (  0.9%)    LowerMemory
+    0.0014 (  0.0%)    0.0014 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0172 (  0.2%)    0.0172 (  0.6%)    PrefixModules
+    0.0014 (  0.0%)    0.0014 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0773 (  1.0%)    0.0773 (  2.7%)    IMConstProp
+    0.0020 (  0.0%)    0.0020 (  0.1%)    HoistPassthrough
+    0.0013 (  0.0%)    0.0013 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0708 (  0.9%)    0.0708 (  2.5%)  IMDeadCodeElim
+    0.0010 (  0.0%)    0.0010 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0015 (  0.0%)    0.0015 (  0.1%)    (A) circt::hw::InnerSymbolTableCollection
+    0.0009 (  0.0%)    0.0009 (  0.0%)  'firrtl.circuit' Pipeline
+    0.0009 (  0.0%)    0.0009 (  0.0%)    AddSeqMemPorts
+    0.0008 (  0.0%)    0.0008 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0148 (  0.2%)    0.0148 (  0.5%)  CreateSiFiveMetadata
+    0.0010 (  0.0%)    0.0010 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0310 (  0.4%)    0.0310 (  1.1%)  'firrtl.circuit' Pipeline
+    0.0022 (  0.0%)    0.0022 (  0.1%)    ExtractInstances
+    0.0012 (  0.0%)    0.0012 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0000 (  0.0%)    0.0000 (  0.0%)    GrandCentral
+    0.0090 (  0.1%)    0.0090 (  0.3%)    BlackBoxReader
+    0.0198 (  0.3%)    0.0198 (  0.7%)    SymbolDCE
+    0.0206 (  0.3%)    0.0206 (  0.7%)  InnerSymbolDCE
+    0.1759 (  2.3%)    0.0611 (  2.1%)  'firrtl.circuit' Pipeline
+    0.1148 (  1.5%)    0.0092 (  0.3%)    'firrtl.module' Pipeline
+    0.0873 (  1.1%)    0.0085 (  0.3%)      Canonicalizer
+    0.0205 (  0.3%)    0.0015 (  0.1%)      RegisterOptimizer
+    0.0452 (  0.6%)    0.0452 (  1.6%)    IMConstProp
+    0.0029 (  0.0%)    0.0029 (  0.1%)      (A) circt::firrtl::InstanceGraph
+    0.0385 (  0.5%)    0.0385 (  1.3%)  IMDeadCodeElim
+    0.0009 (  0.0%)    0.0009 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0012 (  0.0%)    0.0012 (  0.0%)    (A) circt::hw::InnerSymbolTableCollection
+    0.1773 (  2.3%)    0.0714 (  2.5%)  'firrtl.circuit' Pipeline
+    0.0000 (  0.0%)    0.0000 (  0.0%)    EmitOMIR
+    0.0831 (  1.1%)    0.0076 (  0.3%)    'firrtl.module' Pipeline
+    0.0093 (  0.1%)    0.0011 (  0.0%)      MergeConnections
+    0.0635 (  0.8%)    0.0068 (  0.2%)      Vectorization
+    0.0049 (  0.1%)    0.0049 (  0.2%)    ResolveTraces
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) circt::firrtl::NLATable
+    0.0009 (  0.0%)    0.0009 (  0.0%)      (A) circt::hw::InnerSymbolTableCollection
+    0.0111 (  0.1%)    0.0111 (  0.4%)    LowerXMR
+    0.0011 (  0.0%)    0.0011 (  0.0%)      (A) circt::firrtl::InstanceGraph
+    0.0349 (  0.5%)    0.0349 (  1.2%)    LowerClasses
+    0.0114 (  0.1%)    0.0114 (  0.4%)      (A) circt::firrtl::InstanceGraph
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0010 (  0.0%)    0.0010 (  0.0%)    VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)      (A) SymbolTable
+    0.0228 (  0.3%)    0.0010 (  0.0%)    'firrtl.module' Pipeline
+    0.0070 (  0.1%)    0.0006 (  0.0%)      Lint
+    0.0738 (  1.0%)    0.0738 (  2.6%)  LowerFIRRTLToHW
+    0.0007 (  0.0%)    0.0007 (  0.0%)    (A) circt::firrtl::InstanceGraph
+    0.0001 (  0.0%)    0.0001 (  0.0%)    (A) circt::firrtl::NLATable
+    0.5035 (  6.5%)    0.0274 (  1.0%)  'hw.module' Pipeline
+    0.0466 (  0.6%)    0.0096 (  0.3%)    CSE
+    0.0022 (  0.0%)    0.0003 (  0.0%)      (A) DominanceInfo
+    0.4475 (  5.8%)    0.0212 (  0.7%)    Canonicalizer
+    0.0025 (  0.0%)    0.0025 (  0.1%)  VerifyInnerRefNamespace
+    0.0023 (  0.0%)    0.0023 (  0.1%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0003 (  0.0%)    0.0003 (  0.0%)  ExternalizeClockGate
+    0.0041 (  0.1%)    0.0041 (  0.1%)  LowerSimToSV
+    0.0175 (  0.2%)    0.0175 (  0.6%)  LowerSeqToSV
+    0.0575 (  0.7%)    0.0029 (  0.1%)  'hw.module' Pipeline
+    0.0365 (  0.5%)    0.0024 (  0.1%)    LowerVerifToSV
+    0.0033 (  0.0%)    0.0033 (  0.1%)  HWMemSimImpl
+    0.1773 (  2.3%)    0.0100 (  0.3%)  'hw.module' Pipeline
+    0.0544 (  0.7%)    0.0038 (  0.1%)    CSE
+    0.0109 (  0.1%)    0.0011 (  0.0%)      (A) DominanceInfo
+    0.0427 (  0.6%)    0.0031 (  0.1%)    Canonicalizer
+    0.0299 (  0.4%)    0.0017 (  0.1%)    CSE
+    0.0070 (  0.1%)    0.0007 (  0.0%)      (A) DominanceInfo
+    0.0136 (  0.2%)    0.0008 (  0.0%)    HWCleanup
+    0.0074 (  0.1%)    0.0074 (  0.3%)  VerifyInnerRefNamespace
+    0.0011 (  0.0%)    0.0011 (  0.0%)  VerifyObjectFields
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0704 (  0.9%)    0.0035 (  0.1%)  'hw.module' Pipeline
+    0.0120 (  0.2%)    0.0008 (  0.0%)    HWLegalizeModules
+    0.0287 (  0.4%)    0.0023 (  0.1%)    PrettifyVerilog
+    0.0047 (  0.1%)    0.0047 (  0.2%)  StripDebugInfoWithPred
+    0.0022 (  0.0%)    0.0022 (  0.1%)  HWExportModuleHierarchy
+    0.0000 (  0.0%)    0.0000 (  0.0%)    (A) SymbolTable
+    0.0016 (  0.0%)    0.0016 (  0.1%)  VerifyInnerRefNamespace
+    0.0045 (  0.1%)    0.0045 (  0.2%)  VerifyObjectFields
+    0.0514 (  0.7%)    0.0514 (  1.8%)  ExportSplitVerilog
+    0.1389 (  1.8%)    0.0164 (  0.6%)  'builtin.module' Pipeline
+    0.0039 (  0.1%)    0.0039 (  0.1%)    HWLowerInstanceChoices
+    0.1225 (  1.6%)    0.0083 (  0.3%)    'hw.module' Pipeline
+    0.1160 (  1.5%)    0.0083 (  0.3%)      PrepareForEmission
+   -0.0017 ( -0.0%)   -0.0017 ( -0.1%)  Rest
+    7.7221 (100.0%)    2.8634 (100.0%)  Total
+sed -i 's/.*/& /' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.mems.conf # need trailing space for SFC macrocompiler
+# If there are no BB's then the file might not be generated; ensure it exists
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/firrtl_black_box_resource_files.f
+/root/chipyard/scripts/uniquify-module-names.py \
+	--model-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/model_module_hierarchy.json \
+	--top-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/top_module_hierarchy.json \
+	--in-all-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/filelist.f \
+	--in-bb-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/firrtl_black_box_resource_files.f \
+	--dut ChipTop \
+	--model ZCU104FPGATestHarness \
+	--target-dir /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral \
+	--out-dut-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.f \
+	--out-model-filelist /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.f \
+	--out-model-hier-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/model_module_hierarchy.uniquified.json \
+	--gcpath /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral
+sed -e 's;^;/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/;' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/firrtl_black_box_resource_files.f > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.bb.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.f
+sed -i 's/\.\///' /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.bb.f
+sort -u /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.bb.f > /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.all.f
+cp -f  /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.f
+/root/chipyard/scripts/split-mems-conf.py \
+	--in-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.mems.conf \
+	--in-model-hrchy-json /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/model_module_hierarchy.uniquified.json \
+	--dut-module-name ChipTop \
+	--model-module-name ZCU104FPGATestHarness \
+	--out-dut-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.conf \
+	--out-model-smems-conf /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.conf
+[ -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/custom.mems.conf ] && cat /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/custom.mems.conf >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.conf
+cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/tapeout.jar tapeout.macros.MacroCompiler -n /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.conf -v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.v -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.fir --mode synflops
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.fir
+cd /root/chipyard && java -cp /root/chipyard/.classpath_cache/tapeout.jar tapeout.macros.MacroCompiler  -n /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.conf -v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.v -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.fir --mode synflops
+touch /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.v /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.fir
+rm -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.common.f
+sort -u /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.all.f | grep -v '.*\.\(svh\|h\|conf\)$' >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.common.f
+echo "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.top.mems.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.common.f
+echo "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.model.mems.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.common.f
+rm -f /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.vsrcs.f
+echo "/root/chipyard/generators/rocket-chip-blocks/vsrc/SRLatch.v" >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.vsrcs.f;
+cat /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/sim_files.common.f >> /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.vsrcs.f
+cd /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig; vivado \
+	-nojournal -mode batch \
+	-source /root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl \
+	-tclargs \
+		-top-module "ZCU104FPGATestHarness" \
+		-F "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.vsrcs.f" \
+		-board "zcu104" \
+		-ip-vivado-tcls "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.harnessSysPLL.vivado.tcl /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig.shell.vivado.tcl"
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\fpga-shells\xilinx\common\tcl\vivado.tcl}
+# set scriptdir [file dirname [info script]]
+# source [file join $scriptdir "prologue.tcl"]
+## set ip_vivado_tcls {}
+## while {[llength $argv]} {
+##   set argv [lassign $argv[set argv {}] flag]
+##   switch -glob $flag {
+##     -top-module {
+##       set argv [lassign $argv[set argv {}] top]
+##     }
+##     -F {
+##       # This should be a simple file format with one filepath per line
+##       set argv [lassign $argv[set argv {}] vsrc_manifest]
+##     }
+##     -board {
+##       set argv [lassign $argv[set argv {}] board]
+##     }
+##     -ip-vivado-tcls {
+##       set argv [lassign $argv[set argv {}] ip_vivado_tcls]
+##     }
+##     -pre-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] pre_impl_debug_tcl]
+##     }
+##     -post-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] post_impl_debug_tcl]
+##     }
+##     -env-var-srcs {
+##       set argv [lassign $argv[set argv {}] env_var_srcs]
+##     }
+##     default {
+##       return -code error [list {unknown option} $flag]
+##     }
+##   }
+## }
+## if {![info exists top]} {
+##   return -code error [list {--top-module option is required}]
+## }
+## if {![info exists vsrc_manifest]} {
+##   return -code error [list {-F option is required}]
+## }
+## if {![info exists board]} {
+##   return -code error [list {--board option is required}]
+## }
+## set commondir [file dirname $scriptdir]
+## set boarddir [file join [file dirname $commondir] $board]
+## source [file join $boarddir tcl board.tcl]
+### set name {zcu104}
+### set part_fpga {xczu7ev-ffvc1156-2-e}
+### set part_board {xilinx.com:zcu104:part0:1.1}
+## set constraintsdir [file join $boarddir constraints]
+## set srcdir [file join $commondir vsrc]
+## set wrkdir [file join [pwd] obj]
+## set ipdir [file join $wrkdir ip]
+## create_project -part $part_fpga -force $top
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig'
+## set_param messaging.defaultLimit 1000000
+## set_property -dict [list \
+## 	BOARD_PART $part_board \
+## 	TARGET_LANGUAGE {Verilog} \
+## 	DEFAULT_LIB {xil_defaultlib} \
+## 	IP_REPO_PATHS $ipdir \
+## 	] [current_project]
+## if {[get_filesets -quiet sources_1] eq ""} {
+## 	create_fileset -srcset sources_1
+## }
+## set obj [current_fileset]
+## proc load_vsrc_manifest {obj vsrc_manifest} {
+##   set fp [open $vsrc_manifest r]
+##   set files [lsearch -not -exact -all -inline [split [read $fp] "\n"] {}]
+##   set relative_files {}
+##   foreach path $files {
+##     if {[string match {/*} $path]} {
+##       lappend relative_files $path
+##     } elseif {![string match {#*} $path]} {
+##       lappend relative_files [file join [file dirname $vsrc_manifest] $path]
+##     }
+##   }
+##   # Read environment variable vsrcs and append to relative_files
+##   upvar #0 env_var_srcs env_var_srcs
+##   set additions [info exists env_var_srcs]
+##   if {$additions} {
+##     if {[info exists ::env($env_var_srcs)]} {
+##       set resources [split $::env($env_var_srcs) :]
+##       set relative_files [list {*}$relative_files {*}$resources]
+##     }
+##   }
+##   add_files -norecurse -fileset $obj {*}$relative_files
+##   close $fp
+## }
+## load_vsrc_manifest $obj $vsrc_manifest
+## if {$ip_vivado_tcls ne {}} {
+##   # Split string into words even with multiple consecutive spaces
+##   # http://wiki.tcl.tk/989
+##   set ip_vivado_tcls [regexp -inline -all -- {\S+} $ip_vivado_tcls]
+## }
+## if {[get_filesets -quiet sim_1] eq ""} {
+## 	create_fileset -simset sim_1
+## }
+## set obj [current_fileset -simset]
+## if {[get_filesets -quiet constrs_1] eq ""} {
+## 	create_fileset -constrset constrs_1
+## }
+## set obj [current_fileset -constrset]
+## add_files -quiet -norecurse -fileset $obj [lsort [glob -directory $constraintsdir -nocomplain {*.tcl}]]
+## add_files -quiet -norecurse -fileset $obj [lsort [glob -directory $constraintsdir -nocomplain {*.xdc}]]
+# source [file join $scriptdir "init.tcl"]
+## source [file join $scriptdir "util.tcl"]
+### proc recglob { basedir pattern } {
+###   set dirlist [glob -nocomplain -directory $basedir -type d *]
+###   set findlist [glob -nocomplain -directory $basedir $pattern]
+###   foreach dir $dirlist {
+###     set reclist [recglob $dir $pattern]
+###     set findlist [concat $findlist $reclist]
+###   }
+###   return $findlist
+### }
+### proc findincludedir { basedir pattern } {
+###   set vhfiles [recglob $basedir $pattern]
+###   set vhdirs {}
+###   foreach match $vhfiles {
+###     lappend vhdirs [file dir $match]
+###   }
+###   set uniquevhdirs [lsort -unique $vhdirs]
+###   return $uniquevhdirs
+### }
+## file mkdir $ipdir
+## update_ip_catalog -rebuild
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/obj/ip'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'E:/PRO_APP/xilinx/Vivado/2021.2/data/ip'.
+## foreach ip_vivado_tcl $ip_vivado_tcls {
+##   source $ip_vivado_tcl
+## }
+### create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name \
+###  harnessSysPLL -dir $ipdir -force
+create_ip: Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1992.996 ; gain = 388.914
+### set_property -dict [list \
+###  CONFIG.CLK_IN1_BOARD_INTERFACE {Custom} \
+###  CONFIG.PRIM_SOURCE {No_buffer} \
+###  CONFIG.NUM_OUT_CLKS {1} \
+###  CONFIG.PRIM_IN_FREQ {125.0} \
+###  CONFIG.CLKIN1_JITTER_PS {50.0} \
+###  CONFIG.CLKOUT1_USED {true} \
+###  CONFIG.CLKOUT2_USED {false} \
+###  CONFIG.CLKOUT3_USED {false} \
+###  CONFIG.CLKOUT4_USED {false} \
+###  CONFIG.CLKOUT5_USED {false} \
+###  CONFIG.CLKOUT6_USED {false} \
+###  CONFIG.CLKOUT7_USED {false} \
+###  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {50.0} \
+###  CONFIG.CLKOUT1_REQUESTED_PHASE {0.0} \
+###  CONFIG.CLKOUT1_REQUESTED_DUTY_CYCLE {50.0} \
+### ] [get_ips harnessSysPLL]
+### set mult [get_property CONFIG.MMCM_CLKFBOUT_MULT_F [get_ips harnessSysPLL]]
+### set div1 [get_property CONFIG.MMCM_DIVCLK_DIVIDE [get_ips harnessSysPLL]]
+### set jitter [get_property CONFIG.CLKOUT1_JITTER [get_ips harnessSysPLL]]
+### if {$jitter > 300.0} {
+###   puts "Output jitter $jitter ps exceeds required limit of 300.0"
+###   exit 1
+### }
+### set phase [get_property CONFIG.MMCM_CLKOUT0_PHASE [get_ips harnessSysPLL]]
+### if {$phase < -5.0 || $phase > 5.0} {
+###   puts "Achieved phase $phase degrees is outside tolerated range -5.0-5.0"
+###   exit 1
+### }
+### set div2 [get_property CONFIG.MMCM_CLKOUT0_DIVIDE_F [get_ips harnessSysPLL]]
+### set freq [expr { 125.0 * $mult / $div1 / $div2 }]
+### if {$freq < 49.5 || $freq > 50.5} {
+###   puts "Achieved frequency $freq MHz is outside tolerated range 49.5-50.5"
+###   exit 1
+### }
+### puts "Achieve frequency $freq MHz phase $phase degrees jitter $jitter ps"
+Achieve frequency 50.0 MHz phase 0.000 degrees jitter 196.543 ps
+### set shell_vivado_tcl [file normalize [info script]]
+### set shell_vivado_idx [string last ".shell.vivado.tcl" $shell_vivado_tcl]
+### add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".shell.sdc"]
+### add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".shell.xdc"]
+### set extra_constr [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".extra.shell.xdc"]
+### if [file exist $extra_constr] {
+###   add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".extra.shell.xdc"]
+### }
+## set boardiptcl [file join $boarddir tcl ip.tcl]
+## if {[file exists $boardiptcl]} {
+##   source $boardiptcl
+## }
+## set xci_files [get_files -all {*.xci}]
+## foreach xci_file $xci_files {
+##   set_property GENERATE_SYNTH_CHECKPOINT {false} -quiet $xci_file
+## }
+## set obj [get_ips]
+## generate_target all $obj
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'harnessSysPLL'...
+## export_ip_user_files -of_objects $obj -no_script -force
+## set obj [current_fileset]
+## set property_include_dirs [get_property include_dirs $obj]
+## set ip_include_dirs [concat $property_include_dirs [findincludedir $ipdir "*.vh"]]
+## set ip_include_dirs [concat $ip_include_dirs [findincludedir $srcdir "*.h"]]
+## set ip_include_dirs [concat $ip_include_dirs [findincludedir $srcdir "*.vh"]]
+# source [file join $scriptdir "synth.tcl"]
+## read_ip [glob -directory $ipdir [file join * {*.xci}]]
+CRITICAL WARNING: [Vivado 12-1504] The IP is already part of the fileset 'sources_1'. Requested source 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104NoDDRHelloConfig/obj/ip/harnessSysPLL/harnessSysPLL.xci' will not be added.
+## synth_design -top $top -flatten_hierarchy rebuilt
+Command: synth_design -top ZCU104FPGATestHarness -flatten_hierarchy rebuilt
+Starting synth_design
+Using part: xczu7ev-ffvc1156-2-e
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu7ev'
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 31720

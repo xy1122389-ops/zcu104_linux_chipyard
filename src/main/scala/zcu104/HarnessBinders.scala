@@ -29,9 +29,11 @@ class WithLEDGPIO extends HarnessBinder({
       th.gpio_led_3_ls_drive
     )
     ledDrives.zipWithIndex.foreach { case (drive, idx) =>
-      val ledDrive = port.io.pins(idx).o.oe && port.io.pins(idx).o.oval
-      drive := ledDrive
-      port.io.pins(idx).i.ival := ledDrive
+      val ledOn = port.io.pins(idx).o.oe && port.io.pins(idx).o.oval
+      // ZCU104 GPIO_LED_*_LS nets are low-side control lines with board pull-ups,
+      // so the external LED path is active low: drive low to turn the LED on.
+      drive := !ledOn
+      port.io.pins(idx).i.ival := ledOn
       port.io.pins(idx).i.po.foreach(_ := false.B)
     }
   }

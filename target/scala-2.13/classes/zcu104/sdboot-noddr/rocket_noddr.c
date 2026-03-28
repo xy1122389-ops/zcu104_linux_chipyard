@@ -59,9 +59,9 @@ static void uart_puts(const char *s)
   }
 }
 
-static void print_dec(uint64_t value)
+static void print_dec(uint32_t value)
 {
-  char buffer[21];
+  char buffer[11];
   int i = 0;
 
   if (value == 0) {
@@ -88,7 +88,7 @@ static void delay_cycles(volatile uint64_t cycles)
 
 int main(void)
 {
-  uint64_t count = 0;
+  uint32_t count = 0;
 
   uart_init();
   gpio_init();
