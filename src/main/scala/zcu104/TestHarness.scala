@@ -79,6 +79,7 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
 class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawModuleImp(_outer) with HasHarnessInstantiators {
   override def provideImplicitClockToLazyChildren = true
   val zcu104Outer = _outer
+  // DS37 on ZCU104 is driven by GPIO_LED_0_LS on package pin D5.
   val gpio_led_0_ls = IO(Output(Bool())).suggestName("gpio_led_0_ls")
   val gpio_led_0_ls_drive = WireDefault(false.B)
   gpio_led_0_ls := gpio_led_0_ls_drive

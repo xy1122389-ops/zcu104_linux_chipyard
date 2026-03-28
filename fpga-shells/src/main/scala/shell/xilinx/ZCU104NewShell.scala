@@ -86,21 +86,21 @@ class SDIOZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: SPI
   def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-// JTAG on PMOD J55 upper row
+// External JTAG on PMOD0_4..0_7
 class JTAGDebugZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: JTAGDebugDesignInput, val shellInput: JTAGDebugShellInput)
   extends JTAGDebugXilinxPlacedOverlay(name, designInput, shellInput)
 {
   shell { InModuleBody {
-    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "H12")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS18")
-    shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK)) // prevent JTAG TCK from using dedicated clock routing
-    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "E10")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS18")
-    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "D10")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS18")
-    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "C11")
-    shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS18")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "J6") // PMOD0_6
+    shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS33")
+    shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK))
+    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "H6") // PMOD0_5
+    shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS33")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "J7") // PMOD0_7
+    shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS33")
+    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "G6") // PMOD0_4
+    shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS33")
   } }
 }
 class JTAGDebugZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: JTAGDebugShellInput)(implicit val valName: ValName)
