@@ -1,0 +1,8 @@
+/dts-v1/;
+/ {
+  compatible = "chipyard,zcu104-linux-frontchain-demo";
+  model = "demo-frontchain";
+  chosen {
+    bootargs = "console=ttyS0,115200 earlycon";
+  };
+};

@@ -1,0 +1,54 @@
+[info] Linux front-chain address plan
+  payload ELF   : 0x80200000 size=0x00200000
+  stack reserve : 0x803e0000..0x80400000
+  kernel        : 0x80400000 size=0x02000000
+  dtb           : 0x82400000 size=0x00020000
+  payload blob  : 0x83000000 size=0x04000000
+
+[info] front-chain payload ELF: /root/chipyard/fpga/linux-bringup/payload/linux-chain/build/linux_chain.elf
+[info] front-chain payload BIN: /root/chipyard/fpga/linux-bringup/payload/linux-chain/build/linux_chain.bin
+[info] kernel: /root/chipyard/fpga/linux-bringup/demo-assets/kernel-demo.bin
+[info] dtb: /root/chipyard/fpga/linux-bringup/demo-assets/dtb/demo-frontchain.dtb
+[info] payload blob: /root/chipyard/fpga/linux-bringup/demo-assets/payload-demo.bin
+[info] front-chain payload BIN size: 3328 bytes
+[info] kernel size: 768 bytes
+[info] dtb size: 238 bytes
+[info] payload blob size: 832 bytes
+
+[info] Planned load order
+  1. Ensure stable platform is initialized:
+     bash /root/chipyard/fpga/scripts/run_ps_ddr_init.sh
+  2. Load front-chain payload ELF to 0x80200000
+  3. Load payload blob to 0x83000000
+  4. Load kernel to 0x80400000
+  5. Load dtb to 0x82400000
+  6. Halt at linux_*_marker observation points as needed
+  7. Future step: replace placeholder with real jump to Linux entry
+
+[info] Address summary
+  manifest      : 0x803df000
+  payload ELF   : 0x80200000
+  kernel        : 0x80400000
+  dtb           : 0x82400000
+  payload blob  : 0x83000000
+  gdb server    : 172.19.128.1:2331
+
+[info] Loading files into target memory...
+0x000000000001048c in ?? ()
+Restoring binary file /root/chipyard/fpga/linux-bringup/payload/linux-chain/build/linux_chain.bin into memory (0x80200000 to 0x80200d00)
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/kernel-demo.bin into memory (0x80400000 to 0x80400300)
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/dtb/demo-frontchain.dtb into memory (0x82400000 to 0x824000ee)
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/payload-demo.bin into memory (0x83000000 to 0x83000340)
+Restoring binary file /tmp/tmp.tt0MkTdv3x/linux_chain_manifest.bin into memory (0x803df000 to 0x803df050)
+0x803df000:	0x4c43484d4e465431	0x0000000000000001
+0x803df010:	0x000000000000000f	0x0000000080400000
+0x803df020:	0x0000000000000300	0x0000000082400000
+0x803df030:	0x00000000000000ee	0x0000000083000000
+0x803df040:	0x0000000000000340	0x0000000080400000
+
+[info] Loaded front-chain payload BIN to 0x80200000
+[info] Loaded kernel to 0x80400000
+[info] Loaded dtb to 0x82400000
+[info] Loaded payload blob to 0x83000000
+[info] Loaded manifest to 0x803df000
+[info] ready_to_jump flag set in manifest, but actual jump remains disabled in code

@@ -1,11 +1,18 @@
 # Linux Bring-up Script Placeholders
 
-This directory is reserved for future Linux bring-up helpers.
+This directory contains the stage-C Linux front-chain helpers.
 
-Planned script roles:
-- payload download helper
-- payload selection helper
-- Linux GDB entry helper
+Current scripts:
+- `build_linux_chain_payload.sh`
+- `download_linux_payload.sh`
+- `start_linux_gdb.sh`
+- `linux_chain_observe.gdb`
 
-These scripts are placeholders only at stage C.
-The current supported bring-up path remains the stable baremetal route.
+Current state:
+- front-chain payload ELF is buildable
+- address plan is printed and validated
+- Linux-specific observation points exist for J-Link/GDB
+- actual Linux image jump is still a placeholder
+
+Stable default route remains unchanged:
+- `bash /root/chipyard/fpga/scripts/run_ps_ddr_init.sh`
