@@ -1,0 +1,81 @@
+0x0000000000000000 in ?? ()
+
+=== PHASE: LOAD (27 chunks + DTB) ===
+
+[load] chunk 0/27 -> 0x80000000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_000.bin into memory (0x80000000 to 0x80100000)
+[load] chunk 1/27 -> 0x80100000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_001.bin into memory (0x80100000 to 0x80200000)
+[load] chunk 2/27 -> 0x80200000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_002.bin into memory (0x80200000 to 0x80300000)
+[verify-mid] Linux header right after chunk 2 (expect 0x106f5a4d): 0x80200000 <payload_bin>:	0xd2010113
+[load] chunk 3/27 -> 0x80300000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_003.bin into memory (0x80300000 to 0x80400000)
+[load] chunk 4/27 -> 0x80400000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_004.bin into memory (0x80400000 to 0x80500000)
+[load] chunk 5/27 -> 0x80500000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_005.bin into memory (0x80500000 to 0x80600000)
+[load] chunk 6/27 -> 0x80600000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_006.bin into memory (0x80600000 to 0x80700000)
+[load] chunk 7/27 -> 0x80700000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_007.bin into memory (0x80700000 to 0x80800000)
+[load] chunk 8/27 -> 0x80800000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_008.bin into memory (0x80800000 to 0x80900000)
+[load] chunk 9/27 -> 0x80900000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_009.bin into memory (0x80900000 to 0x80a00000)
+[load] chunk 10/27 -> 0x80a00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_010.bin into memory (0x80a00000 to 0x80b00000)
+[load] chunk 11/27 -> 0x80b00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_011.bin into memory (0x80b00000 to 0x80c00000)
+[load] chunk 12/27 -> 0x80c00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_012.bin into memory (0x80c00000 to 0x80d00000)
+[load] chunk 13/27 -> 0x80d00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_013.bin into memory (0x80d00000 to 0x80e00000)
+[load] chunk 14/27 -> 0x80e00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_014.bin into memory (0x80e00000 to 0x80f00000)
+[load] chunk 15/27 -> 0x80f00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_015.bin into memory (0x80f00000 to 0x81000000)
+[load] chunk 16/27 -> 0x81000000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_016.bin into memory (0x81000000 to 0x81100000)
+[load] chunk 17/27 -> 0x81100000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_017.bin into memory (0x81100000 to 0x81200000)
+[load] chunk 18/27 -> 0x81200000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_018.bin into memory (0x81200000 to 0x81300000)
+[load] chunk 19/27 -> 0x81300000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_019.bin into memory (0x81300000 to 0x81400000)
+[load] chunk 20/27 -> 0x81400000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_020.bin into memory (0x81400000 to 0x81500000)
+[load] chunk 21/27 -> 0x81500000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_021.bin into memory (0x81500000 to 0x81600000)
+[load] chunk 22/27 -> 0x81600000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_022.bin into memory (0x81600000 to 0x81700000)
+[load] chunk 23/27 -> 0x81700000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_023.bin into memory (0x81700000 to 0x81800000)
+[load] chunk 24/27 -> 0x81800000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_024.bin into memory (0x81800000 to 0x81900000)
+[load] chunk 25/27 -> 0x81900000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_025.bin into memory (0x81900000 to 0x81a00000)
+[load] chunk 26/27 -> 0x81a00000
+Restoring binary file /tmp/tmp.Q7vHZfSx1n/chunk_026.bin into memory (0x81a00000 to 0x81ad4808)
+[load] DTB -> 0x82400000
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb into memory (0x82400000 to 0x82401069)
+
+=== PHASE: VERIFY ===
+
+[verify] OpenSBI @ 0x80000000 (expect 0x0e976f05): 0x80000000 <_start>:	0x34233200
+[verify] Linux   @ 0x80200000 (expect 0x106f5a4d): 0x80200000 <payload_bin>:	0xd2010113
+[verify] DTB     @ 0x82400000 (expect 0xedfe0dd0): 0x82400000:	0xedfe0dd0
+
+=== PHASE: WALK (OpenSBI -> Linux kernel entry) ===
+
+--- Diagnostic: 3x stepi to confirm CPU executes from 0x80000000 ---
+PC before stepi: pc             0x80000000	0x80000000 <_start>
+0x0000000000000000 in ?? ()
+PC after stepi 1: pc             0x0	0x0
+0x0000000000000000 in ?? ()
+PC after stepi 2: pc             0x0	0x0
+0x0000000000000000 in ?? ()
+PC after stepi 3: pc             0x0	0x0
+
+--- Step 1: Run to sbi_init (0x8000079c) ---
+Breakpoint 1 at 0x8000079c

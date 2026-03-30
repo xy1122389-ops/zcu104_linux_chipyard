@@ -1,0 +1,119 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0000000000000000 in ?? ()
+Resetting target
+[diag] CPU halted at pc = pc             0x0	0x0
+
+=== PHASE: LOAD (27 chunks + DTB) ===
+
+[load] chunk 0/27 -> 0x80000000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_000.bin into memory (0x80000000 to 0x80100000)
+[load] chunk 1/27 -> 0x80100000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_001.bin into memory (0x80100000 to 0x80200000)
+[load] chunk 2/27 -> 0x80200000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_002.bin into memory (0x80200000 to 0x80300000)
+[verify-mid] Linux header right after chunk 2 (expect 0x106f5a4d): 0x80200000:	0x106f5a4d
+[load] chunk 3/27 -> 0x80300000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_003.bin into memory (0x80300000 to 0x80400000)
+[load] chunk 4/27 -> 0x80400000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_004.bin into memory (0x80400000 to 0x80500000)
+[load] chunk 5/27 -> 0x80500000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_005.bin into memory (0x80500000 to 0x80600000)
+[load] chunk 6/27 -> 0x80600000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_006.bin into memory (0x80600000 to 0x80700000)
+[load] chunk 7/27 -> 0x80700000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_007.bin into memory (0x80700000 to 0x80800000)
+[load] chunk 8/27 -> 0x80800000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_008.bin into memory (0x80800000 to 0x80900000)
+[load] chunk 9/27 -> 0x80900000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_009.bin into memory (0x80900000 to 0x80a00000)
+[load] chunk 10/27 -> 0x80a00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_010.bin into memory (0x80a00000 to 0x80b00000)
+[load] chunk 11/27 -> 0x80b00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_011.bin into memory (0x80b00000 to 0x80c00000)
+[load] chunk 12/27 -> 0x80c00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_012.bin into memory (0x80c00000 to 0x80d00000)
+[load] chunk 13/27 -> 0x80d00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_013.bin into memory (0x80d00000 to 0x80e00000)
+[load] chunk 14/27 -> 0x80e00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_014.bin into memory (0x80e00000 to 0x80f00000)
+[load] chunk 15/27 -> 0x80f00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_015.bin into memory (0x80f00000 to 0x81000000)
+[load] chunk 16/27 -> 0x81000000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_016.bin into memory (0x81000000 to 0x81100000)
+[load] chunk 17/27 -> 0x81100000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_017.bin into memory (0x81100000 to 0x81200000)
+[load] chunk 18/27 -> 0x81200000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_018.bin into memory (0x81200000 to 0x81300000)
+[load] chunk 19/27 -> 0x81300000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_019.bin into memory (0x81300000 to 0x81400000)
+[load] chunk 20/27 -> 0x81400000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_020.bin into memory (0x81400000 to 0x81500000)
+[load] chunk 21/27 -> 0x81500000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_021.bin into memory (0x81500000 to 0x81600000)
+[load] chunk 22/27 -> 0x81600000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_022.bin into memory (0x81600000 to 0x81700000)
+[load] chunk 23/27 -> 0x81700000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_023.bin into memory (0x81700000 to 0x81800000)
+[load] chunk 24/27 -> 0x81800000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_024.bin into memory (0x81800000 to 0x81900000)
+[load] chunk 25/27 -> 0x81900000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_025.bin into memory (0x81900000 to 0x81a00000)
+[load] chunk 26/27 -> 0x81a00000
+Restoring binary file /tmp/tmp.stiEKIhjvR/chunk_026.bin into memory (0x81a00000 to 0x81ad4808)
+[load] DTB -> 0x82400000
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb into memory (0x82400000 to 0x82401069)
+
+=== PHASE: VERIFY ===
+
+[verify] OpenSBI @ 0x80000000 (expect 0x0e976f05): 0x80000000:	0x34233200
+[verify] Linux   @ 0x80200000 (expect 0x106f5a4d): 0x80200000:	0xd2010113
+[verify] DTB     @ 0x82400000 (expect 0xedfe0dd0): 0x82400000:	0xedfe0dd0
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux" at
+	.text_addr = 0x80200000
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+
+=== PHASE: WALK (OpenSBI -> Linux kernel entry) ===
+
+--- Diagnostic A: disassemble first 8 instructions at 0x80000000 ---
+=> 0x80000000 <_start>:	fld	fs0,32(a2)
+   0x80000002 <_start+2>:	sd	a4,-120(s0)
+   0x80000006 <_start+6>:	auipc	a3,0x1f
+   0x8000000a <_start+10>:	lw	a3,50(a3)
+   0x8000000e <_start+14>:	beqz	a3,0x800003fe <_scratch_init+188>
+   0x80000012 <_start+18>:	slli	a4,s3,0x20
+   0x80000016 <_start+22>:	srli	a4,a4,0x20
+   0x80000018 <_start+24>:	sd	s7,104(sp)
+
+--- Diagnostic B: current CPU state ---
+pc             0x80000000	0x80000000 <_start>
+a0             0x0	0
+a1             0x82400000	2185232384
+a2             0x0	0
+sp             0x800ffc0	0x800ffc0
+ra             0x8000002a	0x8000002a <_start+42>
+mtvec: Unsupported register !
+mstatus: Unsupported register !
+
+--- Diagnostic C: 5x stepi from 0x80000000 (no breakpoints) ---
+stepi 0: pc = pc             0x80000000	0x80000000 <_start>
+0x0000000000000000 in ?? ()
+stepi 1: pc = pc             0x0	0x0
+0x0000000000000000 in ?? ()
+stepi 2: pc = pc             0x0	0x0
+0x0000000000000000 in ?? ()
+stepi 3: pc = pc             0x0	0x0
+0x0000000000000000 in ?? ()
+stepi 4: pc = pc             0x0	0x0
+0x0000000000000000 in ?? ()
+stepi 5: pc = pc             0x0	0x0
+
+--- Diagnostic D: breadcrumb + trap check after 5 stepi ---
+stage: 0x800200f0:	0x0000000000000000
+trap (mcause/mtval/mepc): 0x800200d8:	0x0000000000000000	0x0000000000000000
+0x800200e8:	0x0000000000000000
+
+--- Step 1: continue to sbi_init (0x8000079c) ---
+Breakpoint 1 at 0x8000079c

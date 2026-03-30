@@ -1,0 +1,18 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x000000000001048c in ?? ()
+Resetting target
+[diag] CPU halted at pc = 0x000000000001048c
+[ok] CPU state looks valid for loading.
+
+=== PHASE: LOAD (27 chunks + DTB) ===
+
+[load] chunk 0/27 -> 0x80000000
+Restoring binary file /tmp/tmp.KEiyObukvk/chunk_000.bin into memory (0x80000000 to 0x80100000)
+[load] chunk 1/27 -> 0x80100000
+Restoring binary file /tmp/tmp.KEiyObukvk/chunk_001.bin into memory (0x80100000 to 0x80200000)
+[load] chunk 2/27 -> 0x80200000
+Restoring binary file /tmp/tmp.KEiyObukvk/chunk_002.bin into memory (0x80200000 to 0x80300000)
+[verify-mid] Linux header right after chunk 2 (expect 0x106f5a4d): 0x80200000:	/tmp/tmp.KEiyObukvk/master.gdb:44: Error in sourced command file:
+Cannot access memory at address 0x80200000

@@ -37,6 +37,12 @@ define blpayload
   continue
 end
 
+define blfirmwaredone
+  delete breakpoints
+  hbreak firmware_load_done_marker
+  continue
+end
+
 define blkernel
   delete breakpoints
   hbreak linux_kernel_stage_marker
@@ -122,6 +128,7 @@ echo Linux front-chain observe script loaded.\n
 echo Commands:\n
 echo   blstart   - break at linux chain start marker\n
 echo   blpayload - break before payload stage\n
+echo   blfirmwaredone - break after firmware ready is observed\n
 echo   blkernel  - break before kernel stage\n
 echo   bldtb     - break before dtb stage\n
 echo   bljump    - break before jump linux entry marker\n

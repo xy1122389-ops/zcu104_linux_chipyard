@@ -1,0 +1,3 @@
+Python Exception <class 'gdb.error'>: could not connect: Connection timed out.
+/tmp/tmp.8Wap2BkXds/walk.gdb:11: Error in sourced command file:
+Error occurred in Python: could not connect: Connection timed out.

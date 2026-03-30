@@ -4,25 +4,29 @@ set -euo pipefail
 PAYLOAD_ELF=/root/chipyard/fpga/linux-bringup/payload/linux-chain/build/linux_chain.elf
 PAYLOAD_BIN=/root/chipyard/fpga/linux-bringup/payload/linux-chain/build/linux_chain.bin
 PAYLOAD_NM=/root/chipyard/fpga/linux-bringup/payload/linux-chain/build/linux_chain.nm
-PAYLOAD_ADDR=0x80200000
-PAYLOAD_SIZE=0x00200000
-MANIFEST_ADDR=0x803df000
-STACK_BASE=0x803e0000
-STACK_TOP=0x80400000
-KERNEL_ADDR=0x80400000
+PAYLOAD_ADDR=0x88000000
+PAYLOAD_SIZE=0x00400000
+MANIFEST_ADDR=0x883df000
+STACK_BASE=0x883e0000
+STACK_TOP=0x88400000
+FIRMWARE_ADDR=0x80000000
+FIRMWARE_SIZE=0x00400000
+KERNEL_ADDR=0x80200000
 KERNEL_SIZE=0x02000000
 DTB_ADDR=0x82400000
 DTB_SIZE=0x00020000
 BLOB_ADDR=0x83000000
 BLOB_SIZE=0x04000000
 MANIFEST_MAGIC=0x4c43484d4e465431
-MANIFEST_VER=0x0000000000000001
-FLAG_KERNEL_READY=1
-FLAG_DTB_READY=2
-FLAG_PAYLOAD_READY=4
-FLAG_READY_TO_JUMP=8
-FLAG_JUMP_ENABLED=16
+MANIFEST_VER=0x0000000000000002
+FLAG_FIRMWARE_READY=1
+FLAG_KERNEL_READY=2
+FLAG_DTB_READY=4
+FLAG_PAYLOAD_READY=8
+FLAG_READY_TO_JUMP=16
+FLAG_JUMP_ENABLED=32
 
+FIRMWARE=""
 KERNEL=""
 DTB=""
 PAYLOAD_BLOB=""
@@ -36,6 +40,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --kernel)
       KERNEL="$2"
+      shift 2
+      ;;
+    --firmware)
+      FIRMWARE="$2"
       shift 2
       ;;
     --dtb)
@@ -86,6 +94,7 @@ check_path() {
 echo "[info] Linux front-chain address plan"
 printf '  payload ELF   : %s size=%s\n' "$PAYLOAD_ADDR" "$PAYLOAD_SIZE"
 printf '  stack reserve : %s..%s\n' "$STACK_BASE" "$STACK_TOP"
+printf '  firmware      : %s size=%s\n' "$FIRMWARE_ADDR" "$FIRMWARE_SIZE"
 printf '  kernel        : %s size=%s\n' "$KERNEL_ADDR" "$KERNEL_SIZE"
 printf '  dtb           : %s size=%s\n' "$DTB_ADDR" "$DTB_SIZE"
 printf '  payload blob  : %s size=%s\n' "$BLOB_ADDR" "$BLOB_SIZE"
@@ -93,6 +102,7 @@ echo
 
 check_path "front-chain payload ELF" "$PAYLOAD_ELF"
 check_path "front-chain payload BIN" "$PAYLOAD_BIN"
+check_path "firmware" "$FIRMWARE"
 check_path "kernel" "$KERNEL"
 check_path "dtb" "$DTB"
 check_path "payload blob" "$PAYLOAD_BLOB"
@@ -114,6 +124,7 @@ check_size() {
 }
 
 check_size "front-chain payload BIN" "$PAYLOAD_BIN" $((PAYLOAD_SIZE))
+check_size "firmware" "$FIRMWARE" $((FIRMWARE_SIZE))
 check_size "kernel" "$KERNEL" $((KERNEL_SIZE))
 check_size "dtb" "$DTB" $((DTB_SIZE))
 check_size "payload blob" "$PAYLOAD_BLOB" $((BLOB_SIZE))
@@ -123,16 +134,17 @@ echo "[info] Planned load order"
 echo "  1. Ensure stable platform is initialized:"
 echo "     bash /root/chipyard/fpga/scripts/run_ps_ddr_init.sh"
 echo "  2. Load front-chain payload ELF to $PAYLOAD_ADDR"
-echo "  3. Load payload blob to $BLOB_ADDR"
+echo "  3. Load firmware to $FIRMWARE_ADDR"
 echo "  4. Load kernel to $KERNEL_ADDR"
 echo "  5. Load dtb to $DTB_ADDR"
-echo "  6. Halt at linux_*_marker observation points as needed"
-echo "  7. Future step: replace placeholder with real jump to Linux entry"
+echo "  6. Load payload blob to $BLOB_ADDR"
+echo "  7. Halt at linux_* / opensbi_* observation points as needed"
 echo
 
 echo "[info] Address summary"
 printf '  manifest      : %s\n' "$MANIFEST_ADDR"
 printf '  payload ELF   : %s\n' "$PAYLOAD_ADDR"
+printf '  firmware      : %s\n' "$FIRMWARE_ADDR"
 printf '  kernel        : %s\n' "$KERNEL_ADDR"
 printf '  dtb           : %s\n' "$DTB_ADDR"
 printf '  payload blob  : %s\n' "$BLOB_ADDR"
@@ -145,8 +157,8 @@ if [[ ! -x "$GDB" ]]; then
   exit 4
 fi
 
-if [[ -z "$KERNEL" || -z "$DTB" ]]; then
-  echo "Error: --kernel and --dtb are required for real load." >&2
+if [[ -z "$FIRMWARE" || -z "$KERNEL" || -z "$DTB" ]]; then
+  echo "Error: --firmware, --kernel and --dtb are required for real load." >&2
   exit 5
 fi
 
@@ -159,15 +171,16 @@ PAYLOAD_SIZE_BYTES=0
 if [[ -n "$PAYLOAD_BLOB" ]]; then
   PAYLOAD_SIZE_BYTES=$(stat -c %s "$PAYLOAD_BLOB")
 fi
+FIRMWARE_SIZE_BYTES=$(stat -c %s "$FIRMWARE")
 KERNEL_SIZE_BYTES=$(stat -c %s "$KERNEL")
 DTB_SIZE_BYTES=$(stat -c %s "$DTB")
 
-FLAGS=$((FLAG_KERNEL_READY | FLAG_DTB_READY | FLAG_READY_TO_JUMP))
+FLAGS=$((FLAG_FIRMWARE_READY | FLAG_KERNEL_READY | FLAG_DTB_READY | FLAG_READY_TO_JUMP))
 if [[ -n "$PAYLOAD_BLOB" ]]; then
   FLAGS=$((FLAGS | FLAG_PAYLOAD_READY))
 fi
 if [[ -z "$ENTRY" ]]; then
-  ENTRY="$KERNEL_ADDR"
+  ENTRY="$FIRMWARE_ADDR"
 fi
 if (( ENABLE_JUMP )); then
   FLAGS=$((FLAGS | FLAG_JUMP_ENABLED))
@@ -177,10 +190,12 @@ python3 - <<PY
 import struct
 
 manifest = struct.pack(
-    "<10Q",
+    "<12Q",
     int("${MANIFEST_MAGIC}", 16),
     int("${MANIFEST_VER}", 16),
     int("${FLAGS}"),
+    int("${FIRMWARE_ADDR}", 16),
+    int("${FIRMWARE_SIZE_BYTES}"),
     int("${KERNEL_ADDR}", 16),
     int("${KERNEL_SIZE_BYTES}"),
     int("${DTB_ADDR}", 16),
@@ -200,6 +215,7 @@ PY
   echo "target remote ${HOST}:${PORT}"
   echo "monitor halt"
   echo "restore ${PAYLOAD_BIN} binary ${PAYLOAD_ADDR}"
+  echo "restore ${FIRMWARE} binary ${FIRMWARE_ADDR}"
   echo "restore ${KERNEL} binary ${KERNEL_ADDR}"
   echo "restore ${DTB} binary ${DTB_ADDR}"
   if [[ -n "$PAYLOAD_BLOB" ]]; then
@@ -216,6 +232,7 @@ echo "[info] Loading files into target memory..."
 
 echo
 echo "[info] Loaded front-chain payload BIN to ${PAYLOAD_ADDR}"
+echo "[info] Loaded firmware to ${FIRMWARE_ADDR}"
 echo "[info] Loaded kernel to ${KERNEL_ADDR}"
 echo "[info] Loaded dtb to ${DTB_ADDR}"
 if [[ -n "$PAYLOAD_BLOB" ]]; then

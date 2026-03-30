@@ -1,0 +1,10 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0000000000000000 in ?? ()
+Resetting target
+[diag] CPU halted at pc = pc             0x0	0x0
+
+=== PHASE: LOAD (27 chunks + DTB) ===
+
+[load] chunk 0/27 -> 0x80000000

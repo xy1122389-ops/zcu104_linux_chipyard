@@ -10,26 +10,31 @@
 #define UART_DIV  ((TL_CLK * 1000000UL) / UART_BAUD)
 #define REG32(p, i) ((p)[(i) >> 2])
 
-#define LINUX_CHAIN_PAYLOAD_ADDR   0x80200000UL
-#define LINUX_CHAIN_PAYLOAD_SIZE   0x00200000UL
-#define LINUX_CHAIN_MANIFEST_ADDR  0x803df000UL
-#define LINUX_CHAIN_STACK_BASE     0x803e0000UL
-#define LINUX_CHAIN_STACK_TOP      0x80400000UL
-#define LINUX_KERNEL_LOAD_ADDR     0x80400000UL
+#define LINUX_CHAIN_PAYLOAD_ADDR   0x88000000UL
+#define LINUX_CHAIN_PAYLOAD_SIZE   0x00400000UL
+#define LINUX_CHAIN_MANIFEST_ADDR  0x883df000UL
+#define LINUX_CHAIN_STACK_BASE     0x883e0000UL
+#define LINUX_CHAIN_STACK_TOP      0x88400000UL
+#define LINUX_KERNEL_LOAD_ADDR     0x80200000UL
 #define LINUX_KERNEL_MAX_SIZE      0x02000000UL
 #define LINUX_DTB_LOAD_ADDR        0x82400000UL
 #define LINUX_DTB_MAX_SIZE         0x00020000UL
 #define LINUX_PAYLOAD_BLOB_ADDR    0x83000000UL
 #define LINUX_PAYLOAD_BLOB_MAXSIZE 0x04000000UL
-#define LINUX_JUMP_ENTRY_ADDR      LINUX_KERNEL_LOAD_ADDR
+#define LINUX_OPENSBI_LOAD_ADDR    0x88400000UL
+#define LINUX_OPENSBI_MAX_SIZE     0x00400000UL
+#define LINUX_JUMP_ENTRY_ADDR      LINUX_OPENSBI_LOAD_ADDR
 #define LINUX_CHAIN_MANIFEST_MAGIC 0x4c43484d4e465431ULL
-#define LINUX_CHAIN_MANIFEST_VER   0x0000000000000001ULL
+#define LINUX_CHAIN_MANIFEST_VER   0x0000000000000002ULL
 
+#define LINUX_FLAG_FIRMWARE_READY  (1ULL << 0)
 #define LINUX_FLAG_KERNEL_READY    (1ULL << 0)
-#define LINUX_FLAG_DTB_READY       (1ULL << 1)
-#define LINUX_FLAG_PAYLOAD_READY   (1ULL << 2)
-#define LINUX_FLAG_READY_TO_JUMP   (1ULL << 3)
-#define LINUX_FLAG_JUMP_ENABLED    (1ULL << 4)
+#undef LINUX_FLAG_KERNEL_READY
+#define LINUX_FLAG_KERNEL_READY    (1ULL << 1)
+#define LINUX_FLAG_DTB_READY       (1ULL << 2)
+#define LINUX_FLAG_PAYLOAD_READY   (1ULL << 3)
+#define LINUX_FLAG_READY_TO_JUMP   (1ULL << 4)
+#define LINUX_FLAG_JUMP_ENABLED    (1ULL << 5)
 
 static volatile uint32_t * const uart0 = (void *)(UART_CTRL_ADDR);
 static volatile uint32_t * const gpio0 = (void *)(GPIO_CTRL_ADDR);
@@ -39,6 +44,8 @@ struct linux_chain_manifest {
   uint64_t magic;
   uint64_t version;
   uint64_t flags;
+  uint64_t firmware_addr;
+  uint64_t firmware_size;
   uint64_t kernel_addr;
   uint64_t kernel_size;
   uint64_t dtb_addr;
@@ -57,6 +64,7 @@ __attribute__((noinline, used)) void linux_kernel_stage_marker(void) { __asm__ _
 __attribute__((noinline, used)) void linux_dtb_stage_marker(void) { __asm__ __volatile__("nop"); }
 __attribute__((noinline, used)) void linux_jump_stage_marker(void) { __asm__ __volatile__("nop"); }
 __attribute__((noinline, used)) void linux_count_loop_marker(void) { __asm__ __volatile__("nop"); }
+__attribute__((noinline, used)) void firmware_load_done_marker(void) { __asm__ __volatile__("nop"); }
 __attribute__((noinline, used)) void payload_load_done_marker(void) { __asm__ __volatile__("nop"); }
 __attribute__((noinline, used)) void kernel_load_done_marker(void) { __asm__ __volatile__("nop"); }
 __attribute__((noinline, used)) void dtb_load_done_marker(void) { __asm__ __volatile__("nop"); }
@@ -198,6 +206,8 @@ int main(void)
 {
   uint64_t count = 0;
   uint64_t flags = 0;
+  uint64_t firmware_addr = LINUX_OPENSBI_LOAD_ADDR;
+  uint64_t firmware_size = 0;
   uint64_t kernel_addr = LINUX_KERNEL_LOAD_ADDR;
   uint64_t kernel_size = 0;
   uint64_t dtb_addr = LINUX_DTB_LOAD_ADDR;
@@ -208,6 +218,7 @@ int main(void)
   int manifest_ok = 0;
   int ready_to_jump = 0;
   int jump_enabled = 0;
+  int firmware_region_valid = 0;
   int kernel_region_valid = 0;
   int dtb_region_valid = 0;
   int payload_region_valid = 0;
@@ -225,6 +236,8 @@ int main(void)
       linux_manifest->version == LINUX_CHAIN_MANIFEST_VER) {
     manifest_ok = 1;
     flags = linux_manifest->flags;
+    firmware_addr = linux_manifest->firmware_addr;
+    firmware_size = linux_manifest->firmware_size;
     kernel_addr = linux_manifest->kernel_addr;
     kernel_size = linux_manifest->kernel_size;
     dtb_addr = linux_manifest->dtb_addr;
@@ -240,6 +253,22 @@ int main(void)
     print_hex64(flags);
     uart_puts("\n");
   }
+
+  linux_payload_stage_marker();
+  uart_puts("load firmware start\n");
+  firmware_region_valid = region_ok(firmware_addr, firmware_size, LINUX_OPENSBI_LOAD_ADDR, LINUX_OPENSBI_MAX_SIZE);
+  if (manifest_ok && (flags & LINUX_FLAG_FIRMWARE_READY)) {
+    firmware_load_done_marker();
+    print_yes_no("firmware prepared", 1);
+    print_region("firmware", firmware_addr, firmware_size);
+    uart_puts("firmware first64=");
+    print_hex64(peek64(firmware_addr));
+    uart_puts("\n");
+  } else {
+    print_yes_no("firmware prepared", 0);
+    print_region("firmware", firmware_addr, firmware_size);
+  }
+  print_yes_no("firmware range valid", firmware_region_valid);
 
   linux_payload_stage_marker();
   uart_puts("load payload start\n");
@@ -292,12 +321,14 @@ int main(void)
   linux_jump_stage_marker();
   jump_enabled = manifest_ok && ((flags & LINUX_FLAG_JUMP_ENABLED) != 0);
   ready_to_jump = manifest_ok &&
+                  ((flags & LINUX_FLAG_FIRMWARE_READY) != 0) &&
                   ((flags & LINUX_FLAG_KERNEL_READY) != 0) &&
                   ((flags & LINUX_FLAG_DTB_READY) != 0) &&
+                  firmware_region_valid &&
                   kernel_region_valid &&
                   dtb_region_valid &&
                   payload_region_valid &&
-                  (jump_addr == kernel_addr);
+                  (jump_addr == firmware_addr);
   if (ready_to_jump) {
     linux_ready_to_jump_marker();
   }
@@ -310,12 +341,18 @@ int main(void)
   if (!manifest_ok) {
     linux_jump_blocked_marker();
     print_status_line("jump blocked:", " manifest invalid");
+  } else if (!(flags & LINUX_FLAG_FIRMWARE_READY)) {
+    linux_jump_blocked_marker();
+    print_status_line("jump blocked:", " firmware not ready");
   } else if (!(flags & LINUX_FLAG_KERNEL_READY)) {
     linux_jump_blocked_marker();
     print_status_line("jump blocked:", " kernel not ready");
   } else if (!(flags & LINUX_FLAG_DTB_READY)) {
     linux_jump_blocked_marker();
     print_status_line("jump blocked:", " dtb not ready");
+  } else if (!firmware_region_valid) {
+    linux_jump_blocked_marker();
+    print_status_line("jump blocked:", " firmware region invalid");
   } else if (!kernel_region_valid) {
     linux_jump_blocked_marker();
     print_status_line("jump blocked:", " kernel region invalid");
@@ -325,7 +362,7 @@ int main(void)
   } else if (!payload_region_valid) {
     linux_jump_blocked_marker();
     print_status_line("jump blocked:", " payload region invalid");
-  } else if (jump_addr != kernel_addr) {
+  } else if (jump_addr != firmware_addr) {
     linux_jump_blocked_marker();
     print_status_line("jump blocked:", " jump addr mismatch");
   } else if (!jump_enabled) {

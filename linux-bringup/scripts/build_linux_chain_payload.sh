@@ -11,5 +11,5 @@ echo "[info] Key symbols:"
 grep -E '(_prog_start| main$|linux_chain_start_marker|linux_payload_stage_marker|linux_kernel_stage_marker|linux_dtb_stage_marker|linux_jump_stage_marker|linux_count_loop_marker)' \
   "$ROOT/build/linux_chain.nm" || true
 echo "[info] Additional load-done markers:"
-grep -E '(payload_load_done_marker|kernel_load_done_marker|dtb_load_done_marker|linux_ready_to_jump_marker|linux_jump_taken_marker)' \
+grep -E '(firmware_load_done_marker|payload_load_done_marker|kernel_load_done_marker|dtb_load_done_marker|linux_ready_to_jump_marker|linux_jump_taken_marker|linux_jump_blocked_marker)' \
   "$ROOT/build/linux_chain.nm" || true

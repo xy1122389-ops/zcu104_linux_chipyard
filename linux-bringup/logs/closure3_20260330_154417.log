@@ -1,0 +1,14 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0000000000000000 in ?? ()
+Resetting target
+[diag] CPU halted at pc = 0x0000000000000000
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! ERROR: CPU is in crashed state (PC=0x0).           !!
+!! DDR writes will silently fail in this state.       !!
+!! You MUST re-initialize the board first:            !!
+!!   bash /root/chipyard/fpga/scripts/run_ps_ddr_init.sh
+!! Then re-run this script.                           !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

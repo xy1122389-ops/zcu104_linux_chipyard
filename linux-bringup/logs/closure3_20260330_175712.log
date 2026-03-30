@@ -1,0 +1,138 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x000000000001048c in ?? ()
+
+=== PHASE: LOAD (via XSDB ARM core) ===
+
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check input files ====
+fw_payload.bin (orig) = \\wsl.localhost\Ubuntu-22.04\root\chipyard\software\firemarshal\boards\default\firmware\opensbi\build\platform\generic\firmware\fw_payload.bin (28133384 bytes)
+fw_payload.bin (load) = \\wsl.localhost\Ubuntu-22.04\tmp\fw_payload_padded_0x2000.bin (28141576 bytes)
+firmware compensation: enabled (padded source to cancel 0x2000 source-skip bug)
+DTB            = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\linux-bringup\demo-assets\dtb\chipyard-zcu104-linux.dtb (4201 bytes)
+
+==== connect hw_server ====
+attempting to launch hw_server
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2021.2
+
+  **** Build date : Oct 19 2021 at 03:13:30
+
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+Memory access checks bypassed.
+
+==== select PSU target for direct memory access ====
+Using PSU target for cache-bypassing DDR writes.
+
+==== load DTB -> DDR 0x02400000 (Rocket 0x82400000) ====
+Loading DTB (4201 bytes, 1051 words)...
+DTB loaded.
+
+==== load fw_payload.bin -> DDR 0x00000000 (Rocket 0x80000000) -- 28MB ====
+Loading firmware (28133384 bytes, 7033346 words)...
+This may take a few minutes via debug transport...
+Firmware loaded.
+
+==== verify key addresses (via debug APB, bypassing cache) ====
+  OpenSBI @ DDR 0x00000000 (Rocket 0x80000000) = 0x0e976f05
+  Linux   @ DDR 0x00200000 (Rocket 0x80200000) = 0x106f5a4d
+  DTB     @ DDR 0x02400000 (Rocket 0x82400000) = 0xedfe0dd0
+
+==== disconnect ====
+
+Payload loaded to DDR via ARM core. Ready for J-Link boot.
+[ok] XSDB DDR load complete
+
+Resetting target
+[diag] CPU halted at pc = 0x000000000001048c
+[ok] CPU state looks valid for loading.
+
+=== PHASE: SET ENTRY STATE ===
+
+[ok] Entry state set: pc=0x80000000 a0=0 a1=0x82400000
+
+=== PHASE: VERIFY (non-fatal) ===
+
+[verify] OpenSBI: 0x80000000:	0x0e976f05  (expect 0x0e976f05)
+[verify] Linux  : 0x80200000:	0x106f5a4d  (expect 0x106f5a4d)
+[verify] DTB    : 0x82400000:	0xedfe0dd0  (expect 0xedfe0dd0)
+[ok] All verify passed -- progbuf works after ndmreset!
+
+--- Zero breadcrumbs ---
+[info] Breadcrumbs zeroed: 8/8
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux" at
+	.text_addr = 0x80200000
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+
+=== PHASE: BOOT ===
+
+[ok] Progbuf works! BootROM @ 0x10000: 0x10000:	0x08000117
+[info] Full walk possible. Proceeding...
+
+
+=== PHASE: WALK (OpenSBI -> Linux kernel entry) ===
+
+--- Diagnostic A: disassemble first 8 instructions at 0x80000000 ---
+=> 0x80000000 <_start>:	lui	t5,0x1
+   0x80000002 <_start+2>:	auipc	t4,0x20
+   0x80000006 <_start+6>:	addi	t4,t4,238
+   0x8000000a <_start+10>:	sd	t5,0(t4)
+   0x8000000e <_start+14>:	sd	a0,8(t4)
+   0x80000012 <_start+18>:	sd	a1,16(t4)
+   0x80000016 <_start+22>:	sd	a2,24(t4)
+   0x8000001a <_start+26>:	add	s0,a0,zero
+
+--- Diagnostic B: current CPU state ---
+pc             0x80000000	0x80000000 <_start>
+a0             0x0	0
+a1             0x82400000	2185232384
+a2             0x0	0
+sp             0x800ffc0	0x800ffc0
+ra             0x104cc	0x104cc
+
+--- Diagnostic C: 5x stepi from 0x80000000 (no breakpoints) ---
+stepi 0: pc = pc             0x80000000	0x80000000 <_start>
+51			lla	t4, _debug_stage
+stepi 1: pc = pc             0x80000002	0x80000002 <_start+2>
+0x0000000080000006	51			lla	t4, _debug_stage
+stepi 2: pc = pc             0x80000006	0x80000006 <_start+6>
+52			REG_S	t5, 0(t4)
+stepi 3: pc = pc             0x8000000a	0x8000000a <_start+10>
+53			REG_S	a0, (__SIZEOF_POINTER__)(t4)
+stepi 4: pc = pc             0x8000000e	0x8000000e <_start+14>
+54			REG_S	a1, (__SIZEOF_POINTER__ * 2)(t4)
+stepi 5: pc = pc             0x80000012	0x80000012 <_start+18>
+
+--- Step 1: continue to sbi_init (0x8000079c) ---
+Breakpoint 1 at 0x8000079c
+Cannot execute this command while the target is running.
+Use the "interrupt" command to stop the target
+and then try again.

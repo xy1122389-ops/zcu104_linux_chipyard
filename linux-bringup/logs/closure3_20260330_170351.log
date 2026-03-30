@@ -1,0 +1,31 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x00000000deadbeef in ?? ()
+Resetting target
+[diag] CPU halted at pc = 0x00000000deadbeef
+[ok] CPU state looks valid for loading.
+
+=== PHASE: SET ENTRY STATE ===
+
+[ok] Entry state set: pc=0x80000000 a0=0 a1=0x82400000
+
+=== PHASE: VERIFY (non-fatal) ===
+
+[verify] OpenSBI: FAILED - Cannot access memory at address 0x80000000
+[verify] Linux  : FAILED - Cannot access memory at address 0x80200000
+[verify] DTB    : FAILED - Cannot access memory at address 0x82400000
+[warn] Some verify failed. Registers set OK; will try continue.
+
+--- Zero breadcrumbs ---
+[info] Breadcrumbs zeroed: 8/8
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux" at
+	.text_addr = 0x80200000
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+
+=== PHASE: WALK (OpenSBI -> Linux kernel entry) ===
+
+--- Diagnostic A: disassemble first 8 instructions at 0x80000000 ---
+   0x80000000 <_start>:	/tmp/tmp.eoOEPgG2x5/master.gdb:88: Error in sourced command file:
+Cannot access memory at address 0x80000000

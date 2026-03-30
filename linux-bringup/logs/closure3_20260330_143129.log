@@ -1,0 +1,24 @@
+0x0000000000000000 in ?? ()
+
+=== PHASE: VERIFY ===
+
+[verify] OpenSBI @ 0x80000000 (expect 0x0e976f05): 0x80000000 <_start>:	0x34233200
+[verify] Linux   @ 0x80200000 (expect 0x106f5a4d): 0x80200000 <payload_bin>:	0xd2010113
+[verify] DTB     @ 0x82400000 (expect 0xedfe0dd0): 0x82400000:	0xedfe0dd0
+
+=== PHASE: WALK (OpenSBI -> Linux kernel entry) ===
+
+--- Diagnostic: 3x stepi to confirm CPU executes from 0x80000000 ---
+PC before stepi: pc             0x80000000	0x80000000 <_start>
+0x0000000000000000 in ?? ()
+PC after stepi 1: pc             0x0	0x0
+0x0000000000000000 in ?? ()
+PC after stepi 2: pc             0x0	0x0
+0x0000000000000000 in ?? ()
+PC after stepi 3: pc             0x0	0x0
+
+--- Step 1: Run to sbi_init (0x8000079c) ---
+Breakpoint 1 at 0x8000079c
+Cannot execute this command while the target is running.
+Use the "interrupt" command to stop the target
+and then try again.

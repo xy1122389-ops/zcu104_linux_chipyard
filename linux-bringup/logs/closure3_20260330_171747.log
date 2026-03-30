@@ -1,0 +1,73 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x00000000deadbeef in ?? ()
+
+=== PHASE: LOAD (via XSDB ARM core) ===
+
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+==== check input files ====
+fw_payload.bin = \\wsl.localhost\Ubuntu-22.04\root\chipyard\software\firemarshal\boards\default\firmware\opensbi\build\platform\generic\firmware\fw_payload.bin (28133384 bytes)
+DTB            = \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\linux-bringup\demo-assets\dtb\chipyard-zcu104-linux.dtb (4201 bytes)
+
+==== connect hw_server ====
+
+==== list all targets ====
+
+==== select APU Cortex-A53 #0 ====
+Selected target:
+        9* Cortex-A53 #0 (Reset Catch, EL3(S)/A64)
+       10  Cortex-A53 #1 (Power On Reset)
+       11  Cortex-A53 #2 (Power On Reset)
+       12  Cortex-A53 #3 (Power On Reset)
+
+==== release ARM core from reset and stop it ====
+Releasing core from APU Reset...
+ARM core ready.
+
+==== load DTB -> ARM 0x02400000 (Rocket 0x82400000) -- small file first ====
+DTB loaded.
+
+==== load fw_payload.bin -> ARM 0x00000000 (Rocket 0x80000000) -- 28MB ====
+Firmware loaded.
+
+==== verify key addresses (via ARM memory bus) ====
+  OpenSBI @ ARM 0x00000000 (Rocket 0x80000000) = 0x34233200
+  Linux   @ ARM 0x00200000 (Rocket 0x80200000) = 0xd2010113
+  DTB     @ ARM 0x02400000 (Rocket 0x82400000) = 0xedfe0dd0
+
+==== disconnect ====
+
+Payload loaded to DDR via ARM core. Ready for J-Link boot.
+[ok] XSDB DDR load complete
+
+Resetting target
+[diag] CPU halted at pc = 0x00000000deadbeef
+[ok] CPU state looks valid for loading.
+
+=== PHASE: SET ENTRY STATE ===
+
+[ok] Entry state set: pc=0x80000000 a0=0 a1=0x82400000
+
+=== PHASE: VERIFY (non-fatal) ===
+
+[verify] OpenSBI: FAILED - Cannot access memory at address 0x80000000
+[verify] Linux  : FAILED - Cannot access memory at address 0x80200000
+[verify] DTB    : FAILED - Cannot access memory at address 0x82400000
+[warn] Some verify failed. Registers set OK; will try continue.
+
+--- Zero breadcrumbs ---
+[info] Breadcrumbs zeroed: 8/8
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux" at
+	.text_addr = 0x80200000
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+
+=== PHASE: WALK (OpenSBI -> Linux kernel entry) ===
+
+--- Diagnostic A: disassemble first 8 instructions at 0x80000000 ---
+=> 0x80000000 <_start>:	/tmp/tmp.7D2e6vDKZI/master.gdb:94: Error in sourced command file:
+Cannot access memory at address 0x80000000

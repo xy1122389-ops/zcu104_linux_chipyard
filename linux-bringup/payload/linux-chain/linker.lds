@@ -2,7 +2,7 @@ ENTRY(_prog_start)
 
 MEMORY
 {
-  linux_chain_mem (rwx) : ORIGIN = 0x80200000, LENGTH = 0x00200000
+  linux_chain_mem (rwx) : ORIGIN = 0x88000000, LENGTH = 0x00400000
 }
 
 SECTIONS

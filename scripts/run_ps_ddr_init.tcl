@@ -57,38 +57,33 @@ step "run psu_init (PS DDR init first)" {
 }
 
 step "program FPGA bitstream" {
+  # Rocket core starts immediately after FPGA programming (PowerOnResetFPGAOnly).
+  # Its first DDR access via AXI HP0 will stall until isolation is removed below.
   fpga $bit_file
 }
 
 step "wait after FPGA program" {
-  after 1000
-}
-
-step "reselect PSU target" {
-  targets -set -nocase -filter {name =~ "*PSU*"}
-  targets
+  after 3000
 }
 
 step "remove PS-PL isolation" {
   psu_ps_pl_isolation_removal
 }
 
-step "wait after isolation removal" {
-  after 1000
+step "wait for isolation removal" {
+  after 2000
 }
 
-step "apply PS-PL reset config" {
+step "PS-PL reset config" {
   psu_ps_pl_reset_config
 }
 
 step "final message" {
-  puts "PS DDR init + FPGA download flow completed."
-  puts "Now open the UART terminal and look for:"
-  puts "  hello from baremetal"
-  puts "  ddr test start"
-  puts "  ddr fixed pass"
-  puts "  ddr linear pass"
-  puts "  ddr test pass"
+  puts ""
+  puts "PS DDR init + FPGA download + isolation removal completed."
+  puts "Rocket core is executing baremetal (LED should blink)."
+  puts ""
+  puts "Next: load OpenSBI/Linux payload into DDR via XSDB, then use J-Link to boot."
 }
 
 step "disconnect" {
