@@ -81,15 +81,7 @@ step "select PSU target for direct memory access" {
   puts "Using PSU target for cache-bypassing DDR writes."
 }
 
-step "load DTB -> DDR 0x02400000 (Rocket 0x82400000)" {
-  set dtb_size [file size $dtb_file]
-  set dtb_words [expr {($dtb_size + 3) / 4}]
-  puts "Loading DTB ($dtb_size bytes, $dtb_words words)..."
-  mwr -force -bin -file $dtb_file 0x02400000 $dtb_words
-  puts "DTB loaded."
-}
-
-step "load fw_payload.bin -> DDR 0x00000000 (Rocket 0x80000000) -- 28MB" {
+step "load fw_payload.bin -> DDR 0x00000000 (Rocket 0x80000000) -- ~51MB" {
   set fw_size [file size $fw_bin_orig]
   set fw_words [expr {($fw_size + 3) / 4}]
   puts "Loading firmware ($fw_size bytes, $fw_words words)..."
@@ -98,13 +90,24 @@ step "load fw_payload.bin -> DDR 0x00000000 (Rocket 0x80000000) -- 28MB" {
   puts "Firmware loaded."
 }
 
+# NOTE: DTB is loaded AFTER firmware so firmware write doesn't overwrite DTB.
+# DTB address changed from 0x02400000 to 0x04000000 because the 51MB firmware
+# extends past 0x02400000 and would overwrite DTB if loaded in the old order.
+step "load DTB -> DDR 0x04000000 (Rocket 0x84000000)" {
+  set dtb_size [file size $dtb_file]
+  set dtb_words [expr {($dtb_size + 3) / 4}]
+  puts "Loading DTB ($dtb_size bytes, $dtb_words words)..."
+  mwr -force -bin -file $dtb_file 0x04000000 $dtb_words
+  puts "DTB loaded."
+}
+
 step "verify key addresses (via debug APB, bypassing cache)" {
   set val0 [mrd -force -value 0x00000000]
   puts [format "  OpenSBI @ DDR 0x00000000 (Rocket 0x80000000) = 0x%08x" $val0]
   set val1 [mrd -force -value 0x00200000]
   puts [format "  Linux   @ DDR 0x00200000 (Rocket 0x80200000) = 0x%08x" $val1]
-  set val2 [mrd -force -value 0x02400000]
-  puts [format "  DTB     @ DDR 0x02400000 (Rocket 0x82400000) = 0x%08x" $val2]
+  set val2 [mrd -force -value 0x04000000]
+  puts [format "  DTB     @ DDR 0x04000000 (Rocket 0x84000000) = 0x%08x" $val2]
 }
 
 step "disconnect" {

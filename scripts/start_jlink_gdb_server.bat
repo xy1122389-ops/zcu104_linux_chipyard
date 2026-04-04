@@ -1,7 +1,17 @@
 @echo off
 setlocal
 
-pushd "%~dp0" >nul
+rem If launched from a UNC path (e.g. \\wsl$\...), first switch to a local drive.
+for %%I in ("%~dp0") do set "SCRIPT_DIR=%%~fI"
+set "SCRIPT_DRIVE=%SCRIPT_DIR:~0,2%"
+if "%SCRIPT_DRIVE:~1,1%"==":" (
+  %SCRIPT_DRIVE%
+  cd /d "%SCRIPT_DIR%" >nul 2>&1
+) else (
+  cd /d "C:\" >nul 2>&1
+)
+
+pushd "%~dp0" >nul 2>&1
 
 set "JLINK_DIR=C:\Program Files\SEGGER\JLink"
 set "JLINK_GDB_SERVER=%JLINK_DIR%\JLinkGDBServerCL.exe"
@@ -30,6 +40,5 @@ set "EC=%ERRORLEVEL%"
 
 echo.
 echo [info] J-Link GDB Server exited with code %EC%.
-pause
 popd >nul
 exit /b %EC%

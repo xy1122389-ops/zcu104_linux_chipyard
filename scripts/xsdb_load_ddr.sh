@@ -19,10 +19,11 @@ if [[ ! -f "$FW_BIN_ORIG" ]]; then
   exit 1
 fi
 
-# Workaround for XSDB mwr -bin -file bug: source data is skipped by 0x2000 bytes
-# on large files. We prepend 0x2000 zero bytes so effective payload starts at 0.
-truncate -s 8192 "$FW_PADDED"
-cat "$FW_BIN_ORIG" >> "$FW_PADDED"
+# NOTE: padding workaround DISABLED — it causes +0x2000 destination shift.
+# XSDB mwr -bin writes are correct without padding; the readback (mrd) is
+# what's broken. Loading original file directly gives correct DDR layout.
+# truncate -s 8192 "$FW_PADDED"
+# cat "$FW_BIN_ORIG" >> "$FW_PADDED"
 
 if [[ -n "${XSCT:-}" ]]; then
   exec "$XSCT" "$TCL_SCRIPT"

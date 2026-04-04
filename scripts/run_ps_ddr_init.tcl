@@ -11,10 +11,18 @@ proc step {label body} {
   }
 }
 
-set linux_psu_init "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ip/zcu104ps/psu_init.tcl"
-set linux_bit "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit"
-set windows_psu_init {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config\obj\ip\zcu104ps\psu_init.tcl}
-set windows_bit {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config\obj\ZCU104FPGATestHarness.bit}
+if {[info exists ::env(CHIPYARD_ZCU104_CFG)] && $::env(CHIPYARD_ZCU104_CFG) ne ""} {
+  set zcu104_cfg $::env(CHIPYARD_ZCU104_CFG)
+} else {
+  set zcu104_cfg "RocketZCU104Config"
+}
+
+set linux_obj_dir "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"
+set windows_obj_dir [string map {/ \\} "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]
+set linux_psu_init "${linux_obj_dir}/ip/zcu104ps/psu_init.tcl"
+set linux_bit "${linux_obj_dir}/ZCU104FPGATestHarness.bit"
+set windows_psu_init "${windows_obj_dir}\\ip\\zcu104ps\\psu_init.tcl"
+set windows_bit "${windows_obj_dir}\\ZCU104FPGATestHarness.bit"
 
 if {$tcl_platform(platform) eq "windows"} {
   set psu_init_tcl $windows_psu_init
@@ -25,6 +33,7 @@ if {$tcl_platform(platform) eq "windows"} {
 }
 
 step "check input files" {
+  puts "zcu104_cfg   = $zcu104_cfg"
   if {![file exists $psu_init_tcl]} {
     error "missing psu_init.tcl: $psu_init_tcl"
   }
@@ -81,7 +90,9 @@ step "PS-PL reset config" {
 step "final message" {
   puts ""
   puts "PS DDR init + FPGA download + isolation removal completed."
-  puts "Rocket core is executing baremetal (LED should blink)."
+  puts "Configured ZCU104 target: $zcu104_cfg"
+  puts "Bitstream used          : $bit_file"
+  puts "LED routing and boot behavior depend on the selected generated config."
   puts ""
   puts "Next: load OpenSBI/Linux payload into DDR via XSDB, then use J-Link to boot."
 }

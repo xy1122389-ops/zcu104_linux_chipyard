@@ -15,6 +15,12 @@ set breakpoint auto-hw off
 #   sbi_init          = 0x8000079c
 #   sbi_hart_switch_mode = 0x8000b1d0
 #   mret (in switch)  = 0x8000b2b2
+#   _relocate_lottery = 0x800200a8
+#   _boot_status      = 0x800200b0
+#   _load_start       = 0x800200b8
+#   _link_start       = 0x800200c0
+#   _link_end         = 0x800200c8
+#   __fw_rw_offset    = 0x800200d0
 #   _debug_stage      = 0x800200f0
 #   _debug_value0..3  = 0x800200f8..0x80020110
 #   _debug_last_mcause= 0x800200d8
@@ -173,8 +179,8 @@ define pkernel
 end
 
 define popensbistate
-  echo --- _relocate_lottery / _boot_status ---\n
-  x/4gx 0x800200b8
+  echo --- early boot state + metadata ---\n
+  x/6gx 0x800200a8
   echo --- key regs ---\n
   info reg a0 a1 a2 sp ra pc
 end
@@ -273,27 +279,93 @@ define pverify
   echo Linux Image header (expect: 0x106f5a4d = MZ + j _start_kernel):\n
   x/2wx 0x80200000
   echo DTB magic (expect: 0xedfe0dd0 = FDT_MAGIC LE):\n
-  x/1wx 0x82400000
+  x/1wx 0x84000000
   echo === END VERIFY ===\n
 end
 
-define recleanopensbi
-  echo --- Resetting OpenSBI state and registers ---\n
-  set {long long}0x800200b8 = 0
-  set {long long}0x800200c0 = 0
-  set {long long}0x800200d8 = 0
-  set {long long}0x800200e0 = 0
-  set {long long}0x800200e8 = 0
-  set {long long}0x800200f0 = 0
-  set {long long}0x800200f8 = 0
-  set {long long}0x80020100 = 0
-  set {long long}0x80020108 = 0
-  set {long long}0x80020110 = 0
+define restoreopensbiearly
+  echo --- Restoring OpenSBI early state from ELF semantics ---\n
+  python
+import gdb
+
+def _sym(name):
+    """Get the address value of a linker symbol (equivalent to its 'value')."""
+    return int(gdb.parse_and_eval(f"(unsigned long)&{name}"))
+
+def _addr(name):
+    return int(gdb.parse_and_eval(f"(unsigned long)&{name}"))
+
+def _write64(addr, value):
+    gdb.execute(f"set {{unsigned long long}}0x{addr:x} = 0x{value:x}")
+
+restore_from_elf = {
+    "_load_start": _sym("_fw_start"),
+    "_link_start": _sym("_fw_start"),
+    "_link_end": _sym("_fw_reloc_end"),
+    "__fw_rw_offset": _sym("_fw_rw_start") - _sym("_fw_start"),
+}
+
+zero_symbols = [
+    "_relocate_lottery",
+    "_boot_status",
+    "_debug_last_mcause",
+    "_debug_last_mtval",
+    "_debug_last_mepc",
+    "_debug_stage",
+    "_debug_value0",
+    "_debug_value1",
+    "_debug_value2",
+    "_debug_value3",
+]
+
+for name, value in restore_from_elf.items():
+    _write64(_addr(name), value)
+
+for name in zero_symbols:
+    _write64(_addr(name), 0)
+
+bss_start = _sym("_bss_start")
+bss_end = _sym("_bss_end")
+bss_size = bss_end - bss_start
+
+# Bulk BSS zero: write a temp zero file and use GDB restore (much faster than per-qword set)
+import tempfile, os
+with tempfile.NamedTemporaryFile(delete=False, suffix=".bin") as tf:
+    tf.write(b'\x00' * bss_size)
+    tf_path = tf.name
+gdb.execute(f"restore {tf_path} binary 0x{bss_start:x}")
+os.unlink(tf_path)
+
+gdb.write(
+    f"[info] metadata restored: _load_start=0x{restore_from_elf['_load_start']:x} "
+    f"_link_start=0x{restore_from_elf['_link_start']:x} "
+    f"_link_end=0x{restore_from_elf['_link_end']:x} "
+    f"__fw_rw_offset=0x{restore_from_elf['__fw_rw_offset']:x}\n"
+)
+gdb.write(f"[info] bss zeroed: 0x{bss_start:x}..0x{bss_end:x} ({bss_size} bytes)\n")
+  end
+
   set $a0 = 0
-  set $a1 = 0x82400000
+  set $a1 = 0x84000000
   set $a2 = 0
   set $pc = 0x80000000
-  echo Ready: pc=0x80000000 a0=0 a1=0x82400000\n
+  echo --- early boot state after restore ---\n
+  x/6gx 0x800200a8
+  echo --- breadcrumbs after restore ---\n
+  x/8gx 0x800200d8
+  echo Ready: pc=0x80000000 a0=0 a1=0x84000000\n
+end
+document restoreopensbiearly
+Restore OpenSBI early state using current ELF semantics.
+This restores metadata words, zeros runtime state and breadcrumbs,
+zeros [_bss_start, _bss_end), and resets entry registers.
+end
+
+define recleanopensbi
+  restoreopensbiearly
+end
+document recleanopensbi
+Alias for restoreopensbiearly.
 end
 
 define bbootwait
@@ -391,7 +463,8 @@ echo   ppmp          - PMP register dump\n
 echo   pverify       - verify memory at key addresses\n
 echo \n
 echo Actions:\n
-echo   recleanopensbi     - zero state, set pc=0x80000000 a0=0 a1=dtb\n
+echo   restoreopensbiearly - restore metadata/state, zero bss, reset entry regs\n
+echo   recleanopensbi      - alias of restoreopensbiearly\n
 echo   walk_opensbi_to_linux - automated walk through all stages\n
 echo   bbootwait          - _wait_for_boot_hart\n
 echo   bhang              - _start_hang\n

@@ -81,11 +81,13 @@ class zcu104ps(implicit val p: Parameters) extends BlackBox {
         CONFIG.PSU__SD1__PERIPHERAL__IO {MIO 46 .. 51} \
         CONFIG.PSU__SD1__SLOT_TYPE {SD 2.0} \
         CONFIG.PSU__DDRC__MEMORY_TYPE {DDR 4} \
-        CONFIG.PSU__DDRC__BUS_WIDTH {32 Bit} \
+        CONFIG.PSU__DDRC__BUS_WIDTH {64 Bit} \
         CONFIG.PSU__DDRC__DDR4_ADDR_MAPPING {0} \
-        CONFIG.PSU__DDRC__DEVICE_CAPACITY {8192 MBits} \
+        CONFIG.PSU__DDRC__DEVICE_CAPACITY {4096 MBits} \
         CONFIG.PSU__DDRC__DRAM_WIDTH {16 Bits} \
-        CONFIG.PSU__DDRC__ROW_ADDR_COUNT {16} \
+        CONFIG.PSU__DDRC__ROW_ADDR_COUNT {15} \
+        CONFIG.PSU__DDRC__BG_ADDR_COUNT {1} \
+        CONFIG.PSU__DDRC__RANK_ADDR_COUNT {0} \
       ] [get_ips zcu104ps]
       generate_target all [get_ips zcu104ps]
     """

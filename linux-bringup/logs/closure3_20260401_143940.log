@@ -1,0 +1,11 @@
+The target architecture is set to "riscv:rv64".
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0000000000000000 in ?? ()
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
+add symbol table from file "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux" at
+	.text_addr = 0x80200000
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+Python Exception <class 'IndentationError'>: unexpected indent (<string>, line 3)
+/tmp/tmp.2DLQ3BG5SD/master.gdb:88: Error in sourced command file:
+Error occurred in Python: unexpected indent (<string>, line 3)

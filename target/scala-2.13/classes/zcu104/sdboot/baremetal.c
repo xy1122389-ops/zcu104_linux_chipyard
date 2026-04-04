@@ -10,6 +10,7 @@
 #define UART_BAUD 115200UL
 #define UART_DIV  ((TL_CLK * 1000000UL) / UART_BAUD)
 #define REG32(p, i) ((p)[(i) >> 2])
+#define NEWBIT_TAG "[NEWBIT] "
 #define DDR_FIXED_WORDS 4u
 #define DDR_LINEAR_WORDS 16u
 #define DDR_LINEAR_OFFSET_WORDS 16u
@@ -37,9 +38,9 @@ static inline void gpio_init(void)
   REG32(gpio0, GPIO_OUTPUT_EN) = 1;
 }
 
-static inline void led_toggle(void)
+static inline void led_set(uint32_t value)
 {
-  led_state ^= 1u;
+  led_state = value & 1u;
   REG32(gpio0, GPIO_OUTPUT_VAL) = led_state;
 }
 
@@ -58,6 +59,12 @@ static void uart_puts(const char *s)
     }
     uart_putc(*s++);
   }
+}
+
+static void uart_put_tag(const char *s)
+{
+  uart_puts(NEWBIT_TAG);
+  uart_puts(s);
 }
 
 static void print_dec(uint64_t value)
@@ -161,6 +168,25 @@ static void delay_cycles(volatile uint64_t cycles)
   }
 }
 
+static void delay_ms(uint32_t ms)
+{
+  delay_cycles((uint64_t)TL_CLK * 1000ULL * (uint64_t)ms);
+}
+
+static void startup_blink_sequence(void)
+{
+  uint32_t i;
+
+  for (i = 0; i < 2u; ++i) {
+    led_set(1u);
+    delay_ms(80u);
+    led_set(0u);
+    delay_ms(80u);
+  }
+
+  delay_ms(240u);
+}
+
 int main(void)
 {
   uint64_t count = 0;
@@ -168,8 +194,10 @@ int main(void)
 
   uart_init();
   gpio_init();
-  uart_puts("hello from baremetal\n");
-  uart_puts("ddr test start\n");
+  uart_put_tag("ds39-uart-build-1\n");
+  uart_put_tag("bootrom=zcu104/sdboot/baremetal.c led=DS39 gpio=0x64002000 uart=0x64000000\n");
+  startup_blink_sequence();
+  uart_put_tag("ddr test start\n");
   if (ddr_test_fixed() != 0) {
     ddr_ok = 0;
   }
@@ -177,17 +205,19 @@ int main(void)
     ddr_ok = 0;
   }
   if (ddr_ok) {
-    uart_puts("ddr test pass\n");
+    uart_put_tag("ddr test pass\n");
   } else {
-    uart_puts("ddr test fail\n");
+    uart_put_tag("ddr test fail\n");
   }
 
   while (1) {
-    uart_puts("count=");
+    uart_put_tag("alive ");
     print_dec(count++);
     uart_puts("\n");
-    led_toggle();
-    delay_cycles(TL_CLK * 50000UL);
+    led_set(1u);
+    delay_ms(150u);
+    led_set(0u);
+    delay_ms(850u);
   }
 
   return 0;

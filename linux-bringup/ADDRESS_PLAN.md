@@ -15,11 +15,11 @@ It does not replace the current stable baremetal default flow.
 
 | Region | Start | End | Purpose |
 |---|---:|---:|---|
-| Linux kernel image | `0x80200000` | `0x81b32000` | actual Linux `Image` placement derived from current image header |
+| Linux kernel image | `0x80200000` | `0x830d4808` | actual Linux `Image` placement (full 49MB embedded in fw_payload) |
 | Linux first landing `_start` | `0x80200000` | `0x80200000` | physical Linux `_start` |
 | Linux `_start_kernel` | `0x802010d0` | `0x802010d0` | early Linux handoff after image header |
 | Linux `start_kernel` | `0x80800768` | `0x80800768` | physical `start_kernel` derived from `vmlinux` |
-| Future DTB | `0x82400000` | `0x8241ffff` | planned DTB load region |
+| DTB | `0x84000000` | `0x8401ffff` | DTB load region (moved past fw_payload end 0x830d4808) |
 | Future payload blob / initramfs | `0x83000000` | `0x86ffffff` | planned extra payload region |
 | Linux front-chain payload ELF | `0x88000000` | `0x883fffff` | standalone observable loader skeleton (`linux_chain.elf`) |
 | Front-chain manifest | `0x883df000` | `0x883dffff` | manifest/status block written by Linux load script |
@@ -29,7 +29,7 @@ It does not replace the current stable baremetal default flow.
 ## Linux image header facts
 
 - `text_offset = 0x200000`
-- `image_size = 0x1932000`
+- `image_size = 0x2f32000`
 - `flags = 0x0`
 - `version = 0x2`
 - `magic = "RISCV\\0\\0\\0"`
@@ -43,7 +43,7 @@ It does not replace the current stable baremetal default flow.
 - This avoids relying on PIE relocation for internal override tables before
   platform initialization
 - OpenSBI `FW_JUMP_ADDR = 0x80200000`
-- OpenSBI `FW_JUMP_FDT_ADDR = 0x82400000`
+- OpenSBI `FW_PAYLOAD_FDT_ADDR = 0x84000000`
 - Linux `Image` remains at its expected physical load base `0x80200000`
 - `vmlinux` symbols are relocated for GDB by loading `vmlinux` with text base
   `0x80200000`
@@ -54,7 +54,7 @@ It does not replace the current stable baremetal default flow.
 - Stable BootROM execute region stays in `0x00010000..0x00011fff`
 - Stable DDR smoke test only touches the first `0x80` bytes at `0x80000000`
 - Linux `Image` starts at `0x80200000`, well above the stable smoke-test bytes
-- Linux image ends at `0x81b32000`, so it does not overlap DTB at `0x82400000`
+- Linux image ends at `0x830d4808`, so DTB is placed at `0x84000000` to avoid overlap
 - Front-chain has been moved to `0x88000000+`, so it no longer overlaps the Linux image
 - OpenSBI at `0x80000000` remains below Linux `Image @ 0x80200000`, so the two regions do not overlap
 - Linux manifest at `0x883df000` is below the reserved stack window

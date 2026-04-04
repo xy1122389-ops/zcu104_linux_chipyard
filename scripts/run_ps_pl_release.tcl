@@ -11,7 +11,14 @@ proc step {label body} {
   }
 }
 
-set psu_init_tcl {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config\obj\ip\zcu104ps\psu_init.tcl}
+if {[info exists ::env(CHIPYARD_ZCU104_CFG)] && $::env(CHIPYARD_ZCU104_CFG) ne ""} {
+  set zcu104_cfg $::env(CHIPYARD_ZCU104_CFG)
+} else {
+  set zcu104_cfg "RocketZCU104Config"
+}
+
+set windows_obj_dir [string map {/ \\} "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]
+set psu_init_tcl "${windows_obj_dir}\\ip\\zcu104ps\\psu_init.tcl"
 
 step "connect hw_server" {
   connect -url tcp:127.0.0.1:3121
@@ -38,7 +45,8 @@ step "apply PS-PL reset config" {
 }
 
 step "done" {
-  puts "PS-PL isolation removed. CPU should now be running."
+  puts "PS-PL isolation removed for $zcu104_cfg."
+  puts "psu_init.tcl used: $psu_init_tcl"
 }
 
 step "disconnect" {

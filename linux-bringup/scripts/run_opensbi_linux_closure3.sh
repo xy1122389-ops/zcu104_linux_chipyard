@@ -112,13 +112,18 @@ echo ""
 
 if (( BATCH_MODE )); then
   # ============================================================
-  # BATCH: Single GDB session — load chunks + verify + walk
-  # No reconnection needed. Fixes Phase 3 timeout bug.
+  # BATCH: Stable J-Link load path, then single GDB session for restore + walk.
   # ============================================================
   echo "[batch] Single-session load + walk"
   echo ""
 
-  check_jlink || exit 3
+  if (( !SKIP_LOAD )); then
+    echo "[phase 2] Stable J-Link chunked load + DTB"
+    bash "${SCRIPT_DIR}/load_opensbi_linux_payload.sh" --host "$HOST" --port "$PORT"
+    echo ""
+  else
+    check_jlink || exit 3
+  fi
 
   TMPDIR=$(mktemp -d)
   trap 'rm -rf "$TMPDIR"' EXIT
@@ -144,61 +149,18 @@ if (( BATCH_MODE )); then
     echo "set architecture riscv:rv64"
     echo ""
     echo "target remote $HOST:$PORT"
-    echo ""
-    echo "# Step 1: Halt Rocket (freeze D-cache so XSDB writes to DDR aren't overwritten)"
     echo "monitor halt"
     echo ""
-
-    # Step 2: XSDB load payload to DDR via ARM core (while Rocket is halted)
-    if (( !SKIP_LOAD )); then
-      echo "printf \"\\n=== PHASE: LOAD (via XSDB ARM core) ===\\n\\n\""
-      echo "shell bash $FPGA_DIR/scripts/xsdb_load_ddr.sh"
-      echo "printf \"[ok] XSDB DDR load complete\\n\\n\""
-    fi
-
-    echo "# Step 3: Re-halt after XSDB load (do NOT ndmreset here)."
-    echo "# On this setup, monitor reset may push core into persistent PC=0 state."
-    echo "monitor halt"
-    echo ""
-    echo "# --- CPU state check: diagnostic only ---"
-    echo "# We always set entry registers explicitly below, so PC=0 is warning-only."
-    cat <<'CPUCHECK'
-python
-import gdb, sys
-pc_val = int(gdb.parse_and_eval("$pc"))
-gdb.write(f"[diag] CPU halted at pc = 0x{pc_val:016x}\n")
-if pc_val == 0:
-    gdb.write("[warn] CPU at PC=0x0. Will override with explicit entry state.\n")
-elif pc_val < 0x10000 or (pc_val > 0x20000 and pc_val < 0x80000000):
-    gdb.write(f"[warn] Unusual PC value 0x{pc_val:x}. Proceeding anyway.\n")
-else:
-    gdb.write("[ok] CPU state looks valid for loading.\n")
-end
-CPUCHECK
+    echo "# Load symbol files for debugging before semantic restore"
+    echo "add-symbol-file $FW_ELF"
+    echo "add-symbol-file /root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux 0x80200000"
     echo ""
 
-    # ---- LOAD was done via XSDB before GDB started ----
-    # (J-Link progbuf is broken; XSDB uses ARM core for reliable DDR access)
-
-    # ---- Set entry state FIRST (abstract register access — always works) ----
-    # This must happen before any memory access (x/, set {long long}),
-    # because progbuf might fail and abort the GDB batch script.
-    echo "# Entry state: a0=hartid=0, a1=dtb, pc=OpenSBI _start"
-    echo "printf \"\\n=== PHASE: SET ENTRY STATE ===\\n\\n\""
-    echo "set \$a0 = 0"
-    echo "set \$a1 = 0x82400000"
-    echo "set \$a2 = 0"
-    echo "set \$pc = 0x80000000"
-    echo "printf \"[ok] Entry state set: pc=0x80000000 a0=0 a1=0x82400000\\n\""
-    echo ""
-
-    # ---- VERIFY + BREADCRUMBS via Python (non-fatal) ----
-    # Wrapped in try-except so progbuf failures don't abort the batch script.
-    cat <<PYVERIFY
+    cat <<PYRESTORE
 python
 import gdb
 
-def try_read(addr, label, expected):
+  def try_read(addr, label, expected):
     try:
         result = gdb.execute(f"x/1wx {addr}", to_string=True).strip()
         gdb.write(f"[verify] {label}: {result}  (expect {expected})\\n")
@@ -214,7 +176,13 @@ def try_write(addr, val=0):
     except gdb.error:
         return False
 
-gdb.write("\\n=== PHASE: VERIFY (non-fatal) ===\\n\\n")
+    def sym(name):
+      return int(gdb.parse_and_eval(name))
+
+    def addr(name):
+      return int(gdb.parse_and_eval(f"(unsigned long)&{name}"))
+
+    gdb.write("\\n=== PHASE: VERIFY + SEMANTIC RESTORE ===\\n\\n")
 v1 = try_read("0x80000000", "OpenSBI", "0x$EXPECT_OPENSBI")
 v2 = try_read("0x80200000", "Linux  ", "0x$EXPECT_LINUX")
 v3 = try_read("0x82400000", "DTB    ", "0x$EXPECT_DTB")
@@ -222,22 +190,60 @@ v3 = try_read("0x82400000", "DTB    ", "0x$EXPECT_DTB")
 if v1 and v2 and v3:
     gdb.write("[ok] All verify passed -- progbuf works after ndmreset!\\n")
 else:
-    gdb.write("[warn] Some verify failed. Registers set OK; will try continue.\\n")
+  gdb.write("[warn] Some verify failed. Proceeding with semantic restore anyway.\\n")
 
-gdb.write("\\n--- Zero breadcrumbs ---\\n")
-addrs = [0x800200d8, 0x800200e0, 0x800200e8, 0x800200f0,
-         0x800200f8, 0x80020100, 0x80020108, 0x80020110]
-ok = sum(1 for a in addrs if try_write(f"0x{a:x}"))
-gdb.write(f"[info] Breadcrumbs zeroed: {ok}/{len(addrs)}\\n")
+restore_from_elf = {
+  "_load_start": sym("_fw_start"),
+  "_link_start": sym("_fw_start"),
+  "_link_end": sym("_fw_reloc_end"),
+  "__fw_rw_offset": sym("_fw_rw_start") - sym("_fw_start"),
+}
+zero_syms = [
+  "_relocate_lottery",
+  "_boot_status",
+  "_debug_last_mcause",
+  "_debug_last_mtval",
+  "_debug_last_mepc",
+  "_debug_stage",
+  "_debug_value0",
+  "_debug_value1",
+  "_debug_value2",
+  "_debug_value3",
+]
+
+for name, value in restore_from_elf.items():
+  try_write(f"0x{addr(name):x}", value)
+
+for name in zero_syms:
+  try_write(f"0x{addr(name):x}", 0)
+
+bss_start = sym("_bss_start")
+bss_end = sym("_bss_end")
+zeroed = 0
+for slot in range(bss_start, bss_end, 8):
+  if try_write(f"0x{slot:x}", 0):
+    zeroed += 1
+
+gdb.write(
+  f"[info] restored metadata: _load_start=0x{restore_from_elf['_load_start']:x} "
+  f"_link_start=0x{restore_from_elf['_link_start']:x} "
+  f"_link_end=0x{restore_from_elf['_link_end']:x} "
+  f"__fw_rw_offset=0x{restore_from_elf['__fw_rw_offset']:x}\\n"
+)
+gdb.write(f"[info] bss zeroed slots: {zeroed} (0x{bss_start:x}..0x{bss_end:x})\\n")
 end
-PYVERIFY
+PYRESTORE
     echo ""
 
-    # ---- Add symbols ----
-    echo "# Load symbol files for debugging"
-    echo "add-symbol-file $FW_ELF"
-    echo "add-symbol-file /root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux 0x80200000"
-    echo ""
+  echo "# Entry state: a0=hartid=0, a1=dtb, pc=OpenSBI _start"
+  echo "set \$a0 = 0"
+  echo "set \$a1 = 0x82400000"
+  echo "set \$a2 = 0"
+  echo "set \$pc = 0x80000000"
+  echo "printf \"[ok] Entry state set: pc=0x80000000 a0=0 a1=0x82400000\\n\""
+  echo "printf \"[state] early boot window after restore:\\n\""
+  echo "x/6gx 0x800200a8"
+  echo ""
 
     # ---- BOOT phase: test progbuf, then walk or free-run ----
     cat <<'BOOTPHASE'
@@ -304,8 +310,10 @@ for d in (0.01, 0.05, 0.20, 1.00, 2.00):
 
     stage = safe("x/1gx 0x800200f0")
     trap = safe("x/3gx 0x800200d8")
+  boot = safe("x/6gx 0x800200a8")
 
     gdb.write(f"[run {d:>4.2f}s] pc={pc_s}\n")
+  gdb.write(f"  boot : {boot}\n")
     gdb.write(f"  stage: {stage}\n")
     gdb.write(f"  trap : {trap}\n")
 
@@ -313,13 +321,22 @@ for d in (0.01, 0.05, 0.20, 1.00, 2.00):
         gdb.write("  note : PC advanced\n")
     last_pc = pc
 
+final_trap = safe("x/3gx 0x800200d8")
 if last_pc is not None:
-    if 0x80200000 <= last_pc < 0x90000000:
-        gdb.write("\n[ok] PC reached Linux payload range (>= 0x80200000).\n")
-    elif 0x80000000 <= last_pc < 0x80200000:
-        gdb.write("\n[info] PC in OpenSBI range (0x80000000..0x801fffff).\n")
-    else:
-        gdb.write("\n[warn] PC in unexpected range. Check UART and trap breadcrumbs.\n")
+  if 0x80200000 <= last_pc < 0x90000000:
+    gdb.write("\n[result] advanced_to_linux_entry_or_later\n")
+  elif "0x00000000800003be" in final_trap:
+    gdb.write("\n[result] trapped_at_0x800003be\n")
+  elif "0x0000000080012ec6" in final_trap:
+    gdb.write("\n[result] trapped_at_0x80012ec6\n")
+  elif 0x80000418 <= last_pc < 0x80000428:
+    gdb.write("\n[result] waiting_for_boot_hart\n")
+  elif 0x80000180 <= last_pc < 0x800001c0:
+    gdb.write("\n[result] waiting_for_relocate_copy_done\n")
+  elif 0x80000000 <= last_pc < 0x80200000:
+    gdb.write("\n[result] still_in_opensbi_other\n")
+  else:
+    gdb.write("\n[result] pc_unexpected_range\n")
 
 gdb.write("\n=== WALK CHECKPOINTS COMPLETE ===\n")
 end
@@ -375,7 +392,8 @@ else
   echo "    stepi after bmret    - step into Linux"
   echo "    bkernel_head         - break at _start_kernel"
   echo "    bkernel_bss          - break at first BSS store"
-  echo "    recleanopensbi       - reset and restart from _start"
+  echo "    restoreopensbiearly  - restore metadata/state and restart from _start"
+  echo "    recleanopensbi       - alias of restoreopensbiearly"
   echo ""
   echo "  Typical manual flow:"
   echo "    1. pverify           - confirm load OK"
