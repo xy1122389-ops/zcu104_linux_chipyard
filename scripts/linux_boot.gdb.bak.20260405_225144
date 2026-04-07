@@ -1,0 +1,542 @@
+# linux_boot.gdb — ZCU104 Rocket Linux bring-up (DDR zero + boot + dcsr fix)
+#
+# Prerequisites (must be done in order before running this script):
+#   1. run_ps_ddr_init.sh — PS DDR init + bitstream download
+#   2. xsdb_load_ddr.sh  — fresh XSDB load of fw_payload.bin + DTB
+#   3. J-Link GDB Server running (start_jlink_gdb_server.bat, port 2331)
+#
+# What this script does:
+#   Phase 1: Zero uninitialized DDR regions via Rocket core (~30s)
+#   Phase 2: Patch CMDLINE to add init_on_alloc=1
+#   Phase 3: L2 cache flush (eliminate stale cache lines after zero+patch)
+#   Phase 4: Restore pristine OpenSBI + DTB + fence.i
+#   Phase 5: Boot OpenSBI -> mret -> Linux _start -> _start_kernel
+#   Phase 6: Clear dcsr ebreak bits so kernel WARN/ebreak is handled by
+#            kernel's own trap handler, not by J-Link debug mode
+#   Phase 7: Continue kernel, detach
+#
+# After this script completes, the kernel is running unattended.
+# Use dump_klog.sh (60-120s later) to halt and read the kernel ring buffer.
+#
+# KNOWN CONSTRAINTS:
+#   - NEVER use "monitor go" -- crashes hart to 0xdeadbeef
+#   - GDB batch "continue &" + "interrupt" does NOT work reliably
+#   - J-Link does NOT detect ebreak halts -- always use hbreak
+#   - OpenSBI _relocate_lottery in .data persists across boots -- MUST restore
+#   - OpenSBI fdt_open_into expands DTB in place -- MUST restore original DTB
+#   - SBA writes bypass L2 cache; program-buffer writes are L2-coherent
+#
+# Key addresses (see also linux-bringup/ADDRESS_PLAN.md):
+#   OpenSBI _start:      0x80000000
+#   Linux _start:        0x80200000
+#   Linux _start_kernel: 0x802010d0
+#   OpenSBI mret:        0x8000b2b2
+#   DTB:                 0x84000000 (4201 bytes)
+#   Kernel log buffer:   0x830e7108 (PA)
+#   L2 Flush64:          0x2010200
+
+set pagination off
+set confirm off
+set breakpoint auto-hw off
+set remotetimeout 600
+
+file /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf
+
+python
+import subprocess, gdb
+host = subprocess.check_output(
+    ["bash", "-lc", "ip route | awk '/default/ {print $3; exit}'"], text=True
+).strip() or "172.19.128.1"
+gdb.write(f"[info] Connecting to J-Link at {host}:2331\n")
+gdb.execute(f"target remote {host}:2331")
+end
+
+monitor halt
+echo --- Initial state ---\n
+info reg pc
+
+# ============================================================
+# Phase 1: Zero DDR via Rocket core
+# ============================================================
+echo \n=== Phase 1: Zero DDR via Rocket core ===\n
+
+# Ensure M-mode bare (no address translation)
+monitor WriteCSR 0x180 0
+monitor WriteCSR 0x7b0 0x4000F0C3
+
+# Write zero_loop at 0x80036100 (inside OpenSBI reserved region)
+#   0x80036100: sd zero,0(a0)       # 0x00053023
+#   0x80036104: c.addi a0,8         # 0x0521
+#   0x80036106: blt a0,a1,loop      # 0xFEB54DE3
+#   0x8003610a: c.ebreak            # 0x9002
+set *(unsigned int*)0x80036100 = 0x00053023
+set *(unsigned short*)0x80036104 = 0x0521
+set *(unsigned int*)0x80036106 = 0xFEB54DE3
+set *(unsigned short*)0x8003610A = 0x9002
+
+# fence.i trampoline at 0x80036200
+set *(unsigned int*)0x80036200 = 0x0000100f
+set *(unsigned short*)0x80036204 = 0x9002
+
+# Flush L2 for trampoline addresses (fix SBA vs L2 coherency)
+set *(unsigned long long*)0x2010200 = 0x80036100
+set *(unsigned long long*)0x2010200 = 0x80036140
+set *(unsigned long long*)0x2010200 = 0x80036200
+
+set $pc = 0x80036200
+stepi
+echo [ok] fence.i\n
+
+delete breakpoints
+hbreak *0x8003610a
+
+# Pass 0: OpenSBI overflow (0x80040000-0x80200000, ~1.75MB)
+echo [zero0] 0x80040000-0x80200000...\n
+set $a0 = 0x80040000
+set $a1 = 0x80200000
+set $pc = 0x80036100
+continue
+echo [zero0] done\n
+
+# Pass 1: Gap between firmware end and DTB (0x830D4808-0x84000000)
+echo [zero1] 0x830D4808-0x84000000...\n
+set $a0 = 0x830D4808
+set $a1 = 0x84000000
+set $pc = 0x80036100
+continue
+echo [zero1] done\n
+
+# Pass 1b: After DTB to 0x84100000 (~1MB)
+echo [zero1b] 0x84001070-0x84100000...\n
+set $a0 = 0x84001070
+set $a1 = 0x84100000
+set $pc = 0x80036100
+continue
+echo [zero1b] done\n
+
+# Pass 2-4: Everything above DTB (~1.94GB)
+echo [zero2] 0x84100000-0xA0000000...\n
+set $a0 = 0x84100000
+set $a1 = 0xA0000000
+set $pc = 0x80036100
+continue
+echo [zero2] done\n
+
+echo [zero3] 0xA0000000-0xC0000000...\n
+set $a0 = 0xA0000000
+set $a1 = 0xC0000000
+set $pc = 0x80036100
+continue
+echo [zero3] done\n
+
+echo [zero4] 0xC0000000-0x100000000...\n
+set $a0 = 0xC0000000
+set $a1 = 0x100000000
+set $pc = 0x80036100
+continue
+echo [zero4] done\n
+echo [ALL DDR ZEROED]\n
+
+# ============================================================
+# Phase 2: SKIPPED — 2GB L2 flush is unnecessary here
+# ============================================================
+# Analysis: Phase 1 DDR zeroing sweeps sequentially, pushing all dirty L2
+# entries to the end of DDR (PA 0xFFF80000+). No stale entries remain in
+# the firmware region (0x80000000-0x830D4808). Phase 3.5 will flush L2
+# for just the firmware region after SBA restore.
+echo \n=== Phase 2: Skipped (L2 flush deferred to Phase 3.5) ===\n
+
+# ============================================================
+# Phase 3: Restore ENTIRE fw_payload.bin + DTB + CMDLINE patches
+# ============================================================
+# CRITICAL: XSDB mwr loads corrupt the first 8 bytes of every 64-byte
+# cache line. The only reliable fix is to re-write the entire firmware
+# image via GDB SBA, which writes correctly to DDR.
+echo \n=== Phase 3: Restore entire fw_payload.bin (49MB via SBA) ===\n
+
+monitor WriteCSR 0x180 0
+monitor WriteCSR 0x7b0 0x4000F0C3
+
+# Re-establish fence.i trampoline (may have been evicted)
+set *(unsigned int*)0x80036200 = 0x0000100f
+set *(unsigned short*)0x80036204 = 0x9002
+# Flush L2 for trampoline address (Phase 1 execution may have left L2 entries)
+set *(unsigned long long*)0x2010200 = 0x80036200
+set $pc = 0x80036200
+stepi
+echo [ok] fence.i\n
+
+# Restore fw_payload.bin in 4MB chunks to avoid J-Link connection crash.
+# Single 49MB transfer causes J-Link to drop the connection.
+python
+import os, gdb, time
+
+chunk_dir = "/tmp/fw_chunks"
+base_addr = 0x80000000
+chunk_size = 4194304  # 4MB
+reconnect_every = 4   # reconnect every N chunks to avoid J-Link timeout
+
+# Get sorted list of chunk files
+chunks = sorted([f for f in os.listdir(chunk_dir) if f.startswith("chunk_") and f.endswith(".bin")])
+total = len(chunks)
+gdb.write(f"[restore] Loading fw_payload.bin in {total} chunks (4MB each)...\n")
+gdb.write(f"[restore] Will reconnect every {reconnect_every} chunks to avoid J-Link timeout\n")
+
+for i, fname in enumerate(chunks):
+    # Reconnect every N chunks (except before the first chunk)
+    if i > 0 and i % reconnect_every == 0:
+        gdb.write(f"[reconnect] Cycling J-Link connection after {i} chunks...\n")
+        gdb.execute("disconnect")
+        time.sleep(3)
+        gdb.execute("target remote 172.19.128.1:2331")
+        gdb.execute("monitor halt")
+        gdb.write(f"[reconnect] OK\n")
+
+    addr = base_addr + i * chunk_size
+    fpath = os.path.join(chunk_dir, fname)
+    fsize = os.path.getsize(fpath)
+    gdb.write(f"[restore {i+1}/{total}] {fname} -> 0x{addr:08x} ({fsize} bytes)...\n")
+    gdb.execute(f"restore {fpath} binary 0x{addr:x}")
+    gdb.write(f"[restore {i+1}/{total}] done\n")
+
+gdb.write("[ok] fw_payload.bin restored (49MB in chunks)\n")
+end
+
+# Restore original DTB (4201 bytes, before fdt_open_into expansion)
+restore /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb binary 0x84000000
+echo [ok] DTB restored\n
+
+# Patch CMDLINE (3 copies) — must be AFTER full restore
+restore /tmp/cmdline_rodata_patch.bin binary 0x82CDCD88
+restore /tmp/cmdline_rodata_patch.bin binary 0x82B4B600
+restore /tmp/cmdline_rodata_patch.bin binary 0x80A0F8E8
+echo [ok] CMDLINE patched\n
+x/1s 0x82CDCD88
+
+# ============================================================
+# Phase 3.5: L2 cache invalidation after SBA restore
+# ============================================================
+# SBA writes bypass L2 cache, leaving stale entries.
+# Use L2 Flush64 MMIO to invalidate the firmware region.
+# If L2 has clean entries (from Phase 2), Flush64 just invalidates.
+echo \n=== Phase 3.5: Invalidate L2 cache for firmware region ===\n
+
+# Re-install trampoline code (overwritten by Phase 3 SBA restore)
+# Loop: sd a0, 0(a2); addi a0, a0, 64; blt a0, a1, loop; c.ret
+set *(unsigned int*)0x80036100 = 0x00A63023
+set *(unsigned int*)0x80036104 = 0x04050513
+set *(unsigned int*)0x80036108 = 0xFEB54CE3
+set *(unsigned short*)0x8003610C = 0x9002
+
+# fence.i trampoline
+set *(unsigned int*)0x80036200 = 0x0000100f
+set *(unsigned short*)0x80036204 = 0x9002
+# Flush L2 for trampoline addresses (fix SBA vs L2 coherency)
+set *(unsigned long long*)0x2010200 = 0x80036100
+set *(unsigned long long*)0x2010200 = 0x80036140
+set *(unsigned long long*)0x2010200 = 0x80036200
+set $pc = 0x80036200
+stepi
+echo [ok] fence.i for L2 invalidation\n
+
+# Use the L2 MMIO loop: sd a0, 0(a2); a0 += 64; blt a0, a1, loop; ret
+delete breakpoints
+hbreak *0x8003610C
+set $a0 = 0x80000000
+set $a1 = 0x830D4808
+set $a2 = 0x2010200
+set $pc = 0x80036100
+echo [L2inv] Invalidating L2 for firmware region (49MB)...\n
+continue
+echo [L2inv] done\n
+
+# Also invalidate DTB region
+delete breakpoints
+hbreak *0x8003610C
+set $a0 = 0x84000000
+set $a1 = 0x84002000
+set $a2 = 0x2010200
+set $pc = 0x80036100
+echo [L2inv] Invalidating L2 for DTB region...\n
+continue
+echo [L2inv] done\n
+
+# Verify SBA write integrity at key addresses
+echo [verify] Checking SBA write integrity...\n
+x/2wx 0x80200000
+x/2wx 0x83000000
+x/2wx 0x82e00000
+x/2wx 0x830D4800
+
+# Patch out plist self-test (CONFIG_DEBUG_PLIST=y stress test causes BUG_ON)
+# plist_test at VA 0xffffffff8062e47a -> PA 0x8082e47a
+# Replace first 4 bytes with: c.li a0,0 (0x4501) + c.ret (0x8082) = return 0
+set *(unsigned int*)0x8082e47a = 0x80824501
+echo [ok] plist_test patched out (returns 0)\n
+
+# Patch out dma_atomic_pool_init (causes vmap PTE collision → crashes init stack)
+# dma_atomic_pool_init at VA 0xffffffff8060c980 -> PA 0x8080c980
+# No DMA devices on this Rocket platform, safe to skip
+set *(unsigned int*)0x8080c980 = 0x80824501
+echo [ok] dma_atomic_pool_init patched out (returns 0)\n
+
+# Patch out vty_init (crashes in kernfs_name_hash: name ptr corrupted to 0xffffffff83000000)
+# vty_init at VA 0xffffffff806228ae -> PA 0x808228ae (in .init.text)
+set *(unsigned int*)0x808228ae = 0x80824501
+echo [ok] vty_init patched out (returns 0)\n
+
+# Patch out pty_init (crashes accessing VA above _end due to corrupted tty_driver pointer)
+# pty_init at VA 0xffffffff806223d4 -> PA 0x808223d4 (in .init.text)
+set *(unsigned int*)0x808223d4 = 0x80824501
+
+# Patch out sifive_serial_init (causes infinite loop in kernfs_name_hash
+# during sysfs directory creation for UART device registration)
+# sifive_serial_init at VA 0xffffffff80623858 -> PA 0x80823858
+set *(unsigned int*)0x80823858 = 0x80824501
+echo [ok] sifive_serial_init patched out (returns 0)\n
+
+# Patch out debug_vm_pgtable (crc32_body load fault at PCI IO range 0xffffffc6ff000000)
+# debug_vm_pgtable at VA 0xffffffff80616a06 -> PA 0x80816a06
+set *(unsigned int*)0x80816a06 = 0x80824501
+echo [ok] debug_vm_pgtable patched out (returns 0)\n
+
+# Replace strlen with simple unbounded version (assembler-generated binary)
+# strlen at VA 0xffffffff80496470 -> PA 0x80696470 (24 bytes = 0x18)
+# Layout:
+#   +0:  nop               (4B)  — alternatives placeholder (Zbb absent, safe)
+#   +4:  mv   t0, a0       (2B)  — save start
+#   +6:  lbu  t1, 0(a0)    (4B)  — load byte  [loop start]
+#  +10:  beqz t1, +8       (4B)  — exit if null → +18
+#  +14:  addi a0, a0, 1    (2B)  — next char
+#  +16:  j    -10           (2B)  — back to +6
+#  +18:  sub  a0, a0, t0   (4B)  — length
+#  +22:  ret                (2B)
+restore /tmp/strlen_patch.bin binary 0x80696470
+# Verify strlen patch (read back and check)
+printf "[verify] strlen PA 0x80696470: %08x %08x %08x %08x %08x %08x\n", \
+  *(unsigned int*)0x80696470, *(unsigned int*)0x80696474, \
+  *(unsigned int*)0x80696478, *(unsigned int*)0x8069647c, \
+  *(unsigned int*)0x80696480, *(unsigned int*)0x80696484
+echo [ok] strlen patched (unbounded, assembler-verified binary)\n
+
+echo [ok] pty_init patched out (returns 0)\n
+
+# Patch out __stack_chk_fail (prevents panic on stack canary mismatch)
+# __stack_chk_fail at VA 0xffffffff804a1f46 -> PA 0x806a1f46
+# Replace first 2 bytes with c.ret (0x8082) so it returns instead of panicking
+set *(unsigned short*)0x806a1f46 = 0x8082
+echo [ok] __stack_chk_fail patched out (returns immediately)\n
+
+# ============================================================
+# Phase 4: L2 flush + fence.i for binary patches
+# ============================================================
+# Binary patches above were written via SBA (bypass L2).
+# Must flush L2 and invalidate I-cache so CPU sees patched code.
+echo \n=== Phase 4: Flush L2 for patched addresses ===\n
+
+# Flush L2 for each patched address (one cacheline each)
+set *(unsigned long long*)0x2010200 = 0x8082e470
+set *(unsigned long long*)0x2010200 = 0x8080c980
+set *(unsigned long long*)0x2010200 = 0x808223d0
+set *(unsigned long long*)0x2010200 = 0x808228a0
+set *(unsigned long long*)0x2010200 = 0x80823850
+set *(unsigned long long*)0x2010200 = 0x80816a00
+set *(unsigned long long*)0x2010200 = 0x80696470
+set *(unsigned long long*)0x2010200 = 0x80696480
+set *(unsigned long long*)0x2010200 = 0x82CDCD80
+set *(unsigned long long*)0x2010200 = 0x82B4B600
+set *(unsigned long long*)0x2010200 = 0x80A0F8E0
+set *(unsigned long long*)0x2010200 = 0x806a1f40
+
+# Re-install fence.i trampoline + flush L2 for it
+set *(unsigned int*)0x80036200 = 0x0000100f
+set *(unsigned short*)0x80036204 = 0x9002
+set *(unsigned long long*)0x2010200 = 0x80036200
+set $pc = 0x80036200
+stepi
+echo [ok] fence.i after binary patches\n
+
+# ============================================================
+# Phase 5: Boot OpenSBI -> mret -> Linux _start -> _start_kernel
+# ============================================================
+echo \n=== Phase 5: Boot to _start_kernel ===\n
+
+# Set up OpenSBI entry: a0=hartid=0, a1=DTB address
+set $a0 = 0
+set $a1 = 0x84000000
+set $a2 = 0
+set $pc = 0x80000000
+
+delete breakpoints
+hbreak *0x8000b2b2
+echo [boot] Running OpenSBI to mret...\n
+continue
+
+python
+import gdb
+
+pc = int(gdb.parse_and_eval("$pc"))
+if pc != 0x8000b2b2:
+    gdb.write(f"\n[FAIL] Expected mret at 0x8000b2b2, got 0x{pc:x}\n")
+    gdb.execute("info reg pc ra sp a0 a1")
+    gdb.execute("x/8i $pc")
+    raise gdb.GdbError("OpenSBI did not reach mret")
+
+gdb.write("[OK] OpenSBI reached mret\n")
+gdb.execute("delete breakpoints")
+
+# NOTE: Do NOT use stepi here! J-Link cannot single-step across
+# mret (M-mode -> S-mode transition). Instead use hbreak at _start.
+gdb.execute("hbreak *0x80200000")
+gdb.execute("continue")
+
+pc2 = int(gdb.parse_and_eval("$pc"))
+gdb.write(f"[OK] Linux _start: pc=0x{pc2:x}\n")
+
+gdb.execute("delete breakpoints")
+# NOTE: Do NOT set hbreak at PA 0x802010d0 for _start_kernel!
+# After MMU is enabled, kernel runs at VA 0xffffffff802010d0.
+# Hardware breakpoint at PA would never fire.
+# Instead, clear dcsr here at _start (before MMU) and let kernel run.
+
+# ==========================================================
+# Phase 6: Clear dcsr ebreak bits (THE KEY FIX)
+# ==========================================================
+# Current dcsr = 0x4000F0C3:
+#   bit [15] ebreakm = 1  -> M-mode ebreak enters debug mode
+#   bit [13] ebreaks = 1  -> S-mode ebreak enters debug mode  <- PROBLEM
+#   bit [12] ebreaku = 1  -> U-mode ebreak enters debug mode  <- PROBLEM
+#   bit [1:0] prv    = 3  -> M-mode privilege
+#
+# The kernel uses ebreak for WARN_ON guards (e.g. stack_depot_early_init).
+# With ebreaks=1, these kernel ebreaks halt the CPU in debug mode instead
+# of being handled by the kernel's own exception handler.
+#
+# Fix: clear bits 15,13,12 -> new value = 0x400040C3
+# (xdebugver and cause are read-only, hardware ignores writes to them)
+
+gdb.write("\n=== Phase 6: Clear dcsr ebreak bits ===\n")
+
+# Read current dcsr via monitor command and parse the value
+read_out = gdb.execute("monitor ReadCSR 0x7b0", to_string=True)
+gdb.write(f"[dcsr] Before: {read_out.strip()}\n")
+
+# Parse hex value from J-Link output (e.g. "= 0x4000F0C3" or "4000F0C3")
+import re
+m = re.search(r'(?:0x)?([0-9A-Fa-f]{8})', read_out)
+if not m:
+    raise gdb.GdbError(f"Cannot parse dcsr from: {read_out.strip()}")
+old_dcsr = int(m.group(1), 16)
+
+# Clear ebreakm(15), ebreaks(13), ebreaku(12) while preserving prv and all other bits
+EBREAK_MASK = (1 << 15) | (1 << 13) | (1 << 12)  # 0xF000 is wrong — only 0xB000
+new_dcsr = old_dcsr & ~EBREAK_MASK
+gdb.write(f"[dcsr] old=0x{old_dcsr:08X} -> new=0x{new_dcsr:08X} (cleared bits 15,13,12)\n")
+gdb.write(f"[dcsr] prv preserved = {old_dcsr & 0x3} (1=S-mode, 3=M-mode)\n")
+
+gdb.execute(f"monitor WriteCSR 0x7b0 0x{new_dcsr:08X}")
+
+# Verify
+verify_out = gdb.execute("monitor ReadCSR 0x7b0", to_string=True)
+gdb.write(f"[dcsr] After:  {verify_out.strip()}\n")
+
+gdb.write("[OK] dcsr ebreak bits cleared (prv unchanged)\n")
+
+# ==========================================================
+# Phase 7: Launch kernel, wait, halt, dump dmesg
+# ==========================================================
+gdb.write("\n=== Phase 7: Launch kernel + timed dmesg dump ===\n")
+gdb.write("Kernel will run for 300s, then halt for log dump.\n")
+
+import time
+
+gdb.execute("continue &")
+gdb.write("[boot] Kernel running... disconnecting GDB.\n")
+time.sleep(1)
+gdb.execute("disconnect")
+gdb.write("[boot] Disconnected. Waiting 120 seconds...\n")
+
+time.sleep(300)
+
+# Reconnect — J-Link halts CPU on new connection
+gdb.write("[halt] Reconnecting to halt CPU...\n")
+gdb.execute("target remote 172.19.128.1:2331")
+time.sleep(2)
+gdb.write("[halt] Connected. CPU should be halted.\n")
+
+# Read PC via GDB
+try:
+    pc_val = int(gdb.parse_and_eval("$pc"))
+    gdb.write(f"[state] PC = 0x{pc_val & 0xFFFFFFFFFFFFFFFF:016x}\n")
+except Exception as e:
+    gdb.write(f"[state] PC read error: {e}\n")
+    pc_val = 0
+
+# Clear satp for PA memory access
+try:
+    gdb.execute("set $satp = 0")
+except:
+    pass
+
+# Read log buffer pointer
+try:
+    log_buf_val = int(gdb.parse_and_eval("*(unsigned long long*)0x830d3c00"))
+    log_buf_len = int(gdb.parse_and_eval("*(unsigned int*)0x830d3bf8"))
+    gdb.write(f"[log] log_buf = 0x{log_buf_val:016x}\n")
+    gdb.write(f"[log] log_buf_len = 0x{log_buf_len:x} ({log_buf_len})\n")
+except Exception as e:
+    log_buf_val = 0
+    log_buf_len = 0
+    gdb.write(f"[log] Cannot read log_buf: {e}\n")
+
+# Check if log_buf is a valid kernel VA (0xffffffd8xxxxxxxx for lowmem)
+# or still the original __log_buf VA (0xffffffff82ee7108)
+# VA -> PA: PA = VA + 0x100200000 (mod 2^64)
+log_pa = None
+if log_buf_val == 0xffffffff82ee7108:
+    # Still the static __log_buf
+    log_pa = 0x830e7108
+    gdb.write("[log] Using static __log_buf PA = 0x830e7108\n")
+elif (log_buf_val >> 32) == 0xffffffd8 or (log_buf_val >> 32) == 0xffffffff:
+    # lowmem or kernel VA — convert to PA
+    log_pa = (log_buf_val + 0x100200000) & 0xFFFFFFFFFFFFFFFF
+    # Ensure it's in DDR range
+    if 0x80000000 <= log_pa <= 0xFFFFFFFF:
+        gdb.write(f"[log] Relocated log_buf PA = 0x{log_pa:x}\n")
+    else:
+        gdb.write(f"[log] WARNING: Computed PA 0x{log_pa:x} out of DDR range!\n")
+        log_pa = 0x830e7108  # fallback to static
+else:
+    gdb.write(f"[log] WARNING: log_buf value 0x{log_buf_val:016x} looks invalid! Trying __log_buf.\n")
+    log_pa = 0x830e7108
+
+# Determine dump size (default 128KB, or log_buf_len if valid)
+dump_sz = 0x20000
+if 0 < log_buf_len <= 0x200000:  # max 2MB
+    dump_sz = log_buf_len
+    gdb.write(f"[log] Using log_buf_len = {dump_sz} bytes\n")
+
+# Dump ring buffer
+dump_end = log_pa + dump_sz
+gdb.write(f"[dump] Dumping 0x{dump_sz:x} bytes from PA 0x{log_pa:x}...\n")
+gdb.execute(f"dump binary memory /tmp/klog_latest.bin {log_pa} {dump_end}")
+gdb.write("[dump] Saved to /tmp/klog_latest.bin\n")
+
+# Also dump the __log_buf if we used a different address
+if log_pa != 0x830e7108:
+    gdb.write("[dump] Also dumping __log_buf for comparison...\n")
+    gdb.execute("dump binary memory /tmp/klog_static.bin 0x830e7108 0x83107108")
+
+# Read CSRs for diagnosis
+for name, reg in [("satp", "$satp"), ("scause", "$scause"), ("sepc", "$sepc")]:
+    try:
+        val = int(gdb.parse_and_eval(reg))
+        gdb.write(f"[state] {name} = 0x{val & 0xFFFFFFFFFFFFFFFF:016x}\n")
+    except Exception as e:
+        gdb.write(f"[state] {name}: {e}\n")
+
+gdb.write("\n[DONE] Dmesg dump complete. Check /tmp/klog_latest.bin\n")
+gdb.execute("disconnect")
+end
+
+quit

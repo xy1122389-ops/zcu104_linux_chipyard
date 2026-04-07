@@ -1,0 +1,135 @@
+[OK] Relay running at 172.19.128.1:12331
+[info] Boot timeout: 900s
+[info] fw chunks: 4
+
+=== Running linux_boot.gdb (timeout 900s) ===
+[info] Connecting to J-Link at 172.19.128.1:12331
+0x0000000080036204 in ?? ()
+--- Initial state ---
+pc             0x80036204	0x80036204
+
+=== Phase 1: Zero DDR via Rocket core ===
+O.K.
+O.K.
+0x0000000080036204 in ?? ()
+[ok] fence.i
+Hardware assisted breakpoint 1 at 0x8003610a
+[zero0] 0x80040000-0x80200000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero0] done
+[zero1] 0x80EC4000-0x84000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero1] done
+[zero1b] 0x84001070-0x84100000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero1b] done
+[zero2] 0x84100000-0xA0000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero2] done
+[zero3] 0xA0000000-0xC0000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero3] done
+[zero4] 0xC0000000-0x100000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero4] done
+[ALL DDR ZEROED]
+=== Phase 2: Restore fw_payload.bin (15MB via SBA) ===
+O.K.
+O.K.
+0x0000000080036204 in ?? ()
+[ok] fence.i
+[restore] Loading fw_payload.bin in 4 chunks (4MB each)...
+[restore 1/4] chunk_00.bin -> 0x80000000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_00.bin into memory (0x80000000 to 0x80400000)
+[restore 1/4] done
+[restore 2/4] chunk_01.bin -> 0x80400000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_01.bin into memory (0x80400000 to 0x80800000)
+[restore 2/4] done
+[restore 3/4] chunk_02.bin -> 0x80800000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_02.bin into memory (0x80800000 to 0x80c00000)
+[restore 3/4] done
+[restore 4/4] chunk_03.bin -> 0x80c00000 (2896392 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_03.bin into memory (0x80c00000 to 0x80ec3208)
+[restore 4/4] done
+[ok] fw_payload.bin restored (15MB in chunks)
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb into memory (0x84000000 to 0x8400105d)
+[ok] DTB restored at 0x84000000
+[dtb] External DTB has bootargs + initrd props; will redirect a1 at mret
+
+=== Phase 3: Invalidate L2 cache for firmware region ===
+0x0000000080036204 in ?? ()
+[ok] fence.i for L2 invalidation
+Hardware assisted breakpoint 2 at 0x8003610c
+[L2inv] Invalidating L2 for firmware region (17MB)...
+
+Breakpoint 2, 0x000000008003610c in ?? ()
+[L2inv] done
+Hardware assisted breakpoint 3 at 0x8003610c
+[L2inv] Invalidating L2 for DTB region...
+
+Breakpoint 3, 0x000000008003610c in ?? ()
+[L2inv] done
+[verify] Checking SBA write integrity...
+0x80200000 <payload_bin>:	0x106f5a4d	0x00010820
+0x81000000:	0x00000000	0x00000000
+0x80ec2800 <payload_bin+13379584>:	0x00000040	0x0000000f
+
+=== Phase 4: fence.i ===
+0x0000000080036204 in ?? ()
+[ok] fence.i
+
+=== Phase 5: Boot to Linux _start ===
+Hardware assisted breakpoint 4 at 0x8000b2b2: file /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_hart.c, line 830.
+[boot] Running OpenSBI to mret...
+
+Breakpoint 4, sbi_hart_switch_mode (arg0=arg0@entry=0, arg1=2185232384, next_addr=2149580800, next_mode=1, next_virt=next_virt@entry=0) at /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_hart.c:830
+830		__asm__ __volatile__("mret" : : "r"(a0), "r"(a1));
+[OK] OpenSBI reached mret
+[dtb] a1 = 0x82400000 (DTB addr from OpenSBI)
+[dtb] DTB magic: 0xedfe0dd0 (valid)
+0x0000000080200000 in payload_bin ()
+[OK] Linux _start: pc=0x80200000
+
+=== Phase 5.5: GDB patches SKIPPED (System.map mismatch) ===
+
+=== Phase 6: Clear dcsr ebreak bits ===
+[dcsr] Before: O.K.:0x4000F105
+[dcsr] old=0x4000F105 -> new=0x40004101 (cleared bits 15,13,12,2)
+O.K.
+[dcsr] After:  O.K.:0x40004101
+[OK] dcsr ebreak bits cleared
+[boot] Advancing past Linux entry stub with stepi x2...
+0x0000000080200002 in payload_bin ()
+0x0000000080201084 in payload_bin ()
+[boot] PC after entry stepi = 0x80201084
+
+=== Phase 7: Launch kernel ===
+Kernel will run. Use 'scripts/linux_klog_dump.gdb' later to dump klog.
+Run boot script with: timeout 600 gdb -batch -x scripts/linux_boot.gdb
+Then dump with: gdb -batch -x scripts/linux_klog_dump.gdb
+
+[triggers] Clearing hardware trigger CSRs...
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+[OK] Hardware triggers cleared (tselect 0 and 1)
+[boot] Launching kernel (use Ctrl-C or timeout to stop)...
+Cannot execute this command while the target is running.
+Use the "interrupt" command to stop the target
+and then try again.
+
+=== Boot GDB exited. Waiting 5s for relay recovery... ===
+=== Dumping kernel log ===
+[info] Connecting to 172.19.128.1:12331...
+Python Exception <class 'gdb.error'>: Remote communication error.  Target disconnected: error while reading: Connection reset by peer.
+scripts/linux_klog_dump.gdb:100: Error in sourced command file:
+Error occurred in Python: Remote communication error.  Target disconnected: error while reading: Connection reset by peer.

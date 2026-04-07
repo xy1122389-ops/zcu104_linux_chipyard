@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Create /dev/kmsg for printk output (major 1, minor 11)
+mknod /dev/kmsg c 1 11 2>/dev/null
+
+# Log to both console and kernel log ring buffer
+log() {
+    echo "$1"
+    echo "$1" > /dev/kmsg 2>/dev/null
+}
+
+log "=== Minimal Linux booted successfully ==="
+log "Welcome to RISC-V Rocket on ZCU104!"
+log "init: PID=$$"
+log "init: about to exec /bin/sh"
+
+# Also add devmem and mknod symlinks if not present
+ln -s /bin/busybox /bin/devmem 2>/dev/null
+ln -s /bin/busybox /bin/dmesg 2>/dev/null
+ln -s /bin/busybox /bin/mknod 2>/dev/null
+
+# Exec shell - shell prompt goes to console UART only
+# To see if shell is alive, check klog for the messages above
+exec /bin/sh

@@ -65,6 +65,34 @@ class RocketZCU104Config extends Config(
   new chipyard.RocketConfig
 )
 
+// Alias for Linux bring-up (same as RocketZCU104Config)
+class RocketZCU104LinuxBringupConfig extends RocketZCU104Config
+
+// Minimal safe config: no Zba/Zbb/Zbs — reduces decode complexity
+// For Linux bring-up debugging
+class RocketZCU104SafeConfig extends Config(
+  new WithZCU104Tweaks ++
+  new freechips.rocketchip.rocket.RocketCoreConfig(
+    _.copy(useZba = false, useZbb = false, useZbs = false)
+  ) ++
+  new chipyard.RocketConfig
+)
+
+// Minimal Linux-focused config: keep PS DDR, remove subsystem L2/InclusiveCache,
+// and disable Zb* to reduce early-boot complexity while preserving the same
+// bring-up flow as RocketZCU104Config.
+class RocketZCU104NoL2LinuxConfig extends Config(
+  new WithZCU104Tweaks ++
+  new testchipip.soc.WithNoScratchpads ++
+  new freechips.rocketchip.subsystem.WithIncoherentTiles ++
+  new freechips.rocketchip.subsystem.WithIncoherentBusTopology ++
+  new freechips.rocketchip.subsystem.WithNBanks(0) ++
+  new freechips.rocketchip.rocket.RocketCoreConfig(
+    _.copy(useZba = false, useZbb = false, useZbs = false)
+  ) ++
+  new chipyard.RocketConfig
+)
+
 // No-DDR fallback: uses Rocket scratchpad TCM (for bring-up / no PS init required)
 class WithZCU104TweaksNoDDR extends Config(
   new chipyard.iobinders.WithGPIOPunchthrough ++

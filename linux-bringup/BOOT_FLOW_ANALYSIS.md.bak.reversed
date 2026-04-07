@@ -1,0 +1,449 @@
+#
+
+- **风险**: OpenSBI 内部如果在 mret 前也读取 DTB（如 `fdt_parse()`），会读到 `0x82400000` 处的垃圾数据
+- **当前缓解**: GDB 在 mret 处强制覆写 `$a1=0x84000000`
+- **现象**: OpenSBI 编译时 `FW_PAYLOAD_FDT_ADDR=0x82400000`，GDB 加载 DTB 到 `0x84000000`
+
+### 问题 3: DTB 地址不一致
+
+- **修复**: 改 `.config` 为 `init=/init` 或去掉 `CONFIG_CMDLINE_FORCE=y`
+- **影响**: 即使 crash 修复，内核也会 panic 找不到 init
+- **现象**: `.config` 强制 `init=/bin/sh`，initramfs 中只有 `/init`
+
+### 问题 2: CONFIG_CMDLINE_FORCE 冲突
+
+- **状态**: 未验证
+- **影响**: payload 写入也走 SBA，如有损坏 → 内核 binary 本身就是坏的
+- **现象**: klog 读取每行末尾 2 字节重复
+
+### 问题 1: SBA 数据完整性 (最优先)
+
+## 当前阻塞问题
+
+---
+
+| Klog dump | +120s/300s | GDB halt + `dump binary memory 0x80ed4060` |
+| Crash | +数秒 | `do_one_initcall` 阶段 page fault |
+| Kernel run | `monitor go` | 释放 CPU 自由运行 |
+| Linux _start | `0x80200000` | GDB hbreak 确认到达 |
+| OpenSBI mret | `0x8000b2b2` | GDB hbreak, 覆写 a1=0x84000000 |
+| OpenSBI 入口 | `0x80000000` | GDB 设置 PC 并 continue |
+| Payload 恢复开始 | — | 4 块 × 4MB via SBA |
+| PS-PL 隔离解除 | +5s | DDR 访问通路打开 |
+| FPGA bitstream 下载 | — | Rocket core 开始跑 BootROM hang |
+|------|-----------|------|
+| 事件 | 地址/时间 | 说明 |
+
+## 关键时序与地址总结
+
+---
+
+| Timebase | 50 kHz |
+| 时钟 | 50 MHz |
+| MMU | SV39 (3-level, 39-bit VA) |
+| L2 Cache | 512KB (仅 L2 配置, sifive,inclusivecache0) |
+| I-TLB | 32 entries |
+| D-TLB | 32 entries |
+| I-Cache | 32KB |
+| D-Cache | 32KB (64 sets × 8 ways × 64B) |
+| ISA | rv64imafdc_zicsr_zifencei_zihpm |
+|------|-----|
+| 参数 | 值 |
+
+### CPU 核心参数
+
+```raw
+0x8000_0000 ┴─ DDR4 (0x80000000 = 2GB, 通过 PS AXI HP0)
+0x6400_2000 ├─ GPIO (0x1000)
+0x6400_1000 ├─ SPI (0x1000)
+0x6400_0000 ├─ UART SiFive (0x1000)
+0x0C00_0000 ├─ PLIC (0x4000000)
+0x0201_0000 ├─ L2 Cache Controller (0x1000) [仅 L2 配置]
+0x0200_0000 ├─ CLINT (0x10000)
+0x0011_0000 ├─ Tile Reset Setter (0x1000)
+0x0010_0000 ├─ Clock Gater (0x1000)
+0x0001_0000 ├─ BootROM (0x10000, 挂起循环)
+0x0000_3000 ├─ Error Device (0x1000)
+0x0000_1000 ├─ Boot Address Reg (0x1000)
+0x0000_0000 ┬─ Debug Module (0x1000)
+```
+
+## 硬件 Memory Map 汇总
+
+---
+
+5. **无限循环**: `nanosleep(1, 0)` — 永不退出
+4. `open("/dev/kmsg")` → 写入内核日志
+3. `write(1, "=== Minimal Linux booted successfully ===\n")`
+2. `dup3(0, 1)`, `dup3(0, 2)` → stdout/stderr
+1. `open("/dev/console", O_RDWR)` → fd 0
+
+### `/init` (minimal_init.elf) 行为
+
+```raw
+    └── kmsg         ← c 1 11
+    ├── null         ← c 1 3
+    ├── console      ← c 5 1
+└── dev/
+├── init             ← minimal_init.elf (静态链接, 无 libc)
+.
+```
+
+### Initramfs 内容
+
+```raw
+                └── ★找不到 /bin/sh → panic★  (initramfs 中只有 /init)
+            └── run_init_process("/bin/sh")  ← CONFIG_CMDLINE_FORCE=y → 用 /bin/sh
+            ├── 解析 cmdline 中的 init=
+        └── (之后)
+        ├── do_basic_setup() → do_one_initcall() 循环  ← 当前卡在这里
+  └── kernel_init_freeable()
+kernel_init()
+```
+
+### 预期流程 (如果内核不 crash)
+
+## Stage 4: 用户态 (从未到达)
+
+---
+
+- 不同 initcall 函数崩溃 → 不是某个驱动的 bug
+- badaddr 都是 `ffffff80000000xx` 形式（低位不同但都指向近零物理地址）
+- 都在 `do_one_initcall` 阶段
+**共同特征**:
+
+| L2_compare1 | L2 | `strlen` | `ffffff8000000007` | legacy_pty_init |
+| noL2_shortcmd1 | NoL2 | `vmap_pages_pte_range` | `ffffff8000000107` | dma_atomic_pool_init |
+| noL2_sysctloff1 | NoL2 | sysctl 相关 | — | sysctl_init |
+| noL2_nol2dtb_rpmsgoff1 | NoL2 | rpmsg 相关 | — | rpmsg_init |
+|------|------|----------|---------|----------|
+| 运行 | 配置 | 崩溃函数 | badaddr | initcall |
+
+### 历次 Crash 记录对比
+
+- 这是一个接近零的物理映射——通常意味着 **某个指针的高位被截断/损坏**
+- `0xffffff8000000007` 在内核空间范围内，但对应物理地址 `0x0000000007`
+- SV39 虚拟地址空间: 内核空间 `0xffffffc000000000` ~ `0xffffffffffffffff`
+**地址 `0xffffff8000000007` 的含义**:
+
+```raw
+  ret_from_fork+0xa
+  kernel_init+0x1e
+  kernel_init_freeable+0x192
+  do_one_initcall+0x68          ← initcall 调度器
+  pty_init+0x10
+  legacy_pty_init+0x14c
+  tty_register_driver+0xda
+  tty_register_device_attr+0x146
+  kobject_uevent+0xe
+  kobject_uevent_env+0xa2       ← 发送 uevent
+  strlen+0x6                    ← 从某个字符串指针读取字节
+Call stack:
+
+cause:   0x0000000d             ← Store/AMO page fault → 实际是 Load page fault (0xd=13)
+badaddr: ffffff8000000007       ← 被访问的虚拟地址
+
+ ra : kobject_get_path+0x92/0xae
+epc : strlen+0x6/0x1c          ← 崩溃指令
+
+Unable to handle kernel paging request at virtual address ffffff8000000007
+```
+
+### Crash 详析
+
+```raw
+    └── ★ PANIC: "Attempted to kill init! exitcode=0x0000000b" ★
+    │
+    │   └── kernel_init_freeable() → kernel_init() → ★未到达 run_init_process()★
+    │   │
+    │   │   └── 后续 initcall 未执行
+    │   │   │
+    │   │   │               └── strlen()  ← ★★★ PAGE FAULT ★★★
+    │   │   │           └── kobject_uevent_env()
+    │   │   │       └── tty_register_driver()
+    │   │   │   └── legacy_pty_init()
+    │   │   ├── pty_init()
+    │   │   ├── ... (多个成功的 initcall) ...
+    │   ├── do_one_initcall() 循环:
+    │   │
+    │   ├── io scheduler → mq-deadline/kyber/bfq   ← klog line 8-10
+    │   ├── workingset init                        ← klog line 7
+    │   ├── KVM check → "not available"            ← klog line 6
+    │   ├── clocksource → riscv_clocksource       ← klog line 5
+    │   ├── iommu init                            ← klog line 3-4
+    │   ├── HugeTLB init                          ← klog line 1-2
+    │   │
+    │   │   └── "cpu0: Ratio of byte access time to unaligned word access is 0.01"   ← klog line 0
+    │   ├── calibrate_delay()
+    │   │
+    │   │   └── unflatten_device_tree()
+    │   │   ├── paging_init() → 完整 SV39 页表
+    │   │   ├── setup_bootmem() → 2GB DDR at 0x80000000
+    │   │   ├── parse DTB → "Hardware name: ucb-bar,chipyard (DT)"
+    │   ├── setup_arch()
+    ├── start_kernel()
+    ├── setup_trap_vector()    # 设置 stvec
+    ├── relocate_enable_mmu()  # 开启 MMU, 跳转到虚拟地址
+    ├── setup_vm()             # 建立初始页表 (SV39, 1GB megapage)
+    │
+0x80200000  _start (arch/riscv/kernel/head.S)
+```
+
+### 启动序列 (基于 klog 输出)
+
+- 即使内核不 crash，也会找不到 init 程序
+- tiny initramfs 中只有 `/init`，**没有 `/bin/sh`**
+- **`init=/bin/sh`** 被使用（来自 .config），而不是 DTB 中的 `init=/init`
+由于 `CONFIG_CMDLINE_FORCE=y`:
+
+```raw
+bootargs = "earlycon=sifive,0x64000000 console=ttySIF0,115200n8 init=/init loglevel=8"
+# DTB 中:
+
+CONFIG_CMDLINE_FORCE=y   ← 强制使用编译时 cmdline，忽略 DTB bootargs
+CONFIG_CMDLINE="earlycon=sifive,0x64000000 console=ttySIF0,115200n8 init=/bin/sh loglevel=7"
+# .config 中:
+```
+
+### ⚠️ 关键配置冲突
+
+- **initramfs**: 内嵌到 kernel image，2560 bytes (tiny cpio)
+- **CONFIG 选项**: 748 个 `=y`
+- **架构**: rv64imafdc, SV39 MMU
+- **版本**: Linux 6.6.0-fpga-min (git: `67bc4513761f`, build #13)
+
+### 内核版本与配置
+
+| 特权级 | S-mode | 由 mret 切换 |
+| `sstatus.SIE` | `0` | S-mode 中断关闭 |
+| `satp` | `0` | MMU 关闭 |
+| `a1` | `0x84000000` | DTB 物理地址 |
+| `a0` | `0` | Hart ID |
+| `pc` | `0x80200000` | Linux Image 入口 (`_start`) |
+|--------|-----|------|
+| 寄存器 | 值 | 含义 |
+
+### 入口状态
+
+## Stage 3: Linux 内核启动 (S-mode)
+
+---
+
+> **注**: OpenSBI 编译时 `FW_PAYLOAD_FDT_ADDR=0x82400000`，但 DTB 实际在 `0x84000000`。如果不在 mret 处覆写 `$a1`，Linux 会收到错误的 DTB 地址。
+
+4. **执行 `continue`**: CPU 执行 `mret`，跳转到 `0x80200000`，进入 S-mode
+3. **设置 Linux 入口断点**: `hbreak *0x80200000`
+2. **修改 dcsr**: 清除 `ebreaks/ebreaku/ebreakm/step` 位，防止 `ebreak` 指令意外触发调试异常
+1. **覆写 `$a1`**: OpenSBI 的 `fw_next_arg1` 返回的是编译时地址 `0x82400000`，但 GDB **强制改为 `0x84000000`**（实际 DTB 加载位置）
+
+GDB 在 `sbi_hart_switch_mode` 的 `mret` 指令处设了硬件断点 (`hbreak *0x8000b2b2`)。当断点命中:
+
+### GDB 在 mret 处的干预
+
+```raw
+        └── mret        ← ★GDB 在此处设置 hbreak (0x8000b2b2)★
+        ├── satp = 0    ← MMU 关闭
+        ├── sie = 0
+        ├── sscratch = 0
+        ├── stvec = 0x80200000
+        ├── MEPC = 0x80200000
+        ├── MSTATUS.MPP = PRV_S
+    └── sbi_hart_switch_mode(hartid=0, arg1=DTB, next=0x80200000, mode=S)
+    │
+    ├── fw_next_mode() → return PRV_S (= 1)
+    ├── fw_next_arg1() → return FW_PAYLOAD_FDT_ADDR (= 0x82400000, 编译时写死)
+    ├── fw_next_addr() → return &payload_bin  (= 0x80200000)
+    │
+    │   └── sbi_ipi_init → CLINT IPI
+    │   ├── sbi_timer_init → CLINT timer (0x02000000)
+    │   ├── sbi_domain_init → 设置 PMP 保护
+    │   │   └── "OpenSBI v1.0" banner
+    │   │   ├── [此时 earlycon 开始输出]
+    │   ├── sbi_console_init → 初始化 UART (0x64000000, SiFive UART)
+    │   ├── sbi_hart_init → 检测 ISA 扩展 (rv64imafdczicsr_zifencei)
+    │   ├── sbi_platform_early_init → 检测平台特性
+    ├── sbi_init()
+    │
+    ├── 初始化 .bss
+    ├── 设置 M-mode 栈
+    ├── fw_save_info → nop
+    ├── fw_boot_hart → return -1 (任意 hart 都可为 boot hart)
+    │
+0x80000000  _start (fw_base.S)
+```
+
+OpenSBI v1.0，generic platform，`fw_payload` 模式。
+
+### OpenSBI 内部流程
+
+set $pc = 0x80000000     # OpenSBI 入口
+set $a2 = 0
+set $a1 = 0x84000000     # DTB 物理地址 (由 GDB 传入)
+set $a0 = 0              # Hart ID
+```gdb
+
+### 入口设置 (GDB)
+
+## Stage 2: OpenSBI 启动 (M-mode)
+
+---
+
+**SBA 写路径**（用于恢复 payload）是否也有损坏 **尚未验证**，是当前首要排查项。
+
+- 45 行 klog 中 32 行命中此模式
+- `Translated` → `Translateded`
+- `pages` → `pageses`
+- `slow` → `slowow`
+**SBA 读路径**存在系统性的 **末尾 2 字节重复** bug:
+
+### ⚠️ 已知问题: SBA 数据完整性
+
+```
+0xFFFFFFFF └─────────────────────┘   DDR 结束 (2GB)
+           │ ...                 │
+           │ Device Tree Blob    │    ~4KB
+0x84000000 ├─────────────────────┤ ← DTB
+           │ ...                 │
+           │ Kernel log buffer   │    128KB
+0x80ED4060 ├─────────────────────┤ ← __log_buf (kernel printk ring buffer)
+           │ (空闲 DDR)          │
+0x80EC2C08 ├─────────────────────┤ ← fw_payload.bin 结束
+           │ Linux kernel Image  │    ~13MB
+0x80200000 ├─────────────────────┤ ← Linux Image (payload_bin)
+           │ OpenSBI (M-mode FW) │    ~2MB
+0x80000000 ├─────────────────────┤ ← fw_payload.bin 起始
+           │ ...                 │
+0x64000000 │ UART (SiFive)       │
+0x0C000000 │ PLIC                │
+0x02010000 │ L2 Cache Ctrl       │  ← 仅 L2 配置有
+0x02000000 │ CLINT               │
+           │ ...                 │
+0x00010000 │ BootROM (hang loop) │
+           │ Debug Module        │
+0x00000000 ┌─────────────────────┐
+```raw
+
+#### 内存布局 (恢复后)
+
+| DTB (`.dtb`) | `0x84000000` | ~4KB |
+|------|----------|------|
+| 产物 | 目标地址 | 大小 |
+
+DTB 恢复:
+
+| chunk_03 | `/tmp/fw_chunks_new/chunk_03.bin` | `0x80C00000` | ~2.76MB |
+| chunk_02 | `/tmp/fw_chunks_new/chunk_02.bin` | `0x80800000` | 4MB |
+| chunk_01 | `/tmp/fw_chunks_new/chunk_01.bin` | `0x80400000` | 4MB |
+| chunk_00 | `/tmp/fw_chunks_new/chunk_00.bin` | `0x80000000` | 4MB |
+|----|--------|----------|------|
+| 块 | 源文件 | 目标地址 | 大小 |
+
+Payload 分块恢复（`restore binary` 命令通过 SBA 写入物理内存）:
+
+```
+monitor WriteCSR 0x7b0 0x4000F0C3    # dcsr: 设置调试模式参数
+monitor WriteCSR 0x180 0              # satp = 0, 关闭 MMU
+monitor halt                          # 停住 CPU (在 BootROM 的 hang 循环中)
+```raw
+
+#### Phase 1: 写入 payload
+
+### GDB 脚本: `scripts/linux_boot_nol2_direct.gdb`
+
+- **SBA (System Bus Access)**: J-Link 通过 RISC-V Debug Module 的 System Bus 直接读写物理内存，不经过 CPU
+- GDB 直连: `target remote 172.19.128.1:2331`
+- J-Link GDB Server 运行在 Windows 侧: `JLinkGDBServerCL.exe -device RISC-V -if JTAG -speed 1000 -port 2331 -localhostonly 0`
+
+```
+WSL2 GDB ──TCP 2331──→ Windows J-Link GDB Server ──JTAG──→ ZCU104 Debug Module ──SBA──→ DDR
+```raw
+
+### 通信链路
+
+## Stage 1: Payload 恢复 (GDB SBA → DDR)
+
+---
+
+| `RocketZCU104LinuxBringupConfig` | 有 L2 (= RocketZCU104Config 的别名) | ❌ 无法连接 |
+| `RocketZCU104NoL2LinuxConfig` | 无 L2 Cache | ✅ |
+| `RocketZCU104Config` | 有 512KB L2 Cache | ✅ |
+|--------|------|-------------|
+| 配置名 | 特征 | J-Link 可连 |
+
+### 可用配置
+
+| Bitstream | `generated-src/.../obj/ZCU104FPGATestHarness.bit` |
+| PSU init (自动生成) | `generated-src/.../obj/ip/zcu104ps/psu_init.tcl` |
+| DDR 初始化 TCL | `scripts/run_ps_ddr_init.tcl` |
+| DDR 初始化 shell | `scripts/run_ps_ddr_init.sh` |
+|------|------|
+| 文件 | 路径 |
+
+### 关键文件
+
+- Core 在 BootROM hang 循环中等待调试器接管
+- Core 的第一条指令取自 **BootROM (0x00010000)**，BootROM 内容是一个无限循环 (hang)
+- FPGA bitstream 编程完成瞬间，Rocket core 即开始执行
+
+```
+endmodule
+  end
+    power_on_reset <= 1'b0;   // 第 1 个时钟上升沿后释放
+  always @(posedge clock) begin
+  end
+    power_on_reset <= 1'b1;   // 上电: 复位有效
+  initial begin
+);
+  output reg power_on_reset
+  input wire clock,
+module PowerOnResetFPGAOnly(
+```verilog
+
+### PowerOnResetFPGAOnly
+
+| 8 | `psu_ps_pl_reset_config` | PS-PL 复位配置 |
+| 7 | `psu_ps_pl_isolation_removal` | **解除 PS-PL 隔离** — 此后 Rocket core 的 AXI HP0 DDR 访问不再被阻塞 |
+| 6 | `after 3000` | 等待 3 秒让 PL 稳定 |
+| 5 | `fpga <bitstream>` | **烧写 FPGA bitstream** — Rocket core 立即开始运行（PowerOnResetFPGAOnly 后复位释放） |
+| 4 | `psu_init` | **执行 DDR4 控制器初始化 + 其他 PS 外设初始化** |
+| 3 | `source psu_init.tcl` | 加载 PS 初始化脚本 |
+| 2 | `targets -set -filter {name =~ "*PSU*"}` | 选择 Zynq PS 处理器 |
+| 1 | `connect -url tcp:127.0.0.1:3121` | 连接 hw_server |
+|------|----------|------|
+| 步骤 | TCL 命令 | 作用 |
+
+### 执行步骤
+
+- 入口脚本: `scripts/run_ps_ddr_init.sh` → 调用 `scripts/run_ps_ddr_init.tcl`
+- **XSDB** (Xilinx System Debugger): 通过 `hw_server` (TCP 3121) 连接 JTAG
+### 工具链
+
+## Stage 0: FPGA 编程 + PS DDR 初始化
+
+---
+
+```
+└──────────────────────────────────────────────────────────────────────────────┘
+│   kernel_init → run_init_process("/init") → minimal_init → 无限循环           │
+│ Stage 4: 用户态 (从未到达)                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│   clocksource → do_one_initcall 循环 → ★当前 crash 位置★                     │
+│   _start → setup_vm → start_kernel → calibrate_delay →                      │
+│ Stage 3: Linux 内核启动 (S-mode, 0x80200000)                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│   初始化 → 设置 MEPC=0x80200000 → mret → 切换到 S-mode                       │
+│ Stage 2: OpenSBI 启动 (M-mode, 0x80000000)                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│   DTB           → 0x84000000                                                │
+│   fw_payload.bin → 0x80000000 (OpenSBI + Linux Image, ~15MB)                │
+│ Stage 1: Payload 恢复 (GDB via J-Link SBA → DDR)                            │
+├──────────────────────────────────────────────────────────────────────────────┤
+│   psu_init → DDR4 控制器初始化 → PS-PL 隔离解除                                │
+│   bitstream → FPGA → PowerOnResetFPGAOnly → Rocket core 复位释放              │
+│ Stage 0: FPGA 编程 + PS DDR 初始化 (XSDB/XSCT, Zynq PS)                     │
+┌──────────────────────────────────────────────────────────────────────────────┐
+```raw
+
+## 总览
+ Chipyard ZCU104 Linux 启动流程详细分析
+```

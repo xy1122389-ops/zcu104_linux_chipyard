@@ -1,0 +1,85 @@
+[OK] Relay running at 172.19.128.1:12331
+[info] Boot timeout: 300s
+[info] fw chunks: 4
+
+=== Running linux_boot.gdb (timeout 300s) ===
+[info] Connecting to J-Link at 172.19.128.1:12331
+0x0000000080000694 in _trap_exit () at /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/firmware/fw_base.S:838
+838		TRAP_RESTORE_GENERAL_REGS_EXCEPT_A0_T0
+--- Initial state ---
+pc             0x80000694	0x80000694 <_trap_exit+38>
+
+=== Phase 1: Zero DDR via Rocket core ===
+O.K.
+O.K.
+0x0000000080036204 in ?? ()
+[ok] fence.i
+Hardware assisted breakpoint 1 at 0x8003610a
+[zero0] 0x80040000-0x80200000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero0] done
+[zero1] 0x80EC4000-0x84000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero1] done
+[zero1b] 0x84001070-0x84100000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero1b] done
+[zero2] 0x84100000-0xA0000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero2] done
+[zero3] 0xA0000000-0xC0000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero3] done
+[zero4] 0xC0000000-0x100000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero4] done
+[ALL DDR ZEROED]
+=== Phase 2: Restore fw_payload.bin (15MB via SBA) ===
+O.K.
+O.K.
+0x0000000080036204 in ?? ()
+[ok] fence.i
+[restore] Loading fw_payload.bin in 4 chunks (4MB each)...
+[restore 1/4] chunk_00.bin -> 0x80000000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_00.bin into memory (0x80000000 to 0x80400000)
+[restore 1/4] done
+[restore 2/4] chunk_01.bin -> 0x80400000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_01.bin into memory (0x80400000 to 0x80800000)
+[restore 2/4] done
+[restore 3/4] chunk_02.bin -> 0x80800000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_02.bin into memory (0x80800000 to 0x80c00000)
+[restore 3/4] done
+[restore 4/4] chunk_03.bin -> 0x80c00000 (2896392 bytes)...
+Restoring binary file /tmp/fw_chunks_new/chunk_03.bin into memory (0x80c00000 to 0x80ec3208)
+
+=== Boot GDB exited. Waiting 5s for relay recovery... ===
+=== Dumping kernel log ===
+[info] Connecting to 172.19.128.1:12331...
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0000000080036204 in ?? ()
+[info] Target halted.
+[state] PC = 0x0000000080036204
+[state] satp = 0x0000000000000000
+[klog] Estimated used: ~0 bytes
+[log] log_buf = 0xffffffff80cd4060
+[log] log_buf_len = 0x20000
+[dump] Dumping 131072 bytes from PA 0x80ed4060...
+[dump] Saved to /tmp/klog_latest.bin
+
+[strings] Extracting readable strings from klog...
+Found 0 strings in klog
+
+=== klog dump complete ===
+Check /tmp/klog_latest.bin for full binary dump.
+Use: python3 -c "import re; data=open('/tmp/klog_latest.bin','rb').read(); [print(s.decode()) for s in re.findall(rb'[\x20-\x7e]{8,}', data)]"
+
+=== Done ===
+Logs: /tmp/boot24.log, /tmp/boot24_dump.log
+Klog: /tmp/klog_latest.bin

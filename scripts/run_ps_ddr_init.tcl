@@ -65,14 +65,18 @@ step "run psu_init (PS DDR init first)" {
   psu_init
 }
 
-step "program FPGA bitstream" {
-  # Rocket core starts immediately after FPGA programming (PowerOnResetFPGAOnly).
-  # Its first DDR access via AXI HP0 will stall until isolation is removed below.
-  fpga $bit_file
-}
+if {[info exists ::env(SKIP_FPGA_PROGRAM)] && $::env(SKIP_FPGA_PROGRAM) eq "1"} {
+  puts "\n==== SKIP FPGA programming (SKIP_FPGA_PROGRAM=1) ===="
+} else {
+  step "program FPGA bitstream" {
+    # Rocket core starts immediately after FPGA programming (PowerOnResetFPGAOnly).
+    # Its first DDR access via AXI HP0 will stall until isolation is removed below.
+    fpga $bit_file
+  }
 
-step "wait after FPGA program" {
-  after 3000
+  step "wait after FPGA program" {
+    after 3000
+  }
 }
 
 step "remove PS-PL isolation" {

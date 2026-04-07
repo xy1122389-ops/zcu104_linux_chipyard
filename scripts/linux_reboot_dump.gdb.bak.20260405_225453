@@ -1,0 +1,194 @@
+# linux_reboot_dump.gdb — Quick reboot: re-apply patches + boot + 120s dmesg dump
+# Assumes DDR already has valid fw_payload.bin from previous full boot.
+# Only re-applies binary patches, clears dcsr, boots, waits, halts, dumps.
+
+set pagination off
+set confirm off
+set breakpoint auto-hw off
+set remotetimeout 600
+
+file /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf
+
+python
+import subprocess, gdb
+host = subprocess.check_output(
+    ["bash", "-lc", "ip route | awk '/default/ {print $3; exit}'"], text=True
+).strip() or "172.19.128.1"
+gdb.write(f"[info] Connecting to J-Link at {host}:2331\n")
+gdb.execute(f"target remote {host}:2331")
+end
+
+monitor halt
+echo --- Quick Reboot ---\n
+info reg pc
+
+# Force M-mode bare
+monitor WriteCSR 0x180 0
+monitor WriteCSR 0x7b0 0x4000F0C3
+
+# fence.i trampoline
+set *(unsigned int*)0x80036200 = 0x0000100f
+set *(unsigned short*)0x80036204 = 0x9002
+set $pc = 0x80036200
+stepi
+echo [ok] fence.i\n
+
+# Re-restore critical chunks (not full 49MB — only writable sections)
+# chunk_00: OpenSBI (0x80000000-0x80400000) — corrupted by crash loop
+# chunk_02: kernel .init.text/.init.data (0x80800000-0x80C00000)
+# chunk_10: .data start (0x82800000-0x82C00000) — modified during boot
+# chunk_11: .rodata+.data mid (0x82C00000-0x83000000) — modified during boot
+# chunk_12: .data end (0x83000000-0x830D4808) — modified during boot
+restore /tmp/fw_chunks/chunk_00.bin binary 0x80000000
+echo [ok] chunk_00 (OpenSBI) restored\n
+restore /tmp/fw_chunks/chunk_02.bin binary 0x80800000
+echo [ok] chunk_02 (.init) restored\n
+restore /tmp/fw_chunks/chunk_10.bin binary 0x82800000
+echo [ok] chunk_10 (.data start) restored\n
+restore /tmp/fw_chunks/chunk_11.bin binary 0x82C00000
+echo [ok] chunk_11 (.rodata+data) restored\n
+restore /tmp/fw_chunks/chunk_12.bin binary 0x83000000
+echo [ok] chunk_12 (.data end) restored\n
+
+# Restore modified DTB (without zbb in ISA string to avoid orc.b hardware bug)
+restore /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb binary 0x84000000
+echo [ok] DTB restored (no zbb)\n
+
+# Re-apply binary patches
+set *(unsigned int*)0x8082e47a = 0x80824501
+echo [ok] plist_test patched\n
+set *(unsigned int*)0x8080c980 = 0x80824501
+echo [ok] dma_atomic_pool_init patched\n
+set *(unsigned int*)0x808223d4 = 0x80824501
+echo [ok] pty_init patched\n
+
+# Undo strlen_zbb alternative: restore NOP at strlen entry (PA 0x80696470)
+# The previous boot patched this to 'j strlen_zbb' due to Zbb in DTB.
+# With new DTB (no zbb), we need to undo this so regular strlen is used.
+set *(unsigned int*)0x80696470 = 0x00000013
+echo [ok] strlen NOP restored (disable strlen_zbb)\n
+
+# Re-apply CMDLINE
+restore /tmp/cmdline_rodata_patch.bin binary 0x82CDCD88
+restore /tmp/cmdline_rodata_patch.bin binary 0x82B4B600
+restore /tmp/cmdline_rodata_patch.bin binary 0x80A0F8E8
+echo [ok] CMDLINE patched\n
+
+# Verify key data
+echo [verify]\n
+x/2wx 0x80200000
+x/1s 0x82CDCD88
+
+# Boot OpenSBI -> mret -> Linux _start
+echo \n=== Boot to Linux _start ===\n
+set $a0 = 0
+set $a1 = 0x84000000
+set $a2 = 0
+set $pc = 0x80000000
+
+delete breakpoints
+hbreak *0x8000b2b2
+echo [boot] Running OpenSBI to mret...\n
+continue
+
+python
+import gdb, re, time
+
+pc = int(gdb.parse_and_eval("$pc"))
+if pc != 0x8000b2b2:
+    gdb.write(f"\n[FAIL] Expected mret at 0x8000b2b2, got 0x{pc:x}\n")
+    raise gdb.GdbError("OpenSBI did not reach mret")
+
+gdb.write("[OK] OpenSBI reached mret\n")
+gdb.execute("delete breakpoints")
+gdb.execute("hbreak *0x80200000")
+gdb.execute("continue")
+
+pc2 = int(gdb.parse_and_eval("$pc"))
+gdb.write(f"[OK] Linux _start: pc=0x{pc2:x}\n")
+gdb.execute("delete breakpoints")
+
+# Clear dcsr ebreak bits
+gdb.write("\n=== Clear dcsr ebreak bits ===\n")
+read_out = gdb.execute("monitor ReadCSR 0x7b0", to_string=True)
+m = re.search(r'(?:0x)?([0-9A-Fa-f]{8})', read_out)
+old_dcsr = int(m.group(1), 16) if m else 0x4000F081
+EBREAK_MASK = (1 << 15) | (1 << 13) | (1 << 12)
+new_dcsr = old_dcsr & ~EBREAK_MASK
+gdb.write(f"[dcsr] 0x{old_dcsr:08X} -> 0x{new_dcsr:08X}\n")
+gdb.execute(f"monitor WriteCSR 0x7b0 0x{new_dcsr:08X}")
+verify_out = gdb.execute("monitor ReadCSR 0x7b0", to_string=True)
+gdb.write(f"[dcsr] After: {verify_out.strip()}\n")
+
+# Launch kernel + timed dump
+gdb.write("\n=== Launch kernel + 120s dmesg dump ===\n")
+gdb.execute("continue &")
+gdb.write("[boot] Kernel running... disconnecting GDB.\n")
+time.sleep(1)
+gdb.execute("disconnect")
+gdb.write("[boot] Disconnected. Waiting 120 seconds...\n")
+
+time.sleep(120)
+
+# Reconnect — J-Link halts CPU on new connection
+gdb.write("[halt] Reconnecting to halt CPU...\n")
+gdb.execute("target remote 172.19.128.1:2331")
+time.sleep(2)
+gdb.write("[halt] Connected. CPU should be halted.\n")
+
+# Read PC via GDB
+try:
+    pc_val = int(gdb.parse_and_eval("$pc"))
+    gdb.write(f"[state] PC = 0x{pc_val & 0xFFFFFFFFFFFFFFFF:016x}\n")
+except Exception as e:
+    gdb.write(f"[state] PC read failed: {e}\n")
+
+# Clear satp for M-mode bare memory access
+try:
+    gdb.execute("set $satp = 0")
+except:
+    pass
+
+# Read log buffer pointer
+try:
+    log_buf_val = int(gdb.parse_and_eval("*(unsigned long long*)0x830d3c00"))
+    log_buf_len = int(gdb.parse_and_eval("*(unsigned int*)0x830d3bf8"))
+    gdb.write(f"[log] log_buf = 0x{log_buf_val:016x}, len = 0x{log_buf_len:x}\n")
+except:
+    log_buf_val = 0
+    log_buf_len = 0
+    gdb.write("[log] Cannot read log_buf pointer\n")
+
+# Determine log PA
+log_pa = 0x830e7108  # default: static __log_buf
+if log_buf_val == 0xffffffff82ee7108:
+    gdb.write("[log] Using static __log_buf\n")
+elif (log_buf_val >> 32) in (0xffffffd8, 0xffffffff):
+    computed = (log_buf_val + 0x100200000) & 0xFFFFFFFFFFFFFFFF
+    if 0x80000000 <= computed <= 0xFFFFFFFF:
+        log_pa = computed
+        gdb.write(f"[log] Relocated log_buf PA = 0x{log_pa:x}\n")
+else:
+    gdb.write(f"[log] log_buf 0x{log_buf_val:016x} invalid, using __log_buf\n")
+
+dump_sz = 0x20000
+if 0 < log_buf_len <= 0x200000:
+    dump_sz = log_buf_len
+
+gdb.write(f"[dump] Dumping 0x{dump_sz:x} bytes from PA 0x{log_pa:x}...\n")
+gdb.execute(f"dump binary memory /tmp/klog_latest.bin {log_pa} {log_pa + dump_sz}")
+gdb.write("[dump] Saved to /tmp/klog_latest.bin\n")
+
+# Read CSRs via GDB
+for name, reg in [("satp", "$satp"), ("scause", "$scause"), ("sepc", "$sepc")]:
+    try:
+        val = int(gdb.parse_and_eval(reg))
+        gdb.write(f"[state] {name} = 0x{val & 0xFFFFFFFFFFFFFFFF:016x}\n")
+    except Exception as e:
+        gdb.write(f"[state] {name}: {e}\n")
+
+gdb.write("\n[DONE] Dmesg dump complete. Check /tmp/klog_latest.bin\n")
+gdb.execute("disconnect")
+end
+
+quit

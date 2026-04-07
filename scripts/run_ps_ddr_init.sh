@@ -91,6 +91,7 @@ WIN_CFG=${CHIPYARD_ZCU104_CFG}
 cat > "$WIN_WRAPPER" <<CMD
 @echo off
 set "CHIPYARD_ZCU104_CFG=$WIN_CFG"
+set "SKIP_FPGA_PROGRAM=${SKIP_FPGA_PROGRAM:-0}"
 pushd C:\Windows\Temp
 call "$WIN_XSDB_BAT" -eval "source {$WIN_TCL}"
 set EC=%ERRORLEVEL%

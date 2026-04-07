@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VIVADO_BAT=${VIVADO_BAT:-/mnt/e/PRO_APP/xilinx/Vivado/2021.2/bin/vivado.bat}
+
+if [[ ! -f "$VIVADO_BAT" ]]; then
+  echo "ERROR: Vivado batch wrapper not found: $VIVADO_BAT" >&2
+  exit 127
+fi
+
+if [[ ! -d /mnt/c/Windows/Temp ]]; then
+  echo "ERROR: /mnt/c/Windows/Temp not available for Vivado wrapper" >&2
+  exit 127
+fi
+
+cmd_escape() {
+  local value=$1
+  value=${value//\"/\"\"}
+  printf '%s' "$value"
+}
+
+convert_arg() {
+  local arg=$1
+  if [[ "$arg" == /* ]]; then
+    wslpath -w "$arg"
+  else
+    printf '%s' "$arg"
+  fi
+}
+
+win_pwd=$(wslpath -w "$PWD")
+win_vivado=$(wslpath -w "$VIVADO_BAT")
+wrapper=$(mktemp /mnt/c/Windows/Temp/vivado_wrapperXXXX.cmd)
+trap 'rm -f "$wrapper"' EXIT
+
+{
+  echo '@echo off'
+  echo 'setlocal'
+  printf 'pushd "%s"
+' "$(cmd_escape "$win_pwd")"
+  printf 'call "%s"' "$(cmd_escape "$win_vivado")"
+  for arg in "$@"; do
+    converted=$(convert_arg "$arg")
+    printf ' "%s"' "$(cmd_escape "$converted")"
+  done
+  echo
+  echo 'set EC=%ERRORLEVEL%'
+  echo 'popd'
+  echo 'exit /b %EC%'
+} > "$wrapper"
+
+exec cmd.exe /c "$(wslpath -w "$wrapper")"

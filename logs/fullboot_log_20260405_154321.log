@@ -1,0 +1,171 @@
+nohup: ignoring input
+[info] Connecting to J-Link at 172.19.128.1:2331
+0x0000000080036204 in ?? ()
+--- Initial state ---
+pc             0x80036204	0x80036204
+
+=== Phase 1: Zero DDR via Rocket core ===
+O.K.
+O.K.
+0x0000000080036204 in ?? ()
+[ok] fence.i
+Hardware assisted breakpoint 1 at 0x8003610a
+[zero0] 0x80040000-0x80200000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero0] done
+[zero1] 0x830D4808-0x84000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero1] done
+[zero1b] 0x84001070-0x84100000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero1b] done
+[zero2] 0x84100000-0xA0000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero2] done
+[zero3] 0xA0000000-0xC0000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero3] done
+[zero4] 0xC0000000-0x100000000...
+
+Breakpoint 1, 0x000000008003610a in ?? ()
+[zero4] done
+[ALL DDR ZEROED]
+
+=== Phase 2: Skipped (L2 flush deferred to Phase 3.5) ===
+
+=== Phase 3: Restore entire fw_payload.bin (49MB via SBA) ===
+O.K.
+O.K.
+0x0000000080036204 in ?? ()
+[ok] fence.i
+[restore] Loading fw_payload.bin in 13 chunks (4MB each)...
+[restore] Will reconnect every 4 chunks to avoid J-Link timeout
+[restore 1/13] chunk_00.bin -> 0x80000000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_00.bin into memory (0x80000000 to 0x80400000)
+[restore 1/13] done
+[restore 2/13] chunk_01.bin -> 0x80400000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_01.bin into memory (0x80400000 to 0x80800000)
+[restore 2/13] done
+[restore 3/13] chunk_02.bin -> 0x80800000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_02.bin into memory (0x80800000 to 0x80c00000)
+[restore 3/13] done
+[restore 4/13] chunk_03.bin -> 0x80c00000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_03.bin into memory (0x80c00000 to 0x81000000)
+[restore 4/13] done
+[reconnect] Cycling J-Link connection after 4 chunks...
+0x0000000080036204 in ?? ()
+[reconnect] OK
+[restore 5/13] chunk_04.bin -> 0x81000000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_04.bin into memory (0x81000000 to 0x81400000)
+[restore 5/13] done
+[restore 6/13] chunk_05.bin -> 0x81400000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_05.bin into memory (0x81400000 to 0x81800000)
+[restore 6/13] done
+[restore 7/13] chunk_06.bin -> 0x81800000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_06.bin into memory (0x81800000 to 0x81c00000)
+[restore 7/13] done
+[restore 8/13] chunk_07.bin -> 0x81c00000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_07.bin into memory (0x81c00000 to 0x82000000)
+[restore 8/13] done
+[reconnect] Cycling J-Link connection after 8 chunks...
+0x0000000080036204 in ?? ()
+[reconnect] OK
+[restore 9/13] chunk_08.bin -> 0x82000000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_08.bin into memory (0x82000000 to 0x82400000)
+[restore 9/13] done
+[restore 10/13] chunk_09.bin -> 0x82400000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_09.bin into memory (0x82400000 to 0x82800000)
+[restore 10/13] done
+[restore 11/13] chunk_10.bin -> 0x82800000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_10.bin into memory (0x82800000 to 0x82c00000)
+[restore 11/13] done
+[restore 12/13] chunk_11.bin -> 0x82c00000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_11.bin into memory (0x82c00000 to 0x83000000)
+[restore 12/13] done
+[reconnect] Cycling J-Link connection after 12 chunks...
+0x0000000080036204 in ?? ()
+[reconnect] OK
+[restore 13/13] chunk_12.bin -> 0x83000000 (870408 bytes)...
+Restoring binary file /tmp/fw_chunks/chunk_12.bin into memory (0x83000000 to 0x830d4808)
+[restore 13/13] done
+[ok] fw_payload.bin restored (49MB in chunks)
+Restoring binary file /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb into memory (0x84000000 to 0x8400105d)
+[ok] DTB restored
+Restoring binary file /tmp/cmdline_rodata_patch.bin into memory (0x82cdcd88 to 0x82cdcdb1)
+Restoring binary file /tmp/cmdline_rodata_patch.bin into memory (0x82b4b600 to 0x82b4b629)
+Restoring binary file /tmp/cmdline_rodata_patch.bin into memory (0x80a0f8e8 to 0x80a0f911)
+[ok] CMDLINE patched
+0x82cdcd88 <payload_bin+44944776>:	"console=ttySIF0 earlycon init_on_alloc=1"
+
+=== Phase 3.5: Invalidate L2 cache for firmware region ===
+0x0000000080036204 in ?? ()
+[ok] fence.i for L2 invalidation
+Hardware assisted breakpoint 2 at 0x8003610c
+[L2inv] Invalidating L2 for firmware region (49MB)...
+
+Breakpoint 2, 0x000000008003610c in ?? ()
+[L2inv] done
+Hardware assisted breakpoint 3 at 0x8003610c
+[L2inv] Invalidating L2 for DTB region...
+
+Breakpoint 3, 0x000000008003610c in ?? ()
+[L2inv] done
+[verify] Checking SBA write integrity...
+0x80200000 <payload_bin>:	0x106f5a4d	0x00010ce0
+0x83000000 <payload_bin+48234496>:	0x00000000	0x00000000
+0x82e00000 <payload_bin+46137344>:	0x0000001e	0x00000000
+0x830d4800 <payload_bin+49104896>:	0x00000000	0x00000000
+[ok] plist_test patched out (returns 0)
+[ok] dma_atomic_pool_init patched out (returns 0)
+[ok] strlen patched with 127-byte bound
+[ok] pty_init patched out (returns 0)
+
+=== Phase 4: Flush L2 for patched addresses ===
+0x0000000080036204 in ?? ()
+[ok] fence.i after binary patches
+
+=== Phase 5: Boot to _start_kernel ===
+Hardware assisted breakpoint 4 at 0x8000b2b2: file /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_hart.c, line 830.
+[boot] Running OpenSBI to mret...
+
+Breakpoint 4, sbi_hart_switch_mode (arg0=arg0@entry=0, arg1=2185232384, next_addr=2149580800, next_mode=1, next_virt=next_virt@entry=0) at /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_hart.c:830
+830		__asm__ __volatile__("mret" : : "r"(a0), "r"(a1));
+[OK] OpenSBI reached mret
+Hardware assisted breakpoint 5 at 0x80200000
+
+Breakpoint 5, 0x0000000080200000 in payload_bin ()
+[OK] Linux _start: pc=0x80200000
+
+=== Phase 6: Clear dcsr ebreak bits ===
+[dcsr] Before: O.K.:0x4000F081
+[dcsr] old=0x4000F081 -> new=0x40004081 (cleared bits 15,13,12)
+[dcsr] prv preserved = 1 (1=S-mode, 3=M-mode)
+O.K.
+[dcsr] After:  O.K.:0x40004081
+[OK] dcsr ebreak bits cleared (prv unchanged)
+
+=== Phase 7: Launch kernel + timed dmesg dump ===
+Kernel will run for 120s, then halt for log dump.
+[boot] Kernel running... disconnecting GDB.
+[boot] Disconnected. Waiting 120 seconds...
+[halt] Reconnecting to halt CPU...
+0x0000000080016060 in sbi_emulate_csr_read (csr_num=csr_num@entry=3073, regs=regs@entry=0x80037ee8, csr_val=csr_val@entry=0x80037d50) at /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_emulate_csr.c:77
+77			*csr_val = (virt) ? sbi_timer_virt_value():
+[halt] Connected. CPU should be halted.
+[state] PC = 0x0000000080016060
+[log] log_buf = 0xffffffff82ee7108
+[log] log_buf_len = 0x20000 (131072)
+[log] Using static __log_buf PA = 0x830e7108
+[log] Using log_buf_len = 131072 bytes
+[dump] Dumping 0x20000 bytes from PA 0x830e7108...
+[dump] Saved to /tmp/klog_latest.bin
+[state] satp = 0x0000000000000000
+[state] scause: Cannot convert value to long.
+[state] sepc: Cannot convert value to long.
+
+[DONE] Dmesg dump complete. Check /tmp/klog_latest.bin
