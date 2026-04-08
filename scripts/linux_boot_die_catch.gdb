@@ -42,7 +42,7 @@ import os, gdb, time
 # Strategy: write 256KB via SBA, then immediately copyback (ld+sd) to make dirty.
 # 256KB = 4096 lines = 4 lines/set (out of 8 ways), safe from self-eviction.
 
-COPYBACK_ADDR = 0x81200000
+COPYBACK_ADDR = 0x80F00000
 SUB_CHUNK = 256 * 1024  # 256KB sub-chunks for interleaved write+copyback
 
 # Write the copyback routine via SBA (6 instructions = 24 bytes)
@@ -83,7 +83,7 @@ def run_copyback(start, end_aligned):
         gdb.write(f"[WARN] copyback incomplete: a0=0x{a0_after:x} expected 0x{end_aligned:x}\n")
 
 # --- Load payload with interleaved copyback ---
-chunk_dir = "/tmp/fw_chunks_norvc"
+chunk_dir = "/tmp/fw_chunks_new"
 base_addr = 0x80000000
 chunk_size = 4194304  # 4MB per file chunk
 chunks = sorted([f for f in os.listdir(chunk_dir) if f.startswith("chunk_") and f.endswith(".bin")])
@@ -130,7 +130,7 @@ gdb.write(f"[dtb] Using: {dtb_path}\n")
 gdb.execute(f"restore {dtb_path} binary 0x84000000")
 
 # Copyback DTB immediately (< 4KB = 66 cache lines, trivial)
-COPYBACK_ADDR = 0x81200000
+COPYBACK_ADDR = 0x80F00000
 dtb_size = os.path.getsize(dtb_path)
 dtb_end = (0x84000000 + dtb_size + 63) & ~63
 gdb.execute(f"set $a0 = 0x84000000")
@@ -192,31 +192,30 @@ if pc2 != 0x80200000:
     gdb.write("[WARN] Did not stop at Linux _start as expected\n")
 end
 
-echo \n=== Phase 3: Run kernel for a short window, then halt ===\n
+echo \n=== Phase 3: Set hbreak at die(), continue, catch crash ===\n
 symbol-file /root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux
 
 python
-import gdb, time, os, re
-run_secs = int(os.environ.get("KERNEL_RUN_SECS", "20"))
-run_tag = os.environ.get("RUN_TAG", time.strftime("timedcap_%Y%m%d_%H%M%S"))
-summary = f"/tmp/{run_tag}_timed_capture.txt"
+import gdb, re
 
+# Clear hardware triggers first
 for trig_idx in range(2):
     gdb.execute(f"monitor WriteCSR 0x7a0 {trig_idx}")
     gdb.execute("monitor WriteCSR 0x7a1 0")
     gdb.execute("monitor WriteCSR 0x7a2 0")
 gdb.write("[OK] Hardware triggers cleared\n")
+end
 
-gdb.execute("monitor go")
-gdb.write(f"[run] Kernel running for {run_secs}s...\n")
-time.sleep(run_secs)
-gdb.write(f"[run] {run_secs}s elapsed, halting target...\n")
-gdb.execute("monitor halt")
-time.sleep(2)
-try:
-    gdb.execute("maintenance flush register-cache")
-except gdb.error:
-    pass
+# Set hbreak at die() VA - will fire once MMU is on and kernel hits die()
+delete breakpoints
+hbreak *0xffffffff8000480e
+echo [boot] hbreak at die() set, continuing kernel boot...\n
+continue
+
+echo \n=== Caught die() - dumping full state ===\n
+
+python
+import gdb, re, time
 
 def read_csr(csr_num):
     out = gdb.execute(f"monitor ReadCSR 0x{csr_num:x}", to_string=True)
@@ -224,90 +223,60 @@ def read_csr(csr_num):
     return (int(m.group(1), 16) if m else None, out.strip())
 
 pc = int(gdb.parse_and_eval("$pc")) & 0xFFFFFFFFFFFFFFFF
+gdb.write(f"[die] PC = 0x{pc:016x}\n")
 
-# Read ALL relevant CSRs - both S-mode and M-mode
-csrs = {}
-for name, num in [("sepc", 0x141), ("scause", 0x142), ("stval", 0x143),
-                  ("satp", 0x180), ("sstatus", 0x100), ("stvec", 0x105),
-                  ("mepc", 0x341), ("mcause", 0x342), ("mtval", 0x343),
-                  ("mstatus", 0x300), ("mtvec", 0x305), ("medeleg", 0x302),
-                  ("mideleg", 0x303), ("dcsr", 0x7b0), ("dpc", 0x7b1)]:
-    val, raw = read_csr(num)
-    csrs[name] = (val, raw)
-    gdb.write(f"[csr] {name:10s} = {raw}\n")
-
-gdb.write(f"\n[stop] PC = 0x{pc:016x}\n")
+# Check if we actually stopped at die
+if pc != 0xffffffff8000480e:
+    gdb.write(f"[WARN] PC is NOT at die() - unexpected stop\n")
 
 # Dump all GPRs
-gdb.write("\n[regs] All GPRs:\n")
 gdb.execute("info reg pc ra sp gp tp t0 t1 t2 s0 s1 a0 a1 a2 a3 a4 a5 a6 a7 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 t3 t4 t5 t6")
 
-# Check medeleg to see which exceptions are delegated
-medeleg = csrs["medeleg"][0]
-if medeleg is not None:
-    gdb.write(f"\n[analysis] medeleg = 0x{medeleg:016x}\n")
-    exc_names = {0: "InstrMisalign", 1: "InstrAccess", 2: "IllegalInstr", 3: "Breakpoint",
-                 4: "LoadMisalign", 5: "LoadAccess", 6: "StoreMisalign", 7: "StoreAccess",
-                 8: "UEcall", 9: "SEcall", 12: "InstrPageFault", 13: "LoadPageFault",
-                 15: "StorePageFault"}
-    for bit in range(16):
-        delegated = "delegated" if (medeleg >> bit) & 1 else "NOT delegated"
-        name = exc_names.get(bit, f"exc{bit}")
-        gdb.write(f"  [{bit:2d}] {name:20s} : {delegated}\n")
+# Dump critical CSRs
+for name, num in [("sepc", 0x141), ("scause", 0x142), ("stval", 0x143), 
+                  ("satp", 0x180), ("sstatus", 0x100), ("stvec", 0x105),
+                  ("sscratch", 0x140), ("mepc", 0x341), ("mcause", 0x342),
+                  ("mtval", 0x343), ("mstatus", 0x300)]:
+    val, raw = read_csr(num)
+    gdb.write(f"[csr] {name:10s} = {raw}\n")
 
-# Interpret scause and mcause
-for prefix in ["s", "m"]:
-    cause_name = f"{prefix}cause"
-    cause_val = csrs[cause_name][0]
-    if cause_val is not None:
-        is_interrupt = (cause_val >> 63) & 1
-        code = cause_val & 0x7FFFFFFFFFFFFFFF
-        kind = "interrupt" if is_interrupt else "exception"
-        gdb.write(f"\n[{cause_name}] = {kind} code={code}\n")
-
-# Save summary
-with open(summary, "w") as f:
-    f.write(f"pc=0x{pc:016x}\n")
-    for name, (val, raw) in csrs.items():
-        f.write(f"{name}={raw}\n")
-gdb.write(f"\n[files] Summary: {summary}\n")
-
-# Disassemble at PC and sepc
+# Try backtrace
+gdb.write("\n[die] Backtrace:\n")
 try:
-    gdb.execute("info symbol $pc")
-    gdb.execute("x/8i $pc")
-except gdb.error as err:
-    gdb.write(f"[pc] symbol/disasm unavailable: {err}\n")
-
-sepc = csrs["sepc"][0]
-if sepc is not None:
-    try:
-        gdb.write(f"\n[fault] Disassembly at sepc=0x{sepc:016x}\n")
-        gdb.execute(f"info symbol 0x{sepc:x}")
-        gdb.execute(f"x/8i 0x{sepc:x}")
-    except gdb.error as err:
-        gdb.write(f"[fault] Could not inspect sepc: {err}\n")
-
-mepc = csrs["mepc"][0]
-if mepc is not None and mepc != 0:
-    try:
-        gdb.write(f"\n[trap] Disassembly at mepc=0x{mepc:016x}\n")
-        gdb.execute(f"x/8i 0x{mepc:x}")
-    except gdb.error as err:
-        gdb.write(f"[trap] Could not inspect mepc: {err}\n")
-
-try:
-    gdb.execute("bt 30")
+    gdb.execute("bt 20")
 except gdb.error as err:
     gdb.write(f"[bt] unavailable: {err}\n")
 
-# Dump klog region: 128KB from __log_buf area
-gdb.write("\n[klog] Dumping klog to /tmp/klog_die_catch.bin\n")
+# Disassemble at PC
+gdb.write("\n[die] Disassembly at PC:\n")
 try:
-    gdb.execute("dump binary memory /tmp/klog_die_catch.bin 0x810D0000 0x81100000")
-    gdb.write("[klog] Dumped 0x810D0000 - 0x81100000 (192KB around __log_buf PA 0x810D0060)\n")
+    gdb.execute("x/8i $pc")
 except gdb.error as err:
-    gdb.write(f"[klog] dump error: {err}\n")
+    gdb.write(f"[disasm] error: {err}\n")
+
+# Inspect die() arguments: a0 = struct pt_regs*, a1 = const char *msg
+gdb.write("\n[die] Arguments:\n")
+try:
+    regs_ptr = int(gdb.parse_and_eval("$a0")) & 0xFFFFFFFFFFFFFFFF
+    msg_ptr = int(gdb.parse_and_eval("$a1")) & 0xFFFFFFFFFFFFFFFF
+    gdb.write(f"  a0 (pt_regs*) = 0x{regs_ptr:016x}\n")
+    gdb.write(f"  a1 (msg)      = 0x{msg_ptr:016x}\n")
+    # Try to read the message string
+    gdb.execute(f"x/s 0x{msg_ptr:x}")
+    # Dump pt_regs: 32 GPRs + sepc + sstatus = 34 entries × 8 bytes
+    gdb.write("\n[die] pt_regs dump (saved regs at exception time):\n")
+    reg_names = ["zero/epc", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
+                 "s0/fp", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
+                 "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
+                 "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6",
+                 "sepc", "sstatus", "badaddr", "cause"]
+    for j in range(min(36, len(reg_names))):
+        val = int(gdb.parse_and_eval(f"*(unsigned long long*)(0x{regs_ptr:x} + {j*8})")) & 0xFFFFFFFFFFFFFFFF
+        gdb.write(f"  pt_regs[{j:2d}] {reg_names[j]:10s} = 0x{val:016x}\n")
+except gdb.error as err:
+    gdb.write(f"  [error reading die args: {err}]\n")
+
+gdb.write("\n[die] Done. CPU halted at die() entry.\n")
 end
 
 quit
