@@ -159,19 +159,19 @@ set $a2 = 0
 set $pc = 0x80000000
 
 delete breakpoints
-hbreak *0x8000b1ca
+hbreak *0x8000ad3c
 echo [boot] Running OpenSBI to mret...\n
 continue
 
 python
 import gdb, re
 pc = int(gdb.parse_and_eval("$pc"))
-if pc != 0x8000b1ca:
-    gdb.write(f"[FAIL] Expected mret at 0x8000b1ca, got 0x{pc:x}\n")
+if pc != 0x8000ad3c:
+    gdb.write(f"[FAIL] Expected mret at 0x8000ad3c, got 0x{pc:x}\n")
     gdb.execute("info reg pc ra sp a0 a1 a2")
     gdb.execute("x/8i $pc")
     raise gdb.GdbError("OpenSBI did not reach mret")
-gdb.write("[OK] OpenSBI reached mret at 0x8000b1ca\n")
+gdb.write("[OK] OpenSBI reached mret at 0x8000ad3c\n")
 gdb.execute("delete breakpoints")
 gdb.execute("set $a1 = 0x84000000")
 out = gdb.execute("monitor ReadCSR 0x7b0", to_string=True)
@@ -214,8 +214,8 @@ if die_catch:
     # die_kernel_fault(const char *msg, unsigned long addr, struct pt_regs *regs)
     # a0=msg, a1=badaddr, a2=pt_regs
     gdb.execute("delete breakpoints")
-    die_kf_addr = 0xffffffff800089c8
-    die_kf_pa = 0x802089c8  # PA = VA - 0xffffffff80000000 + 0x80200000
+    die_kf_addr = 0xffffffff8000687c
+    die_kf_pa = 0x8020687c  # PA = VA - 0xffffffff80000000 + 0x80200000
     
     # Set mcontrol trigger: type=2, dmode=1, s=1, m=1, execute=1, action=1(debug)
     # tdata1 = (2<<60)|(1<<59)|(1<<12)|(1<<6)|(1<<4)|(1<<2) = 0x2800000000001054
@@ -523,8 +523,8 @@ except gdb.error as err:
 klog_file = f"/tmp/{run_tag}_klog.bin"
 gdb.write(f"\n[klog] Dumping klog to {klog_file}\n")
 try:
-    gdb.execute(f"dump binary memory {klog_file} 0x810D0000 0x81100000")
-    gdb.write(f"[klog] Dumped 0x810D0000 - 0x81100000 (192KB around __log_buf PA 0x810D0060)\n")
+    gdb.execute(f"dump binary memory {klog_file} 0x80ED0000 0x80F10000")
+    gdb.write(f"[klog] Dumped 0x80ED0000 - 0x80F10000 (128KB around __log_buf PA 0x80ED0060)\n")
 except gdb.error as err:
     gdb.write(f"[klog] dump error: {err}\n")
 
