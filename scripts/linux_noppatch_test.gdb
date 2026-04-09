@@ -425,6 +425,14 @@ if die_catch:
         except Exception as e:
             gdb.write(f"[stack] Error: {e}\n")
 else:
+    # Fix: Clear UART IE register to prevent IRQ race in sifive_serial_probe
+    # Use J-Link monitor command to write MMIO directly (SBA write hangs on MMIO)
+    try:
+        # UART base=0x64000000, IE offset=0x10
+        gdb.execute("monitor WriteU32 0x64000010 0")
+        gdb.write("[fix] UART IE at 0x64000010 cleared via J-Link WriteU32\n")
+    except Exception as e:
+        gdb.write(f"[fix] WARN: UART IE clear failed: {e}\n")
     gdb.execute("monitor go")
     gdb.write(f"[run] Kernel running for {run_secs}s...\n")
     time.sleep(run_secs)
