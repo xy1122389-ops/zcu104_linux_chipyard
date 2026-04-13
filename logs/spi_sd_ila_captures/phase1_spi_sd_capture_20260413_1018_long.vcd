@@ -1,0 +1,20 @@
+$date
+        2026-Apr-13 10:55:05
+$end
+$version
+        Vivado v2021.2 (64-bit)
+$end
+$timescale
+        1ps
+$end
+$scope module dut $end
+$var reg 1 " chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_clk_OBUF $end
+$var reg 1 # chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_dat_3_OBUF $end
+$var reg 1 $ \chiptop0/system/spiClockDomainWrapper/spi_0/mac/phy/txd[0]_i_1_n_0 $end
+$var reg 1 % sdio_spi_dat_0_IBUF $end
+$var reg 1 & io_spi_bbIn_dq_1_i_REG_1 $end
+$var reg 1 ' _TRIGGER $end
+$var reg 1 ( _WINDOW $end
+$var reg 1 ) _GAP $end
+$upscope $end
+$enddefinitions $end

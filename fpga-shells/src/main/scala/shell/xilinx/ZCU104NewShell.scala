@@ -55,6 +55,27 @@ class UARTZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: UAR
   def place(designInput: UARTDesignInput) = new UARTZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
+// UART1 on PMOD1_2/3 (L8=RXD, K8=TXD) — for SLIP networking
+class UART1ZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
+    val designInput: UARTDesignInput, val shellInput: UARTShellInput)
+  extends UARTXilinxPlacedOverlay(name, designInput, shellInput, false)
+{
+  shell { InModuleBody {
+    val packagePinsWithPackageIOs = Seq(
+      ("L8", IOPin(io.rxd)),   // PMOD1_2 = L8 → UART1 RXD
+      ("K8", IOPin(io.txd)))   // PMOD1_3 = K8 → UART1 TXD
+    packagePinsWithPackageIOs foreach { case (pin, io) => {
+      shell.xdc.addPackagePin(io, pin)
+      shell.xdc.addIOStandard(io, "LVCMOS33")
+    }}
+  }}
+}
+class UART1ZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: UARTShellInput)(implicit val valName: ValName)
+  extends UARTShellPlacer[ZCU104ShellBasicOverlays]
+{
+  def place(designInput: UARTDesignInput) = new UART1ZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
+}
+
 // SDIO on PMOD J55
 // NOTE: Bank 67/68 are HP banks on ZCU104 - must use LVCMOS18, NOT LVCMOS33
 class SDIOZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
@@ -137,6 +158,7 @@ class WithZCU104ShellPMODSDIO extends WithZCU104ShellPMOD("SDIO")
 class ZCU104Shell()(implicit p: Parameters) extends ZCU104ShellBasicOverlays {
   val pmod_is_sdio = p(ZCU104ShellPMOD) == "SDIO"
 
+  val uart1     = Overlay(UARTOverlayKey, new UART1ZCU104ShellPlacer(this, UARTShellInput(index = 1)))
   val uart      = Overlay(UARTOverlayKey, new UARTZCU104ShellPlacer(this, UARTShellInput()))
   val sdio      = if (pmod_is_sdio) Some(Overlay(SPIOverlayKey, new SDIOZCU104ShellPlacer(this, SPIShellInput()))) else None
   val jtag      = Overlay(JTAGDebugOverlayKey, new JTAGDebugZCU104ShellPlacer(this, JTAGDebugShellInput()))

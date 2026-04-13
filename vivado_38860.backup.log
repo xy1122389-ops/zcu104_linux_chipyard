@@ -1,0 +1,78 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Mon Apr 13 10:11:56 2026
+# Process ID: 38860
+# Current directory: Z:/root/chipyard/fpga
+# Command line: vivado.exe -mode batch -source \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_spi_sd.tcl -tclargs /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/spi_sd_ila/spi_sd_ila.ltx /root/chipyard/fpga/logs/spi_sd_ila_captures/spi_sd_ila_smoketest2 0.1
+# Log file: Z:/root/chipyard/fpga/vivado.log
+# Journal file: Z:/root/chipyard/fpga\vivado.jou
+# Running On: YXY, OS: Windows, CPU Frequency: 2495 MHz, CPU Physical cores: 32, Host memory: 33483 MB
+#-----------------------------------------------------------
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_spi_sd.tcl}
+# if {$argc < 2} {
+#   puts "Usage: vivado -mode batch -source scripts/capture_hw_ila_spi_sd.tcl -tclargs <ltx_file> <out_base> ?timeout_mins?"
+#   exit 2
+# }
+# proc find_probe_by_name {ila probe_name} {
+#   foreach probe [get_hw_probes -of_objects $ila] {
+#     if {[get_property NAME $probe] eq $probe_name} {
+#       return $probe
+#     }
+#   }
+#   return ""
+# }
+# set ltx_file [lindex $argv 0]
+# set out_base [lindex $argv 1]
+# set timeout_mins [lindex $argv 2]
+# if {$timeout_mins eq ""} {
+#   set timeout_mins 15
+# }
+# set cs_probe_name chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_dat_3_OBUF
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:09 . Memory (MB): peak = 1603.457 ; gain = 0.000
+# catch {close_hw_target}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/07198A is already closed
+# set target [lindex [get_hw_targets] 0]
+# open_hw_target $target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/07198Aopen_hw_target: Time (s): cpu = 00:00:00 ; elapsed = 00:00:23 . Memory (MB): peak = 1602.945 ; gain = 0.000
+# set dev [lindex [get_hw_devices] 0]
+# if {$dev eq ""} {
+#   puts "ERROR: no hardware device found"
+#   exit 3
+# }
+# current_hw_device $dev
+# set_property BSCAN_SWITCH_USER_MASK 0001 $dev
+# set_property PROBES.FILE $ltx_file $dev
+# set_property FULL_PROBES.FILE $ltx_file $dev
+# refresh_hw_device $dev
+INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+refresh_hw_device: Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 2524.457 ; gain = 921.512
+# set ila [lindex [get_hw_ilas] 0]
+# if {$ila eq ""} {
+#   puts "ERROR: no ILA found after refresh"
+#   exit 4
+# }
+# current_hw_ila $ila
+# set cs_probe [find_probe_by_name $ila $cs_probe_name]
+# if {$cs_probe eq ""} {
+#   puts "ERROR: failed to locate CS probe '$cs_probe_name'"
+#   puts "Available probes:"
+#   foreach probe [get_hw_probes -of_objects $ila] {
+#     puts "  [get_property NAME $probe]"
+#   }
+#   exit 5
+# }
+# reset_hw_ila $ila
+# set_property CONTROL.DATA_DEPTH 8192 $ila
+# set_property CONTROL.WINDOW_COUNT 1 $ila
+# set_property CONTROL.TRIGGER_POSITION 512 $ila
+# set_property CONTROL.TRIGGER_CONDITION AND $ila
+# set_property CONTROL.CAPTURE_MODE ALWAYS $ila
+ERROR: [Labtoolstcl 44-156] hw_ila property 'CONTROL.CAPTURE_MODE' is read-only.
+INFO: [Common 17-206] Exiting Vivado at Mon Apr 13 10:12:24 2026...

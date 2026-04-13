@@ -1,0 +1,2 @@
+Sample in Buffer,Sample in Window,TRIGGER,chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_clk_OBUF,chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_dat_3_OBUF,chiptop0/system/spiClockDomainWrapper/spi_0/mac/phy/txd[0]_i_1_n_0,sdio_spi_dat_0_IBUF,io_spi_bbIn_dq_1_i_REG_1
+Radix - UNSIGNED,UNSIGNED,UNSIGNED,HEX,HEX,HEX,HEX,HEX

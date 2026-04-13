@@ -1,24 +1,38 @@
 #!/bin/sh
+PATH=/bin:/sbin
 
-# Create /dev/kmsg for printk output (major 1, minor 11)
-mknod /dev/kmsg c 1 11 2>/dev/null
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
 
-# Log to both console and kernel log ring buffer
+/bin/busybox mknod /dev/kmsg c 1 11 2>/dev/null
 log() {
     echo "$1"
     echo "$1" > /dev/kmsg 2>/dev/null
 }
 
-log "=== Minimal Linux booted successfully ==="
-log "Welcome to RISC-V Rocket on ZCU104!"
-log "init: PID=$$"
-log "init: about to exec /bin/sh"
+log "rescue-init: SPI-SD smoke test start"
+log "rescue-init: waiting for /dev/mmcblk0p1"
 
-# Also add devmem and mknod symlinks if not present
-ln -s /bin/busybox /bin/devmem 2>/dev/null
-ln -s /bin/busybox /bin/dmesg 2>/dev/null
-ln -s /bin/busybox /bin/mknod 2>/dev/null
+i=0
+while [ ! -b /dev/mmcblk0p1 ] && [ "$i" -lt 30 ]; do
+    sleep 1
+    i=$((i + 1))
+done
 
-# Exec shell - shell prompt goes to console UART only
-# To see if shell is alive, check klog for the messages above
-exec /bin/sh
+log "rescue-init: current block devices"
+cat /proc/partitions
+
+mkdir -p /newroot
+if ! mount -t ext4 /dev/mmcblk0p1 /newroot; then
+    log "rescue-init: mount /dev/mmcblk0p1 failed"
+    exec /bin/sh
+fi
+
+if [ ! -x /newroot/sbin/init ]; then
+    log "rescue-init: /newroot/sbin/init missing"
+    exec /bin/sh
+fi
+
+log "rescue-init: switch_root to SD root"
+exec switch_root /newroot /sbin/init

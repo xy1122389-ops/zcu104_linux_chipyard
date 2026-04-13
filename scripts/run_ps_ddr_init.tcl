@@ -11,25 +11,36 @@ proc step {label body} {
   }
 }
 
-if {[info exists ::env(CHIPYARD_ZCU104_CFG)] && $::env(CHIPYARD_ZCU104_CFG) ne ""} {
-  set zcu104_cfg $::env(CHIPYARD_ZCU104_CFG)
+if {[info exists ::env(CHIPYARD_BITSTREAM_LINUX)] && $::env(CHIPYARD_BITSTREAM_LINUX) ne ""} {
+  if {$tcl_platform(platform) eq "windows"} {
+    set bit_file $::env(CHIPYARD_BITSTREAM_WINDOWS)
+    set psu_init_tcl $::env(CHIPYARD_PSU_INIT_TCL_WINDOWS)
+  } else {
+    set bit_file $::env(CHIPYARD_BITSTREAM_LINUX)
+    set psu_init_tcl $::env(CHIPYARD_PSU_INIT_TCL_LINUX)
+  }
+  set zcu104_cfg "direct-bitstream"
 } else {
-  set zcu104_cfg "RocketZCU104Config"
-}
+  if {[info exists ::env(CHIPYARD_ZCU104_CFG)] && $::env(CHIPYARD_ZCU104_CFG) ne ""} {
+    set zcu104_cfg $::env(CHIPYARD_ZCU104_CFG)
+  } else {
+    set zcu104_cfg "RocketZCU104Config"
+  }
 
-set linux_obj_dir "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"
-set windows_obj_dir [string map {/ \\} "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]
-set linux_psu_init "${linux_obj_dir}/ip/zcu104ps/psu_init.tcl"
-set linux_bit "${linux_obj_dir}/ZCU104FPGATestHarness.bit"
-set windows_psu_init "${windows_obj_dir}\\ip\\zcu104ps\\psu_init.tcl"
-set windows_bit "${windows_obj_dir}\\ZCU104FPGATestHarness.bit"
+  set linux_obj_dir "/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"
+  set windows_obj_dir [string map {/ \\} "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]
+  set linux_psu_init "${linux_obj_dir}/ip/zcu104ps/psu_init.tcl"
+  set linux_bit "${linux_obj_dir}/ZCU104FPGATestHarness.bit"
+  set windows_psu_init "${windows_obj_dir}\\ip\\zcu104ps\\psu_init.tcl"
+  set windows_bit "${windows_obj_dir}\\ZCU104FPGATestHarness.bit"
 
-if {$tcl_platform(platform) eq "windows"} {
-  set psu_init_tcl $windows_psu_init
-  set bit_file $windows_bit
-} else {
-  set psu_init_tcl $linux_psu_init
-  set bit_file $linux_bit
+  if {$tcl_platform(platform) eq "windows"} {
+    set psu_init_tcl $windows_psu_init
+    set bit_file $windows_bit
+  } else {
+    set psu_init_tcl $linux_psu_init
+    set bit_file $linux_bit
+  }
 }
 
 step "check input files" {

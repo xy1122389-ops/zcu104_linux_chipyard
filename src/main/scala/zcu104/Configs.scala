@@ -22,7 +22,10 @@ import chipyard._
 import chipyard.harness._
 
 class WithZCU104DefaultPeripherals extends Config((site, here, up) => {
-  case PeripheryUARTKey => List(UARTParams(address = BigInt(0x64000000L)))
+  case PeripheryUARTKey => List(
+    UARTParams(address = BigInt(0x64000000L)),  // UART0: console (J9/K9)
+    UARTParams(address = BigInt(0x64003000L))   // UART1: SLIP networking (L8/K8)
+  )
   case PeripherySPIKey  => List(SPIParams(rAddress = BigInt(0x64001000L)))
   case ZCU104ShellPMOD  => "SDIO"
 })
@@ -50,6 +53,7 @@ class WithZCU104Tweaks extends Config(
   new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
   new WithLEDGPIO ++
   new WithUART ++
+  new WithUART1 ++
   new WithSPISDCard ++
   new WithPSDDRMem ++
   new WithJTAG ++

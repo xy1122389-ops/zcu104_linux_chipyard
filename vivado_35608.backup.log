@@ -1,0 +1,233 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Mon Apr 13 10:09:37 2026
+# Process ID: 35608
+# Current directory: Z:/root/chipyard/fpga
+# Command line: vivado.exe -mode tcl -source \\wsl$\Ubuntu-22.04\tmp\query_upload_write_help.tcl
+# Log file: Z:/root/chipyard/fpga/vivado.log
+# Journal file: Z:/root/chipyard/fpga\vivado.jou
+# Running On: YXY, OS: Windows, CPU Frequency: 2495 MHz, CPU Physical cores: 32, Host memory: 33483 MB
+#-----------------------------------------------------------
+source {\\wsl$\Ubuntu-22.04\tmp\query_upload_write_help.tcl}
+# load_features labtools
+# puts [help upload_hw_ila_data]
+upload_hw_ila_data
+
+Description: 
+Stop capturing. Upload any captured hardware ILA data.
+
+Syntax: 
+upload_hw_ila_data  [-quiet] [-verbose] [<hw_ilas>...]
+
+Returns: 
+hardware ILA data objects
+
+Usage: 
+  Name         Description
+  ------------------------
+  [-quiet]     Ignore command errors
+  [-verbose]   Suspend message limits during command execution
+  [<hw_ilas>]  List of hardware ILA objects.
+               Default: Current hardware ILA
+
+Categories: 
+Hardware
+
+Description:
+
+  Upload the captured data from the memory buffers of the specified ILA debug
+  cores on the Xilinx FPGA hardware device, and move it into a hw_ila_data
+  object in the Vivado logic analyzer.
+
+  You can upload captured data from the ILA debug core at any time during the
+  capture process triggered by the run_hw_ila command. However, you may want
+  to use the wait_on_hw_ila command in any Tcl scripts, to wait until the
+  sample data buffers of the ILA core are fully populated with data. If you
+  run the upload_hw_ila_data command prior to this, you may see a message as
+  follows:
+
+    INFO: [Labtools 27-1965] The ILA core `hw_ila_1` trigger was stopped by user \  
+    at 2014-Mar-06 08:59:30  
+    INFO: [Labtools 27-2212] The ILA core `hw_ila_1` captured `6` windows with \  
+    `64` samples each, and a last partial window with `0` samples. 
+    
+
+  The upload process creates a hw_ila_data object in the process of moving
+  the captured data from the ILA debug core, hw_ila, on the physical FPGA
+  device, hw_device. The hw_ila_data object is named after the hw_ila core it
+  is uploaded from.
+
+  Note: Each hw_ila object has only one matching hw_ila_data object
+  associated with it. Each time upload_hw_ila_data is run for a specific
+  hw_ila core, the hw_ila_data object is overwritten if it already exists.
+
+  The data object, hw_ila_data can be viewed in the waveform viewer of the
+  Vivado logic analyzer by using the display_hw_ila_data command, and can be
+  written to disk using the write_hw_ila_data command.
+
+  This command returns a hw_ila_data object, or returns an error if it fails.
+
+Arguments:
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+  <hw_ilas> - (Optional) Specify one or more hw_ila objects to upload data
+  from. The hw_ila objects can either be specified as objects returned by the
+  get_hw_ilas or current_hw_ila commands, or specified by name. If the hw_ila
+  is not specified, the data will be uploaded from the current_hw_ila.
+
+Example:
+
+  The following example arms the current hardware ILA debug core on the
+  target hw_device, captures sample data at the probes as trigger events or
+  capture conditions are encountered. Tcl script processing is suspended
+  while sample data is captured, and then the data is uploaded from the
+  hw_ila on the hw_device, into a hw_ila_data object:
+
+    run_hw_ila -trigger_now [current_hw_ila]  
+    wait_on_hw_ila [current_hw_ila]  
+    upload_hw_ila_data [current_hw_ila] 
+    
+
+See Also:
+
+   *  current_hw_device
+   *  current_hw_ila
+   *  current_hw_ila_data
+   *  display_hw_ila_data
+   *  get_hw_devices
+   *  get_hw_ilas
+   *  get_hw_ila_datas
+   *  run_hw_ila
+   *  wait_on_hw_ila
+   *  write_hw_ila_data
+
+# puts [help write_hw_ila_data]
+write_hw_ila_data
+
+Description: 
+Write hardware ILA data to a file
+
+Syntax: 
+write_hw_ila_data  [-force] [-csv_file] [-vcd_file] [-legacy_csv_file] [-quiet]
+                   [-verbose] <file> [<hw_ila_data>] [<hw_ila_data>]
+
+Returns: 
+Name of the output file
+
+Usage: 
+  Name                Description
+  -------------------------------
+  [-force]            Overwrite existing file
+  [-csv_file]         Export CSV format file only
+  [-vcd_file]         Export VCD format file only
+  [-legacy_csv_file]  Export csv file without radix information.
+  [-quiet]            Ignore command errors
+  [-verbose]          Suspend message limits during command execution
+  <file>              hardware ILA data file name
+  [<hw_ila_data>]     hardware ILA data object
+                      Default: Current hardware ILA data
+
+Categories: 
+Hardware
+
+Description:
+
+  Write the ILA debug core sample data, stored in the specified hw_ila_data
+  object, to a binary file on the disk.
+
+  A hw_ila_data object is created when the hw_ila is triggered on the
+  hw_device, or by the upload_hw_ila_data command when moving the captured
+  data from the physical FPGA device, hw_device.
+
+  The write_hw_ila_data lets you write the data of the hw_ila_data object to
+  a binary file on the disk for later review. You can read the ILA debug core
+  data back into the Vivado logic analyzer using the read_hw_ila_data
+  command, which creates a new hw_ila_data object.
+
+  This command returns the name of the file written, or returns an error if
+  it fails.
+
+Arguments:
+
+  -force - (Optional) Overwrite an existing file of the same name if one
+  exists.
+
+  -csv_file - (Optional) Export a comma-separated values (CSV) file only.
+  This configures the write_hw_ila_data command to export the ILA data in the
+  form of a CSV file that can be used to import into a spreadsheet or
+  third-party application, rather than the default binary ILA file format.
+
+  -vcd_file - (Optional) Export a value change dump (VCD) file only. This
+  configures the write_hw_ila_data command to export the ILA data in the form
+  of a VCD file that can be used to import into a third-party application or
+  viewer, rather than the default binary ILA file format.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+  <file> - (Required) The filename of the ILA data file to write. The default
+  file extension for an ILA data file is .ila. The default file extension for
+  -csv_file is .csv, and for -vcd_file is .vcd.
+
+  Note: If the path is not specified as part of the file name, the file will
+  be written into the current working directory, or the directory from which
+  the tool was launched.
+
+  <hw_ila_data> - (Optional) The hardware ILA data to write to the specified
+  file. The hw_ila_data must be specified as an object, as returned by the
+  get_hw_ila_datas or the current_hw_ila_data commands. If no hw_ila_data
+  object is specified, the current hw_ila_data is written to the specified
+  file.
+
+Example:
+
+  The following example uploads the data from the hw_ila debug core into a
+  hw_ila_data object, and then writes that data object to the specified ILA
+  data file, overwriting an existing file if one exists:
+
+    write_hw_ila_data -force design1_ila_data [upload_hw_ila_data hw_ila_1] 
+    
+
+  This example triggers the hw_ila, then writes the captured hw_ila_data to a
+  CSV file:
+
+    run_hw_ila hw_ila_1  
+    write_hw_ila_data -csv_file C:/Data/design1_ila_data [current_hw_ila_data] 
+    
+
+See Also:
+
+   *  current_hw_ila
+   *  current_hw_ila_data
+   *  get_hw_ilas
+   *  get_hw_ila_datas
+   *  run_hw_ila
+   *  upload_hw_ila_data
+   *  wait_on_hw_ila
+
+# exit
+INFO: [Common 17-206] Exiting Vivado at Mon Apr 13 10:09:39 2026...

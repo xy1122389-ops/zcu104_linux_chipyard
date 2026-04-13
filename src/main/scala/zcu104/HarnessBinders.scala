@@ -12,10 +12,17 @@ import chipyard._
 import chipyard.harness._
 import chipyard.iobinders._
 
-/*** UART ***/
+/*** UART0 (console) ***/
 class WithUART extends HarnessBinder({
-  case (th: ZCU104FPGATestHarnessImp, port: UARTPort, chipId: Int) => {
+  case (th: ZCU104FPGATestHarnessImp, port: UARTPort, chipId: Int) if port.uartNo == 0 => {
     th.zcu104Outer.io_uart_bb.bundle <> port.io
+  }
+})
+
+/*** UART1 (SLIP networking) ***/
+class WithUART1 extends HarnessBinder({
+  case (th: ZCU104FPGATestHarnessImp, port: UARTPort, chipId: Int) if port.uartNo == 1 => {
+    th.zcu104Outer.io_uart1_bb.bundle <> port.io
   }
 })
 

@@ -3,7 +3,7 @@ set -euo pipefail
 
 OPENSBI=/root/chipyard/software/firemarshal/boards/default/firmware/opensbi
 LINUX_IMAGE=/root/chipyard/software/firemarshal/boards/default/linux-clean/arch/riscv/boot/Image
-FW_PAYLOAD_FDT_ADDR=0x82400000
+FW_PAYLOAD_FDT_ADDR=0x84000000
 CROSS=/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-
 
 if [[ ! -f "$LINUX_IMAGE" ]]; then

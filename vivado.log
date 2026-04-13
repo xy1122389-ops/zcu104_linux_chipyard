@@ -2,47 +2,135 @@
 # Vivado v2021.2 (64-bit)
 # SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
 # IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
-# Start of session at: Wed Mar 18 18:26:52 2026
-# Process ID: 14732
+# Start of session at: Mon Apr 13 10:24:29 2026
+# Process ID: 37316
 # Current directory: Z:/root/chipyard/fpga
-# Command line: vivado.exe -nojournal -mode batch -source /root/chipyard/fpga/scripts/write_cfgmem_generic.tcl -tclargs spix1 64 /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/system.mcs /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit
+# Command line: vivado.exe -mode batch -source \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_spi_sd.tcl -tclargs /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/spi_sd_ila/spi_sd_ila.ltx /root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long 30
 # Log file: Z:/root/chipyard/fpga/vivado.log
-# Journal file: 
+# Journal file: Z:/root/chipyard/fpga\vivado.jou
 # Running On: YXY, OS: Windows, CPU Frequency: 2495 MHz, CPU Physical cores: 32, Host memory: 33483 MB
 #-----------------------------------------------------------
-source /root/chipyard/fpga/scripts/write_cfgmem_generic.tcl
-# if {$argc < 4 || $argc > 5} {
-#   puts {Error: Invalid number of arguments}
-#   puts {Usage: write_cfgmem_generic.tcl iface size mcsfile bitfile [datafile]}
-#   exit 1
+source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_spi_sd.tcl}
+# if {$argc < 2} {
+#   puts "Usage: vivado -mode batch -source scripts/capture_hw_ila_spi_sd.tcl -tclargs <ltx_file> <out_base> ?timeout_mins?"
+#   exit 2
 # }
-# lassign $argv iface size mcsfile bitfile datafile
-# set load_data_arg [expr {$datafile ne "" ? "-loaddata up 0x400000 $datafile" : ""}]
-# set cmd [list write_cfgmem -format mcs -interface $iface -size $size -loadbit "up 0x0 $bitfile" -file $mcsfile -force]
-# if {$datafile ne ""} {
-#   lappend cmd -loaddata "up 0x400000 $datafile"
+# proc find_probe_by_name {ila probe_name} {
+#   foreach probe [get_hw_probes -of_objects $ila] {
+#     if {[get_property NAME $probe] eq $probe_name} {
+#       return $probe
+#     }
+#   }
+#   return ""
 # }
-# puts "Running: $cmd"
-Running: write_cfgmem -format mcs -interface spix1 -size 64 -loadbit {up 0x0 /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit} -file /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/system.mcs -force
-# eval $cmd
-Command: write_cfgmem -format mcs -interface spix1 -size 64 -loadbit {up 0x0 /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit} -file /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/system.mcs -force
-Creating config memory files...
-Creating bitstream load up from address 0x00000000
-Loading bitfile /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit
-Writing file /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/system.mcs
-Writing log file /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/system.prm
-===================================
-Configuration Memory information
-===================================
-File Format        MCS
-Interface          SPIX1
-Size               64M
-Start Address      0x00000000
-End Address        0x03FFFFFF
-
-Addr1         Addr2         Date                    File(s)
-0x00000000    0x00A513F7    Mar 18 18:24:56 2026    /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104Config/obj/ZCU104FPGATestHarness.bit
-0 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
-write_cfgmem completed successfully
-write_cfgmem: Time (s): cpu = 00:00:04 ; elapsed = 00:00:09 . Memory (MB): peak = 1567.098 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Wed Mar 18 18:27:05 2026...
+# set ltx_file [lindex $argv 0]
+# set out_base [lindex $argv 1]
+# set timeout_mins [lindex $argv 2]
+# if {$timeout_mins eq ""} {
+#   set timeout_mins 15
+# }
+# set cs_probe_name chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_dat_3_OBUF
+# set_param labtools.enable_cs_server false
+# open_hw_manager
+# connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 1602.309 ; gain = 0.000
+# catch {close_hw_target}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/07198A is already closed
+# set target [lindex [get_hw_targets] 0]
+# open_hw_target $target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+open_hw_target: Time (s): cpu = 00:00:00 ; elapsed = 00:00:11 . Memory (MB): peak = 1602.309 ; gain = 0.000
+# set dev [lindex [get_hw_devices] 0]
+# if {$dev eq ""} {
+#   puts "ERROR: no hardware device found"
+#   exit 3
+# }
+# current_hw_device $dev
+# set_property BSCAN_SWITCH_USER_MASK 0001 $dev
+# set_property PROBES.FILE $ltx_file $dev
+# set_property FULL_PROBES.FILE $ltx_file $dev
+# refresh_hw_device $dev
+INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+refresh_hw_device: Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 2524.535 ; gain = 922.227
+# set ila [lindex [get_hw_ilas] 0]
+# if {$ila eq ""} {
+#   puts "ERROR: no ILA found after refresh"
+#   exit 4
+# }
+# current_hw_ila $ila
+# set cs_probe [find_probe_by_name $ila $cs_probe_name]
+# if {$cs_probe eq ""} {
+#   puts "ERROR: failed to locate CS probe '$cs_probe_name'"
+#   puts "Available probes:"
+#   foreach probe [get_hw_probes -of_objects $ila] {
+#     puts "  [get_property NAME $probe]"
+#   }
+#   exit 5
+# }
+# reset_hw_ila $ila
+# set_property CONTROL.DATA_DEPTH 8192 $ila
+# set_property CONTROL.WINDOW_COUNT 1 $ila
+# set_property CONTROL.TRIGGER_POSITION 512 $ila
+# set_property CONTROL.TRIGGER_CONDITION AND $ila
+# foreach probe [get_hw_probes -of_objects $ila] {
+#   set_property TRIGGER_COMPARE_VALUE eq1'bX $probe
+#   set_property CAPTURE_COMPARE_VALUE eq1'bX $probe
+# }
+# set_property TRIGGER_COMPARE_VALUE eq1'b0 $cs_probe
+# puts "HW_DEVICE=$dev"
+HW_DEVICE=xczu7_0
+# puts "ILA=$ila"
+ILA=hw_ila_1
+# puts "LTX=$ltx_file"
+LTX=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/spi_sd_ila/spi_sd_ila.ltx
+# puts "OUT_BASE=$out_base"
+OUT_BASE=/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long
+# puts "TIMEOUT_MINS=$timeout_mins"
+TIMEOUT_MINS=30
+# puts "TRIGGER_PROBE=$cs_probe_name"
+TRIGGER_PROBE=chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_dat_3_OBUF
+# puts "TRIGGER_COMPARE=eq1'b0"
+TRIGGER_COMPARE=eq1'b0
+# run_hw_ila $ila
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2026-Apr-13 10:25:03
+# puts "ILA armed; waiting for trigger"
+ILA armed; waiting for trigger
+wait_on_hw_ila: Time (s): cpu = 00:00:01 ; elapsed = 00:30:00 . Memory (MB): peak = 2524.832 ; gain = 0.043
+# set wait_rc [catch {wait_on_hw_ila -timeout $timeout_mins $ila} wait_msg]
+# if {$wait_rc != 0} {
+#   puts "WAIT_RESULT=TIMEOUT_OR_ERROR"
+#   puts "WAIT_MESSAGE=$wait_msg"
+# } else {
+#   puts "WAIT_RESULT=TRIGGERED"
+# }
+WAIT_RESULT=TRIGGERED
+INFO: [Labtools 27-1965] The ILA core 'hw_ila_1' trigger was stopped by user at 2026-Apr-13 10:55:04
+WARNING: [Labtools 27-157] hw_ila [hw_ila_1] stopped. No data to upload.
+# set data [upload_hw_ila_data $ila]
+# current_hw_ila_data $data
+# set out_ila [write_hw_ila_data -force $out_base $data]
+# set out_csv [write_hw_ila_data -force -csv_file $out_base $data]
+# set out_vcd [write_hw_ila_data -force -vcd_file $out_base $data]
+# puts "STATUS.CORE_STATUS=[get_property STATUS.CORE_STATUS $ila]"
+STATUS.CORE_STATUS=IDLE
+# puts "STATUS.SAMPLE_COUNT=[get_property STATUS.SAMPLE_COUNT $ila]"
+STATUS.SAMPLE_COUNT=0
+# puts "STATUS.TRIGGER_POSITION=[get_property STATUS.TRIGGER_POSITION $ila]"
+STATUS.TRIGGER_POSITION=512
+# puts "OUT_ILA=$out_ila"
+OUT_ILA=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long.ila
+# puts "OUT_CSV=$out_csv"
+OUT_CSV=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long.csv
+# puts "OUT_VCD=$out_vcd"
+OUT_VCD=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long.vcd
+# close_hw_target
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
+# disconnect_hw_server
+# close_hw_manager
+# if {$wait_rc != 0} {
+#   exit 6
+# }
+# exit
+INFO: [Common 17-206] Exiting Vivado at Mon Apr 13 10:55:05 2026...

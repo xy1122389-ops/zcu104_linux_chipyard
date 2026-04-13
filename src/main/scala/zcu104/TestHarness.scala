@@ -27,7 +27,8 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
 
   val pmod_is_sdio = p(ZCU104ShellPMOD) == "SDIO"
 
-  val uart = Overlay(UARTOverlayKey, new UARTZCU104ShellPlacer(this, UARTShellInput()))
+  val uart1 = Overlay(UARTOverlayKey, new UART1ZCU104ShellPlacer(this, UARTShellInput(index = 1)))
+  val uart  = Overlay(UARTOverlayKey, new UARTZCU104ShellPlacer(this, UARTShellInput()))
   val sdio = if (pmod_is_sdio) Some(Overlay(SPIOverlayKey, new SDIOZCU104ShellPlacer(this, SPIShellInput()))) else None
   val jtag = Overlay(JTAGDebugOverlayKey, new JTAGDebugZCU104ShellPlacer(this, JTAGDebugShellInput()))
 
@@ -47,9 +48,13 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
   val dutGroup    = ClockGroup()
   dutClock := dutWrangler.node := dutGroup := harnessSysPLL
 
-  // UART
-  val io_uart_bb = BundleBridgeSource(() => (new UARTPortIO(dp(PeripheryUARTKey).head)))
+  // UART0 (console)
+  val io_uart_bb = BundleBridgeSource(() => (new UARTPortIO(dp(PeripheryUARTKey)(0))))
   dp(UARTOverlayKey).head.place(UARTDesignInput(io_uart_bb))
+
+  // UART1 (SLIP networking)
+  val io_uart1_bb = BundleBridgeSource(() => (new UARTPortIO(dp(PeripheryUARTKey)(1))))
+  dp(UARTOverlayKey).head.place(UARTDesignInput(io_uart1_bb))
 
   // SPI/SD
   val io_spi_bb = BundleBridgeSource(() => (new SPIPortIO(dp(PeripherySPIKey).head)))

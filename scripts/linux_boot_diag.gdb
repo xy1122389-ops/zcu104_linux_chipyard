@@ -32,59 +32,62 @@ echo \n=== Phase 1: Zero DDR via Rocket core ===\n
 monitor WriteCSR 0x180 0
 monitor WriteCSR 0x7b0 0x4000F0C3
 
-set *(unsigned int*)0x80036100 = 0x00053023
-set *(unsigned short*)0x80036104 = 0x0521
-set *(unsigned int*)0x80036106 = 0xFEB54DE3
-set *(unsigned short*)0x8003610A = 0x9002
+set *(unsigned int*)0x80038000 = 0x00053023
+set *(unsigned short*)0x80038004 = 0x0521
+set *(unsigned int*)0x80038006 = 0xFEB54DE3
+set *(unsigned short*)0x8003800A = 0x9002
 
-set *(unsigned int*)0x80036200 = 0x0000100f
-set *(unsigned short*)0x80036204 = 0x9002
-set $pc = 0x80036200
+set *(unsigned int*)0x80038100 = 0x0000100f
+set *(unsigned short*)0x80038104 = 0x9002
+set *(unsigned long long*)0x2010200 = 0x80038000
+set *(unsigned long long*)0x2010200 = 0x80038040
+set *(unsigned long long*)0x2010200 = 0x80038100
+set $pc = 0x80038100
 stepi
 echo [ok] fence.i\n
 
 delete breakpoints
-hbreak *0x8003610a
+hbreak *0x8003800a
 
 echo [zero0] 0x80040000-0x80200000...\n
 set $a0 = 0x80040000
 set $a1 = 0x80200000
-set $pc = 0x80036100
+set $pc = 0x80038000
 continue
 echo [zero0] done\n
 
-echo [zero1] 0x830D4808-0x84000000...\n
-set $a0 = 0x830D4808
+echo [zero1] 0x80EC4000-0x84000000...\n
+set $a0 = 0x80EC4000
 set $a1 = 0x84000000
-set $pc = 0x80036100
+set $pc = 0x80038000
 continue
 echo [zero1] done\n
 
 echo [zero1b] 0x84001070-0x84100000...\n
 set $a0 = 0x84001070
 set $a1 = 0x84100000
-set $pc = 0x80036100
+set $pc = 0x80038000
 continue
 echo [zero1b] done\n
 
 echo [zero2] 0x84100000-0xA0000000...\n
 set $a0 = 0x84100000
 set $a1 = 0xA0000000
-set $pc = 0x80036100
+set $pc = 0x80038000
 continue
 echo [zero2] done\n
 
 echo [zero3] 0xA0000000-0xC0000000...\n
 set $a0 = 0xA0000000
 set $a1 = 0xC0000000
-set $pc = 0x80036100
+set $pc = 0x80038000
 continue
 echo [zero3] done\n
 
 echo [zero4] 0xC0000000-0x100000000...\n
 set $a0 = 0xC0000000
 set $a1 = 0x100000000
-set $pc = 0x80036100
+set $pc = 0x80038000
 continue
 echo [zero4] done\n
 echo [ALL DDR ZEROED]\n
@@ -106,23 +109,26 @@ echo \n=== Phase 3: L2 cache flush ===\n
 monitor WriteCSR 0x180 0
 monitor WriteCSR 0x7b0 0x4000F0C3
 
-set *(unsigned int*)0x80036100 = 0x00A63023
-set *(unsigned int*)0x80036104 = 0x04050513
-set *(unsigned int*)0x80036108 = 0xFEB54CE3
-set *(unsigned short*)0x8003610C = 0x9002
+set *(unsigned int*)0x80038000 = 0x00A63023
+set *(unsigned int*)0x80038004 = 0x04050513
+set *(unsigned int*)0x80038008 = 0xFEB54CE3
+set *(unsigned short*)0x8003800C = 0x9002
 
-set *(unsigned int*)0x80036200 = 0x0000100f
-set *(unsigned short*)0x80036204 = 0x9002
-set $pc = 0x80036200
+set *(unsigned int*)0x80038100 = 0x0000100f
+set *(unsigned short*)0x80038104 = 0x9002
+set *(unsigned long long*)0x2010200 = 0x80038000
+set *(unsigned long long*)0x2010200 = 0x80038040
+set *(unsigned long long*)0x2010200 = 0x80038100
+set $pc = 0x80038100
 stepi
 echo [ok] fence.i for flush\n
 
 delete breakpoints
-hbreak *0x8003610C
+hbreak *0x8003800C
 set $a0 = 0x80000000
 set $a1 = 0x100000000
 set $a2 = 0x2010200
-set $pc = 0x80036100
+set $pc = 0x80038000
 echo [l2flush] Flushing 2GB...\n
 continue
 echo [l2flush] done\n
@@ -135,9 +141,10 @@ echo \n=== Phase 4: Restore pristine data ===\n
 monitor WriteCSR 0x180 0
 monitor WriteCSR 0x7b0 0x4000F0C3
 
-set *(unsigned int*)0x80036200 = 0x0000100f
-set *(unsigned short*)0x80036204 = 0x9002
-set $pc = 0x80036200
+set *(unsigned int*)0x80038100 = 0x0000100f
+set *(unsigned short*)0x80038104 = 0x9002
+set *(unsigned long long*)0x2010200 = 0x80038100
+set $pc = 0x80038100
 stepi
 echo [ok] fence.i\n
 
@@ -183,6 +190,7 @@ if pc != 0x8000b2b2:
 
 gdb.write("[OK] OpenSBI reached mret\n")
 gdb.execute("delete breakpoints")
+gdb.execute("set $a1 = 0x84000000")
 
 # NOTE: Do NOT use stepi here! J-Link cannot single-step across
 # mret (M-mode -> S-mode transition). Use hbreak at _start instead.
