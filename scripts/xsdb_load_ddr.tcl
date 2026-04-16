@@ -36,11 +36,17 @@ proc step {label body} {
 if {$tcl_platform(platform) eq "windows"} {
   set fw_bin_orig {\\wsl.localhost\Ubuntu-22.04\root\chipyard\software\firemarshal\boards\default\firmware\opensbi\build\platform\generic\firmware\fw_payload.bin}
   set fw_bin_padded {\\wsl.localhost\Ubuntu-22.04\tmp\fw_payload_padded_0x2000.bin}
-  set dtb_file {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\linux-bringup\demo-assets\dtb\chipyard-zcu104-linux.dtb}
+  set dtb_default {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\linux-bringup\dtb\chipyard-zcu104-fedora.dtb}
 } else {
   set fw_bin_orig /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.bin
   set fw_bin_padded /tmp/fw_payload_padded_0x2000.bin
-  set dtb_file /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb
+  set dtb_default /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-fedora.dtb
+}
+
+if {[info exists ::env(DTB_PATH)] && $::env(DTB_PATH) ne ""} {
+  set dtb_file $::env(DTB_PATH)
+} else {
+  set dtb_file $dtb_default
 }
 
 if {[file exists $fw_bin_padded]} {

@@ -57,9 +57,16 @@ trap 'rm -f "$WIN_WRAPPER"' EXIT
 WIN_WRAPPER_CMD=$(wslpath -w "$WIN_WRAPPER")
 WIN_XSDB_BAT=$(wslpath -w "$XSDB_BAT")
 
+WIN_DTB_PATH_LINE=
+if [[ -n "${DTB_PATH:-}" ]]; then
+  WIN_DTB_PATH=$(wslpath -w "$DTB_PATH")
+  WIN_DTB_PATH_LINE="set DTB_PATH=$WIN_DTB_PATH"
+fi
+
 cat > "$WIN_WRAPPER" <<CMD
 @echo off
 pushd C:\Windows\Temp
+%WIN_DTB_PATH_LINE%
 call "$WIN_XSDB_BAT" -eval "source {$WIN_TCL}"
 set EC=%ERRORLEVEL%
 popd

@@ -27,11 +27,17 @@ class XDC(val name: String)
     addConstraint(s"set_property PULLUP {TRUE} ${io.sdcPin}")
   }
   def addIOB(io: IOPin) {
-    if (io.isOutput) {
-      addConstraint(s"set_property IOB {TRUE} [ get_cells -of_objects [ all_fanin -flat -startpoints_only ${io.sdcPin}]]")
+    val netExpr = s"[get_nets -quiet -of_objects ${io.sdcPin}]"
+    val cellExpr = if (io.isOutput) {
+      s"[get_cells -quiet -of_objects [all_fanin -flat -startpoints_only ${netExpr}]]"
     } else {
-      addConstraint(s"set_property IOB {TRUE} [ get_cells -of_objects [ all_fanout -flat -endpoints_only ${io.sdcPin}]]")
+      s"[get_cells -quiet -of_objects [all_fanout -flat -endpoints_only ${netExpr}]]"
     }
+    addConstraint(
+      s"""set iob_cells ${cellExpr}
+         |if {[llength $$iob_cells] > 0} {
+         |  set_property IOB {TRUE} $$iob_cells
+         |}""".stripMargin)
   }
   def addSlew(io: IOPin, speed: String) {
     addConstraint(s"set_property SLEW {${speed}} ${io.sdcPin}")

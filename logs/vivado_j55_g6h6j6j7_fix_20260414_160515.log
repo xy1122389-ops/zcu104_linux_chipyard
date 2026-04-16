@@ -1,0 +1,72 @@
+[1/4] Converting source file paths to Windows UNC format...
+  Created /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/vsrcs_win.f (400 files)
+[2/4] Creating Windows wrapper...
+[3/4] Launching Vivado (this will take 30-90 minutes)...
+  Build dir: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig
+  Wrapper: /mnt/c/Windows/Temp/vivado_buildl7fbKn.cmd
+  Vivado: E:\PRO_APP\xilinx\Vivado\2021.2\bin\vivado.bat
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source //wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl
+# set scriptdir [file dirname [info script]]
+# source [file join $scriptdir "prologue.tcl"]
+## set ip_vivado_tcls {}
+## while {[llength $argv]} {
+##   set argv [lassign $argv[set argv {}] flag]
+##   switch -glob $flag {
+##     -top-module {
+##       set argv [lassign $argv[set argv {}] top]
+##     }
+##     -F {
+##       # This should be a simple file format with one filepath per line
+##       set argv [lassign $argv[set argv {}] vsrc_manifest]
+##     }
+##     -board {
+##       set argv [lassign $argv[set argv {}] board]
+##     }
+##     -ip-vivado-tcls {
+##       set argv [lassign $argv[set argv {}] ip_vivado_tcls]
+##     }
+##     -pre-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] pre_impl_debug_tcl]
+##     }
+##     -post-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] post_impl_debug_tcl]
+##     }
+##     -env-var-srcs {
+##       set argv [lassign $argv[set argv {}] env_var_srcs]
+##     }
+##     default {
+##       return -code error [list {unknown option} $flag]
+##     }
+##   }
+## }
+## if {![info exists top]} {
+##   return -code error [list {--top-module option is required}]
+## }
+## if {![info exists vsrc_manifest]} {
+##   return -code error [list {-F option is required}]
+## }
+## if {![info exists board]} {
+##   return -code error [list {--board option is required}]
+## }
+## set commondir [file dirname $scriptdir]
+## set boarddir [file join [file dirname $commondir] $board]
+## source [file join $boarddir tcl board.tcl]
+### set name {zcu104}
+### set part_fpga {xczu7ev-ffvc1156-2-e}
+### set part_board {xilinx.com:zcu104:part0:1.1}
+## set constraintsdir [file join $boarddir constraints]
+## set srcdir [file join $commondir vsrc]
+## set wrkdir [file join [pwd] obj]
+## set ipdir [file join $wrkdir ip]
+## create_project -part $part_fpga -force $top
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig'

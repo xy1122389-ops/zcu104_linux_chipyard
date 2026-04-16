@@ -3,7 +3,7 @@ package chipyard.fpga.zcu104
 import sys.process._
 
 import org.chipsalliance.cde.config.{Config, Parameters}
-import freechips.rocketchip.subsystem.{SystemBusKey, PeripheryBusKey, ControlBusKey, ExtMem}
+import freechips.rocketchip.subsystem.{SystemBusKey, PeripheryBusKey, ControlBusKey, ExtMem, ExtBus, MasterPortParams}
 import freechips.rocketchip.devices.debug.{DebugModuleKey, ExportDebug, JTAG}
 import freechips.rocketchip.devices.tilelink.{DevNullParams, BootROMLocated}
 import freechips.rocketchip.diplomacy.{RegionType, AddressSet}
@@ -43,8 +43,42 @@ class WithZCU104SystemModifications extends Config((site, here, up) => {
 })
 
 // WithDDRMem config: uses PS AXI HP0 → PS DDR4 (2GB)
+// A2: Rocket → S_AXI_LPD → PS SDIO (J100). MMIO port at 0x60000000, 2MB.
+class WithPSLPDMMIOPort extends Config((site, here, up) => {
+  case ExtBus => Some(MasterPortParams(
+    base = BigInt(0x60000000L),
+    size = BigInt(0x200000L),   // 2MB window → PS 0xFF000000–0xFF1FFFFF (covers SDIO1 @ 0xFF170000)
+    beatBytes = 4,              // 32-bit data (matches S_AXI_LPD DATA_WIDTH=32)
+    idBits = 4))
+})
+
 // Requires FSBL to initialize PS DDR before PL bitstream is loaded
 class WithZCU104Tweaks extends Config(
+  new chipyard.iobinders.WithGPIOPunchthrough ++
+  new chipyard.harness.WithAllClocksFromHarnessClockInstantiator ++
+  new chipyard.clocking.WithPassthroughClockGenerator ++
+  new chipyard.config.WithUniformBusFrequencies(50) ++
+  new WithFPGAFrequency(50) ++
+  new chipyard.config.WithGPIO(address = BigInt(0x64002000L), width = 1) ++
+  new WithLEDGPIO ++
+  new WithUART ++
+  new WithUART1 ++
+  new WithSPISDCard ++
+  new WithPSDDRMem ++
+  new WithPSLPDMem ++
+  new WithJTAG ++
+  new WithPSLPDMMIOPort ++
+  new WithZCU104DefaultPeripherals ++
+  new chipyard.config.WithTLBackingMemory ++
+  new WithZCU104SystemModifications ++
+  new freechips.rocketchip.subsystem.WithoutTLMonitors ++
+  new freechips.rocketchip.subsystem.WithNMemoryChannels(1)
+)
+
+// Common ZCU104 bring-up stack without the A2 PSLPD MMIO path.
+// Use this as the base for J-Link diagnostics to verify whether removing the
+// Rocket -> S_AXI_LPD path restores clean debug halt behavior.
+class WithZCU104TweaksNoPSLPD extends Config(
   new chipyard.iobinders.WithGPIOPunchthrough ++
   new chipyard.harness.WithAllClocksFromHarnessClockInstantiator ++
   new chipyard.clocking.WithPassthroughClockGenerator ++
@@ -71,6 +105,48 @@ class RocketZCU104Config extends Config(
 
 // Alias for Linux bring-up (same as RocketZCU104Config)
 class RocketZCU104LinuxBringupConfig extends RocketZCU104Config
+
+// Diagnostic config: removes the A2 PSLPD MMIO path entirely.
+class RocketZCU104JLinkDiagConfig extends Config(
+  new WithZCU104TweaksNoPSLPD ++
+  new chipyard.RocketConfig
+)
+
+// Diagnostic split 1: keep only the MMIO port declaration, but do not connect
+// it to the PS LPD bridge. If this alone breaks J-Link halt, the presence of
+// the port/topology is enough to trigger the issue.
+class RocketZCU104JLinkDiagMMIOPortOnlyConfig extends Config(
+  new WithZCU104TweaksNoPSLPD ++
+  new WithPSLPDMMIOPort ++
+  new chipyard.RocketConfig
+)
+
+// Diagnostic split 1b: keep only the MMIO port declaration, and explicitly tie
+// it off in the FPGA harness so the default simulation MMIO memory is not
+// synthesized into the bitstream.
+class RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig extends Config(
+  new WithZCU104TweaksNoPSLPD ++
+  new WithPSLPDMMIOPort ++
+  new WithTiedOffAXI4MMIO ++
+  new chipyard.RocketConfig
+)
+
+// Diagnostic split 2: keep only the harness binder logic. Without ExtBus this
+// binder should be inert; if behavior changes anyway, that points to binder-side
+// elaboration or unintended connectivity.
+class RocketZCU104JLinkDiagPSLPDConnectOnlyConfig extends Config(
+  new WithZCU104TweaksNoPSLPD ++
+  new WithPSLPDMem ++
+  new chipyard.RocketConfig
+)
+
+// Diagnostic split 3: original A2 path, used as the direct comparison point.
+class RocketZCU104JLinkDiagFullPSLPDConfig extends Config(
+  new WithZCU104TweaksNoPSLPD ++
+  new WithPSLPDMem ++
+  new WithPSLPDMMIOPort ++
+  new chipyard.RocketConfig
+)
 
 // Minimal safe config: no Zba/Zbb/Zbs — reduces decode complexity
 // For Linux bring-up debugging

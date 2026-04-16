@@ -1,6 +1,7 @@
 package chipyard.fpga.zcu104
 
 import chisel3._
+import chisel3.util._
 
 import org.chipsalliance.cde.config.{Parameters}
 import freechips.rocketchip.subsystem.{SystemBusKey}
@@ -87,7 +88,6 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   // DS39 on ZCU104 is driven by GPIO_LED_2_LS on package pin A5.
   val gpio_led_2_ls = IO(Output(Bool())).suggestName("gpio_led_2_ls")
   val gpio_led_2_ls_drive = WireDefault(false.B)
-  gpio_led_2_ls := gpio_led_2_ls_drive
   _outer.xdc.addPackagePin(IOPin(gpio_led_2_ls), "A5")
   _outer.xdc.addIOStandard(IOPin(gpio_led_2_ls), "LVCMOS33")
 
@@ -106,6 +106,15 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   def referenceReset        = hReset
   def success = { require(false, "Unused"); false.B }
 
+  // Blink DS39 in hardware so successful bitstream download is visible even
+  // before J-Link or software drives GPIO0. GPIO can still force the LED on.
+  val heartbeat = withClockAndReset(referenceClock, referenceReset) {
+    val counter = RegInit(0.U(25.W))
+    counter := counter + 1.U
+    counter(24)
+  }
+  gpio_led_2_ls := gpio_led_2_ls_drive || heartbeat
+
   childClock := referenceClock
   childReset := referenceReset
 
@@ -113,6 +122,38 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   _outer.ddrClient.foreach { case (ps, _) =>
     ps.module.clock := referenceClock
     ps.module.reset := referenceReset
+
+    // Default tie-off for the optional PS LPD AXI slave port. Diagnostic
+    // configs that remove the A2 path still instantiate the PS block, so the
+    // raw LPD inputs must be driven even when no HarnessBinder consumes them.
+    // If WithPSLPDMem is present, its later connections override these values.
+    val lpd = ps.module.lpd
+    lpd.awid    := 0.U
+    lpd.awaddr  := 0.U
+    lpd.awlen   := 0.U
+    lpd.awsize  := 0.U
+    lpd.awburst := 0.U
+    lpd.awlock  := 0.U
+    lpd.awcache := 0.U
+    lpd.awprot  := 0.U
+    lpd.awqos   := 0.U
+    lpd.awvalid := false.B
+    lpd.wdata   := 0.U
+    lpd.wstrb   := 0.U
+    lpd.wlast   := false.B
+    lpd.wvalid  := false.B
+    lpd.bready  := false.B
+    lpd.arid    := 0.U
+    lpd.araddr  := 0.U
+    lpd.arlen   := 0.U
+    lpd.arsize  := 0.U
+    lpd.arburst := 0.U
+    lpd.arlock  := 0.U
+    lpd.arcache := 0.U
+    lpd.arprot  := 0.U
+    lpd.arqos   := 0.U
+    lpd.arvalid := false.B
+    lpd.rready  := false.B
   }
 
   instantiateChipTops()

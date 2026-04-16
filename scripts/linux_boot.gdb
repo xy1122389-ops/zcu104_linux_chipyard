@@ -187,7 +187,7 @@ for i, fname in enumerate(chunks):
 gdb.write("[ok] fw_payload.bin restored (15MB in chunks)\n")
 end
 
-restore /root/chipyard/fpga/linux-bringup/demo-assets/dtb/chipyard-zcu104-linux.dtb binary 0x84000000
+restore /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-linux-slip.dtb binary 0x84000000
 echo [ok] DTB restored at 0x84000000\n
 
 # External DTB at 0x84000000 carries bootargs overrides.
@@ -325,7 +325,7 @@ set $a2 = 0
 set $pc = 0x80000000
 
 delete breakpoints
-hbreak *0x8000b2b2
+hbreak *0x8000b1d2
 echo [boot] Running OpenSBI to mret...\n
 continue
 
@@ -333,8 +333,8 @@ python
 import gdb, re
 
 pc = int(gdb.parse_and_eval("$pc"))
-if pc != 0x8000b2b2:
-    gdb.write(f"\n[FAIL] Expected mret at 0x8000b2b2, got 0x{pc:x}\n")
+if pc != 0x8000b1d2:
+    gdb.write(f"\n[FAIL] Expected mret at 0x8000b1d2, got 0x{pc:x}\n")
     gdb.execute("info reg pc ra sp a0 a1 a2")
     gdb.execute("x/8i $pc")
     raise gdb.GdbError("OpenSBI did not reach mret")
@@ -565,6 +565,10 @@ try:
         "Welcome": False,
         "busybox": False,
         "/bin/sh": False,
+        "sdhci": False,
+        "mmc0": False,
+        "mmcblk": False,
+        "arasan": False,
     }
 
     with open(LOG_FILE, "w") as f:

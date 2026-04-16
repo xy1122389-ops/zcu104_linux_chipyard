@@ -1,0 +1,116 @@
+[1/4] Converting source file paths to Windows UNC format...
+  Created /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig/vsrcs_win.f (399 files)
+[2/4] Creating Windows wrapper...
+[2a/4] Cleaning stale Vivado project cache...
+[3/4] Launching Vivado (this will take 30-90 minutes)...
+  Build dir: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig
+  Wrapper: /mnt/c/Windows/Temp/vivado_buildE0cBHq.cmd
+  Vivado: E:\PRO_APP\xilinx\Vivado\2021.2\bin\vivado.bat
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source //wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl
+# set scriptdir [file dirname [info script]]
+# source [file join $scriptdir "prologue.tcl"]
+## set ip_vivado_tcls {}
+## while {[llength $argv]} {
+##   set argv [lassign $argv[set argv {}] flag]
+##   switch -glob $flag {
+##     -top-module {
+##       set argv [lassign $argv[set argv {}] top]
+##     }
+##     -F {
+##       # This should be a simple file format with one filepath per line
+##       set argv [lassign $argv[set argv {}] vsrc_manifest]
+##     }
+##     -board {
+##       set argv [lassign $argv[set argv {}] board]
+##     }
+##     -ip-vivado-tcls {
+##       set argv [lassign $argv[set argv {}] ip_vivado_tcls]
+##     }
+##     -pre-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] pre_impl_debug_tcl]
+##     }
+##     -post-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] post_impl_debug_tcl]
+##     }
+##     -env-var-srcs {
+##       set argv [lassign $argv[set argv {}] env_var_srcs]
+##     }
+##     default {
+##       return -code error [list {unknown option} $flag]
+##     }
+##   }
+## }
+## if {![info exists top]} {
+##   return -code error [list {--top-module option is required}]
+## }
+## if {![info exists vsrc_manifest]} {
+##   return -code error [list {-F option is required}]
+## }
+## if {![info exists board]} {
+##   return -code error [list {--board option is required}]
+## }
+## set commondir [file dirname $scriptdir]
+## set boarddir [file join [file dirname $commondir] $board]
+## source [file join $boarddir tcl board.tcl]
+### set name {zcu104}
+### set part_fpga {xczu7ev-ffvc1156-2-e}
+### set part_board {xilinx.com:zcu104:part0:1.1}
+## set constraintsdir [file join $boarddir constraints]
+## set srcdir [file join $commondir vsrc]
+## set wrkdir [file join [pwd] obj]
+## set ipdir [file join $wrkdir ip]
+## create_project -part $part_fpga -force $top
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig'
+## set_param messaging.defaultLimit 1000000
+## set_property -dict [list \
+## 	BOARD_PART $part_board \
+## 	TARGET_LANGUAGE {Verilog} \
+## 	DEFAULT_LIB {xil_defaultlib} \
+## 	IP_REPO_PATHS $ipdir \
+## 	] [current_project]
+## if {[get_filesets -quiet sources_1] eq ""} {
+## 	create_fileset -srcset sources_1
+## }
+## set obj [current_fileset]
+## proc load_vsrc_manifest {obj vsrc_manifest} {
+##   set fp [open $vsrc_manifest r]
+##   set files [lsearch -not -exact -all -inline [split [read $fp] "\n"] {}]
+##   set relative_files {}
+##   foreach path $files {
+##     if {[string match {/*} $path]} {
+##       lappend relative_files $path
+##     } elseif {![string match {#*} $path]} {
+##       lappend relative_files [file join [file dirname $vsrc_manifest] $path]
+##     }
+##   }
+##   # Read environment variable vsrcs and append to relative_files
+##   upvar #0 env_var_srcs env_var_srcs
+##   set additions [info exists env_var_srcs]
+##   if {$additions} {
+##     if {[info exists ::env($env_var_srcs)]} {
+##       set resources [split $::env($env_var_srcs) :]
+##       set relative_files [list {*}$relative_files {*}$resources]
+##     }
+##   }
+##   add_files -norecurse -fileset $obj {*}$relative_files
+##   close $fp
+## }
+## load_vsrc_manifest $obj $vsrc_manifest
+ERROR: [Vivado 12-172] File or Directory '//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig/gen-collateral/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig.top.mems.v' does not exist
+
+    while executing
+"source [file join $scriptdir "prologue.tcl"]"
+    (file "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl" line 7)
+INFO: [Common 17-206] Exiting Vivado at Wed Apr 15 11:41:19 2026...
+[4/4] Build complete (exit code: 0)
+[FAIL] Vivado log contains ERROR lines

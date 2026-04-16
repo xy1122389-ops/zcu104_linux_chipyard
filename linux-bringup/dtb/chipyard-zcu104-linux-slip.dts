@@ -189,6 +189,44 @@
 				voltage-ranges = <3300 3300>;
 			};
 		};
+		/*
+		 * PS SDIO1 via A2 PSLPD path (Rocket 0x60170000 → PS 0xFF170000).
+		 * J100 full-size SD slot on ZCU104 board.
+		 *
+		 * Clocks: PS hardware supplies the actual clocks internally;
+		 * these fixed-clock nodes satisfy the arasan driver's
+		 * devm_clk_get("clk_ahb") / devm_clk_get("clk_xin") calls.
+		 *   clk_ahb  = LPD_LSBUS_CLK  ≈ 100 MHz
+		 *   clk_xin  = SDIO1_REF_CLK  ≈ 200 MHz (psu_init sets this)
+		 *
+		 * Interrupts: PLIC has only 4 HW sources; PS SDIO1 IRQ goes to
+		 * PS GIC only. We assign a dummy PLIC IRQ (5, beyond ndev) so
+		 * the driver can call request_threaded_irq(). A kernel patch
+		 * (sdhci-poll-timer) handles I/O completion via polling.
+		 */
+		sdio1_clk_ahb: sdio1_clk_ahb {
+			#clock-cells = <0>;
+			clock-frequency = <100000000>;
+			clock-output-names = "sdio1_clk_ahb";
+			compatible = "fixed-clock";
+		};
+		sdio1_clk_xin: sdio1_clk_xin {
+			#clock-cells = <0>;
+			clock-frequency = <200000000>;
+			clock-output-names = "sdio1_clk_xin";
+			compatible = "fixed-clock";
+		};
+		L34: sdhci@60170000 {
+			compatible = "arasan,sdhci-8.9a";
+			reg = <0x60170000 0x1000>;
+			clocks = <&sdio1_clk_xin>, <&sdio1_clk_ahb>;
+			clock-names = "clk_xin", "clk_ahb";
+			bus-width = <4>;
+			no-1-8-v;
+			broken-cd;
+			sdhci-caps-mask = <0x0 0x0>;
+			status = "okay";
+		};
 		L32: tile-reset-setter@110000 {
 			reg = <0x110000 0x1000>;
 			reg-names = "control";

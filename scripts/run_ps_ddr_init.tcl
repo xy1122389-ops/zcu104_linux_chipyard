@@ -11,6 +11,12 @@ proc step {label body} {
   }
 }
 
+if {[info exists ::env(POST_FPGA_PROGRAM_WAIT_MS)] && $::env(POST_FPGA_PROGRAM_WAIT_MS) ne ""} {
+  set post_fpga_program_wait_ms $::env(POST_FPGA_PROGRAM_WAIT_MS)
+} else {
+  set post_fpga_program_wait_ms 5000
+}
+
 if {[info exists ::env(CHIPYARD_BITSTREAM_LINUX)] && $::env(CHIPYARD_BITSTREAM_LINUX) ne ""} {
   if {$tcl_platform(platform) eq "windows"} {
     set bit_file $::env(CHIPYARD_BITSTREAM_WINDOWS)
@@ -57,6 +63,8 @@ step "check input files" {
 
 step "connect hw_server" {
   connect -url tcp:127.0.0.1:3121
+  # Give hw_server time to enumerate all JTAG targets
+  after 3000
 }
 
 step "show targets" {
@@ -64,7 +72,45 @@ step "show targets" {
 }
 
 step "select PSU target" {
-  targets -set -nocase -filter {name =~ "*PSU*"}
+  # Try PSU first (available when PS has booted, e.g. from SD/QSPI FSBL)
+  set psu_found 0
+  if {![catch {targets -set -nocase -filter {name =~ "*PSU*"}}]} {
+    puts "PSU target found directly"
+    set psu_found 1
+  }
+
+  if {!$psu_found} {
+    puts "PSU target not found. Board may be in JTAG-boot / pre-init state."
+    puts "Attempting system reset via PS TAP to bring up PSU..."
+
+    # Issue a system reset through the PS TAP to restart the PMU ROM.
+    # This re-initializes the PS subsystem and makes the PSU target appear.
+    if {![catch {targets -set -nocase -filter {name =~ "*PS TAP*"}}]} {
+      catch {rst -system}
+      puts "System reset issued. Waiting 8 s for PMU boot..."
+      after 8000
+    } else {
+      puts "WARN: PS TAP target also not found!"
+      after 3000
+    }
+
+    # Re-scan targets and try PSU again
+    puts "Targets after reset:"
+    targets
+    if {![catch {targets -set -nocase -filter {name =~ "*PSU*"}}]} {
+      puts "PSU target found after system reset"
+      set psu_found 1
+    }
+  }
+
+  if {!$psu_found} {
+    # Last resort: try "Cortex*#0" (some board revisions / post-FSBL states)
+    if {![catch {targets -set -nocase -filter {name =~ "*Cortex*#0*"}}]} {
+      puts "Using Cortex-A53 #0 as fallback target"
+    } else {
+      error "PSU target not available after system reset.\nAvailable targets:\n[targets]\n\nFix: Power-cycle ZCU104 (turn OFF power switch, wait 10s, turn ON), then re-run."
+    }
+  }
   targets
 }
 
@@ -86,7 +132,8 @@ if {[info exists ::env(SKIP_FPGA_PROGRAM)] && $::env(SKIP_FPGA_PROGRAM) eq "1"} 
   }
 
   step "wait after FPGA program" {
-    after 3000
+    puts "Waiting ${post_fpga_program_wait_ms} ms for PL settle / DS39 heartbeat..."
+    after $post_fpga_program_wait_ms
   }
 }
 

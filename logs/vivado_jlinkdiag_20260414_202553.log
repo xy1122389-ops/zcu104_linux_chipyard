@@ -1,0 +1,793 @@
+[1/4] Converting source file paths to Windows UNC format...
+  Created /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/vsrcs_win.f (376 files)
+[2/4] Creating Windows wrapper...
+[2a/4] Cleaning stale Vivado project cache...
+[3/4] Launching Vivado (this will take 30-90 minutes)...
+  Build dir: /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig
+  Wrapper: /mnt/c/Windows/Temp/vivado_buildRxaAnR.cmd
+  Vivado: E:\PRO_APP\xilinx\Vivado\2021.2\bin\vivado.bat
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+用作为当前目录的以上路径启动了 CMD.EXE。
+UNC 路径不受支持。默认值设为 Windows 目录。
+
+****** Vivado v2021.2 (64-bit)
+  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source //wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl
+# set scriptdir [file dirname [info script]]
+# source [file join $scriptdir "prologue.tcl"]
+## set ip_vivado_tcls {}
+## while {[llength $argv]} {
+##   set argv [lassign $argv[set argv {}] flag]
+##   switch -glob $flag {
+##     -top-module {
+##       set argv [lassign $argv[set argv {}] top]
+##     }
+##     -F {
+##       # This should be a simple file format with one filepath per line
+##       set argv [lassign $argv[set argv {}] vsrc_manifest]
+##     }
+##     -board {
+##       set argv [lassign $argv[set argv {}] board]
+##     }
+##     -ip-vivado-tcls {
+##       set argv [lassign $argv[set argv {}] ip_vivado_tcls]
+##     }
+##     -pre-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] pre_impl_debug_tcl]
+##     }
+##     -post-impl-debug-tcl {
+##       set argv [lassign $argv[set argv {}] post_impl_debug_tcl]
+##     }
+##     -env-var-srcs {
+##       set argv [lassign $argv[set argv {}] env_var_srcs]
+##     }
+##     default {
+##       return -code error [list {unknown option} $flag]
+##     }
+##   }
+## }
+## if {![info exists top]} {
+##   return -code error [list {--top-module option is required}]
+## }
+## if {![info exists vsrc_manifest]} {
+##   return -code error [list {-F option is required}]
+## }
+## if {![info exists board]} {
+##   return -code error [list {--board option is required}]
+## }
+## set commondir [file dirname $scriptdir]
+## set boarddir [file join [file dirname $commondir] $board]
+## source [file join $boarddir tcl board.tcl]
+### set name {zcu104}
+### set part_fpga {xczu7ev-ffvc1156-2-e}
+### set part_board {xilinx.com:zcu104:part0:1.1}
+## set constraintsdir [file join $boarddir constraints]
+## set srcdir [file join $commondir vsrc]
+## set wrkdir [file join [pwd] obj]
+## set ipdir [file join $wrkdir ip]
+## create_project -part $part_fpga -force $top
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig'
+create_project: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1539.430 ; gain = 0.000
+## set_param messaging.defaultLimit 1000000
+## set_property -dict [list \
+## 	BOARD_PART $part_board \
+## 	TARGET_LANGUAGE {Verilog} \
+## 	DEFAULT_LIB {xil_defaultlib} \
+## 	IP_REPO_PATHS $ipdir \
+## 	] [current_project]
+## if {[get_filesets -quiet sources_1] eq ""} {
+## 	create_fileset -srcset sources_1
+## }
+## set obj [current_fileset]
+## proc load_vsrc_manifest {obj vsrc_manifest} {
+##   set fp [open $vsrc_manifest r]
+##   set files [lsearch -not -exact -all -inline [split [read $fp] "\n"] {}]
+##   set relative_files {}
+##   foreach path $files {
+##     if {[string match {/*} $path]} {
+##       lappend relative_files $path
+##     } elseif {![string match {#*} $path]} {
+##       lappend relative_files [file join [file dirname $vsrc_manifest] $path]
+##     }
+##   }
+##   # Read environment variable vsrcs and append to relative_files
+##   upvar #0 env_var_srcs env_var_srcs
+##   set additions [info exists env_var_srcs]
+##   if {$additions} {
+##     if {[info exists ::env($env_var_srcs)]} {
+##       set resources [split $::env($env_var_srcs) :]
+##       set relative_files [list {*}$relative_files {*}$resources]
+##     }
+##   }
+##   add_files -norecurse -fileset $obj {*}$relative_files
+##   close $fp
+## }
+## load_vsrc_manifest $obj $vsrc_manifest
+add_files: Time (s): cpu = 00:00:00 ; elapsed = 00:00:06 . Memory (MB): peak = 1539.430 ; gain = 0.000
+## if {$ip_vivado_tcls ne {}} {
+##   # Split string into words even with multiple consecutive spaces
+##   # http://wiki.tcl.tk/989
+##   set ip_vivado_tcls [regexp -inline -all -- {\S+} $ip_vivado_tcls]
+## }
+## if {[get_filesets -quiet sim_1] eq ""} {
+## 	create_fileset -simset sim_1
+## }
+## set obj [current_fileset -simset]
+## if {[get_filesets -quiet constrs_1] eq ""} {
+## 	create_fileset -constrset constrs_1
+## }
+## set obj [current_fileset -constrset]
+## add_files -quiet -norecurse -fileset $obj [lsort [glob -directory $constraintsdir -nocomplain {*.tcl}]]
+## add_files -quiet -norecurse -fileset $obj [lsort [glob -directory $constraintsdir -nocomplain {*.xdc}]]
+# source [file join $scriptdir "init.tcl"]
+## source [file join $scriptdir "util.tcl"]
+### proc recglob { basedir pattern } {
+###   set dirlist [glob -nocomplain -directory $basedir -type d *]
+###   set findlist [glob -nocomplain -directory $basedir $pattern]
+###   foreach dir $dirlist {
+###     set reclist [recglob $dir $pattern]
+###     set findlist [concat $findlist $reclist]
+###   }
+###   return $findlist
+### }
+### proc findincludedir { basedir pattern } {
+###   set vhfiles [recglob $basedir $pattern]
+###   set vhdirs {}
+###   foreach match $vhfiles {
+###     lappend vhdirs [file dir $match]
+###   }
+###   set uniquevhdirs [lsort -unique $vhdirs]
+###   return $uniquevhdirs
+### }
+## file mkdir $ipdir
+## update_ip_catalog -rebuild
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'E:/PRO_APP/xilinx/Vivado/2021.2/data/ip'.
+## foreach ip_vivado_tcl $ip_vivado_tcls {
+##   source $ip_vivado_tcl
+## }
+### create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name \
+###  harnessSysPLL -dir $ipdir -force
+create_ip: Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1994.406 ; gain = 454.977
+### set_property -dict [list \
+###  CONFIG.CLK_IN1_BOARD_INTERFACE {Custom} \
+###  CONFIG.PRIM_SOURCE {No_buffer} \
+###  CONFIG.NUM_OUT_CLKS {1} \
+###  CONFIG.PRIM_IN_FREQ {125.0} \
+###  CONFIG.CLKIN1_JITTER_PS {50.0} \
+###  CONFIG.CLKOUT1_USED {true} \
+###  CONFIG.CLKOUT2_USED {false} \
+###  CONFIG.CLKOUT3_USED {false} \
+###  CONFIG.CLKOUT4_USED {false} \
+###  CONFIG.CLKOUT5_USED {false} \
+###  CONFIG.CLKOUT6_USED {false} \
+###  CONFIG.CLKOUT7_USED {false} \
+###  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {50.0} \
+###  CONFIG.CLKOUT1_REQUESTED_PHASE {0.0} \
+###  CONFIG.CLKOUT1_REQUESTED_DUTY_CYCLE {50.0} \
+### ] [get_ips harnessSysPLL]
+### set mult [get_property CONFIG.MMCM_CLKFBOUT_MULT_F [get_ips harnessSysPLL]]
+### set div1 [get_property CONFIG.MMCM_DIVCLK_DIVIDE [get_ips harnessSysPLL]]
+### set jitter [get_property CONFIG.CLKOUT1_JITTER [get_ips harnessSysPLL]]
+### if {$jitter > 300.0} {
+###   puts "Output jitter $jitter ps exceeds required limit of 300.0"
+###   exit 1
+### }
+### set phase [get_property CONFIG.MMCM_CLKOUT0_PHASE [get_ips harnessSysPLL]]
+### if {$phase < -5.0 || $phase > 5.0} {
+###   puts "Achieved phase $phase degrees is outside tolerated range -5.0-5.0"
+###   exit 1
+### }
+### set div2 [get_property CONFIG.MMCM_CLKOUT0_DIVIDE_F [get_ips harnessSysPLL]]
+### set freq [expr { 125.0 * $mult / $div1 / $div2 }]
+### if {$freq < 49.5 || $freq > 50.5} {
+###   puts "Achieved frequency $freq MHz is outside tolerated range 49.5-50.5"
+###   exit 1
+### }
+### puts "Achieve frequency $freq MHz phase $phase degrees jitter $jitter ps"
+Achieve frequency 50.0 MHz phase 0.000 degrees jitter 196.543 ps
+### set shell_vivado_tcl [file normalize [info script]]
+### set shell_vivado_idx [string last ".shell.vivado.tcl" $shell_vivado_tcl]
+### add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".shell.sdc"]
+### add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".shell.xdc"]
+### set extra_constr [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".extra.shell.xdc"]
+### if [file exist $extra_constr] {
+###   add_files -fileset [current_fileset -constrset] [string replace $shell_vivado_tcl $shell_vivado_idx 999 ".extra.shell.xdc"]
+### }
+### create_ip -vendor xilinx.com -library ip -name zynq_ultra_ps_e \
+###         -module_name zcu104ps -dir $ipdir -force
+### set_property -dict [list \
+###         CONFIG.PSU_BANK_0_IO_STANDARD {LVCMOS18} \
+###         CONFIG.PSU__CRL_APB__PL0_REF_CTRL__FREQMHZ {100} \
+###         CONFIG.PSU__FPGA_PL0_ENABLE {1} \
+###         CONFIG.PSU__USE__S_AXI_GP2 {1} \
+###         CONFIG.PSU__SAXIGP2__DATA_WIDTH {128} \
+###         CONFIG.PSU__USE__S_AXI_GP6 {1} \
+###         CONFIG.PSU__SAXIGP6__DATA_WIDTH {32} \
+###         CONFIG.PSU__USE__M_AXI_GP0 {0} \
+###         CONFIG.PSU__USE__M_AXI_GP1 {0} \
+###         CONFIG.PSU__USE__M_AXI_GP2 {0} \
+###         CONFIG.PSU__UART1__PERIPHERAL__ENABLE {1} \
+###         CONFIG.PSU__UART1__PERIPHERAL__IO {MIO 36 .. 37} \
+###         CONFIG.PSU__SD1__PERIPHERAL__ENABLE {1} \
+###         CONFIG.PSU__SD1__PERIPHERAL__IO {MIO 46 .. 51} \
+###         CONFIG.PSU__SD1__SLOT_TYPE {SD 2.0} \
+###         CONFIG.PSU__DDRC__MEMORY_TYPE {DDR 4} \
+###         CONFIG.PSU__DDRC__BUS_WIDTH {64 Bit} \
+###         CONFIG.PSU__DDRC__DDR4_ADDR_MAPPING {0} \
+###         CONFIG.PSU__DDRC__DEVICE_CAPACITY {4096 MBits} \
+###         CONFIG.PSU__DDRC__DRAM_WIDTH {16 Bits} \
+###         CONFIG.PSU__DDRC__ROW_ADDR_COUNT {15} \
+###         CONFIG.PSU__DDRC__BG_ADDR_COUNT {1} \
+###         CONFIG.PSU__DDRC__RANK_ADDR_COUNT {0} \
+###       ] [get_ips zcu104ps]
+### generate_target all [get_ips zcu104ps]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'zcu104ps'...
+INFO: [xilinx.com:ip:zynq_ultra_ps_e:3.3-0] zcu104ps: 
+Changes in your design (including the PCW configuration settings) are not automatically exported from Vivado to Xilinx's SDK, Petalinux or Yocto.
+This is by design to avoid disrupting existing embedded development efforts. To have any changes of your design taking effect in the embedded software flow please export your
+design by going through Vivado's main menu, click on File, then Export finally select Export Hardware, please ensure you click on the Include BitStream option.
+The auto-generated HDF file is all you need to import in Xilinx's SDK, Petalinux or Yocto for your changes to be reflected in the Embedded Software Flow.
+For more information, please consult PG201, section: Exporting PCW Settings to Embedded Software Flows
+INFO: [PSU-0] Address Range of DDR (0x7ff00000 to 0x7fffffff) is reserved by PMU for internal purpose.
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI_HP0_FPD'. A default connection has been created.
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI_LPD'. A default connection has been created.
+INFO: [IP_Flow 19-1686] Generating 'Miscellaneous' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Hardware Handoff' target for IP 'zcu104ps'...
+generate_target: Time (s): cpu = 00:00:25 ; elapsed = 00:00:30 . Memory (MB): peak = 2215.969 ; gain = 59.020
+## set boardiptcl [file join $boarddir tcl ip.tcl]
+## if {[file exists $boardiptcl]} {
+##   source $boardiptcl
+## }
+## set xci_files [get_files -all {*.xci}]
+## foreach xci_file $xci_files {
+##   set_property GENERATE_SYNTH_CHECKPOINT {false} -quiet $xci_file
+## }
+## set obj [get_ips]
+## generate_target all $obj
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'harnessSysPLL'...
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'zcu104ps'...
+INFO: [xilinx.com:ip:zynq_ultra_ps_e:3.3-0] zcu104ps: 
+Changes in your design (including the PCW configuration settings) are not automatically exported from Vivado to Xilinx's SDK, Petalinux or Yocto.
+This is by design to avoid disrupting existing embedded development efforts. To have any changes of your design taking effect in the embedded software flow please export your
+design by going through Vivado's main menu, click on File, then Export finally select Export Hardware, please ensure you click on the Include BitStream option.
+The auto-generated HDF file is all you need to import in Xilinx's SDK, Petalinux or Yocto for your changes to be reflected in the Embedded Software Flow.
+For more information, please consult PG201, section: Exporting PCW Settings to Embedded Software Flows
+INFO: [PSU-0] Address Range of DDR (0x7ff00000 to 0x7fffffff) is reserved by PMU for internal purpose.
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI_HP0_FPD'. A default connection has been created.
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'S_AXI_LPD'. A default connection has been created.
+INFO: [IP_Flow 19-1686] Generating 'Miscellaneous' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'zcu104ps'...
+INFO: [IP_Flow 19-1686] Generating 'Hardware Handoff' target for IP 'zcu104ps'...
+generate_target: Time (s): cpu = 00:00:30 ; elapsed = 00:00:36 . Memory (MB): peak = 2241.828 ; gain = 25.859
+## export_ip_user_files -of_objects $obj -no_script -force
+## set obj [current_fileset]
+## set property_include_dirs [get_property include_dirs $obj]
+## set ip_include_dirs [concat $property_include_dirs [findincludedir $ipdir "*.vh"]]
+## set ip_include_dirs [concat $ip_include_dirs [findincludedir $srcdir "*.h"]]
+## set ip_include_dirs [concat $ip_include_dirs [findincludedir $srcdir "*.vh"]]
+# source [file join $scriptdir "synth.tcl"]
+## read_ip [glob -directory $ipdir [file join * {*.xci}]]
+CRITICAL WARNING: [Vivado 12-1504] The IP is already part of the fileset 'sources_1'. Requested source 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/harnessSysPLL/harnessSysPLL.xci' will not be added.
+CRITICAL WARNING: [Vivado 12-1504] The IP is already part of the fileset 'sources_1'. Requested source 'Z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/zcu104ps.xci' will not be added.
+## synth_design -top $top -flatten_hierarchy rebuilt
+Command: synth_design -top ZCU104FPGATestHarness -flatten_hierarchy rebuilt
+Starting synth_design
+Using part: xczu7ev-ffvc1156-2-e
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu7ev'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu7ev'
+INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 27872
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:14 . Memory (MB): peak = 2678.680 ; gain = 339.766
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'ZCU104FPGATestHarness' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ZCU104FPGATestHarness.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ResetWrangler' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ResetWrangler.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AsyncResetRegVec_w13_i0' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetRegVec_w13_i0.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncResetRegVec_w13_i0' (1#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetRegVec_w13_i0.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncResetReg' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetReg.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncResetReg' (2#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetReg.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ResetCatchAndSync_d3_ZCU104FPGATestHarness_UNIQUIFIED' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ResetCatchAndSync_d3_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AsyncResetSynchronizerShiftReg_w1_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerShiftReg_w1_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AsyncResetSynchronizerPrimitiveShiftReg_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerPrimitiveShiftReg_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncResetSynchronizerPrimitiveShiftReg_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED' (3#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerPrimitiveShiftReg_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncResetSynchronizerShiftReg_w1_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED' (4#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerShiftReg_w1_d3_i0_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ResetCatchAndSync_d3_ZCU104FPGATestHarness_UNIQUIFIED' (5#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ResetCatchAndSync_d3_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ResetWrangler' (6#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ResetWrangler.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'XilinxZCU104PS' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PS.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a32d128s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a32d128s4k1z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a32d128s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d128s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x187' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x187.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x187' (7#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x187.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a32d128s4k1z4u' (8#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d128s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a32d128s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d128s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x144' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x144.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x144' (9#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x144.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a32d128s4k1z4u' (10#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d128s4k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a32d128s4k1z4u' (11#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a32d128s4k1z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLToAXI4' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLToAXI4.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_AXI4BundleW' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_AXI4BundleW.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_AXI4BundleW' (12#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_AXI4BundleW.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_AXI4BundleARW' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_AXI4BundleARW.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_AXI4BundleARW' (13#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_AXI4BundleARW.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLToAXI4' (14#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLToAXI4.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'AXI4IdIndexer' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4IdIndexer.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4IdIndexer' (15#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4IdIndexer.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AXI4Deinterleaver' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4Deinterleaver.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue4_AXI4BundleR' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue4_AXI4BundleR.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_4x145' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_4x145.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_4x145' (16#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_4x145.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue4_AXI4BundleR' (17#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue4_AXI4BundleR.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4Deinterleaver' (18#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4Deinterleaver.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'AXI4UserYanker' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4UserYanker.sv:20]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_BundleMap' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_BundleMap.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_BundleMap' (19#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_BundleMap.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4UserYanker' (20#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4UserYanker.sv:20]
+INFO: [Synth 8-6157] synthesizing module 'XilinxZCU104PSIsland' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AXI4AsyncCrossingSink' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4AsyncCrossingSink.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSink_AXI4BundleAR' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleAR.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncResetSynchronizerShiftReg_w4_d3_i0' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerShiftReg_w4_d3_i0.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncResetSynchronizerShiftReg_w4_d3_i0' (21#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerShiftReg_w4_d3_i0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'ClockCrossingReg_w63' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w63.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ClockCrossingReg_w63' (22#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w63.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncValidSync_ZCU104FPGATestHarness_UNIQUIFIED' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncValidSync_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AsyncResetSynchronizerShiftReg_w1_d3_i0_1_ZCU104FPGATestHarness_UNIQUIFIED' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerShiftReg_w1_d3_i0_1_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncResetSynchronizerShiftReg_w1_d3_i0_1_ZCU104FPGATestHarness_UNIQUIFIED' (23#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncResetSynchronizerShiftReg_w1_d3_i0_1_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncValidSync_ZCU104FPGATestHarness_UNIQUIFIED' (24#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncValidSync_ZCU104FPGATestHarness_UNIQUIFIED.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSink_AXI4BundleAR' (25#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleAR.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSink_AXI4BundleAW' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleAW.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSink_AXI4BundleAW' (26#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleAW.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSink_AXI4BundleW' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleW.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ClockCrossingReg_w145' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w145.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ClockCrossingReg_w145' (27#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w145.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSink_AXI4BundleW' (28#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleW.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSource_AXI4BundleR' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleR.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSource_AXI4BundleR' (29#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleR.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSource_AXI4BundleB' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleB.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSource_AXI4BundleB' (30#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleB.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4AsyncCrossingSink' (31#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4AsyncCrossingSink.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'zcu104ps' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:59]
+INFO: [Synth 8-6157] synthesizing module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:244]
+INFO: [Synth 8-6157] synthesizing module 'BUFG_PS' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:1307]
+INFO: [Synth 8-6155] done synthesizing module 'BUFG_PS' (32#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:1307]
+INFO: [Synth 8-6157] synthesizing module 'PS8' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:91151]
+INFO: [Synth 8-6155] done synthesizing module 'PS8' (33#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:91151]
+WARNING: [Synth 8-689] width (4) of port connection 'EMIOSDIO1DATAOUT' does not match port width (8) of module 'PS8' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:4621]
+WARNING: [Synth 8-689] width (4) of port connection 'EMIOSDIO1DATAENA' does not match port width (8) of module 'PS8' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:4622]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXN0OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXN1OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXN2OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXN3OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXP0OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXP1OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXP2OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTTXP3OUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_PADO' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_BOOTMODE' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_CLK' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DONEB' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMA' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMACTN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMALERTN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMBA' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMBG' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMCK' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMCKE' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMCKN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMCSN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMDM' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMDQ' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMDQS' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMDQSN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMODT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMPARITY' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_DRAMRAMRSTN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_ERROROUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_ERRORSTATUS' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_INITB' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_JTAGTCK' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_JTAGTDI' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_JTAGTDO' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_JTAGTMS' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MIO' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_PORB' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_PROGB' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_RCALIBINOUT' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_SRSTB' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_ZQ' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXN0IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXN1IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXN2IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXN3IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXP0IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXP1IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXP2IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_MGTRXP3IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_PADI' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFN0IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFN1IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFN2IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFN3IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFP0IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFP1IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFP2IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7071] port 'PSS_ALTO_CORE_PAD_REFP3IN' of module 'PS8' is unconnected for instance 'PS8_i' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-7023] instance 'PS8_i' of module 'PS8' has 1015 connections declared, but only 957 given [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:3798]
+WARNING: [Synth 8-3848] Net dp_audio_ref_clk in module/entity zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e does not have driver. [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:297]
+WARNING: [Synth 8-3848] Net irq_ipi_pl_0 in module/entity zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e does not have driver. [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:1317]
+WARNING: [Synth 8-3848] Net irq_ipi_pl_1 in module/entity zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e does not have driver. [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:1318]
+WARNING: [Synth 8-3848] Net irq_ipi_pl_2 in module/entity zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e does not have driver. [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:1319]
+WARNING: [Synth 8-3848] Net irq_ipi_pl_3 in module/entity zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e does not have driver. [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:1320]
+INFO: [Synth 8-6155] done synthesizing module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' (34#1) [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/hdl/zynq_ultra_ps_e_v3_3_6.v:244]
+WARNING: [Synth 8-7071] port 'emio_enet0_signal_detect' of module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' is unconnected for instance 'inst' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:355]
+WARNING: [Synth 8-7071] port 'emio_enet1_signal_detect' of module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' is unconnected for instance 'inst' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:355]
+WARNING: [Synth 8-7071] port 'emio_enet2_signal_detect' of module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' is unconnected for instance 'inst' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:355]
+WARNING: [Synth 8-7071] port 'emio_enet3_signal_detect' of module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' is unconnected for instance 'inst' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:355]
+WARNING: [Synth 8-7023] instance 'inst' of module 'zynq_ultra_ps_e_v3_3_6_zynq_ultra_ps_e' has 1491 connections declared, but only 1487 given [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:355]
+INFO: [Synth 8-6155] done synthesizing module 'zcu104ps' (35#1) [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/zcu104ps/synth/zcu104ps.v:59]
+WARNING: [Synth 8-7071] port 'saxigp2_aruser' of module 'zcu104ps' is unconnected for instance 'blackbox' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+WARNING: [Synth 8-7071] port 'saxigp2_awuser' of module 'zcu104ps' is unconnected for instance 'blackbox' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+WARNING: [Synth 8-7071] port 'saxigp6_aruser' of module 'zcu104ps' is unconnected for instance 'blackbox' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+WARNING: [Synth 8-7071] port 'saxigp6_awuser' of module 'zcu104ps' is unconnected for instance 'blackbox' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+WARNING: [Synth 8-7071] port 'pl_resetn0' of module 'zcu104ps' is unconnected for instance 'blackbox' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+WARNING: [Synth 8-7071] port 'pl_clk0' of module 'zcu104ps' is unconnected for instance 'blackbox' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+WARNING: [Synth 8-7023] instance 'blackbox' of module 'zcu104ps' has 82 connections declared, but only 76 given [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:573]
+INFO: [Synth 8-6155] done synthesizing module 'XilinxZCU104PSIsland' (36#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PSIsland.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AXI4AsyncCrossingSource' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4AsyncCrossingSource.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSource_AXI4BundleAR' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleAR.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSource_AXI4BundleAR' (37#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleAR.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSource_AXI4BundleAW' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleAW.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSource_AXI4BundleAW' (38#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleAW.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSource_AXI4BundleW' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleW.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSource_AXI4BundleW' (39#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSource_AXI4BundleW.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSink_AXI4BundleR' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleR.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ClockCrossingReg_w137' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w137.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ClockCrossingReg_w137' (40#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w137.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSink_AXI4BundleR' (41#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleR.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'AsyncQueueSink_AXI4BundleB' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleB.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ClockCrossingReg_w8' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w8.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'ClockCrossingReg_w8' (42#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ClockCrossingReg_w8.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AsyncQueueSink_AXI4BundleB' (43#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AsyncQueueSink_AXI4BundleB.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'AXI4AsyncCrossingSource' (44#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AXI4AsyncCrossingSource.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'XilinxZCU104PS' (45#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/XilinxZCU104PS.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLWidthWidget8' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLWidthWidget8.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleD_a32d128s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleD_a32d128s4k1z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleD_a32d128s4k1z4u' (46#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleD_a32d128s4k1z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLWidthWidget8' (47#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLWidthWidget8.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'harnessSysPLL' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/harnessSysPLL/harnessSysPLL.v:70]
+INFO: [Synth 8-6157] synthesizing module 'harnessSysPLL_clk_wiz' [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/harnessSysPLL/harnessSysPLL_clk_wiz.v:68]
+INFO: [Synth 8-6157] synthesizing module 'MMCME4_ADV' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:63903]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT_F bound to: 48.000000 - type: double 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKFBOUT_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKIN1_PERIOD bound to: 8.000000 - type: double 
+	Parameter CLKOUT0_DIVIDE_F bound to: 24.000000 - type: double 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT0_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT4_CASCADE bound to: FALSE - type: string 
+	Parameter COMPENSATION bound to: AUTO - type: string 
+	Parameter DIVCLK_DIVIDE bound to: 5 - type: integer 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'MMCME4_ADV' (48#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:63903]
+INFO: [Synth 8-6157] synthesizing module 'BUFG' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:1083]
+INFO: [Synth 8-6155] done synthesizing module 'BUFG' (49#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:1083]
+INFO: [Synth 8-6155] done synthesizing module 'harnessSysPLL_clk_wiz' (50#1) [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/harnessSysPLL/harnessSysPLL_clk_wiz.v:68]
+INFO: [Synth 8-6155] done synthesizing module 'harnessSysPLL' (51#1) [z:/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/obj/ip/harnessSysPLL/harnessSysPLL.v:70]
+INFO: [Synth 8-6157] synthesizing module 'IBUFDS' [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:55219]
+	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
+	Parameter DIFF_TERM bound to: FALSE - type: string 
+	Parameter DQS_BIAS bound to: FALSE - type: string 
+	Parameter IBUF_DELAY_VALUE bound to: 0 - type: integer 
+	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
+	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
+	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IBUFDS' (52#1) [E:/PRO_APP/xilinx/Vivado/2021.2/scripts/rt/data/unisim_comp.v:55219]
+INFO: [Synth 8-6157] synthesizing module 'UIntToAnalog_1' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/UIntToAnalog_1.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'UIntToAnalog_1' (53#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/UIntToAnalog_1.v:1]
+INFO: [Synth 8-6157] synthesizing module 'AnalogToUInt_1' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AnalogToUInt_1.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'AnalogToUInt_1' (54#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/AnalogToUInt_1.v:1]
+INFO: [Synth 8-6157] synthesizing module 'PowerOnResetFPGAOnly' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/PowerOnResetFPGAOnly.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'PowerOnResetFPGAOnly' (55#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/PowerOnResetFPGAOnly.v:2]
+INFO: [Synth 8-6157] synthesizing module 'ChipTop' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ChipTop.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'DigitalTop' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/DigitalTop.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'IntXbar_i4_o1' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/IntXbar_i4_o1.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'IntXbar_i4_o1' (56#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/IntXbar_i4_o1.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SystemBus' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SystemBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_4' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_4.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_4' (57#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_4.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_sbus_i2_o2_a32d64s3k3z4c' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_sbus_i2_o2_a32d64s3k3z4c.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_sbus_i2_o2_a32d64s3k3z4c' (58#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_sbus_i2_o2_a32d64s3k3z4c.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'SystemBus' (59#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SystemBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PeripheryBus_pbus' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/PeripheryBus_pbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_5' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_5.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_5' (60#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_5.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_pbus_out_i1_o5_a31d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_pbus_out_i1_o5_a31d64s4k1z3u.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_pbus_out_i1_o5_a31d64s4k1z3u' (61#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_pbus_out_i1_o5_a31d64s4k1z3u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a31d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a31d64s4k1z3u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a31d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a31d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x117' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x117.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x117' (62#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x117.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a31d64s4k1z3u' (63#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a31d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a31d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a31d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x79' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x79.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x79' (64#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x79.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a31d64s4k1z3u' (65#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a31d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a31d64s4k1z3u' (66#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a31d64s4k1z3u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLAtomicAutomata_pbus' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLAtomicAutomata_pbus.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLAtomicAutomata_pbus' (67#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLAtomicAutomata_pbus.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_bootaddressreg' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_bootaddressreg.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_BootAddrReg' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_BootAddrReg.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a13d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a13d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a13d64s4k1z3u' (68#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a13d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_BootAddrReg' (69#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_BootAddrReg.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_bootaddressreg' (70#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_bootaddressreg.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_uart_0' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_UART' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_UART.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a31d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a31d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a31d64s4k1z3u' (71#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a31d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_UART' (72#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_UART.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_uart_0' (73#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_uart_1' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_1.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_uart_1' (74#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_uart_1.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_gpio_0' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_gpio_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter' (75#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_gpio_0' (76#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_gpio_0.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_spi_0' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_spi_0.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_pbus_to_device_named_spi_0' (77#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_pbus_to_device_named_spi_0.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'PeripheryBus_pbus' (78#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/PeripheryBus_pbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a32d64s1k3z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a32d64s1k3z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a32d64s1k3z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d64s1k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x116' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x116.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x116' (79#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x116.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a32d64s1k3z4u' (80#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d64s1k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a32d64s1k3z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d64s1k3z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x78' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x78.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x78' (81#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x78.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a32d64s1k3z4u' (82#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d64s1k3z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a32d64s1k3z4u' (83#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a32d64s1k3z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_fbus_from_debug_sb' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_fbus_from_debug_sb.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLWidthWidget1' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLWidthWidget1.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleD_a32d64s1k3z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleD_a32d64s1k3z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleD_a32d64s1k3z4u' (84#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleD_a32d64s1k3z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLWidthWidget1' (85#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLWidthWidget1.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_fbus_from_debug_sb' (86#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_fbus_from_debug_sb.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'PeripheryBus_cbus' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/PeripheryBus_cbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_7' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_7.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_7' (87#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_7.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_cbus_in_i2_o1_a31d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_cbus_in_i2_o1_a31d64s4k1z4u.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_cbus_in_i2_o1_a31d64s4k1z4u' (88#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_cbus_in_i2_o1_a31d64s4k1z4u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_cbus_out_i1_o8_a31d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_cbus_out_i1_o8_a31d64s4k1z4u.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_cbus_out_i1_o8_a31d64s4k1z4u' (89#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_cbus_out_i1_o8_a31d64s4k1z4u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a31d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a31d64s4k1z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a31d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a31d64s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x118' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x118.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x118' (90#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x118.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a31d64s4k1z4u' (91#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a31d64s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a31d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a31d64s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x80' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x80.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x80' (92#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x80.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a31d64s4k1z4u' (93#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a31d64s4k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a31d64s4k1z4u' (94#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a31d64s4k1z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLAtomicAutomata_cbus' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLAtomicAutomata_cbus.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLAtomicAutomata_cbus' (95#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLAtomicAutomata_cbus.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'ErrorDeviceWrapper' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ErrorDeviceWrapper.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLError' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLError.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_TLBundleA_a14d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_TLBundleA_a14d64s4k1z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_TLBundleA_a14d64s4k1z4u' (96#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_TLBundleA_a14d64s4k1z4u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLError' (97#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLError.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a14d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a14d64s4k1z4u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a14d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a14d64s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x101' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x101.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x101' (98#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x101.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a14d64s4k1z4u' (99#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a14d64s4k1z4u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a14d64s4k1z4u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a14d64s4k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a14d64s4k1z4u' (100#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a14d64s4k1z4u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a14d64s4k1z4u' (101#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a14d64s4k1z4u.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ErrorDeviceWrapper' (102#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ErrorDeviceWrapper.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_l2_ctrl' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_l2_ctrl.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a26d64s8k1z2u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a26d64s8k1z2u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_TLBundleA_a26d64s8k1z2u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_TLBundleA_a26d64s8k1z2u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_TLBundleA_a26d64s8k1z2u' (103#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_TLBundleA_a26d64s8k1z2u.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_TLBundleD_a26d64s8k1z2u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_TLBundleD_a26d64s8k1z2u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_TLBundleD_a26d64s8k1z2u' (104#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_TLBundleD_a26d64s8k1z2u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a26d64s8k1z2u' (105#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a26d64s8k1z2u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_LLCCtrl' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_LLCCtrl.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a26d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a26d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a26d64s4k1z3u' (106#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a26d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_LLCCtrl' (107#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_LLCCtrl.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_l2_ctrl' (108#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_l2_ctrl.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_clint' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_clint.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_CLINT' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_CLINT.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_CLINT' (109#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_CLINT.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_clint' (110#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_clint.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_plic' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_plic.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_PLIC' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_PLIC.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a28d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a28d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a28d64s4k1z3u' (111#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a28d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_PLIC' (112#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_PLIC.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_plic' (113#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_plic.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_debug' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_debug.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_Debug' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_Debug.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a12d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a12d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a12d64s4k1z3u' (114#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a12d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_Debug' (115#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_Debug.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_debug' (116#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_debug.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_bootrom' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_bootrom.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLFragmenter_bootrom' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_bootrom.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Repeater_TLBundleA_a17d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a17d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Repeater_TLBundleA_a17d64s4k1z3u' (117#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Repeater_TLBundleA_a17d64s4k1z3u.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'TLFragmenter_bootrom' (118#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLFragmenter_bootrom.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_bootrom' (119#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_bootrom.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_cbus_to_prci_ctrl' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_prci_ctrl.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a21d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a21d64s4k1z3u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a21d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a21d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x103' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x103.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x103' (120#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x103.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a21d64s4k1z3u' (121#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a21d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a21d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a21d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a21d64s4k1z3u' (122#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a21d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a21d64s4k1z3u' (123#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a21d64s4k1z3u.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_cbus_to_prci_ctrl' (124#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_cbus_to_prci_ctrl.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'PeripheryBus_cbus' (125#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/PeripheryBus_cbus.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'MemoryBus' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/MemoryBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'FixedClockBroadcast_2' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_2.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'FixedClockBroadcast_2' (126#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/FixedClockBroadcast_2.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLXbar_mbus_i1_o2_a32d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_mbus_i1_o2_a32d64s4k1z3u.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'TLXbar_mbus_i1_o2_a32d64s4k1z3u' (127#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLXbar_mbus_i1_o2_a32d64s4k1z3u.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'ProbePicker' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ProbePicker.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'ProbePicker' (128#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ProbePicker.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLInterconnectCoupler_mbus_to_memory_controller_port_named_tl_mem' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_mbus_to_memory_controller_port_named_tl_mem.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a32d64s4k1z3u_1' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a32d64s4k1z3u_1.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a32d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a32d64s4k1z3u' (129#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a32d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a32d64s4k1z3u' (130#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a32d64s4k1z3u_1' (131#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a32d64s4k1z3u_1.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'TLInterconnectCoupler_mbus_to_memory_controller_port_named_tl_mem' (132#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLInterconnectCoupler_mbus_to_memory_controller_port_named_tl_mem.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'TLBuffer_a28d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a28d64s4k1z3u.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a28d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a28d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x114' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x114.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x114' (133#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x114.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a28d64s4k1z3u' (134#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a28d64s4k1z3u.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a28d64s4k1z3u' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a28d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a28d64s4k1z3u' (135#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a28d64s4k1z3u.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'TLBuffer_a28d64s4k1z3u' (136#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/TLBuffer_a28d64s4k1z3u.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'MemoryBus' (137#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/MemoryBus.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'CoherenceManagerWrapper' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/CoherenceManagerWrapper.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'InclusiveCache' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/InclusiveCache.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'InclusiveCacheControl' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/InclusiveCacheControl.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_RegMapperInput_i9_m8' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_RegMapperInput_i9_m8.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_RegMapperInput_i9_m8' (138#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_RegMapperInput_i9_m8.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'InclusiveCacheControl' (139#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/InclusiveCacheControl.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'InclusiveCacheBankScheduler' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/InclusiveCacheBankScheduler.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'SourceA' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceA.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleA_a32d64s3k3z3c' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleA_a32d64s3k3z3c' (140#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleA_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'SourceA' (141#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceA.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SourceB' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceB.sv:64]
+INFO: [Synth 8-6155] done synthesizing module 'SourceB' (142#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceB.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'SourceC' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceC.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue12_TLBundleC_a32d64s3k3z3c' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue12_TLBundleC_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_12x106' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_12x106.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_12x106' (143#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_12x106.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue12_TLBundleC_a32d64s3k3z3c' (144#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue12_TLBundleC_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'SourceC' (145#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceC.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'SourceD' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceD.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue3_BankedStoreInnerDecoded' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue3_BankedStoreInnerDecoded.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_data_3x64' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_data_3x64.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_data_3x64' (146#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_data_3x64.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue3_BankedStoreInnerDecoded' (147#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue3_BankedStoreInnerDecoded.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Atomics' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Atomics.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'Atomics' (148#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Atomics.sv:2]
+WARNING: [Synth 8-6014] Unused sequential element s2_pdata_r_corrupt_reg was removed.  [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceD.sv:346]
+WARNING: [Synth 8-6014] Unused sequential element s3_pdata_corrupt_reg was removed.  [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceD.sv:363]
+WARNING: [Synth 8-6014] Unused sequential element s4_need_pb_reg was removed.  [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceD.sv:371]
+WARNING: [Synth 8-6014] Unused sequential element s4_pdata_corrupt_reg was removed.  [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceD.sv:379]
+INFO: [Synth 8-6155] done synthesizing module 'SourceD' (149#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceD.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'SourceE' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceE.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleE_a32d64s3k3z3c' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleE_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_sink_2x3' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_sink_2x3.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_sink_2x3' (150#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_sink_2x3.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleE_a32d64s3k3z3c' (151#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleE_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'SourceE' (152#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceE.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SourceX' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceX.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_SourceXRequest' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_SourceXRequest.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_SourceXRequest' (153#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_SourceXRequest.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'SourceX' (154#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SourceX.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SinkA' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkA.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ListBuffer_PutBufferAEntry_q40_e40' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ListBuffer_PutBufferAEntry_q40_e40.sv:77]
+INFO: [Synth 8-6157] synthesizing module 'head_40x6' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/head_40x6.sv:3]
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+INFO: [Synth 8-6155] done synthesizing module 'head_40x6' (155#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/head_40x6.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'tail_40x6' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/tail_40x6.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'tail_40x6' (156#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/tail_40x6.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'next_40x6' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/next_40x6.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'next_40x6' (157#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/next_40x6.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'data_40x73' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/data_40x73.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'data_40x73' (158#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/data_40x73.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ListBuffer_PutBufferAEntry_q40_e40' (159#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ListBuffer_PutBufferAEntry_q40_e40.sv:77]
+INFO: [Synth 8-6155] done synthesizing module 'SinkA' (160#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkA.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'SinkC' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkC.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleC_a32d64s3k3z3c' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleC_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'ram_2x109' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x109.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ram_2x109' (161#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ram_2x109.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleC_a32d64s3k3z3c' (162#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleC_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_BankedStoreInnerAddress' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_BankedStoreInnerAddress.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_BankedStoreInnerAddress' (163#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_BankedStoreInnerAddress.sv:46]
+INFO: [Synth 8-6157] synthesizing module 'ListBuffer_PutBufferCEntry_q2_e16' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ListBuffer_PutBufferCEntry_q2_e16.sv:77]
+INFO: [Synth 8-6157] synthesizing module 'head_2x4' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/head_2x4.sv:3]
+WARNING: [Synth 8-4767] Trying to implement RAM 'Memory_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons.
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Unable to determine number of words or word size in RAM. 
+	3: No valid read/write found for RAM. 
+RAM "Memory_reg" dissolved into registers
+INFO: [Synth 8-6155] done synthesizing module 'head_2x4' (164#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/head_2x4.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'tail_2x4' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/tail_2x4.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'tail_2x4' (165#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/tail_2x4.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'next_16x4' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/next_16x4.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'next_16x4' (166#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/next_16x4.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'data_16x65' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/data_16x65.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'data_16x65' (167#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/data_16x65.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'ListBuffer_PutBufferCEntry_q2_e16' (168#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ListBuffer_PutBufferCEntry_q2_e16.sv:77]
+INFO: [Synth 8-6155] done synthesizing module 'SinkC' (169#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkC.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'SinkD' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkD.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'Queue2_TLBundleD_a32d64s3k3z3c' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'Queue2_TLBundleD_a32d64s3k3z3c' (170#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue2_TLBundleD_a32d64s3k3z3c.sv:59]
+INFO: [Synth 8-6155] done synthesizing module 'SinkD' (171#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkD.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'SinkE' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkE.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'SinkE' (172#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkE.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SinkX' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkX.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Queue1_SinkXRequest' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_SinkXRequest.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'Queue1_SinkXRequest' (173#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Queue1_SinkXRequest.sv:46]
+INFO: [Synth 8-6155] done synthesizing module 'SinkX' (174#1) [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/SinkX.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Directory' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Directory.sv:64]
+INFO: [Synth 8-6157] synthesizing module 'cc_dir' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/cc_dir.sv:2]
+ERROR: [Synth 8-439] module 'cc_dir_ext' not found [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/cc_dir.sv:12]
+ERROR: [Synth 8-6156] failed synthesizing module 'cc_dir' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/cc_dir.sv:2]
+ERROR: [Synth 8-6156] failed synthesizing module 'Directory' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/Directory.sv:64]
+ERROR: [Synth 8-6156] failed synthesizing module 'InclusiveCacheBankScheduler' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/InclusiveCacheBankScheduler.sv:64]
+ERROR: [Synth 8-6156] failed synthesizing module 'InclusiveCache' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/InclusiveCache.sv:2]
+ERROR: [Synth 8-6156] failed synthesizing module 'CoherenceManagerWrapper' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/CoherenceManagerWrapper.sv:2]
+ERROR: [Synth 8-6156] failed synthesizing module 'DigitalTop' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/DigitalTop.sv:46]
+ERROR: [Synth 8-6156] failed synthesizing module 'ChipTop' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ChipTop.sv:46]
+ERROR: [Synth 8-6156] failed synthesizing module 'ZCU104FPGATestHarness' [//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104JLinkDiagConfig/gen-collateral/ZCU104FPGATestHarness.sv:46]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:18 . Memory (MB): peak = 2868.184 ; gain = 529.270
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+362 Infos, 84 Warnings, 0 Critical Warnings and 10 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+
+    while executing
+"source [file join $scriptdir "synth.tcl"]"
+    (file "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/fpga-shells/xilinx/common/tcl/vivado.tcl" line 13)
+INFO: [Common 17-206] Exiting Vivado at Tue Apr 14 20:28:38 2026...
+[4/4] Build complete (exit code: 0)
+[FAIL] Vivado log contains ERROR lines

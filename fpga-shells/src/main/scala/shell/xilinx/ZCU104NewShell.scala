@@ -76,24 +76,26 @@ class UART1ZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: UA
   def place(designInput: UARTDesignInput) = new UART1ZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-// SDIO on PMOD J55
-// NOTE: Bank 67/68 are HP banks on ZCU104 - must use LVCMOS18, NOT LVCMOS33
+// SDIO on PMOD0 (J87) top row — directly connected to Digilent Pmod MicroSD
+// Bank 87, VCCO = VCC3V3
+// Pmod MicroSD: Pin1=CS, Pin2=MOSI, Pin3=MISO, Pin4=SCK
+// SDIOOverlay mapping: spi_clk→SCK, spi_cs→MOSI(DQ0), spi_dat(0)→MISO(DQ1), spi_dat(3)→CS
+// spi_dat(1) and spi_dat(2) are unused in SPI mode, parked on PMOD1_4/PMOD1_5
 class SDIOZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: SPIDesignInput, val shellInput: SPIShellInput)
   extends SDIOXilinxPlacedOverlay(name, designInput, shellInput)
 {
   shell { InModuleBody {
-    // J55 PMOD pins (ZCU104 UG1267, Table 1-22) - all in Bank 67/68 (HP)
     val packagePinsWithPackageIOs = Seq(
-      ("E12", IOPin(io.spi_clk)),
-      ("F11", IOPin(io.spi_cs)),
-      ("D12", IOPin(io.spi_dat(0))),
-      ("C12", IOPin(io.spi_dat(1))),
-      ("B12", IOPin(io.spi_dat(2))),
-      ("A12", IOPin(io.spi_dat(3))))
+      ("H7", IOPin(io.spi_clk)),      // PMOD0_3 → SD SCK
+      ("H8", IOPin(io.spi_cs)),        // PMOD0_1 → SD MOSI (directly active)
+      ("G7", IOPin(io.spi_dat(0))),    // PMOD0_2 → SD MISO
+      ("L10", IOPin(io.spi_dat(1))),   // PMOD1_4 → unused, parked
+      ("M10", IOPin(io.spi_dat(2))),   // PMOD1_5 → unused, parked
+      ("G8", IOPin(io.spi_dat(3))))    // PMOD0_0 → SD CS#
     packagePinsWithPackageIOs foreach { case (pin, io) => {
       shell.xdc.addPackagePin(io, pin)
-      shell.xdc.addIOStandard(io, "LVCMOS18")
+      shell.xdc.addIOStandard(io, "LVCMOS33")
     } }
     packagePinsWithPackageIOs drop 1 foreach { case (pin, io) => {
       shell.xdc.addPullup(io)
@@ -107,20 +109,20 @@ class SDIOZCU104ShellPlacer(shell: ZCU104ShellBasicOverlays, val shellInput: SPI
   def place(designInput: SPIDesignInput) = new SDIOZCU104PlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-// External JTAG on PMOD0_4..0_7
+// External JTAG on J55 PMOD0_4..0_7 (G6/H6/J6/J7, LVCMOS33)
 class JTAGDebugZCU104PlacedOverlay(val shell: ZCU104ShellBasicOverlays, name: String,
     val designInput: JTAGDebugDesignInput, val shellInput: JTAGDebugShellInput)
   extends JTAGDebugXilinxPlacedOverlay(name, designInput, shellInput)
 {
   shell { InModuleBody {
-    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "J6") // PMOD0_6
+    shell.xdc.addPackagePin(IOPin(io.jtag_TCK), "J6") // J55 PMOD0_6
     shell.xdc.addIOStandard(IOPin(io.jtag_TCK), "LVCMOS33")
     shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK))
-    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "H6") // PMOD0_5
+    shell.xdc.addPackagePin(IOPin(io.jtag_TMS), "H6") // J55 PMOD0_5
     shell.xdc.addIOStandard(IOPin(io.jtag_TMS), "LVCMOS33")
-    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "J7") // PMOD0_7
+    shell.xdc.addPackagePin(IOPin(io.jtag_TDO), "J7") // J55 PMOD0_7
     shell.xdc.addIOStandard(IOPin(io.jtag_TDO), "LVCMOS33")
-    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "G6") // PMOD0_4
+    shell.xdc.addPackagePin(IOPin(io.jtag_TDI), "G6") // J55 PMOD0_4
     shell.xdc.addIOStandard(IOPin(io.jtag_TDI), "LVCMOS33")
   } }
 }

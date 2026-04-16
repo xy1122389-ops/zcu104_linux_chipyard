@@ -1,0 +1,37 @@
+From: Chipyard Linux Bringup
+Subject: [PATCH 1/2] mmc: sdhci-pltfm: allow optional IRQ for polling mode
+
+On SoCs where the SDHCI controller interrupt is not routed to the
+CPU's interrupt controller (e.g. RISC-V PL with PS peripherals
+behind an AXI bridge), the platform_get_irq() call fails and
+prevents the driver from probing at all.
+
+Mark the IRQ as optional: when it is not available, set host->irq = 0.
+The companion sdhci core patch adds a polling timer for this case.
+
+Signed-off-by: Chipyard Linux Bringup
+
+---
+ drivers/mmc/host/sdhci-pltfm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/mmc/host/sdhci-pltfm.c b/drivers/mmc/host/sdhci-pltfm.c
+index xxxx..yyyy 100644
+--- a/drivers/mmc/host/sdhci-pltfm.c
++++ b/drivers/mmc/host/sdhci-pltfm.c
+@@ -123,9 +123,12 @@ struct sdhci_host *sdhci_pltfm_init(struct platform_device *pdev,
+ 		goto err;
+ 	}
+ 
+-	irq = platform_get_irq(pdev, 0);
++	irq = platform_get_irq_optional(pdev, 0);
+ 	if (irq < 0) {
+-		ret = irq;
++		dev_info(&pdev->dev,
++			 "no IRQ found, will use polling mode\n");
++		irq = 0;
++	}
+-		goto err;
+ 	}
+ 
+ 	host = sdhci_alloc_host(&pdev->dev,

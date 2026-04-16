@@ -17,7 +17,7 @@
 
 static volatile uint32_t * const uart0 = (void *)(UART_CTRL_ADDR);
 static volatile uint32_t * const gpio0 = (void *)(GPIO_CTRL_ADDR);
-static volatile uint32_t * const ddr0 = (void *)(MEMORY_MEM_ADDR);
+static volatile uint32_t * const ddr0 = (void *)(MEMORY_MEM_ADDR + 0x7F00000u);
 static uint32_t led_state;
 
 static inline void uart_init(void)
@@ -187,6 +187,41 @@ static void startup_blink_sequence(void)
   delay_ms(240u);
 }
 
+/* DTB address where XSDB preloads the device tree */
+#define DTB_ADDR     0x84000000UL
+#define DTB_MAGIC    0xEDFE0DD0UL  /* 0xD00DFEED in little-endian memory */
+
+/* Sentinel: after DDR test we clear 0x80000000; XSDB payload write will set a
+   non-zero value.  We also accept any non-zero, non-0x11223344 (test pattern)
+   value so we don't accidentally trigger on leftover test data.
+
+   CRITICAL: The sentinel must NOT be at MEMORY_MEM_ADDR (0x80000000)
+   because the DDR test writes there, populating the D-cache.
+   Subsequent reads from the polling loop would hit the cache and
+   never see firmware data written by XSDB through the non-coherent
+   ARM path.  Using offset 0x1000 avoids this cache-coherence issue:
+   the first read is a cold cache miss that fetches directly from DDR. */
+#define PAYLOAD_SENTINEL_ADDR  ((volatile uint32_t *)(MEMORY_MEM_ADDR + 0x1000))
+#define DDR_TEST_PATTERN       0x11223344u
+
+static void jump_to_payload(unsigned long hart, unsigned long dtb)
+{
+  void (*entry)(unsigned long, unsigned long) =
+    (void (*)(unsigned long, unsigned long))MEMORY_MEM_ADDR;
+
+  /* fence to make sure all prior stores/loads are visible */
+  __asm__ __volatile__("fence rw, rw" ::: "memory");
+
+  uart_put_tag("jumping to 0x80000000  a0=");
+  print_hex32((uint32_t)hart);
+  uart_puts(" a1=");
+  print_hex32((uint32_t)dtb);
+  uart_puts("\n");
+
+  entry(hart, dtb);
+  __builtin_unreachable();
+}
+
 int main(void)
 {
   uint64_t count = 0;
@@ -194,7 +229,7 @@ int main(void)
 
   uart_init();
   gpio_init();
-  uart_put_tag("ds39-uart-build-1\n");
+  uart_put_tag("ds39-uart-build-4 (ddr-test-safe)\n");
   uart_put_tag("bootrom=zcu104/sdboot/baremetal.c led=DS39 gpio=0x64002000 uart=0x64000000\n");
   startup_blink_sequence();
   uart_put_tag("ddr test start\n");
@@ -210,14 +245,47 @@ int main(void)
     uart_put_tag("ddr test fail\n");
   }
 
+  /* Do NOT clear sentinel — the sentinel is at 0x80001000 which is
+     outside the DDR test area.  On cold boot the D-cache line for
+     0x80001000 has not been allocated, so the first read will be a
+     cache miss that fetches directly from DDR.  If firmware was
+     preloaded by XSDB, we see non-zero immediately and jump. */
+  __asm__ __volatile__("fence rw, rw" ::: "memory");
+
+  uart_put_tag("polling 0x80001000 for payload (XSDB preload)...\n");
+
   while (1) {
-    uart_put_tag("alive ");
-    print_dec(count++);
-    uart_puts("\n");
-    led_set(1u);
-    delay_ms(150u);
-    led_set(0u);
-    delay_ms(850u);
+    uint32_t val = *PAYLOAD_SENTINEL_ADDR;
+
+    if (val != 0 && val != DDR_TEST_PATTERN) {
+      /* Payload detected — wait a bit for the full write to finish */
+      uart_put_tag("payload detected: ");
+      print_hex32(val);
+      uart_puts("\n");
+
+      /* Wait 3 seconds to let XSDB finish writing DTB etc. */
+      led_set(1u);
+      delay_ms(3000u);
+
+      /* Check DTB magic */
+      volatile uint32_t *dtb_ptr = (volatile uint32_t *)DTB_ADDR;
+      uint32_t dtb_val = *dtb_ptr;
+      uart_put_tag("dtb @0x84000000 = ");
+      print_hex32(dtb_val);
+      uart_puts("\n");
+
+      jump_to_payload(0, DTB_ADDR);
+    }
+
+    /* Heartbeat while waiting */
+    if ((count & 0x3Fu) == 0) {
+      uart_put_tag("alive ");
+      print_dec(count);
+      uart_puts("\n");
+    }
+    count++;
+    led_set((count >> 3) & 1u);
+    delay_ms(50u);
   }
 
   return 0;
