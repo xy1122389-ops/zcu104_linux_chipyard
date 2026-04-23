@@ -1,38 +1,237 @@
 #!/bin/sh
 PATH=/bin:/sbin
 
-mount -t devtmpfs devtmpfs /dev
-mount -t proc proc /proc
-mount -t sysfs sysfs /sys
-
-/bin/busybox mknod /dev/kmsg c 1 11 2>/dev/null
-log() {
-    echo "$1"
-    echo "$1" > /dev/kmsg 2>/dev/null
+# ------------------------------------------------------------------
+# Phase-B early breadcrumbs: write BEFORE any mount, so we can tell
+# whether /init started exec at all. Kernel CONFIG_DEVTMPFS_MOUNT=y
+# means /dev/kmsg normally already exists at /init entry.
+# Each hard_echo is best-effort; failure of one path must NOT block.
+# ------------------------------------------------------------------
+hard_echo() {
+    /bin/busybox printf '<6>%s\n' "$1" >/dev/kmsg 2>/dev/null || true
+    /bin/busybox printf '%s\n' "$1" >/dev/console 2>/dev/null || true
 }
 
-log "rescue-init: SPI-SD smoke test start"
-log "rescue-init: waiting for /dev/mmcblk0p1"
+hard_echo "INIT_ENTRY pid=$$ argv0=$0"
 
+# Mount pseudo-fs FIRST so /dev/console and /dev/kmsg exist.
+/bin/busybox mount -t devtmpfs devtmpfs /dev 2>/dev/null
+/bin/busybox mount -t proc proc /proc 2>/dev/null
+/bin/busybox mount -t sysfs sysfs /sys 2>/dev/null
+
+hard_echo "INIT_AFTER_PSEUDO_MOUNTS"
+
+# Ensure /dev/kmsg node; best-effort.
+[ -c /dev/kmsg ] || /bin/busybox mknod /dev/kmsg c 1 11 2>/dev/null
+[ -c /dev/console ] || /bin/busybox mknod /dev/console c 5 1 2>/dev/null
+[ -c /dev/mem ] || /bin/busybox mknod /dev/mem c 1 1 2>/dev/null
+
+# Keep inherited stdio. Early userspace writes to /dev/console can wedge before
+# the full tty path is ready, so breadcrumbs should prefer /dev/kmsg.
+
+# Ensure writable scratch dirs exist before later mount/log redirections.
+/bin/busybox mkdir -p /tmp /run /dev/block 2>/dev/null
+
+hard_echo "INIT_BEFORE_FIRST_STAGE_MARK"
+
+mark_stage() {
+    /sbin/stage_mark "$1" 2>/dev/null || true
+}
+
+mark_stage 0x5354474500000001
+
+hard_echo "INIT_AFTER_FIRST_STAGE_MARK sm=0x01"
+
+log() {
+    if /bin/busybox printf '<6>%s\n' "$1" >/dev/kmsg 2>/dev/null; then
+        return 0
+    fi
+    /bin/busybox printf '%s\n' "$1" >/dev/console 2>/dev/null || true
+}
+
+log_mmc_sysfs() {
+    for path in /sys/class/block/mmcblk0*; do
+        [ -e "$path/dev" ] || continue
+        name=${path##*/}
+        devnum=$(/bin/busybox cat "$path/dev" 2>/dev/null)
+        log "fedora-rootfs: sysfs: ${name} dev=${devnum}"
+    done
+}
+
+synthesize_block_node() {
+    name="$1"
+    sysdev="/sys/class/block/${name}/dev"
+    node="/dev/${name}"
+    [ -b "$node" ] && return 0
+    [ -r "$sysdev" ] || return 1
+
+    devnum=$(/bin/busybox cat "$sysdev" 2>/dev/null)
+    major=${devnum%%:*}
+    minor=${devnum##*:}
+    [ -n "$major" ] || return 1
+    [ -n "$minor" ] || return 1
+
+    /bin/busybox rm -f "$node" 2>/dev/null
+    if /bin/busybox mknod "$node" b "$major" "$minor" 2>/dev/null; then
+        /bin/busybox ln -sf "../${name}" "/dev/block/${major}:${minor}" 2>/dev/null
+        log "fedora-rootfs: SYNTH-NODE ${node} major=${major} minor=${minor}"
+        return 0
+    fi
+    return 1
+}
+
+refresh_mmc_nodes() {
+    /bin/busybox mdev -s 2>/dev/null || true
+    synthesize_block_node mmcblk0
+    synthesize_block_node mmcblk0p1
+    synthesize_block_node mmcblk0p2
+    synthesize_block_node mmcblk0p3
+}
+
+log "fedora-rootfs: SPI-SD Fedora bringup start (conservative, total wait 1800s)"
+log "fedora-rootfs: uname: $(/bin/busybox uname -a 2>&1)"
+log "fedora-rootfs: /proc/filesystems:"
+/bin/busybox cat /proc/filesystems 2>&1 | while read line; do log "fedora-rootfs: fs: $line"; done
+
+# ------------------------------------------------------------------
+# Phase A: wait for /dev/mmcblk0p3 up to 1800 s, log every 10 s.
+# ------------------------------------------------------------------
+MAX_WAIT=1800
 i=0
-while [ ! -b /dev/mmcblk0p1 ] && [ "$i" -lt 30 ]; do
-    sleep 1
+loop=0
+first_seen_p3=""
+first_seen_p3_sysfs=""
+refresh_mmc_nodes
+while [ ! -b /dev/mmcblk0p3 ] && [ "$i" -lt "$MAX_WAIT" ]; do
+    refresh_mmc_nodes
+    if [ -z "$first_seen_p3_sysfs" ] && [ -r /sys/class/block/mmcblk0p3/dev ]; then
+        first_seen_p3_sysfs=$i
+        log "fedora-rootfs: FIRST-SEEN sysfs mmcblk0p3 dev=$(/bin/busybox cat /sys/class/block/mmcblk0p3/dev 2>/dev/null) at ${first_seen_p3_sysfs}s loop=${loop}"
+    fi
+    if [ -b /dev/mmcblk0p3 ]; then
+        break
+    fi
+    if [ $((i % 10)) -eq 0 ]; then
+        log "fedora-rootfs: wait tick=${i}s loop=${loop} /dev/mmcblk0p3 still missing"
+        /bin/busybox ls -l /dev/mmcblk0* 2>&1 | while read line; do
+            log "fedora-rootfs: dev: $line"
+        done
+        log_mmc_sysfs
+        log "fedora-rootfs: /proc/partitions:"
+        /bin/busybox cat /proc/partitions 2>&1 | while read line; do
+            log "fedora-rootfs: part: $line"
+        done
+    fi
+    /bin/busybox sleep 1
     i=$((i + 1))
+    loop=$((loop + 1))
 done
 
-log "rescue-init: current block devices"
-cat /proc/partitions
+refresh_mmc_nodes
 
-mkdir -p /newroot
-if ! mount -t ext4 /dev/mmcblk0p1 /newroot; then
-    log "rescue-init: mount /dev/mmcblk0p1 failed"
+if [ -b /dev/mmcblk0p3 ]; then
+    first_seen_p3=$i
+    log "fedora-rootfs: FIRST-SEEN /dev/mmcblk0p3 at ${first_seen_p3}s loop=${loop}"
+    mark_stage 0x5354474500000002
+else
+    log "fedora-rootfs: wait loop exited after ${i}s WITHOUT mmcblk0p3"
+fi
+
+log "fedora-rootfs: final /dev/mmcblk0* listing:"
+/bin/busybox ls -l /dev/mmcblk0* 2>&1 | while read line; do log "fedora-rootfs: dev: $line"; done
+log "fedora-rootfs: final /sys/class/block/mmcblk0*/dev listing:"
+log_mmc_sysfs
+log "fedora-rootfs: final /proc/partitions:"
+/bin/busybox cat /proc/partitions 2>&1 | while read line; do log "fedora-rootfs: part: $line"; done
+
+if [ ! -b /dev/mmcblk0p3 ]; then
+    mark_stage 0x53544745000000e1
+    log "fedora-rootfs: GIVE-UP no mmcblk0p3, drop to /bin/sh"
     exec /bin/sh
 fi
 
-if [ ! -x /newroot/sbin/init ]; then
-    log "rescue-init: /newroot/sbin/init missing"
+# ------------------------------------------------------------------
+# Phase B: mount /newroot via btrfs with lenient retry (20 x 15s).
+# ------------------------------------------------------------------
+/bin/busybox mkdir -p /newroot
+
+MOUNT_ATTEMPTS=20
+MOUNT_INTERVAL=15
+attempt=0
+mounted=0
+while [ "$attempt" -lt "$MOUNT_ATTEMPTS" ]; do
+    attempt=$((attempt + 1))
+    log "fedora-rootfs: PRE-MOUNT attempt=${attempt}/${MOUNT_ATTEMPTS} mount -t btrfs -o subvol=root,ro /dev/mmcblk0p3 /newroot"
+    /bin/busybox mount -t btrfs -o subvol=root,ro /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
+    rc=$?
+    log "fedora-rootfs: POST-MOUNT attempt=${attempt} subvol=root rc=${rc}"
+    /bin/busybox cat /tmp/mount.err 2>&1 | while read line; do log "fedora-rootfs: mount_err: $line"; done
+    if [ "$rc" -eq 0 ]; then
+        mounted=1
+        mark_stage 0x5354474500000003
+        log "fedora-rootfs: MOUNT SUCCESS subvol=root on attempt ${attempt}"
+        break
+    fi
+    log "fedora-rootfs: subvol=root failed rc=${rc}, trying default subvol"
+    /bin/busybox mount -t btrfs -o ro /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
+    rc=$?
+    log "fedora-rootfs: POST-MOUNT attempt=${attempt} default rc=${rc}"
+    /bin/busybox cat /tmp/mount.err 2>&1 | while read line; do log "fedora-rootfs: mount_err2: $line"; done
+    if [ "$rc" -eq 0 ]; then
+        mounted=1
+        mark_stage 0x5354474500000004
+        log "fedora-rootfs: MOUNT SUCCESS default subvol on attempt ${attempt}"
+        break
+    fi
+    log "fedora-rootfs: mount attempt ${attempt} failed, sleep ${MOUNT_INTERVAL}s and retry"
+    /bin/busybox sleep "$MOUNT_INTERVAL"
+done
+
+if [ "$mounted" -eq 0 ]; then
+    mark_stage 0x53544745000000e2
+    log "fedora-rootfs: GIVE-UP after ${MOUNT_ATTEMPTS} mount attempts, drop to /bin/sh"
     exec /bin/sh
 fi
 
-log "rescue-init: switch_root to SD root"
-exec switch_root /newroot /sbin/init
+# ------------------------------------------------------------------
+# Phase C: inspect /newroot.
+# ------------------------------------------------------------------
+/bin/busybox mkdir -p /newroot/dev /newroot/proc /newroot/sys /newroot/run 2>/dev/null
+
+log "fedora-rootfs: ls -la /newroot:"
+/bin/busybox ls -la /newroot 2>&1 | while read line; do log "fedora-rootfs: root: $line"; done
+log "fedora-rootfs: ls -l /newroot/sbin/init:"
+/bin/busybox ls -l /newroot/sbin/init 2>&1 | while read line; do log "fedora-rootfs: sbin_init: $line"; done
+log "fedora-rootfs: ls -l /newroot/usr/lib/systemd/systemd:"
+/bin/busybox ls -l /newroot/usr/lib/systemd/systemd 2>&1 | while read line; do log "fedora-rootfs: systemd: $line"; done
+log "fedora-rootfs: ls -l /newroot/bin/sh:"
+/bin/busybox ls -l /newroot/bin/sh 2>&1 | while read line; do log "fedora-rootfs: bin_sh: $line"; done
+log "fedora-rootfs: /newroot/etc/os-release:"
+/bin/busybox cat /newroot/etc/os-release 2>&1 | while read line; do log "fedora-rootfs: os: $line"; done
+
+# ------------------------------------------------------------------
+# Phase D: switch_root priority /sbin/init -> systemd -> /bin/sh.
+# ------------------------------------------------------------------
+if [ -x /newroot/sbin/init ] || [ -L /newroot/sbin/init ]; then
+    mark_stage 0x5354474500000011
+    log "fedora-rootfs: SWITCH_ROOT -> /sbin/init"
+    exec /sbin/switch_root /newroot /sbin/init
+fi
+if [ -x /newroot/usr/lib/systemd/systemd ]; then
+    mark_stage 0x5354474500000012
+    log "fedora-rootfs: SWITCH_ROOT -> /usr/lib/systemd/systemd"
+    exec /sbin/switch_root /newroot /usr/lib/systemd/systemd
+fi
+if [ -x /newroot/bin/sh ]; then
+    mark_stage 0x5354474500000013
+    log "fedora-rootfs: SWITCH_ROOT fallback -> /bin/sh"
+    exec /sbin/switch_root /newroot /bin/sh
+fi
+if [ -x /newroot/bin/busybox ]; then
+    mark_stage 0x5354474500000014
+    log "fedora-rootfs: SWITCH_ROOT fallback -> /bin/busybox sh"
+    exec /sbin/switch_root /newroot /bin/busybox sh
+fi
+mark_stage 0x53544745000000ef
+log "fedora-rootfs: GIVE-UP no init candidate under /newroot, drop to /bin/sh"
+exec /bin/sh

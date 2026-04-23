@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 TCL_SCRIPT="$SCRIPT_DIR/run_ps_pl_release.tcl"
 FPGA_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-DEFAULT_ZCU104_CFG="RocketZCU104Config"
+DEFAULT_ZCU104_CFG="RocketZCU104LinuxBringupConfig"
 
 resolve_latest_zcu104_cfg() {
   local prefix="${FPGA_DIR}/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness."

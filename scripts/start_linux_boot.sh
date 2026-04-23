@@ -90,3 +90,23 @@ echo "=== Done ==="
 echo "Log: ${BOOT_LOG}"
 echo "Klog binary: /tmp/klog_${RUN_TAG}.bin"
 echo "Klog strings: /tmp/boot_${RUN_TAG}.strings"
+
+# Phase A2: print stage_mark tail (written by /sbin/stage_mark at PA 0x8F000000)
+STAGE_BIN="/tmp/stage_${RUN_TAG}.bin"
+if [[ -f "$STAGE_BIN" ]]; then
+  echo "Stage binary: ${STAGE_BIN} ($(stat -c %s "$STAGE_BIN") bytes)"
+  echo "--- stage_mark first 64 bytes ---"
+  xxd -g1 -l 64 "$STAGE_BIN" || true
+  # Decode first u64 (little-endian) for quick glance
+  python3 - "$STAGE_BIN" <<'PY' || true
+import sys
+with open(sys.argv[1], "rb") as f:
+    d = f.read(8)
+if len(d) == 8:
+    v = int.from_bytes(d, "little")
+    tag = "STGE" if ((v >> 32) & 0xFFFFFFFF) == 0x53544745 else "----"
+    print(f"[stage] u64 = 0x{v:016x} (tag={tag}, sub=0x{v & 0xFFFFFFFF:08x})")
+PY
+else
+  echo "[warn] stage binary not found: ${STAGE_BIN}"
+fi

@@ -1,0 +1,267 @@
+Linux version 6.6.0-fpga-min-g67bc4513761f-dirty (root@YXY) (riscv64-unknown-linux-gnu-gcc (g04696df0963) 14.2.0, GNU ld (GNU Binutils) 2.43.1) #60 Tue Apr 14 01:21:28 CST 202626
+Machine model: ucb-bar,chipyardrd
+SBI specification v1.0 detecteded
+SBI implementation ID=0x1 Version=0x1000202
+SBI TIME extension detecteded
+SBI IPI extension detecteded
+SBI RFENCE extension detecteded
+earlycon: sifive0 at MMIO 0x0000000064000000 (options '')')
+printk: bootconsole [sifive0] enableded
+efi: UEFI not found.d.
+OF: reserved mem: 0x0000000080000000..0x000000008001ffff (128 KiB) map non-reusable mmode_resv0@8000000000
+OF: reserved mem: 0x0000000080020000..0x000000008003ffff (128 KiB) map non-reusable mmode_resv1@8002000000
+Zone ranges:s:
+  DMA32    [mem 0x0000000080000000-0x00000000ffffffff]f]
+  Normal   emptyty
+Movable zone start for each nodede
+Early memory node rangeses
+  node   0: [mem 0x0000000080000000-0x00000000ffffffff]f]
+Initmem setup node 0 [mem 0x0000000080000000-0x00000000ffffffff]f]
+Falling back to deprecated "riscv,isa"a"
+riscv: base ISA extensions acdfimim
+riscv: ELF capabilities acdfimim
+pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+pcpu-alloc: [0] 0 
+Kernel command line: earlycon=sifive,0x64000000 console=ttyS0,115200n8 loglevel=8=8
+Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)r)
+Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)r)
+Built 1 zonelists, mobility grouping on.  Total pages: 51609696
+mem auto-init: stack:off, heap alloc:off, heap free:offff
+Virtual kernel memory layout:t:
+      fixmap : 0xffffffc6fea00000 - 0xffffffc6ff000000   (6144 kB)B)
+      pci io : 0xffffffc6ff000000 - 0xffffffc700000000   (  16 MB)B)
+     vmemmap : 0xffffffc700000000 - 0xffffffc800000000   (4096 MB)B)
+     vmalloc : 0xffffffc800000000 - 0xffffffd800000000   (  64 GB)B)
+     modules : 0xffffffff00f2a000 - 0xffffffff80000000   (2032 MB)B)
+      lowmem : 0xffffffd800000000 - 0xffffffd880000000   (2048 MB)B)
+      kernel : 0xffffffff80000000 - 0xffffffffffffffff   (2047 MB)B)
+Memory: 2044596K/2097152K available (4300K kernel code, 3704K rwdata, 2048K rodata, 3253K init, 374K bss, 52556K reserved, 0K cma-reserved)d)
+SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1=1
+NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0 0
+riscv-intc: 64 local interrupts mappeded
+plic: interrupt-controller@c000000: mapped 3 interrupts with 1 handlers for 2 contexts.s.
+clocksource: riscv_clocksource: mask: 0xffffffffffffffff max_cycles: 0x179dd7f66, max_idle_ns: 56421785867800 nsns
+sched_clock: 64 bits at 50kHz, resolution 20000ns, wraps every 70368744170000nsns
+Calibrating delay loop (skipped), value calculated using timer frequency.. 0.10 BogoMIPS (lpj=200)0)
+pid_max: default: 32768 minimum: 30101
+Mount-cache hash table entries: 4096 (order: 3, 32768 bytes, linear)r)
+Mountpoint-cache hash table entries: 4096 (order: 3, 32768 bytes, linear)r)
+RCU Tasks Trace: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1.1.
+riscv: ELF compat mode unsupporteded
+ASID allocator disabled (0 bits)s)
+EFI services will not be available.e.
+devtmpfs: initializeded
+clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 nsns
+futex hash table entries: 256 (order: 1, 12288 bytes, linear)r)
+pinctrl core: initialized pinctrl subsystemem
+NET: Registered PF_NETLINK/PF_ROUTE protocol familyly
+DMA: preallocated 256 KiB GFP_KERNEL pool for atomic allocationsns
+DMA: preallocated 256 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocationsns
+audit: initializing netlink subsys (disabled)d)
+thermal_sys: Registered thermal governor 'step_wise'e'
+thermal_sys: Registered thermal governor 'user_space'e'
+cpuidle: using governor menunu
+cpu0: skipping unaligned access speed probe, assuming slowow
+audit: type=2000 audit(0.000:1): state=initialized audit_enabled=0 res=1=1
+HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pageses
+HugeTLB: 0 KiB vmemmap can be freed for a 2.00 MiB pagege
+clocksource: Switched to clocksource riscv_clocksourcece
+NET: Registered PF_INET protocol familyly
+IP idents hash table entries: 32768 (order: 6, 262144 bytes, linear)r)
+tcp_listen_portaddr_hash hash table entries: 1024 (order: 3, 32768 bytes, linear)r)
+Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)r)
+TCP established hash table entries: 16384 (order: 5, 131072 bytes, linear)r)
+TCP bind hash table entries: 16384 (order: 8, 1048576 bytes, linear)r)
+TCP: Hash tables configured (established 16384 bind 16384)4)
+UDP hash table entries: 1024 (order: 4, 98304 bytes, linear)r)
+UDP-Lite hash table entries: 1024 (order: 4, 98304 bytes, linear)r)
+NET: Registered PF_UNIX/PF_LOCAL protocol familyly
+kvm [1]: hypervisor extension not availablele
+workingset: timestamp_bits=46 max_order=19 bucket_order=0=0
+io scheduler mq-deadline registereded
+io scheduler kyber registereded
+io scheduler bfq registereded
+64000000.serial: ttySIF0 at MMIO 0x64000000 (irq = 3, base_baud = 3125000) is a SiFive UART v0v0
+loop: module loadeded
+sifive_spi 64001000.spi: mapped; irq=4, cs=1
+sifive_spi 64001000.spi: EXP0-AUDIT: sifive_spi_probe: fifo_depth=8 clk_rate=50000000 mode_bits=0x0f0f cs_inactive=0x1 num_cs=1 chipyard_dev=1073741823
+sifive_spi 64001000.spi: registered master spi0
+spi spi0.0: EXP3-AUDIT: set_cs: is_high=1 CSMODE=0x0(wrote=0) CSDEF=0x1
+spi spi0.0: setup mode 0, 8 bits/w, 1000000 Hz max --> 0
+sifive_spi 64001000.spi: registered child spi0.0
+SLIP: version 0.8.4-NET3.019-NEWTTY (dynamic channels, max=256).).
+CSLIP: code copyright 1989 Regents of the University of California.a.
+SLIP linefill/keepalive option.n.
+i2c_dev: i2c /dev entries driverer
+sdhci: Secure Digital Host Controller Interface driverer
+sdhci: Copyright(c) Pierre Ossmanan
+mmc_spi spi0.0: EXP0-AUDIT: BEFORE spi_setup: mode=0x00 max_speed_hz=1000000 bits_per_word=8 chip_select=0
+mmc_spi spi0.0: EXP0-AUDIT: master flags=0x0030 bus_num=0 num_chipselect=1
+mmc_spi spi0.0: EXP3-AUDIT: set_cs: is_high=1 CSMODE=0x0(wrote=0) CSDEF=0x1
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 1000000 Hz max --> 0
+mmc_spi spi0.0: EXP0-AUDIT: AFTER spi_setup: mode=0x03 max_speed_hz=1000000 bits_per_word=8
+mmc_spi spi0.0: probe: host allocated
+mmc_spi spi0.0: probe: pdata ready
+mmc_spi spi0.0: probe: buffers ready
+mmc_spi spi0.0: probe: detect glue ready
+mmc_spi spi0.0: probe: mmc_add_host enter
+mmc_spi spi0.0: mmc core: add_host enter
+mmc_spi spi0.0: mmc core: host caps ok
+mmc_spi spi0.0: mmc core: device_add done
+mmc_spi spi0.0: mmc core: led trigger done
+mmc_spi spi0.0: mmc core: debugfs done
+mmc_spi spi0.0: mmc core: start_host enter
+mmc0: start_host enterer
+mmc0: start_host power setup readydy
+mmc0: start_host claim hostst
+mmc0: start_host power_up beginin
+mmc0: power_up pre_power_onon
+mmc0: power_up set_initial_statete
+mmc0: power_up initial_signal_voltagege
+mmc0: power_up delay before post_power_on (10 ms)s)
+mmc0: power_up post_power_onon
+mmc0: power_up set_ios power_onon
+mmc_spi spi0.0: set_ios: power on -> initsequence
+mmc_spi spi0.0: initseq: enter
+mmc_spi spi0.0: initseq: bus locked
+mmc_spi spi0.0: initseq: wait_unbusy begin
+mmc_spi spi0.0: EXP3-AUDIT: prepare_message: SCKMODE=0x3 CSID=0x0 CSDEF=0x1 CSMODE=0x0 FCTRL=0x0 DELAY0=0x00010001 DELAY1=0x00000001 dev_mode=0x3
+mmc_spi spi0.0: EXP3-AUDIT: set_cs: is_high=0 CSMODE=0x2(wrote=2) CSDEF=0x1
+EXP3-AUDIT: prep_transfer: SCKDIV=0x18(div=25,freq=1000000) FMT=0x00080000 SCKMODE=0x3 CSMODE=0x2 speed_hz=1000000 dir=full-duplexex
+mmc_spi spi0.0: EXP3-AUDIT: transfer_one[0]: len=1016 tx=(____ptrval____) rx=(____ptrval____) CSMODE=0x2 CSID=0x0 CSDEF=0x1 SCKMODE=0x3 SCKDIV=0x18 FMT=0x00080000
+mmc_spi spi0.0: initseq: wait_unbusy done
+mmc_spi spi0.0: initseq: readbytes(10) begin
+mmc_spi spi0.0: EXP3-AUDIT: transfer_one[1]: len=10 tx=(____ptrval____) rx=(____ptrval____) CSMODE=0x2 CSID=0x0 CSDEF=0x1 SCKMODE=0x3 SCKDIV=0x18 FMT=0x00080000
+mmc_spi spi0.0: initseq: readbytes(10) done
+mmc_spi spi0.0: initseq: cs high setup begin
+mmc_spi spi0.0: EXP3-AUDIT: set_cs: is_high=1 CSMODE=0x0(wrote=0) CSDEF=0x1
+mmc_spi spi0.0: setup mode 3, cs_high, 8 bits/w, 1000000 Hz max --> 0
+mmc_spi spi0.0: initseq: readbytes(18) begin
+mmc_spi spi0.0: EXP3-AUDIT: transfer_one[2]: len=18 tx=(____ptrval____) rx=(____ptrval____) CSMODE=0x2 CSID=0x0 CSDEF=0x0 SCKMODE=0x3 SCKDIV=0x18 FMT=0x00080000
+mmc_spi spi0.0: initseq: readbytes(18) done
+mmc_spi spi0.0: initseq: cs restore begin
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 1000000 Hz max --> 0
+mmc_spi spi0.0: initseq: exit
+mmc_spi spi0.0: set_ios: initsequence done
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: power_up final delay (10 ms)s)
+mmc0: power_up exitit
+mmc0: start_host power_up donene
+mmc0: start_host release hostst
+mmc0: start_host request cd irqrq
+mmc0: start_host detect changege
+mmc0: start_host exitit
+mmc_spi spi0.0: mmc core: start_host done
+mmc_spi spi0.0: probe: mmc_add_host done
+mmc_spi spi0.0: probe: no gpios property, using polling/no WP
+mmc_spi spi0.0: probe: detect scheduled
+mmc_spi spi0.0: SD/MMC host mmc0, no DMA, no WP, no poweroff, cd polling
+sdhci-pltfm: SDHCI platform and OF driver helperer
+riscv-pmu-sbi: skipping SBI PMU init on Chipyard bringupup
+NET: Registered PF_INET6 protocol familyly
+mmc0: rescan enterer
+mmc0: rescan after bus_ops detect bus_ops=000000000000000000
+mmc0: rescan claimed removable=1 get_cd=-3838
+mmc0: rescan trying freq[0]=40000000
+mmc0: rescan_try_freq enter 400000 HzHz
+mmc0: go_idle enterer
+mmc0: go_idle wait_for_cmd beginin
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=1 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=2 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=3 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=4 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=5 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=6 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=7 ret=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=0 arg=0x00000000 flags=0xc0 beginin
+mmc_spi spi0.0: cmd0 tx len=1009 speed=400000 mode=0x3: ff 40 00 00 00 00 95 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd0 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=0 done err=-110 resp0=0x0000000000
+mmc0: go_idle attempt=8 ret=-110 resp0=0x0000000000
+mmc0: go_idle exitit
+mmc0: rescan_try_freq after go_idlele
+mmc0: wait_for_cmd opcode=8 arg=0x000001aa flags=0x2f5 beginin
+mmc_spi spi0.0: cmd8 tx len=1013 speed=400000 mode=0x3: ff 48 00 00 01 aa 87 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd8 rx len=1013 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=8 done err=-110 resp0=0x0000000000
+mmc0: rescan_try_freq if_cond ret=0=0
+mmc0: wait_for_cmd opcode=55 arg=0x00000000 flags=0xf5 beginin
+mmc_spi spi0.0: cmd55 tx len=1009 speed=400000 mode=0x3: ff 77 00 00 00 00 65 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd55 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=55 done err=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=55 arg=0x00000000 flags=0xf5 beginin
+mmc_spi spi0.0: cmd55 tx len=1009 speed=400000 mode=0x3: ff 77 00 00 00 00 65 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd55 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=55 done err=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=55 arg=0x00000000 flags=0xf5 beginin
+mmc_spi spi0.0: cmd55 tx len=1009 speed=400000 mode=0x3: ff 77 00 00 00 00 65 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd55 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=55 done err=-110 resp0=0x0000000000
+mmc0: wait_for_cmd opcode=55 arg=0x00000000 flags=0xf5 beginin
+mmc_spi spi0.0: cmd55 tx len=1009 speed=400000 mode=0x3: ff 77 00 00 00 00 65 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd55 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=55 done err=-110 resp0=0x0000000000
+mmc0: rescan_try_freq attach_sd ret=-11010
+mmc0: wait_for_cmd opcode=1 arg=0x00000000 flags=0xe1 beginin
+mmc_spi spi0.0: cmd1 tx len=1009 speed=400000 mode=0x3: ff 41 00 00 00 00 f9 ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: cmd1 rx len=1009 speed=400000 mode=0x3: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+mmc_spi spi0.0: setup mode 3, 8 bits/w, 400000 Hz max --> 0
+mmc0: wait_for_cmd opcode=1 done err=-110 resp0=0x0000000000
+mmc0: rescan_try_freq attach_mmc ret=-11010
+mmc0: rescan_try_freq power_off ret=-EIOIO
+Segment Routing with IPv6v6
+In-situ OAM (IOAM) with IPv6v6
+sit: IPv6, IPv4 and MPLS over IPv4 tunneling driverer
+NET: Registered PF_PACKET protocol familyly
+clk: Disabling unused clocksks
+Warning: unable to open an initial console.e.
+Freeing unused kernel image (initmem) memory: 3252K2K
+Run /init as init processss
+  with arguments:s:
+    /initit
+  with environment:t:
+    HOME=/=/
+    TERM=linuxux
+rescue-init: SPI-SD smoke test start
+rescue-init: waiting for /dev/mmcblk0p1

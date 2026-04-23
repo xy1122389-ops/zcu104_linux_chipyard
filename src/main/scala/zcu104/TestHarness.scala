@@ -106,12 +106,19 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   def referenceReset        = hReset
   def success = { require(false, "Unused"); false.B }
 
-  // Blink DS39 in hardware so successful bitstream download is visible even
-  // before J-Link or software drives GPIO0. GPIO can still force the LED on.
+  // Blink DS39 in a distinctive signature pattern so a freshly synthesized
+  // bitstream is immediately obvious after programming. GPIO can still force
+  // the LED on, so software-visible behavior is preserved.
   val heartbeat = withClockAndReset(referenceClock, referenceReset) {
-    val counter = RegInit(0.U(25.W))
+    val counter = RegInit(0.U(27.W))
     counter := counter + 1.U
-    counter(24)
+
+    // 16-step repeating pattern: two short flashes, then a long gap.
+    // At the default 50 MHz fabric clock, each phase is ~167 ms.
+    val phase = counter(26, 23)
+    (phase === "b0000".U) ||
+    (phase === "b0010".U) ||
+    (phase === "b1000".U)
   }
   gpio_led_2_ls := gpio_led_2_ls_drive || heartbeat
 

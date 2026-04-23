@@ -2,10 +2,10 @@
 # Vivado v2021.2 (64-bit)
 # SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
 # IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
-# Start of session at: Mon Apr 13 10:24:29 2026
-# Process ID: 37316
+# Start of session at: Thu Apr 23 06:54:48 2026
+# Process ID: 49104
 # Current directory: Z:/root/chipyard/fpga
-# Command line: vivado.exe -mode batch -source \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_spi_sd.tcl -tclargs /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/spi_sd_ila/spi_sd_ila.ltx /root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long 30
+# Command line: vivado.exe -mode batch -source \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_spi_sd.tcl -tclargs /root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/spi_sd_ila/spi_sd_ila.ltx /root/chipyard/fpga/logs/spi_sd_ila_captures/live_spi_probe_20260423_065447 20
 # Log file: Z:/root/chipyard/fpga/vivado.log
 # Journal file: Z:/root/chipyard/fpga\vivado.jou
 # Running On: YXY, OS: Windows, CPU Frequency: 2495 MHz, CPU Physical cores: 32, Host memory: 33483 MB
@@ -34,14 +34,21 @@ source {\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\capture_hw_ila_s
 # open_hw_manager
 # connect_hw_server -allow_non_jtag
 INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
-connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 1602.309 ; gain = 0.000
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2021.2
+  **** Build date : Oct 19 2021 at 03:13:30
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:15 . Memory (MB): peak = 1536.430 ; gain = 0.000
 # catch {close_hw_target}
 INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
 INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/07198A is already closed
 # set target [lindex [get_hw_targets] 0]
 # open_hw_target $target
 INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
-open_hw_target: Time (s): cpu = 00:00:00 ; elapsed = 00:00:11 . Memory (MB): peak = 1602.309 ; gain = 0.000
 # set dev [lindex [get_hw_devices] 0]
 # if {$dev eq ""} {
 #   puts "ERROR: no hardware device found"
@@ -53,7 +60,6 @@ open_hw_target: Time (s): cpu = 00:00:00 ; elapsed = 00:00:11 . Memory (MB): pea
 # set_property FULL_PROBES.FILE $ltx_file $dev
 # refresh_hw_device $dev
 INFO: [Labtools 27-2302] Device xczu7 (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
-refresh_hw_device: Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 2524.535 ; gain = 922.227
 # set ila [lindex [get_hw_ilas] 0]
 # if {$ila eq ""} {
 #   puts "ERROR: no ILA found after refresh"
@@ -86,18 +92,18 @@ ILA=hw_ila_1
 # puts "LTX=$ltx_file"
 LTX=/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig/obj/spi_sd_ila/spi_sd_ila.ltx
 # puts "OUT_BASE=$out_base"
-OUT_BASE=/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long
+OUT_BASE=/root/chipyard/fpga/logs/spi_sd_ila_captures/live_spi_probe_20260423_065447
 # puts "TIMEOUT_MINS=$timeout_mins"
-TIMEOUT_MINS=30
+TIMEOUT_MINS=20
 # puts "TRIGGER_PROBE=$cs_probe_name"
 TRIGGER_PROBE=chiptop0/system/spiClockDomainWrapper/spi_0/mac/sdio_spi_dat_3_OBUF
 # puts "TRIGGER_COMPARE=eq1'b0"
 TRIGGER_COMPARE=eq1'b0
 # run_hw_ila $ila
-INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2026-Apr-13 10:25:03
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_1' trigger was armed at 2026-Apr-23 06:55:17
 # puts "ILA armed; waiting for trigger"
 ILA armed; waiting for trigger
-wait_on_hw_ila: Time (s): cpu = 00:00:01 ; elapsed = 00:30:00 . Memory (MB): peak = 2524.832 ; gain = 0.043
+wait_on_hw_ila: Time (s): cpu = 00:00:01 ; elapsed = 00:08:47 . Memory (MB): peak = 2525.844 ; gain = 0.121
 # set wait_rc [catch {wait_on_hw_ila -timeout $timeout_mins $ila} wait_msg]
 # if {$wait_rc != 0} {
 #   puts "WAIT_RESULT=TIMEOUT_OR_ERROR"
@@ -106,8 +112,7 @@ wait_on_hw_ila: Time (s): cpu = 00:00:01 ; elapsed = 00:30:00 . Memory (MB): pea
 #   puts "WAIT_RESULT=TRIGGERED"
 # }
 WAIT_RESULT=TRIGGERED
-INFO: [Labtools 27-1965] The ILA core 'hw_ila_1' trigger was stopped by user at 2026-Apr-13 10:55:04
-WARNING: [Labtools 27-157] hw_ila [hw_ila_1] stopped. No data to upload.
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_1' triggered at 2026-Apr-23 07:04:04
 # set data [upload_hw_ila_data $ila]
 # current_hw_ila_data $data
 # set out_ila [write_hw_ila_data -force $out_base $data]
@@ -120,11 +125,11 @@ STATUS.SAMPLE_COUNT=0
 # puts "STATUS.TRIGGER_POSITION=[get_property STATUS.TRIGGER_POSITION $ila]"
 STATUS.TRIGGER_POSITION=512
 # puts "OUT_ILA=$out_ila"
-OUT_ILA=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long.ila
+OUT_ILA=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/live_spi_probe_20260423_065447.ila
 # puts "OUT_CSV=$out_csv"
-OUT_CSV=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long.csv
+OUT_CSV=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/live_spi_probe_20260423_065447.csv
 # puts "OUT_VCD=$out_vcd"
-OUT_VCD=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/phase1_spi_sd_capture_20260413_1018_long.vcd
+OUT_VCD=Z:/root/chipyard/fpga/logs/spi_sd_ila_captures/live_spi_probe_20260423_065447.vcd
 # close_hw_target
 INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07198A
 # disconnect_hw_server
@@ -133,4 +138,4 @@ INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/07
 #   exit 6
 # }
 # exit
-INFO: [Common 17-206] Exiting Vivado at Mon Apr 13 10:55:05 2026...
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 23 07:04:05 2026...

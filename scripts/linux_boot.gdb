@@ -28,10 +28,16 @@ host = os.environ.get("JLINK_HOST", "172.19.128.1")
 relay_port = int(os.environ.get("JLINK_PORT", "12331"))
 cfg_name = os.environ.get("CHIPYARD_ZCU104_CFG", "")
 skip_l2_env = os.environ.get("SKIP_L2")
+VMLINUX = "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux"
 if skip_l2_env is None:
     skip_l2 = 1 if "NoL2" in cfg_name else 0
 else:
     skip_l2 = int(skip_l2_env)
+
+if not os.path.exists(VMLINUX):
+    raise gdb.GdbError(
+        f"[preflight] Missing linux-clean vmlinux: {VMLINUX}. Rebuild it before running linux_boot.gdb."
+    )
 
 gdb.execute(f"set $skip_l2 = {skip_l2}")
 gdb.write(f"[info] Connecting to J-Link at {host}:{relay_port}\n")
@@ -330,7 +336,7 @@ echo [boot] Running OpenSBI to mret...\n
 continue
 
 python
-import gdb, re
+import gdb, re, time
 
 pc = int(gdb.parse_and_eval("$pc"))
 if pc != 0x8000b1d2:
@@ -357,18 +363,37 @@ except Exception as err:
 gdb.execute("set $a1 = 0x84000000")
 gdb.write("[dtb] Redirected a1 -> 0x84000000 for external DTB\n")
 
-gdb.execute("hbreak *0x80200000")
-gdb.write("[boot] Continuing from mret to Linux _start...\n")
-gdb.execute("continue")
-
-pc2 = int(gdb.parse_and_eval("$pc"))
-gdb.write(f"[OK] Linux _start: pc=0x{pc2:x}\n")
-if pc2 != 0x80200000:
-    gdb.write(f"[WARN] Expected 0x80200000, got 0x{pc2:x}\n")
-
 gdb.execute("delete breakpoints")
 
-gdb.write("\n=== Phase 5.5: GDB patches SKIPPED (System.map mismatch) ===\n")
+gdb.write("\n=== Phase 5.5: Pre-boot UART IE disable ===\n")
+# Clear UART IE register to prevent probe race crash (request_irq before uart_add_one_port)
+# UART base = 0x64000000, IE register offset = 0x10
+gdb.execute("monitor WriteU32 0x64000010 0x00000000")
+gdb.write("[uart] Cleared UART IE @ 0x64000010 -> 0x0 (prevent probe race)\n")
+
+gdb.write("\n=== Phase 5b: Leave mret path (timed go/halt) ===\n")
+start_pc = int(gdb.parse_and_eval("$pc"))
+pc2 = start_pc
+gdb.write(f"[boot] Starting timed go/halt from pc=0x{start_pc:x}\n")
+
+for i in range(20):
+    gdb.execute("monitor go")
+    time.sleep(0.2)
+    gdb.execute("monitor halt")
+    pc2 = int(gdb.parse_and_eval("$pc"))
+    gdb.write(f"[boot] probe {i + 1}/20: pc=0x{pc2:x}\n")
+    if pc2 != start_pc:
+        break
+
+if pc2 == start_pc:
+    gdb.write("[WARN] PC did not advance from mret window after timed go/halt probes\n")
+elif pc2 == 0x80200000:
+    gdb.write(f"[OK] Linux _start reached: pc=0x{pc2:x}\n")
+elif 0x80200000 <= pc2 < 0x90000000:
+    gdb.write(f"[OK] Linux execution observed past entry: pc=0x{pc2:x}\n")
+else:
+    gdb.write(f"[WARN] Unexpected PC after mret transition: 0x{pc2:x}\n")
+
 gdb.write("\n=== Phase 6: Clear dcsr ebreak bits ===\n")
 
 read_out = gdb.execute("monitor ReadCSR 0x7b0", to_string=True)
@@ -608,6 +633,34 @@ try:
         gdb.write("\n[post-check] Could not find CPIO header in fw_payload.bin\n")
 except Exception as err:
     gdb.write(f"[post-check] Initramfs read failed: {err}\n")
+
+# ---------------------------------------------------------------
+# stage_mark region dump @ PA 0x8F000000 (256 bytes)
+# /init writes a single u64 per mark_stage() call (overwrite semantics).
+# Last-written value tells us which stage /init reached before halt.
+# ---------------------------------------------------------------
+try:
+    STAGE_PA = 0x8F000000
+    STAGE_LEN = 0x100
+    stage_bin = f"/tmp/stage_{RUN_TAG}.bin"
+    gdb.execute(f"dump binary memory {stage_bin} 0x{STAGE_PA:x} 0x{STAGE_PA + STAGE_LEN:x}")
+    data = open(stage_bin, "rb").read()
+    gdb.write(f"\n[stage_mark] dumped {len(data)} bytes from PA 0x{STAGE_PA:x} -> {stage_bin}\n")
+    # First u64 = most recent stage written by /sbin/stage_mark
+    if len(data) >= 8:
+        v = int.from_bytes(data[0:8], "little")
+        tag = "STGE" if ((v >> 32) & 0xFFFFFFFF) == 0x53544745 else "----"
+        sub = v & 0xFFFFFFFF
+        gdb.write(f"[stage_mark] last stage u64 = 0x{v:016x} (tag={tag}, sub=0x{sub:08x})\n")
+    # Hex + ASCII dump of first 128 bytes
+    gdb.write("[stage_mark] first 128 bytes (hex + ASCII):\n")
+    for off in range(0, min(128, len(data)), 16):
+        chunk = data[off:off+16]
+        hx = " ".join(f"{b:02x}" for b in chunk)
+        asc = "".join(chr(b) if 0x20 <= b < 0x7f else "." for b in chunk)
+        gdb.write(f"  {off:04x}: {hx:<48s}  |{asc}|\n")
+except Exception as err:
+    gdb.write(f"[stage_mark] dump failed: {err}\n")
 
 gdb.write("\n=== Boot + dump complete ===\n")
 end

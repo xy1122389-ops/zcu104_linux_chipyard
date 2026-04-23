@@ -1,6 +1,7 @@
 package chipyard.fpga.zcu104
 
 import chisel3._
+import chisel3.util._
 
 import org.chipsalliance.cde.config.Parameters
 import org.chipsalliance.diplomacy.nodes.{HeterogeneousBag}
@@ -81,17 +82,130 @@ class WithPSLPDMem extends HarnessBinder({
 
       // Address translation: Rocket 0x60xxxxxx → PS 0xFFxxxxxx (add 0x9F000000)
       val addrOffset = BigInt("9F000000", 16).U(49.W)
+      val psMMIOProt  = (AXI4Parameters.PROT_PRIVILEGED | AXI4Parameters.PROT_INSECURE)
+      val readTimeoutCycles  = 1024.U
+      val writeTimeoutCycles = 1024.U
+
+      val arBurstSupported = axi.ar.bits.burst === AXI4Parameters.BURST_INCR
+      val awBurstSupported = axi.aw.bits.burst === AXI4Parameters.BURST_INCR
+      val arSizeSupported  = axi.ar.bits.size <= 2.U
+      val awSizeSupported  = axi.aw.bits.size <= 2.U
+
+      val readInFlight  = RegInit(false.B)
+      val readWatchdog  = RegInit(0.U(16.W))
+      val readAddr      = RegInit(0.U(49.W))
+      val readSize      = RegInit(0.U(3.W))
+      val readLen       = RegInit(0.U(8.W))
+      val readBurst     = RegInit(0.U(2.W))
+      val readResp      = RegInit(0.U(2.W))
+      val arSeen        = RegInit(false.B)
+      val rSeen         = RegInit(false.B)
+
+      val writeInFlight = RegInit(false.B)
+      val writeWatchdog = RegInit(0.U(16.W))
+      val writeAddr     = RegInit(0.U(49.W))
+      val writeSize     = RegInit(0.U(3.W))
+      val writeLen      = RegInit(0.U(8.W))
+      val writeBurst    = RegInit(0.U(2.W))
+      val writeStrb     = RegInit(0.U(4.W))
+      val writeResp     = RegInit(0.U(2.W))
+
+      val timeoutSeen          = RegInit(false.B)
+      val unsupportedSizeSeen  = RegInit(false.B)
+      val unsupportedBurstSeen = RegInit(false.B)
+
+      when (axi.ar.fire) {
+        printf("[pslpd] AR addr=0x%x size=%d len=%d burst=%d prot_in=0x%x cache_in=0x%x id=%d\n",
+          axi.ar.bits.addr + addrOffset, axi.ar.bits.size, axi.ar.bits.len, axi.ar.bits.burst,
+          axi.ar.bits.prot, axi.ar.bits.cache, axi.ar.bits.id)
+        assert(!readInFlight, "[pslpd] multiple read requests in flight")
+        assert(axi.ar.bits.len === 0.U, "[pslpd] unsupported ARLEN for PS-LPD MMIO")
+        assert(arBurstSupported, "[pslpd] unsupported ARBURST for PS-LPD MMIO")
+        assert(arSizeSupported, "[pslpd] unsupported ARSIZE for PS-LPD MMIO")
+        readInFlight := true.B
+        readWatchdog := 0.U
+        readAddr := axi.ar.bits.addr + addrOffset
+        readSize := axi.ar.bits.size
+        readLen := axi.ar.bits.len
+        readBurst := axi.ar.bits.burst
+        arSeen := true.B
+        when (!arSizeSupported) { unsupportedSizeSeen := true.B }
+        when (!arBurstSupported) { unsupportedBurstSeen := true.B }
+      }.elsewhen(readInFlight && !(axi.r.fire && axi.r.bits.last)) {
+        readWatchdog := readWatchdog + 1.U
+      }
+
+      when (axi.r.fire) {
+        printf("[pslpd] R addr=0x%x data=0x%x resp=%d last=%d id=%d\n",
+          readAddr, axi.r.bits.data, axi.r.bits.resp, axi.r.bits.last, axi.r.bits.id)
+        readResp := axi.r.bits.resp
+        rSeen := true.B
+      }
+
+      when (readInFlight) {
+        when (readWatchdog === readTimeoutCycles - 1.U) { timeoutSeen := true.B }
+        assert(readWatchdog =/= readTimeoutCycles, "[pslpd] read request did not complete in time")
+      }
+      when (axi.r.valid) {
+        assert(readInFlight, "[pslpd] stray read response without matching request")
+      }
+      when (axi.r.fire && axi.r.bits.last) {
+        readInFlight := false.B
+      }
+
+      when (axi.aw.fire) {
+        printf("[pslpd] AW addr=0x%x size=%d len=%d burst=%d prot_in=0x%x cache_in=0x%x id=%d\n",
+          axi.aw.bits.addr + addrOffset, axi.aw.bits.size, axi.aw.bits.len, axi.aw.bits.burst,
+          axi.aw.bits.prot, axi.aw.bits.cache, axi.aw.bits.id)
+        assert(!writeInFlight, "[pslpd] multiple write requests in flight")
+        assert(axi.aw.bits.len === 0.U, "[pslpd] unsupported AWLEN for PS-LPD MMIO")
+        assert(awBurstSupported, "[pslpd] unsupported AWBURST for PS-LPD MMIO")
+        assert(awSizeSupported, "[pslpd] unsupported AWSIZE for PS-LPD MMIO")
+        writeInFlight := true.B
+        writeWatchdog := 0.U
+        writeAddr := axi.aw.bits.addr + addrOffset
+        writeSize := axi.aw.bits.size
+        writeLen := axi.aw.bits.len
+        writeBurst := axi.aw.bits.burst
+        when (!awSizeSupported) { unsupportedSizeSeen := true.B }
+        when (!awBurstSupported) { unsupportedBurstSeen := true.B }
+      }.elsewhen(writeInFlight && !axi.b.fire) {
+        writeWatchdog := writeWatchdog + 1.U
+      }
+
+      when (axi.w.fire) {
+        printf("[pslpd] W addr=0x%x data=0x%x strb=0x%x last=%d\n",
+          writeAddr, axi.w.bits.data, axi.w.bits.strb, axi.w.bits.last)
+        writeStrb := axi.w.bits.strb
+      }
+
+      when (axi.b.fire) {
+        printf("[pslpd] B addr=0x%x resp=%d id=%d strb=0x%x\n",
+          writeAddr, axi.b.bits.resp, axi.b.bits.id, writeStrb)
+        writeResp := axi.b.bits.resp
+      }
+
+      when (writeInFlight) {
+        when (writeWatchdog === writeTimeoutCycles - 1.U) { timeoutSeen := true.B }
+        assert(writeWatchdog =/= writeTimeoutCycles, "[pslpd] write request did not complete in time")
+      }
+      when (axi.b.valid) {
+        assert(writeInFlight, "[pslpd] stray write response without matching request")
+      }
+      when (axi.b.fire) {
+        writeInFlight := false.B
+      }
 
       // ----- AW channel -----
       lpd.awid    := axi.aw.bits.id
       lpd.awaddr  := axi.aw.bits.addr + addrOffset
-      lpd.awlen   := axi.aw.bits.len
+      lpd.awlen   := 0.U
       lpd.awsize  := axi.aw.bits.size
-      lpd.awburst := axi.aw.bits.burst
-      lpd.awlock  := axi.aw.bits.lock
-      lpd.awcache := "b0010".U   // DEVICE_NON_BUFFERABLE
-      lpd.awprot  := axi.aw.bits.prot
-      lpd.awqos   := axi.aw.bits.qos
+      lpd.awburst := AXI4Parameters.BURST_INCR
+      lpd.awlock  := 0.U
+      lpd.awcache := axi.aw.bits.cache
+      lpd.awprot  := psMMIOProt
+      lpd.awqos   := 0.U
       lpd.awvalid := axi.aw.valid
       axi.aw.ready := lpd.awready
 
@@ -105,13 +219,13 @@ class WithPSLPDMem extends HarnessBinder({
       // ----- AR channel -----
       lpd.arid    := axi.ar.bits.id
       lpd.araddr  := axi.ar.bits.addr + addrOffset
-      lpd.arlen   := axi.ar.bits.len
+      lpd.arlen   := 0.U
       lpd.arsize  := axi.ar.bits.size
-      lpd.arburst := axi.ar.bits.burst
-      lpd.arlock  := axi.ar.bits.lock
-      lpd.arcache := "b0010".U   // DEVICE_NON_BUFFERABLE
-      lpd.arprot  := axi.ar.bits.prot
-      lpd.arqos   := axi.ar.bits.qos
+      lpd.arburst := AXI4Parameters.BURST_INCR
+      lpd.arlock  := 0.U
+      lpd.arcache := axi.ar.bits.cache
+      lpd.arprot  := psMMIOProt
+      lpd.arqos   := 0.U
       lpd.arvalid := axi.ar.valid
       axi.ar.ready := lpd.arready
 
@@ -143,6 +257,7 @@ class WithPSLPDMem extends HarnessBinder({
       arEchoQ.io.enq.bits  := axi.ar.bits.echo
       arEchoQ.io.deq.ready := axi.r.fire && axi.r.bits.last
       axi.r.bits.echo      := arEchoQ.io.deq.bits
+
     }
   }
 })

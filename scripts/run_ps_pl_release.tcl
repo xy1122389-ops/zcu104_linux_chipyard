@@ -14,7 +14,7 @@ proc step {label body} {
 if {[info exists ::env(CHIPYARD_ZCU104_CFG)] && $::env(CHIPYARD_ZCU104_CFG) ne ""} {
   set zcu104_cfg $::env(CHIPYARD_ZCU104_CFG)
 } else {
-  set zcu104_cfg "RocketZCU104Config"
+  set zcu104_cfg "RocketZCU104LinuxBringupConfig"
 }
 
 set windows_obj_dir [string map {/ \\} "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]

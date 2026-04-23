@@ -10,7 +10,7 @@
 		serial1 = &L28;
 	};
 	L19: chosen {
-			bootargs = "earlycon=sifive,0x64000000 console=ttySIF0,115200n8 init=/init loglevel=8 ignore_loglevel initcall_debug";
+			bootargs = "earlycon=sifive,0x64000000 console=ttySIF0,115200n8 init=/init loglevel=8 ignore_loglevel";
 		stdout-path = &L27;
 	};
 	L2: cpus {
@@ -35,7 +35,7 @@
 			mmu-type = "riscv,sv39";
 			next-level-cache = <&L11>;
 			reg = <0x0>;
-			riscv,isa = "rv64imafdcbzicsr_zifencei_zihpm_zfh_zba_zbb_zbs_xrocket";
+			riscv,isa = "rv64imafdczicsr_zifencei_zihpm_zfh_xrocket";
 			riscv,pmpgranularity = <4>;
 			riscv,pmpregions = <8>;
 			status = "okay";
@@ -187,6 +187,7 @@
 				reg = <0x0>;
 				spi-max-frequency = <1000000>;
 				voltage-ranges = <3300 3300>;
+				status = "okay";
 			};
 		};
 		/*
@@ -199,10 +200,14 @@
 		 *   clk_ahb  = LPD_LSBUS_CLK  ≈ 100 MHz
 		 *   clk_xin  = SDIO1_REF_CLK  ≈ 200 MHz (psu_init sets this)
 		 *
-		 * Interrupts: PLIC has only 4 HW sources; PS SDIO1 IRQ goes to
-		 * PS GIC only. We assign a dummy PLIC IRQ (5, beyond ndev) so
-		 * the driver can call request_threaded_irq(). A kernel patch
-		 * (sdhci-poll-timer) handles I/O completion via polling.
+		 * Interrupts: PLIC has only 4 HW sources (ndev=4); PS SDIO1 IRQ
+		 * goes to PS GIC only (not routed to PLIC). No interrupt-parent
+		 * or interrupts property here — platform_get_irq_optional()
+		 * returns -ENXIO, and the patched sdhci driver falls back to
+		 * a 10ms poll timer for I/O completion.
+		 * NOTE: Do NOT add interrupt-parent/interrupts with an IRQ
+		 * beyond ndev — PLIC irq_domain mapping will hang on MMIO
+		 * access to non-existent registers.
 		 */
 		sdio1_clk_ahb: sdio1_clk_ahb {
 			#clock-cells = <0>;
@@ -225,7 +230,8 @@
 			no-1-8-v;
 			broken-cd;
 			sdhci-caps-mask = <0x0 0x0>;
-			status = "okay";
+			max-frequency = <400000>;
+			status = "disabled";
 		};
 		L32: tile-reset-setter@110000 {
 			reg = <0x110000 0x1000>;

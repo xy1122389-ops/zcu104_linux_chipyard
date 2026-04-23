@@ -1,0 +1,90 @@
+#!/bin/sh
+PATH=/bin:/sbin
+
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+
+/bin/busybox mknod /dev/kmsg c 1 11 2>/dev/null
+log() {
+    echo "$1"
+    echo "$1" > /dev/kmsg 2>/dev/null
+}
+
+log "fedora-rootfs: SPI-SD Fedora bringup start"
+log "fedora-rootfs: /proc/filesystems supported types:"
+/bin/busybox cat /proc/filesystems 2>&1 | while read line; do log "fedora-rootfs: fs: $line"; done
+log "fedora-rootfs: wait mmcblk0p3 (up to 600s)"
+
+i=0
+while [ ! -b /dev/mmcblk0p3 ] && [ "$i" -lt 600 ]; do
+    if [ $((i % 5)) -eq 0 ]; then
+        log "fedora-rootfs: wait tick=${i}s /dev/mmcblk0p3 still missing"
+        /bin/busybox ls -l /dev/mmcblk0* 2>&1 | while read line; do log "fedora-rootfs: dev: $line"; done
+        /bin/busybox cat /proc/partitions 2>&1 | while read line; do log "fedora-rootfs: part: $line"; done
+    fi
+    sleep 1
+    i=$((i + 1))
+done
+
+log "fedora-rootfs: wait loop exited after ${i}s"
+log "fedora-rootfs: final /dev/mmcblk0* listing:"
+/bin/busybox ls -l /dev/mmcblk0* 2>&1 | while read line; do log "fedora-rootfs: dev: $line"; done
+log "fedora-rootfs: final /proc/partitions:"
+/bin/busybox cat /proc/partitions 2>&1 | while read line; do log "fedora-rootfs: part: $line"; done
+
+if [ ! -b /dev/mmcblk0p3 ]; then
+    log "fedora-rootfs: fallback (mmcblk0p3 never appeared)"
+    exec /bin/sh
+fi
+
+log "fedora-rootfs: /dev/mmcblk0p3 IS present, proceeding to mount"
+mkdir -p /newroot
+log "fedora-rootfs: PRE-MOUNT mount -t btrfs -o subvol=root,ro /dev/mmcblk0p3 /newroot"
+mount -t btrfs -o subvol=root,ro /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
+rc=$?
+log "fedora-rootfs: POST-MOUNT subvol=root rc=${rc}"
+/bin/busybox cat /tmp/mount.err 2>&1 | while read line; do log "fedora-rootfs: mount_err: $line"; done
+if [ "$rc" -ne 0 ]; then
+    log "fedora-rootfs: PRE-MOUNT fallback: mount -t btrfs -o ro /dev/mmcblk0p3 /newroot"
+    mount -t btrfs -o ro /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
+    rc=$?
+    log "fedora-rootfs: POST-MOUNT default subvol rc=${rc}"
+    /bin/busybox cat /tmp/mount.err 2>&1 | while read line; do log "fedora-rootfs: mount_err2: $line"; done
+    if [ "$rc" -ne 0 ]; then
+        log "fedora-rootfs: fallback (btrfs mount failed rc=${rc})"
+        exec /bin/sh
+    fi
+fi
+
+log "fedora-rootfs: MOUNT SUCCESS, ls /newroot:"
+/bin/busybox ls -la /newroot 2>&1 | while read line; do log "fedora-rootfs: root: $line"; done
+
+log "fedora-rootfs: check init"
+/bin/busybox ls -l /newroot/sbin/init 2>&1 | while read line; do log "fedora-rootfs: sbin_init: $line"; done
+/bin/busybox ls -l /newroot/usr/lib/systemd/systemd 2>&1 | while read line; do log "fedora-rootfs: systemd: $line"; done
+/bin/busybox ls -l /newroot/bin/sh 2>&1 | while read line; do log "fedora-rootfs: bin_sh: $line"; done
+/bin/busybox cat /newroot/etc/os-release 2>&1 | while read line; do log "fedora-rootfs: os: $line"; done
+
+if [ -x /newroot/sbin/init ] || [ -L /newroot/sbin/init ]; then
+    log "fedora-rootfs: switch_root /sbin/init"
+    exec switch_root /newroot /sbin/init
+fi
+
+if [ -x /newroot/usr/lib/systemd/systemd ]; then
+    log "fedora-rootfs: switch_root /usr/lib/systemd/systemd"
+    exec switch_root /newroot /usr/lib/systemd/systemd
+fi
+
+if [ -x /newroot/bin/sh ]; then
+    log "fedora-rootfs: fallback switch_root /bin/sh"
+    exec switch_root /newroot /bin/sh
+fi
+
+if [ -x /newroot/bin/busybox ]; then
+    log "fedora-rootfs: fallback switch_root /bin/busybox sh"
+    exec switch_root /newroot /bin/busybox sh
+fi
+
+log "fedora-rootfs: fallback (no init candidate found)"
+exec /bin/sh

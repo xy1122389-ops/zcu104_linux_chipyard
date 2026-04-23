@@ -7,8 +7,9 @@ file /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/p
 
 python
 import gdb, os, time
-host = os.environ.get("JLINK_HOST", "172.19.128.1")
-port = int(os.environ.get("JLINK_PORT", "2331"))
+host = os.environ.get("JLINK_HOST", "127.0.0.1")
+port = int(os.environ.get("JLINK_PORT", "3333"))
+connect_only = os.environ.get("CONNECT_ONLY", "0") == "1"
 gdb.write(f"[info] Connecting to J-Link at {host}:{port}\n")
 last_error = None
 for attempt in range(1, 4):
@@ -24,6 +25,10 @@ for attempt in range(1, 4):
             time.sleep(2)
 if last_error is not None:
     raise last_error
+if connect_only:
+    gdb.write("[info] CONNECT_ONLY=1, connection probe passed; exiting before target mutation\n")
+    gdb.execute("disconnect")
+    gdb.execute("quit")
 end
 
 monitor halt
@@ -38,6 +43,7 @@ import os, gdb, time
 
 COPYBACK_ADDR = 0x81200000
 SUB_CHUNK = 256 * 1024
+FW_PAYLOAD = "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.bin"
 
 instrs = [
     (COPYBACK_ADDR + 0x00, 0x0000100f),
@@ -72,6 +78,39 @@ def run_copyback(start, end_aligned):
 chunk_dir = "/tmp/fw_chunks_slip"
 base_addr = 0x80000000
 chunk_size = 4194304
+
+fw_stat = os.stat(FW_PAYLOAD)
+os.makedirs(chunk_dir, exist_ok=True)
+stamp_path = os.path.join(chunk_dir, ".source_stamp")
+expected_stamp = f"{fw_stat.st_mtime_ns}:{fw_stat.st_size}\n"
+needs_refresh = True
+if os.path.exists(stamp_path):
+    with open(stamp_path, "r", encoding="ascii", errors="ignore") as stamp_file:
+        needs_refresh = stamp_file.read() != expected_stamp
+
+if needs_refresh:
+    for fname in os.listdir(chunk_dir):
+        if fname.startswith("chunk_") and fname.endswith(".bin"):
+            os.unlink(os.path.join(chunk_dir, fname))
+
+    with open(FW_PAYLOAD, "rb") as fw_file:
+        chunk_index = 0
+        while True:
+            data = fw_file.read(chunk_size)
+            if not data:
+                break
+            chunk_path = os.path.join(chunk_dir, f"chunk_{chunk_index:02d}.bin")
+            with open(chunk_path, "wb") as chunk_file:
+                chunk_file.write(data)
+            chunk_index += 1
+
+    with open(stamp_path, "w", encoding="ascii") as stamp_file:
+        stamp_file.write(expected_stamp)
+
+    gdb.write(f"[chunks] Refreshed {chunk_index} payload chunk(s) from {FW_PAYLOAD}\n")
+else:
+    gdb.write(f"[chunks] Reusing current payload chunks for {FW_PAYLOAD}\n")
+
 chunks = sorted([f for f in os.listdir(chunk_dir) if f.startswith("chunk_") and f.endswith(".bin")])
 
 total_size = sum(os.path.getsize(os.path.join(chunk_dir, f)) for f in chunks)
@@ -158,12 +197,40 @@ except gdb.error:
 pc = int(gdb.parse_and_eval("$pc")) & 0xFFFFFFFFFFFFFFFF
 gdb.write(f"[halt] PC = 0x{pc:016x}\n")
 klog_file = f"/tmp/{run_tag}_klog.bin"
-logbuf_va = int(gdb.parse_and_eval("(unsigned long)&__log_buf")) & 0xFFFFFFFFFFFFFFFF
-logbuf_pa = (logbuf_va - 0xffffffff80000000 + 0x80200000) & 0xFFFFFFFFFFFFFFFF
-gdb.write(f"[klog] __log_buf VA = 0x{logbuf_va:016x}, PA = 0x{logbuf_pa:016x}\n")
-gdb.write(f"[klog] Dumping to {klog_file}\n")
-gdb.execute(f"dump binary memory {klog_file} 0x{logbuf_pa:x} 0x{logbuf_pa + 0x20000:x}")
-gdb.write(f"[klog] Dumped 0x{logbuf_pa:x} - 0x{logbuf_pa + 0x20000:x}\n")
+
+def kernel_image_va_to_pa(va):
+    return (va - 0xffffffff80000000 + 0x80200000) & 0xFFFFFFFFFFFFFFFF
+
+def direct_map_va_to_pa(va):
+    return (va - 0xffffffd800000000 + 0x80000000) & 0xFFFFFFFFFFFFFFFF
+
+log_buf_var_va = int(gdb.parse_and_eval("(unsigned long)&log_buf")) & 0xFFFFFFFFFFFFFFFF
+log_buf_len_var_va = int(gdb.parse_and_eval("(unsigned long)&log_buf_len")) & 0xFFFFFFFFFFFFFFFF
+log_buf_var_pa = kernel_image_va_to_pa(log_buf_var_va)
+log_buf_len_var_pa = kernel_image_va_to_pa(log_buf_len_var_va)
+log_buf_ptr = int(gdb.parse_and_eval(f"*(unsigned long long*)0x{log_buf_var_pa:x}")) & 0xFFFFFFFFFFFFFFFF
+log_buf_len = int(gdb.parse_and_eval(f"*(unsigned int*)0x{log_buf_len_var_pa:x}")) & 0xFFFFFFFF
+
+gdb.write(f"[klog] &log_buf VA = 0x{log_buf_var_va:016x}, PA = 0x{log_buf_var_pa:016x}\n")
+gdb.write(f"[klog] &log_buf_len VA = 0x{log_buf_len_var_va:016x}, PA = 0x{log_buf_len_var_pa:016x}\n")
+gdb.write(f"[klog] log_buf = 0x{log_buf_ptr:016x}, log_buf_len = 0x{log_buf_len:x}\n")
+
+dump_size = min(log_buf_len if 0 < log_buf_len <= 0x200000 else 0x20000, 0x40000)
+if 0xffffffd800000000 <= log_buf_ptr < 0xffffffd900000000:
+    buf_pa = direct_map_va_to_pa(log_buf_ptr)
+    gdb.write(f"[klog] log_buf is in direct map, PA = 0x{buf_pa:016x}\n")
+elif log_buf_ptr >= 0xffffffff80000000:
+    buf_pa = kernel_image_va_to_pa(log_buf_ptr)
+    gdb.write(f"[klog] log_buf is in kernel image, PA = 0x{buf_pa:016x}\n")
+else:
+    logbuf_va = int(gdb.parse_and_eval("(unsigned long)&__log_buf")) & 0xFFFFFFFFFFFFFFFF
+    buf_pa = kernel_image_va_to_pa(logbuf_va)
+    dump_size = 0x20000
+    gdb.write(f"[klog] log_buf unavailable, falling back to __log_buf VA = 0x{logbuf_va:016x}, PA = 0x{buf_pa:016x}\n")
+
+gdb.write(f"[klog] Dumping {dump_size} bytes to {klog_file}\n")
+gdb.execute(f"dump binary memory {klog_file} 0x{buf_pa:x} 0x{buf_pa + dump_size:x}")
+gdb.write(f"[klog] Dumped 0x{buf_pa:x} - 0x{buf_pa + dump_size:x}\n")
 end
 
 quit

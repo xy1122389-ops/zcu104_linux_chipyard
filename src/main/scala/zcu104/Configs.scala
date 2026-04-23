@@ -17,6 +17,7 @@ import sifive.fpgashells.shell.{DesignKey}
 import sifive.fpgashells.shell.xilinx.{ZCU104ShellPMOD, ZCU104DDRSize}
 
 import testchipip.serdes.{SerialTLKey}
+import testchipip.soc.SubsystemInjectorKey
 
 import chipyard._
 import chipyard.harness._

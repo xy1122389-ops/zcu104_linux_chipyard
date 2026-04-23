@@ -61,6 +61,8 @@ class ZCU104PSLPDBundle extends Bundle {
 
 class ZCU104PSIOBundle extends Bundle {
   // ========== S_AXI_HP0_FPD (saxigp2) — 128-bit, DDR path ==========
+  val saxigp2_aruser  = Input(UInt(1.W))
+  val saxigp2_awuser  = Input(UInt(1.W))
   // Write address channel
   val saxigp2_awid     = Input(UInt(6.W))
   val saxigp2_awaddr   = Input(UInt(49.W))
@@ -107,6 +109,8 @@ class ZCU104PSIOBundle extends Bundle {
   val saxihp0_fpd_aclk = Input(Clock())
 
   // ========== S_AXI_LPD (saxigp6) — 32-bit, LPD peripheral path ==========
+  val saxigp6_aruser  = Input(UInt(1.W))
+  val saxigp6_awuser  = Input(UInt(1.W))
   // Write address channel
   val saxigp6_awid     = Input(UInt(6.W))
   val saxigp6_awaddr   = Input(UInt(49.W))

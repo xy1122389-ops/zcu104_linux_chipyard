@@ -47,6 +47,8 @@ class XilinxZCU104PSIsland(c: XilinxZCU104PSParams)(implicit p: Parameters)
 
     // AXI HP0 clock = island clock (set externally via island.module.clock)
     blackbox.io.saxihp0_fpd_aclk := clock
+    blackbox.io.saxigp2_awuser   := 0.U
+    blackbox.io.saxigp2_aruser   := 0.U
 
     // Write address channel
     blackbox.io.saxigp2_awid    := axi.aw.bits.id
@@ -101,6 +103,8 @@ class XilinxZCU104PSIsland(c: XilinxZCU104PSParams)(implicit p: Parameters)
 
     // LPD clock = island clock (same as HP0)
     blackbox.io.saxi_lpd_aclk  := clock
+    blackbox.io.saxigp6_awuser := 0.U
+    blackbox.io.saxigp6_aruser := 0.U
 
     // LPD Write address channel
     blackbox.io.saxigp6_awid    := lpd.awid
@@ -186,6 +190,7 @@ class ZCU104PSLPD(edge: AXI4EdgeParameters, addressOffset: BigInt)(implicit p: P
   lazy val module = new Impl
   class Impl extends LazyModuleImp(this) {
     val (axi, _) = node.in(0)
+    val psMMIOProt = (AXI4Parameters.PROT_PRIVILEGED | AXI4Parameters.PROT_INSECURE)
 
     // Raw output IO connecting to PS blackbox saxigp6 (Flipped: master perspective)
     val lpd = IO(Flipped(new ZCU104PSLPDBundle))
@@ -203,7 +208,7 @@ class ZCU104PSLPD(edge: AXI4EdgeParameters, addressOffset: BigInt)(implicit p: P
     lpd.awburst := axi.aw.bits.burst
     lpd.awlock  := axi.aw.bits.lock
     lpd.awcache := "b0010".U  // DEVICE_NON_BUFFERABLE for MMIO registers
-    lpd.awprot  := axi.aw.bits.prot
+    lpd.awprot  := psMMIOProt
     lpd.awqos   := axi.aw.bits.qos
     lpd.awvalid := axi.aw.valid
     axi.aw.ready := lpd.awready
@@ -229,7 +234,7 @@ class ZCU104PSLPD(edge: AXI4EdgeParameters, addressOffset: BigInt)(implicit p: P
     lpd.arburst := axi.ar.bits.burst
     lpd.arlock  := axi.ar.bits.lock
     lpd.arcache := "b0010".U  // DEVICE_NON_BUFFERABLE
-    lpd.arprot  := axi.ar.bits.prot
+    lpd.arprot  := psMMIOProt
     lpd.arqos   := axi.ar.bits.qos
     lpd.arvalid := axi.ar.valid
     axi.ar.ready := lpd.arready

@@ -42,8 +42,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/arty/WithArtyTweaks.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugInjector.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugInjector.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithFPGAFreq25MHz.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithFPGAFreq25MHz.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithPSLPDDebugRegs.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDDebugRegs.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithUART.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithUART.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithFPGAFreq75MHz.class[0m
@@ -72,6 +76,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDMMIOPort$$anonfun$$lessinit$greater$3$$anonfun$apply$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithPSLPDMem$$anonfun$$lessinit$greater$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDMem$$anonfun$$lessinit$greater$7.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugKey.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugKey.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104SafeConfig$$anonfun$$lessinit$greater$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104SafeConfig$$anonfun$$lessinit$greater$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104DefaultPeripherals$$anonfun$$lessinit$greater$1$$anonfun$apply$1.class[0m
@@ -82,6 +88,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104JLinkDiagMMIOPortOnlyCleanConfig.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104JLinkDiagPSLPDConnectOnlyConfig.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104JLinkDiagPSLPDConnectOnlyConfig.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugNames$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugNames$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithPSLPDMem$$anonfun$$lessinit$greater$7$$anonfun$apply$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDMem$$anonfun$$lessinit$greater$7$$anonfun$apply$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104SystemModifications$$anonfun$$lessinit$greater$2.class[0m
@@ -104,8 +112,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithZCU104DefaultPeripherals.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104SafeConfig.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104SafeConfig.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugParams.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugParams.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104DefaultPeripherals$$anonfun$$lessinit$greater$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithZCU104DefaultPeripherals$$anonfun$$lessinit$greater$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugNames.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugNames.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithUART$$anonfun$$lessinit$greater$1$$anonfun$apply$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithUART$$anonfun$$lessinit$greater$1$$anonfun$apply$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithUART$$anonfun$$lessinit$greater$1.class[0m
@@ -116,10 +128,16 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithFPGAFreq100MHz.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104Tweaks.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithZCU104Tweaks.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithPSLPDDebugRegs$$anonfun$$lessinit$greater$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDDebugRegs$$anonfun$$lessinit$greater$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104Config.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104Config.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithSPISDCard$$anonfun$$lessinit$greater$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithSPISDCard$$anonfun$$lessinit$greater$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithPSLPDDebugRegs$$anonfun$$lessinit$greater$2$$anonfun$apply$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDDebugRegs$$anonfun$$lessinit$greater$2$$anonfun$apply$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugParams$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugParams$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithJTAG$$anonfun$$lessinit$greater$6$$anonfun$apply$6.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithJTAG$$anonfun$$lessinit$greater$6$$anonfun$apply$6.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104NoDDRConfig.class[0m
@@ -132,6 +150,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSDDRMem.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithUART1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithUART1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugInjector$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugInjector$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/ZCU104DirectUARTTestHarness.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/ZCU104DirectUARTTestHarness.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithTiedOffAXI4MMIO$$anonfun$$lessinit$greater$8$$anonfun$apply$8.class[0m
@@ -142,6 +162,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithLEDGPIO$$anonfun$$lessinit$greater$3$$anonfun$apply$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104SystemModifications.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithZCU104SystemModifications.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugKey$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugKey$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104NoL2LinuxConfig$$anonfun$$lessinit$greater$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104NoL2LinuxConfig$$anonfun$$lessinit$greater$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithFPGAFrequency.class[0m
@@ -160,6 +182,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithSPISDCard$$anonfun$$lessinit$greater$4$$anonfun$apply$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104TweaksNoPSLPD.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithZCU104TweaksNoPSLPD.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/PSLPDDebugInjector$$anonfun$$lessinit$greater$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugInjector$$anonfun$$lessinit$greater$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/vcu118[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/vcu118[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/vcu118/WithFPGAFreq25MHz.class[0m
