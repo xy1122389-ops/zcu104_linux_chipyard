@@ -187,7 +187,8 @@
 				reg = <0x0>;
 				spi-max-frequency = <1000000>;
 				voltage-ranges = <3300 3300>;
-				status = "okay";
+				/* J100-ONLY: SPI-SD path disabled; active SD path is sdhci@60170000 (J100) */
+				status = "disabled";
 			};
 		};
 		/*
@@ -222,16 +223,25 @@
 			compatible = "fixed-clock";
 		};
 		L34: sdhci@60170000 {
-			compatible = "arasan,sdhci-8.9a";
+			compatible = "xlnx,zynqmp-8.9a", "arasan,sdhci-8.9a";
 			reg = <0x60170000 0x1000>;
 			clocks = <&sdio1_clk_xin>, <&sdio1_clk_ahb>;
 			clock-names = "clk_xin", "clk_ahb";
 			bus-width = <4>;
 			no-1-8-v;
+			xlnx,fails-without-test-cd;
 			broken-cd;
-			sdhci-caps-mask = <0x0 0x0>;
-			max-frequency = <400000>;
-			status = "disabled";
+			/* Disable ADMA2 (bit19), SDMA (bit22), and 64-bit addr (bit28).
+			 * Root cause: Rocket DDR is at PA 0x80000000+ but PS SDIO1 DMA engine
+			 * uses PS-side DDR addresses (0x00000000+). ADMA/SDMA descriptors
+			 * contain Rocket PAs which map to wrong PS-side location → DMA stalls.
+			 * PIO mode: CPU reads card data directly from SDHCI FIFO via AXI bridge
+			 * at 0x60170020 → avoids all DMA address translation issues. */
+			sdhci-caps-mask = <0x10480000 0x0>;
+			/* Raise clock to 25MHz for SD data transfers via PS SDIO1 AXI bridge. */
+			max-frequency = <25000000>;
+			/* J100-ONLY: active SD path — PS SDIO1 via saxigp6 (Rocket 0x60170000 -> PS 0xFF170000) */
+			status = "okay";
 		};
 		L32: tile-reset-setter@110000 {
 			reg = <0x110000 0x1000>;

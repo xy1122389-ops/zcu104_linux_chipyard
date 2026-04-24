@@ -88,7 +88,7 @@ refresh_mmc_nodes() {
     synthesize_block_node mmcblk0p3
 }
 
-log "fedora-rootfs: SPI-SD Fedora bringup start (conservative, total wait 1800s)"
+log "fedora-rootfs: J100/SDHCI Fedora bringup start (conservative, total wait 1800s)"
 log "fedora-rootfs: uname: $(/bin/busybox uname -a 2>&1)"
 log "fedora-rootfs: /proc/filesystems:"
 /bin/busybox cat /proc/filesystems 2>&1 | while read line; do log "fedora-rootfs: fs: $line"; done
