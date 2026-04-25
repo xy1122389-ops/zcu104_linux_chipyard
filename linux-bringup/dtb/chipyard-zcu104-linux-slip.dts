@@ -236,8 +236,11 @@
 			 * uses PS-side DDR addresses (0x00000000+). ADMA/SDMA descriptors
 			 * contain Rocket PAs which map to wrong PS-side location → DMA stalls.
 			 * PIO mode: CPU reads card data directly from SDHCI FIFO via AXI bridge
-			 * at 0x60170020 → avoids all DMA address translation issues. */
-			sdhci-caps-mask = <0x10480000 0x0>;
+			 * at 0x60170020 → avoids all DMA address translation issues.
+			 * DT u64 encoding: <high32 low32> → lower_32_bits = low32 = caps mask.
+			 * MUST be <0x0 0x10480000>: low32=0x10480000 masks CAPS bits 19/22/28.
+			 * Wrong: <0x10480000 0x0> → low32=0x0 → no bits cleared → ADMA enabled! */
+			sdhci-caps-mask = <0x0 0x10480000>;
 			/* Raise clock to 25MHz for SD data transfers via PS SDIO1 AXI bridge. */
 			max-frequency = <25000000>;
 			/* J100-ONLY: active SD path — PS SDIO1 via saxigp6 (Rocket 0x60170000 -> PS 0xFF170000) */

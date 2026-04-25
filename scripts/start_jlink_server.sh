@@ -56,8 +56,8 @@ echo "[jlink] Starting J-Link GDB Server on :3333 (background)..."
 echo "[jlink] Log: $LOG"
 echo ""
 
-primary_args="-select USB=$JLINK_SERIAL -device RISC-V -endian little -if JTAG -speed 1000 -JTAGConf 0,0 -port 3333 -LocalhostOnly 0 -noir"
-fallback_args="-select USB=$JLINK_SERIAL -device RISC-V -endian little -if JTAG -speed 1000 -JTAGConf 0,0 -port 3333 -LocalhostOnly 0"
+primary_args="-select USB=$JLINK_SERIAL -device RISC-V -endian little -if JTAG -speed 1000 -JTAGConf 0,0 -port 3333 -LocalhostOnly 0 -noir -noexit"
+fallback_args="-select USB=$JLINK_SERIAL -device RISC-V -endian little -if JTAG -speed 1000 -JTAGConf 0,0 -port 3333 -LocalhostOnly 0 -noexit"
 
 echo "[jlink] Attempt 1: start with -noir and without -noreset/-nohalt"
 launch_server "$primary_args"

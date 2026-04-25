@@ -163,10 +163,10 @@ echo [ok] fence.i\n
 python
 import os, gdb, time
 
-chunk_dir = "/tmp/fw_chunks_new"
+chunk_dir = "/tmp/fw_chunks_v3"
 base_addr = 0x80000000
 chunk_size = 4194304
-reconnect_every = 4
+reconnect_every = 99
 _host = os.environ.get("JLINK_HOST", "172.19.128.1")
 _port = int(os.environ.get("JLINK_PORT", "12331"))
 
