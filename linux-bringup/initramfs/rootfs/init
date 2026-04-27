@@ -161,8 +161,8 @@ attempt=0
 mounted=0
 while [ "$attempt" -lt "$MOUNT_ATTEMPTS" ]; do
     attempt=$((attempt + 1))
-    log "fedora-rootfs: PRE-MOUNT attempt=${attempt}/${MOUNT_ATTEMPTS} mount -t btrfs -o subvol=root,ro /dev/mmcblk0p3 /newroot"
-    /bin/busybox mount -t btrfs -o subvol=root,ro /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
+    log "fedora-rootfs: PRE-MOUNT attempt=${attempt}/${MOUNT_ATTEMPTS} mount -t btrfs -o subvol=root,rw /dev/mmcblk0p3 /newroot"
+    /bin/busybox mount -t btrfs -o subvol=root,rw /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
     rc=$?
     log "fedora-rootfs: POST-MOUNT attempt=${attempt} subvol=root rc=${rc}"
     /bin/busybox cat /tmp/mount.err 2>&1 | while read line; do log "fedora-rootfs: mount_err: $line"; done
@@ -173,7 +173,7 @@ while [ "$attempt" -lt "$MOUNT_ATTEMPTS" ]; do
         break
     fi
     log "fedora-rootfs: subvol=root failed rc=${rc}, trying default subvol"
-    /bin/busybox mount -t btrfs -o ro /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
+    /bin/busybox mount -t btrfs -o rw /dev/mmcblk0p3 /newroot 2>/tmp/mount.err
     rc=$?
     log "fedora-rootfs: POST-MOUNT attempt=${attempt} default rc=${rc}"
     /bin/busybox cat /tmp/mount.err 2>&1 | while read line; do log "fedora-rootfs: mount_err2: $line"; done

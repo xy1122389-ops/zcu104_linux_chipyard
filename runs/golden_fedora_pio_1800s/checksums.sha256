@@ -1,0 +1,3 @@
+759db54b9bebf2b77945b5b7e861517f564443d370bd1efe4625538f8de31480  /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.bin.v3patched
+83186b47b22659c23327c5904b4a5755ddf3c7cd9718de265c5354ed610425dc  /root/chipyard/fpga/scripts/linux_boot.gdb
+bc516d3d99ad1aedc3bb5c751fe026ac344bd07f2371121403e94bdb082caa56  /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-linux-slip.dtb

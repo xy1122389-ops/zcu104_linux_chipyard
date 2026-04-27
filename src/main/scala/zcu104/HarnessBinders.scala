@@ -32,11 +32,19 @@ class WithUART1 extends HarnessBinder({
 /*** GPIO LED ***/
 class WithLEDGPIO extends HarnessBinder({
   case (th: ZCU104FPGATestHarnessImp, port: GPIOPinsPort, chipId: Int) if port.gpioId == 0 => {
-    // GPIO bit 0 drives DS39 through gpio_led_2_ls on A5.
-    val ledDrive = port.io.pins(0).o.oe && port.io.pins(0).o.oval
-    th.gpio_led_2_ls_drive := ledDrive
-    port.io.pins(0).i.ival := ledDrive
+    // GPIO bit 0 → DS39 (gpio_led_2_ls, A5)
+    val led39Drive = port.io.pins(0).o.oe && port.io.pins(0).o.oval
+    th.gpio_led_2_ls_drive := led39Drive
+    port.io.pins(0).i.ival := led39Drive
     port.io.pins(0).i.po.foreach(_ := false.B)
+
+    // GPIO bit 1 → DS40 (gpio_led_3_ls, B5)
+    if (port.io.pins.length > 1) {
+      val led40Drive = port.io.pins(1).o.oe && port.io.pins(1).o.oval
+      th.gpio_led_3_ls_drive := led40Drive
+      port.io.pins(1).i.ival := led40Drive
+      port.io.pins(1).i.po.foreach(_ := false.B)
+    }
   }
 })
 

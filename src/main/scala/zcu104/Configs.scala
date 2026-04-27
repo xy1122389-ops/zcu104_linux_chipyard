@@ -107,6 +107,12 @@ class RocketZCU104Config extends Config(
 // Alias for Linux bring-up (same as RocketZCU104Config)
 class RocketZCU104LinuxBringupConfig extends RocketZCU104Config
 
+// Dual-core Linux bring-up: same board tweaks as single-core, 2x Rocket harts
+class RocketZCU104DualCoreLinuxBringupConfig extends Config(
+  new WithZCU104Tweaks ++
+  new chipyard.DualRocketConfig
+)
+
 // Diagnostic config: removes the A2 PSLPD MMIO path entirely.
 class RocketZCU104JLinkDiagConfig extends Config(
   new WithZCU104TweaksNoPSLPD ++

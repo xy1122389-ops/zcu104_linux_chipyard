@@ -85,11 +85,17 @@ class ZCU104FPGATestHarness(override implicit val p: Parameters) extends ZCU104S
 class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawModuleImp(_outer) with HasHarnessInstantiators {
   override def provideImplicitClockToLazyChildren = true
   val zcu104Outer = _outer
-  // DS39 on ZCU104 is driven by GPIO_LED_2_LS on package pin A5.
+  // DS39 (gpio_led_2_ls) → A5, Bank 88, LVCMOS33
   val gpio_led_2_ls = IO(Output(Bool())).suggestName("gpio_led_2_ls")
   val gpio_led_2_ls_drive = WireDefault(false.B)
   _outer.xdc.addPackagePin(IOPin(gpio_led_2_ls), "A5")
   _outer.xdc.addIOStandard(IOPin(gpio_led_2_ls), "LVCMOS33")
+
+  // DS40 (gpio_led_3_ls) → B5, Bank 88, LVCMOS33
+  val gpio_led_3_ls = IO(Output(Bool())).suggestName("gpio_led_3_ls")
+  val gpio_led_3_ls_drive = WireDefault(false.B)
+  _outer.xdc.addPackagePin(IOPin(gpio_led_3_ls), "B5")
+  _outer.xdc.addIOStandard(IOPin(gpio_led_3_ls), "LVCMOS33")
 
   val sysclk: Clock = _outer.sysClkNode.out.head._1.clock
 
@@ -106,21 +112,30 @@ class ZCU104FPGATestHarnessImp(_outer: ZCU104FPGATestHarness) extends LazyRawMod
   def referenceReset        = hReset
   def success = { require(false, "Unused"); false.B }
 
-  // Blink DS39 in a distinctive signature pattern so a freshly synthesized
-  // bitstream is immediately obvious after programming. GPIO can still force
-  // the LED on, so software-visible behavior is preserved.
-  val heartbeat = withClockAndReset(referenceClock, referenceReset) {
+  // Blink DS39 and DS40 in a paired dual-core signature so a freshly
+  // synthesised dual-core bitstream is immediately obvious after programming.
+  // Pattern runs from a shared 27-bit counter (at 50 MHz each phase ≈ 167 ms,
+  // full cycle ≈ 2.68 s). GPIO software override is preserved on both LEDs.
+  val (led39, led40) = withClockAndReset(referenceClock, referenceReset) {
     val counter = RegInit(0.U(27.W))
     counter := counter + 1.U
 
-    // 16-step repeating pattern: two short flashes, then a long gap.
-    // At the default 50 MHz fabric clock, each phase is ~167 ms.
-    val phase = counter(26, 23)
-    (phase === "b0000".U) ||
-    (phase === "b0010".U) ||
-    (phase === "b1000".U)
+    val phase = counter(26, 23)   // 16 steps × ~167 ms = ~2.68 s cycle
+
+    // DS39 (A5): two short flashes then a long gap  — marks "core 0"
+    val ds39 = (phase === "b0000".U) ||
+               (phase === "b0010".U) ||
+               (phase === "b1000".U)
+
+    // DS40 (B5): single long flash offset by ~500 ms — marks "core 1"
+    // Phases 4-5 = on for ~334 ms, rest off; clearly distinct from DS39.
+    val ds40 = (phase === "b0100".U) ||
+               (phase === "b0101".U)
+
+    (ds39, ds40)
   }
-  gpio_led_2_ls := gpio_led_2_ls_drive || heartbeat
+  gpio_led_2_ls := gpio_led_2_ls_drive || led39
+  gpio_led_3_ls := gpio_led_3_ls_drive || led40
 
   childClock := referenceClock
   childReset := referenceReset

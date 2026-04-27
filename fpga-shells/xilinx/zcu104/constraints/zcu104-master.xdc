@@ -28,9 +28,14 @@ set_property PACKAGE_PIN J7         [get_ports {jtag_jtag_TDO}]
 set_property IOSTANDARD LVCMOS33    [get_ports {jtag_jtag_TDO}]
 
 #-------------- LED DS39 ----------------------
-# DS39 -> GPIO_LED_2_LS -> A5
+# DS39 -> GPIO_LED_2_LS -> A5, Bank 88, LVCMOS33
 set_property PACKAGE_PIN A5         [get_ports {gpio_led_2_ls}]
 set_property IOSTANDARD LVCMOS33    [get_ports {gpio_led_2_ls}]
+
+#-------------- LED DS40 ----------------------
+# DS40 -> GPIO_LED_3_LS -> B5, Bank 88, LVCMOS33
+set_property PACKAGE_PIN B5         [get_ports {gpio_led_3_ls}]
+set_property IOSTANDARD LVCMOS33    [get_ports {gpio_led_3_ls}]
 
 #-------------- Bitstream Settings ----------------------
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]

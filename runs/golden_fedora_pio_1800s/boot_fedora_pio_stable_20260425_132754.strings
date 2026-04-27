@@ -1,0 +1,274 @@
+   0: Linux version 6.6.0-fpga-min-g67bc4513761f-dirty (root@YXY) (riscv64-unknown-linux-gnu-gcc (g04696df0963) 14.2.0, GNU ld (GNU Binutils) 2.43.1) #129 Thu Apr 23 18:56:45 CST 202626
+   1: Machine model: ucb-bar,chipyardrd
+   2: SBI specification v1.0 detecteded
+   3: SBI implementation ID=0x1 Version=0x1000202
+   4: SBI TIME extension detecteded
+   5: SBI IPI extension detecteded
+   6: SBI RFENCE extension detecteded
+   7: earlycon: sifive0 at MMIO 0x0000000064000000 (options '')')
+   8: printk: bootconsole [sifive0] enableded
+   9: printk: debug: ignoring loglevel setting.g.
+  10: efi: UEFI not found.d.
+  11: OF: reserved mem: 0x0000000080000000..0x000000008001ffff (128 KiB) map non-reusable mmode_resv0@8000000000
+  12: OF: reserved mem: 0x0000000080020000..0x000000008003ffff (128 KiB) map non-reusable mmode_resv1@8002000000
+  13: Zone ranges:s:
+  14:   DMA32    [mem 0x0000000080000000-0x00000000ffffffff]f]
+  15:   Normal   emptyty
+  16: Movable zone start for each nodede
+  17: Early memory node rangeses
+  18:   node   0: [mem 0x0000000080000000-0x00000000ffffffff]f]
+  19: Initmem setup node 0 [mem 0x0000000080000000-0x00000000ffffffff]f]
+  20: Falling back to deprecated "riscv,isa"a"
+  21: riscv: base ISA extensions acdfimim
+  22: riscv: ELF capabilities acdfimim
+  23: pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+  24: pcpu-alloc: [0] 0 
+  25: Kernel command line: earlycon=sifive,0x64000000 console=ttySIF0,115200n8 init=/init loglevel=8 ignore_loglevelel
+  26: Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)r)
+  27: Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)r)
+  28: Built 1 zonelists, mobility grouping on.  Total pages: 51609696
+  29: mem auto-init: stack:off, heap alloc:off, heap free:offff
+  30: Virtual kernel memory layout:t:
+  31:       fixmap : 0xffffffc6fea00000 - 0xffffffc6ff000000   (6144 kB)B)
+  32:       pci io : 0xffffffc6ff000000 - 0xffffffc700000000   (  16 MB)B)
+  33:      vmemmap : 0xffffffc700000000 - 0xffffffc800000000   (4096 MB)B)
+  34:      vmalloc : 0xffffffc800000000 - 0xffffffd800000000   (  64 GB)B)
+  35:      modules : 0xffffffff00f33000 - 0xffffffff80000000   (2032 MB)B)
+  36:       lowmem : 0xffffffd800000000 - 0xffffffd880000000   (2048 MB)B)
+  37:       kernel : 0xffffffff80000000 - 0xffffffffffffffff   (2047 MB)B)
+  38: Memory: 2044592K/2097152K available (5190K kernel code, 3474K rwdata, 2048K rodata, 3501K init, 392K bss, 52560K reserved, 0K cma-reserved)d)
+  39: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1=1
+  40: NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0 0
+  41: riscv-intc: 64 local interrupts mappeded
+  42: plic: interrupt-controller@c000000: mapped 4 interrupts with 1 handlers for 2 contexts.s.
+  43: clocksource: riscv_clocksource: mask: 0xffffffffffffffff max_cycles: 0xb8812736b, max_idle_ns: 440795202655 nsns
+  44: sched_clock: 64 bits at 50MHz, resolution 20ns, wraps every 4398046511100nsns
+  45: Calibrating delay loop (skipped), value calculated using timer frequency.. 100.00 BogoMIPS (lpj=200000)0)
+  46: pid_max: default: 32768 minimum: 30101
+  47: Mount-cache hash table entries: 4096 (order: 3, 32768 bytes, linear)r)
+  48: Mountpoint-cache hash table entries: 4096 (order: 3, 32768 bytes, linear)r)
+  49: RCU Tasks Trace: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1.1.
+  50: riscv: ELF compat mode unsupporteded
+  51: ASID allocator disabled (0 bits)s)
+  52: EFI services will not be available.e.
+  53: devtmpfs: initializeded
+  54: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 nsns
+  55: futex hash table entries: 256 (order: 1, 12288 bytes, linear)r)
+  56: pinctrl core: initialized pinctrl subsystemem
+  57: NET: Registered PF_NETLINK/PF_ROUTE protocol familyly
+  58: DMA: preallocated 256 KiB GFP_KERNEL pool for atomic allocationsns
+  59: DMA: preallocated 256 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocationsns
+  60: audit: initializing netlink subsys (disabled)d)
+  61: thermal_sys: Registered thermal governor 'step_wise'e'
+  62: thermal_sys: Registered thermal governor 'user_space'e'
+  63: cpuidle: using governor menunu
+  64: cpu0: skipping unaligned access speed probe, assuming slowow
+  65: audit: type=2000 audit(0.000:1): state=initialized audit_enabled=0 res=1=1
+  66: HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pageses
+  67: HugeTLB: 0 KiB vmemmap can be freed for a 2.00 MiB pagege
+  68: raid6: skipped pq benchmark and selected int64x8x8
+  69: raid6: using intx1 recovery algorithmhm
+  70: clocksource: Switched to clocksource riscv_clocksourcece
+  71: NET: Registered PF_INET protocol familyly
+  72: IP idents hash table entries: 32768 (order: 6, 262144 bytes, linear)r)
+  73: tcp_listen_portaddr_hash hash table entries: 1024 (order: 3, 32768 bytes, linear)r)
+  74: Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)r)
+  75: TCP established hash table entries: 16384 (order: 5, 131072 bytes, linear)r)
+  76: TCP bind hash table entries: 16384 (order: 8, 1048576 bytes, linear)r)
+  77: TCP: Hash tables configured (established 16384 bind 16384)4)
+  78: UDP hash table entries: 1024 (order: 4, 98304 bytes, linear)r)
+  79: UDP-Lite hash table entries: 1024 (order: 4, 98304 bytes, linear)r)
+  80: NET: Registered PF_UNIX/PF_LOCAL protocol familyly
+  81: kvm [1]: hypervisor extension not availablele
+  82: workingset: timestamp_bits=46 max_order=19 bucket_order=0=0
+  83: jitterentropy: Initialization failed with host not compliant with requirements: 9 9
+  84: xor: measuring software checksum speeded
+  85:    8regs           : 75502 MB/secec
+  86:    8regs_prefetch  : 75259 MB/secec
+  87:    32regs          : 85600 MB/secec
+  88:    32regs_prefetch : 85067 MB/secec
+  89: xor: using function: 32regs (85600 MB/sec)c)
+  90: io scheduler mq-deadline registereded
+  91: io scheduler kyber registereded
+  92: io scheduler bfq registereded
+  93: 64000000.serial: ttySIF0 at MMIO 0x64000000 (irq = 3, base_baud = 3125000) is a SiFive UART v0v0
+  94: printk: console [ttySIF0] enableded
+  95: printk: bootconsole [sifive0] disableded
+  96: 64003000.serial: ttySIF1 at MMIO 0x64003000 (irq = 4, base_baud = 3125000) is a SiFive UART v0v0
+  97: loop: module loadeded
+  98: sifive_spi 64001000.spi: mapped; irq=6, cs=1
+  99: sifive_spi 64001000.spi: registered master spi0
+ 100: SLIP: version 0.8.4-NET3.019-NEWTTY (dynamic channels, max=256).).
+ 101: CSLIP: code copyright 1989 Regents of the University of California.a.
+ 102: SLIP linefill/keepalive option.n.
+ 103: i2c_dev: i2c /dev entries driverer
+ 104: sdhci: Secure Digital Host Controller Interface driverer
+ 105: sdhci: Copyright(c) Pierre Ossmanan
+ 106: sdhci-pltfm: SDHCI platform and OF driver helperer
+ 107: riscv-pmu-sbi: SBI PMU extension is availablele
+ 108: riscv-pmu-sbi: 16 firmware and 2 hardware countersrs
+ 109: riscv-pmu-sbi: Perf sampling/filtering is not supported as sscof extension is not availablele
+ 110: NET: Registered PF_INET6 protocol familyly
+ 111: Segment Routing with IPv6v6
+ 112: In-situ OAM (IOAM) with IPv6v6
+ 113: sit: IPv6, IPv4 and MPLS over IPv4 tunneling driverer
+ 114: NET: Registered PF_PACKET protocol familyly
+ 115: sdhci-arasan 60170000.sdhci: no IRQ found, will use polling mode
+ 116: mmc0: No IRQ, using 10ms poll timerer
+ 117: mmc0: sdhci_set_ios enter power_mode=1 ios_clock=0 host_clock=0 clkctl=0x000000
+ 118: mmc0: sdhci_set_ios before set_clock ios_clock=0 host_clock=0 turning_on_clk=0 clkctl=0x000000
+ 119: mmc0: sdhci_set_clock req=0 host_clock=0 max_clk=200000000 clkctl_before=0x000000
+ 120: mmc0: sdhci_set_clock req=0 clkctl_after=0x000000
+ 121: mmc0: sdhci_set_ios after set_clock ios_clock=0 host_clock=0 actual_clock=0 clkctl=0x000000
+ 122: mmc0: sdhci_set_clock req=0 host_clock=0 max_clk=200000000 clkctl_before=0x000000
+ 123: mmc0: sdhci_set_clock req=0 clkctl_after=0x000000
+ 124: mmc0: sdhci_set_ios exit power_mode=1 ios_clock=0 host_clock=0 actual_clock=0 clkctl=0x000000
+ 125: mmc0: sdhci_start_signal_voltage_switch enter req=0 hostctl2_before=0x0000 version=0x0002 flags=0x000040d0d0
+ 126: mmc0: sdhci_start_signal_voltage_switch branch=3.3.3
+ 127: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_before_write ctrl=0x000000
+ 128: mmc0: sdhci_start_signal_voltage_switch hostctl2 write before=0x0000 write=0x0000 after=0x000000
+ 129: mmc0: sv330 step=after_writete
+ 130: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_after_writete
+ 131: mmc0: sv330 step=vqmmc_check has_vqmmc=0=0
+ 132: mmc0: sv330 step=no_vqmmcmc
+ 133: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_skip_vqmmcmc
+ 134: mmc0: sv330 step=before_waitit
+ 135: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_before_waitit
+ 136: mmc0: sv330 step=after_waitit
+ 137: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_after_waitit
+ 138: mmc0: sv330 step=before_final_readad
+ 139: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_before_final_readad
+ 140: mmc0: sv330 step=after_final_read ctrl=0x000000
+ 141: mmc0: sdhci_start_signal_voltage_switch checkpoint=3v3_after_final_read hostctl2=0x000000
+ 142: mmc0: sdhci_start_signal_voltage_switch exit ret=0 hostctl2_final=0x000000
+ 143: Btrfs loaded, zoned=no, fsverity=nono
+ 144: clk: Disabling unused clocksks
+ 145: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=400000 host_clock=0 clkctl=0x000000
+ 146: mmc0: sdhci_set_ios before set_clock ios_clock=400000 host_clock=0 turning_on_clk=1 clkctl=0x000000
+ 147: mmc0: poll_timer tick #1 cmd=000000000000000000
+ 148: mmc0: sdhci_set_clock req=400000 host_clock=0 max_clk=200000000 clkctl_before=0x000000
+ 149: mmc0: sdhci_set_clock req=400000 calc=0xfa00 actual=400000 clkctl_after=0xfa0707
+ 150: mmc0: sdhci_set_ios after set_clock ios_clock=400000 host_clock=400000 actual_clock=400000 clkctl=0xfa0707
+ 151: mmc0: sdhci_set_ios early_return clkctl=0xfa0707
+ 152: mmc0: SDHCI controller on 60170000.sdhci [60170000.sdhci] using PIOIO
+ 153: mmc0: sdhci_send_command CMD52 arg=0x00000c00 flags=0x1a timeout_jiffies=250000
+ 154: mmc0: fpga-diag req#1 cmd_irq_error cmd=52 arg=0x00000c00 blocks=0 blksz=0 cmd_err=-110 sbc_err=0 data_err=0 stop_err=0 bytes=0 present=0x01f70000 int_status=0x00010000 int_enable=0x00ff0003 signal_enable=0x00ff0003 xfer=0x0000 blkcnt=0x0000 arg_reg=0x00000c00 resp0=0x00000000 host_cmd=(____ptrval____) host_data=0000000000000000 blocks_rem=0=0
+ 155: mmc0: sdhci_send_command CMD52 arg=0x80000c08 flags=0x1a timeout_jiffies=250000
+ 156: mmc0: fpga-diag req#2 cmd_irq_error cmd=52 arg=0x80000c08 blocks=0 blksz=0 cmd_err=-110 sbc_err=0 data_err=0 stop_err=0 bytes=0 present=0x01f70000 int_status=0x00010000 int_enable=0x00ff0003 signal_enable=0x00ff0003 xfer=0x0000 blkcnt=0x0000 arg_reg=0x80000c08 resp0=0x00000000 host_cmd=(____ptrval____) host_data=0000000000000000 blocks_rem=0=0
+ 157: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=400000 host_clock=400000 clkctl=0xfa0707
+ 158: mmc0: sdhci_set_clock req=400000 host_clock=400000 max_clk=200000000 clkctl_before=0xfa0303
+ 159: mmc0: sdhci_set_clock req=400000 calc=0xfa00 actual=400000 clkctl_after=0xfa0707
+ 160: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=400000 host_clock=400000 actual_clock=400000 clkctl=0xfa0707
+ 161: Freeing unused kernel image (initmem) memory: 3500K0K
+ 162: Run /init as init processss
+ 163:   with arguments:s:
+ 164:     /initit
+ 165:   with environment:t:
+ 166:     HOME=/=/
+ 167:     TERM=linuxux
+ 168: INIT_AFTER_PSEUDO_MOUNTS
+ 169: INIT_BEFORE_FIRST_STAGE_MARK
+ 170: INIT_AFTER_FIRST_STAGE_MARK sm=0x01
+ 171: fedora-rootfs: v3-nosleep J100 start
+ 172: fedora-rootfs: uname: Linux ucb 6.6.0-fpga-min-g67bc4513761f-dirty #129 Thu Apr 23 18:56:45 CST 2026 riscv64 GNU/Linux
+ 173: mmc0: sdhci_send_command CMD0 arg=0x00000000 flags=0x0 timeout_jiffies=250000
+ 174: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=400000 host_clock=400000 clkctl=0xfa0707
+ 175: mmc0: sdhci_set_clock req=400000 host_clock=400000 max_clk=200000000 clkctl_before=0xfa0303
+ 176: mmc0: sdhci_set_clock req=400000 calc=0xfa00 actual=400000 clkctl_after=0xfa0707
+ 177: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=400000 host_clock=400000 actual_clock=400000 clkctl=0xfa0707
+ 178: mmc0: sdhci_send_command CMD8 arg=0x000001aa flags=0x1a timeout_jiffies=250000
+ 179: mmc0: sdhci_send_command CMD5 arg=0x00000000 flags=0x2 timeout_jiffies=250000
+ 180: mmc0: fpga-diag req#5 cmd_irq_error cmd=5 arg=0x00000000 blocks=0 blksz=0 cmd_err=-110 sbc_err=0 data_err=0 stop_err=0 bytes=0 present=0x01f70000 int_status=0x00010000 int_enable=0x00ff0003 signal_enable=0x00ff0003 xfer=0x0000 blkcnt=0x0000 arg_reg=0x00000000 resp0=0x000001aa host_cmd=(____ptrval____) host_data=0000000000000000 blocks_rem=0=0
+ 181: mmc0: sdhci_send_command CMD5 arg=0x00000000 flags=0x2 timeout_jiffies=250000
+ 182: mmc0: fpga-diag req#6 cmd_irq_error cmd=5 arg=0x00000000 blocks=0 blksz=0 cmd_err=-110 sbc_err=0 data_err=0 stop_err=0 bytes=0 present=0x01f70000 int_status=0x00010000 int_enable=0x00ff0003 signal_enable=0x00ff0003 xfer=0x0000 blkcnt=0x0000 arg_reg=0x00000000 resp0=0x000001aa host_cmd=(____ptrval____) host_data=0000000000000000 blocks_rem=0=0
+ 183: mmc0: sdhci_send_command CMD5 arg=0x00000000 flags=0x2 timeout_jiffies=250000
+ 184: mmc0: fpga-diag req#7 cmd_irq_error cmd=5 arg=0x00000000 blocks=0 blksz=0 cmd_err=-110 sbc_err=0 data_err=0 stop_err=0 bytes=0 present=0x01f70000 int_status=0x00010000 int_enable=0x00ff0003 signal_enable=0x00ff0003 xfer=0x0000 blkcnt=0x0000 arg_reg=0x00000000 resp0=0x000001aa host_cmd=(____ptrval____) host_data=0000000000000000 blocks_rem=0=0
+ 185: mmc0: sdhci_send_command CMD5 arg=0x00000000 flags=0x2 timeout_jiffies=250000
+ 186: mmc0: fpga-diag req#8 cmd_irq_error cmd=5 arg=0x00000000 blocks=0 blksz=0 cmd_err=-110 sbc_err=0 data_err=0 stop_err=0 bytes=0 present=0x01f70000 int_status=0x00010000 int_enable=0x00ff0003 signal_enable=0x00ff0003 xfer=0x0000 blkcnt=0x0000 arg_reg=0x00000000 resp0=0x000001aa host_cmd=(____ptrval____) host_data=0000000000000000 blocks_rem=0=0
+ 187: mmc0: sdhci_send_command CMD55 arg=0x00000000 flags=0x1a timeout_jiffies=250000
+ 188: mmc0: sdhci_send_command CMD41 arg=0x00000000 flags=0x2 timeout_jiffies=250000
+ 189: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=400000 host_clock=400000 clkctl=0xfa0707
+ 190: mmc0: sdhci_set_clock req=400000 host_clock=400000 max_clk=200000000 clkctl_before=0xfa0303
+ 191: mmc0: sdhci_set_clock req=400000 calc=0xfa00 actual=400000 clkctl_after=0xfa0707
+ 192: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=400000 host_clock=400000 actual_clock=400000 clkctl=0xfa0707
+ 193: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=400000 host_clock=400000 clkctl=0xfa0707
+ 194: mmc0: sdhci_set_clock req=400000 host_clock=400000 max_clk=200000000 clkctl_before=0xfa0303
+ 195: mmc0: sdhci_set_clock req=400000 calc=0xfa00 actual=400000 clkctl_after=0xfa0707
+ 196: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=400000 host_clock=400000 actual_clock=400000 clkctl=0xfa0707
+ 197: fedora-rootfs: wait loop=0 mmcblk0p3 missing
+ 198: fedora-rootfs: wait loop=100 mmcblk0p3 missing
+ 199: fedora-rootfs: wait loop=200 mmcblk0p3 missing
+ 200: fedora-rootfs: wait loop=300 mmcblk0p3 missing
+ 201: fedora-rootfs: wait loop=400 mmcblk0p3 missing
+ 202: fedora-rootfs: wait loop=500 mmcblk0p3 missing
+ 203: fedora-rootfs: wait loop=600 mmcblk0p3 missing
+ 204: fedora-rootfs: wait loop=700 mmcblk0p3 missing
+ 205: fedora-rootfs: wait loop=800 mmcblk0p3 missing
+ 206: fedora-rootfs: wait loop=900 mmcblk0p3 missing
+ 207: fedora-rootfs: wait loop=1000 mmcblk0p3 missing
+ 208: fedora-rootfs: wait loop=1100 mmcblk0p3 missing
+ 209: fedora-rootfs: wait loop=1200 mmcblk0p3 missing
+ 210: fedora-rootfs: wait loop=1300 mmcblk0p3 missing
+ 211: fedora-rootfs: wait loop=1400 mmcblk0p3 missing
+ 212: fedora-rootfs: wait loop=1500 mmcblk0p3 missing
+ 213: fedora-rootfs: wait loop=1600 mmcblk0p3 missing
+ 214: fedora-rootfs: wait loop=1700 mmcblk0p3 missing
+ 215: fedora-rootfs: wait loop=1800 mmcblk0p3 missing
+ 216: fedora-rootfs: wait loop=1900 mmcblk0p3 missing
+ 217: fedora-rootfs: wait loop=2000 mmcblk0p3 missing
+ 218: fedora-rootfs: wait loop=2100 mmcblk0p3 missing
+ 219: fedora-rootfs: wait loop=2200 mmcblk0p3 missing
+ 220: fedora-rootfs: wait loop=2300 mmcblk0p3 missing
+ 221: fedora-rootfs: wait loop=2400 mmcblk0p3 missing
+ 222: fedora-rootfs: wait loop=2500 mmcblk0p3 missing
+ 223: fedora-rootfs: wait loop=2600 mmcblk0p3 missing
+ 224: mmc0: IRQ intmask=0x00000021 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 225: mmc0: IRQ intmask=0x00000002 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 226: mmc0: IRQ intmask=0x00000021 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 227: mmc0: IRQ intmask=0x00000002 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 228: mmc0: IRQ intmask=0x00000021 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 229: mmc0: IRQ intmask=0x00000002 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 230: mmc0: IRQ intmask=0x00000021 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 231: mmc0: IRQ intmask=0x00000002 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 232: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=400000 host_clock=400000 clkctl=0xfa0707
+ 233: mmc0: sdhci_set_clock req=400000 host_clock=400000 max_clk=200000000 clkctl_before=0xfa0303
+ 234: mmc0: sdhci_set_clock req=400000 calc=0xfa00 actual=400000 clkctl_after=0xfa0707
+ 235: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=400000 host_clock=400000 actual_clock=400000 clkctl=0xfa0707
+ 236: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=25000000 host_clock=400000 clkctl=0xfa0707
+ 237: mmc0: sdhci_set_ios before set_clock ios_clock=25000000 host_clock=400000 turning_on_clk=0 clkctl=0xfa0707
+ 238: mmc0: sdhci_set_clock req=19000000 host_clock=400000 max_clk=200000000 clkctl_before=0xfa0707
+ 239: mmc0: sdhci_set_clock req=19000000 calc=0x0600 actual=16666666 clkctl_after=0x060707
+ 240: mmc0: sdhci_set_ios after set_clock ios_clock=25000000 host_clock=25000000 actual_clock=16666666 clkctl=0x060707
+ 241: mmc0: sdhci_set_clock req=19000000 host_clock=25000000 max_clk=200000000 clkctl_before=0x060303
+ 242: mmc0: sdhci_set_clock req=19000000 calc=0x0600 actual=16666666 clkctl_after=0x060707
+ 243: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=25000000 host_clock=25000000 actual_clock=16666666 clkctl=0x060707
+ 244: mmc0: sdhci_set_ios enter power_mode=2 ios_clock=25000000 host_clock=25000000 clkctl=0x060707
+ 245: mmc0: sdhci_set_clock req=19000000 host_clock=25000000 max_clk=200000000 clkctl_before=0x060303
+ 246: mmc0: sdhci_set_clock req=19000000 calc=0x0600 actual=16666666 clkctl_after=0x060707
+ 247: mmc0: sdhci_set_ios exit power_mode=2 ios_clock=25000000 host_clock=25000000 actual_clock=16666666 clkctl=0x060707
+ 248: mmc0: new high speed SDHC card at address aaaaaa
+ 249: fedora-rootfs: wait loop=2700 mmcblk0p3 missing
+ 250: fedora-rootfs: wait loop=2800 mmcblk0p3 missing
+ 251: fedora-rootfs: wait loop=2900 mmcblk0p3 missing
+ 252: mmcblk0: mmc0:aaaa SC16G 14.8 GiB (ro)o)
+ 253: mmc0: IRQ intmask=0x00000021 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 254: mmc0: IRQ intmask=0x00000022 data=(____ptrval____) data_cmd=(____ptrval____)_)
+ 255: GPT:Primary header thinks Alt. header is not at the end of the disk.k.
+ 256: GPT:20971519 != 3111628787
+ 257: GPT:Alternate GPT header not at the end of the disk.k.
+ 258: GPT:20971519 != 3111628787
+ 259: GPT: Use GNU Parted to correct GPT errors.s.
+ 260:  mmcblk0: p1 p2 p3p3
+ 261: fedora-rootfs: FOUND mmcblk0p3 at loop=2901
+ 262: fedora-rootfs: MOUNT attempt=1 subvol=root
+ 263: BTRFS: device label fedora devid 1 transid 17 /dev/mmcblk0p3 scanned by busybox (115)5)
+ 264: BTRFS info (device mmcblk0p3): using crc32c (crc32c-generic) checksum algorithmhm
+ 265: BTRFS info (device mmcblk0p3): using free space treeee
+ 266: BTRFS info (device mmcblk0p3): enabling ssd optimizationsns
+ 267: BTRFS info (device mmcblk0p3): auto enabling async discardrd
+ 268: fedora-rootfs: mount subvol=root rc=0
+ 269: fedora-rootfs: MOUNT SUCCESS subvol=root attempt=1
+ 270: fedora-rootfs: ls /newroot:
+ 271: afs bin boot config.partids dev etc grub2 home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var 
+ 272: fedora-rootfs: SWITCH_ROOT -> /sbin/init
+ 273: systemd[1]: System time advanced to built-in epoch: Fri 2025-06-27 00:00:00 UTC

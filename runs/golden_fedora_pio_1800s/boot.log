@@ -1,0 +1,287 @@
+[info] Connecting to J-Link at 127.0.0.1:3333
+0x000000008003800a in ?? ()
+[info] J-Link connected on attempt 1
+[cfg] skip_l2=0
+--- Initial state ---
+pc             0x8003800a	0x8003800a
+
+=== Phase 1: Zero DDR via Rocket core ===
+O.K.
+O.K.
+0x0000000080038104 in ?? ()
+[ok] fence.i
+Hardware assisted breakpoint 1 at 0x8003800a
+[zero0] 0x80040000-0x80200000...
+
+Breakpoint 1, 0x000000008003800a in ?? ()
+[zero0] done
+[zero1] 0x80EC4000-0x84000000...
+
+Breakpoint 1, 0x000000008003800a in ?? ()
+[zero1] done
+[zero1b] 0x84001070-0x84100000...
+
+Breakpoint 1, 0x000000008003800a in ?? ()
+[zero1b] done
+[zero2] 0x84100000-0xA0000000...
+
+Breakpoint 1, 0x000000008003800a in ?? ()
+[zero2] done
+[zero3] 0xA0000000-0xC0000000...
+
+Breakpoint 1, 0x000000008003800a in ?? ()
+[zero3] done
+[zero4] 0xC0000000-0x100000000...
+
+Breakpoint 1, 0x000000008003800a in ?? ()
+[zero4] done
+[ALL DDR ZEROED]
+
+=== Phase 2: Restore fw_payload.bin (15MB via SBA) ===
+O.K.
+O.K.
+0x0000000080038104 in ?? ()
+[ok] fence.i
+[restore] Loading fw_payload.bin in 5 chunks (4MB each)...
+[restore 1/5] chunk_00.bin -> 0x80000000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_v3/chunk_00.bin into memory (0x80000000 to 0x80400000)
+[restore 1/5] done
+[restore 2/5] chunk_01.bin -> 0x80400000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_v3/chunk_01.bin into memory (0x80400000 to 0x80800000)
+[restore 2/5] done
+[restore 3/5] chunk_02.bin -> 0x80800000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_v3/chunk_02.bin into memory (0x80800000 to 0x80c00000)
+[restore 3/5] done
+[restore 4/5] chunk_03.bin -> 0x80c00000 (4194304 bytes)...
+Restoring binary file /tmp/fw_chunks_v3/chunk_03.bin into memory (0x80c00000 to 0x81000000)
+[restore 4/5] done
+[restore 5/5] chunk_04.bin -> 0x81000000 (851464 bytes)...
+Restoring binary file /tmp/fw_chunks_v3/chunk_04.bin into memory (0x81000000 to 0x810cfe08)
+[restore 5/5] done
+[ok] fw_payload.bin restored (15MB in chunks)
+Restoring binary file /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-linux-slip.dtb into memory (0x84000000 to 0x8400138d)
+[ok] DTB restored at 0x84000000
+[dtb] External DTB provides chosen bootargs; will redirect a1 at mret
+
+=== Phase 3: Invalidate L2 cache for firmware region ===
+0x0000000080038104 in ?? ()
+[ok] fence.i for L2 invalidation
+Hardware assisted breakpoint 2 at 0x8003800c
+[L2inv] Invalidating L2 for firmware region (17MB)...
+
+Breakpoint 2, 0x000000008003800c in ?? ()
+[L2inv] Firmware region done
+Hardware assisted breakpoint 3 at 0x8003800c
+[L2inv] Invalidating L2 for DTB region...
+
+Breakpoint 3, 0x000000008003800c in ?? ()
+[L2inv] DTB region done
+[verify] Checking SBA write integrity...
+[verify] First CPIO header in fw_payload.bin: off=0xd2c1d0 pa=0x80d2c1d0
+[verify] Initramfs magic @ 0x80d2c1d0: 0x37303730 0x00003130
+[verify] Initramfs magic: OK (cpio 070701)
+[verify] Linux _start: OK
+[verify] OpenSBI entry: OK
+[FAIL] Mismatch @ 0x80b00000: got 0x7d175937 expected 0xf9d79e4a
+[verify] Spot-check: 16 locations, 1 mismatches
+
+=== Phase 4: fence.i ===
+0x0000000080038104 in ?? ()
+[ok] fence.i
+
+=== Phase 5: Boot to Linux _start ===
+Hardware assisted breakpoint 4 at 0x8000b1d2: file /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_hart.c, line 777.
+[boot] Running OpenSBI to mret...
+
+Breakpoint 4, 0x000000008000b1d2 in sbi_hart_switch_mode (arg0=arg0@entry=0, arg1=2214592512, next_addr=2149580800, next_mode=1, next_virt=next_virt@entry=0) at /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/lib/sbi/sbi_hart.c:777
+777		switch (next_mode) {
+[OK] OpenSBI reached mret
+[dtb] a1 from OpenSBI = 0x84000000
+[dtb] DTB magic at a1: 0xedfe0dd0 (valid)
+[dtb] Redirected a1 -> 0x84000000 for external DTB
+
+=== Phase 5.5: Pre-boot UART IE disable ===
+Writing 0x00000000 @ address 0x64000010
+[uart] Cleared UART IE @ 0x64000010 -> 0x0 (prevent probe race)
+
+=== Phase 5b: Leave mret path (timed go/halt) ===
+[boot] Starting timed go/halt from pc=0x8000b1d2
+[boot] probe 1/20: pc=0x8000b1d2
+[boot] probe 2/20: pc=0x8000b1d2
+[boot] probe 3/20: pc=0x8000b1d2
+[boot] probe 4/20: pc=0x8000b1d2
+[boot] probe 5/20: pc=0x8000b1d2
+[boot] probe 6/20: pc=0x8000b1d2
+[boot] probe 7/20: pc=0x8000b1d2
+[boot] probe 8/20: pc=0x8000b1d2
+[boot] probe 9/20: pc=0x8000b1d2
+[boot] probe 10/20: pc=0x8000b1d2
+[boot] probe 11/20: pc=0x8000b1d2
+[boot] probe 12/20: pc=0x8000b1d2
+[boot] probe 13/20: pc=0x8000b1d2
+[boot] probe 14/20: pc=0x8000b1d2
+[boot] probe 15/20: pc=0x8000b1d2
+[boot] probe 16/20: pc=0x8000b1d2
+[boot] probe 17/20: pc=0x8000b1d2
+[boot] probe 18/20: pc=0x8000b1d2
+[boot] probe 19/20: pc=0x8000b1d2
+[boot] probe 20/20: pc=0x8000b1d2
+[WARN] PC did not advance from mret window after timed go/halt probes
+
+=== Phase 6: Clear dcsr ebreak bits ===
+[dcsr] Before: O.K.:0x4000F0C1
+[dcsr] old=0x4000F0C1 -> new=0x400040C1 (cleared bits 15,13,12,2)
+O.K.
+[dcsr] After:  O.K.:0x400040C1
+[OK] dcsr ebreak bits cleared
+
+=== Phase 7: Launch kernel (run 1800s then dump klog) ===
+[triggers] Clearing hardware trigger CSRs...
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+[OK] Hardware triggers cleared (tselect 0 and 1)
+[boot] Launching kernel (async), will halt in 1800s...
+[boot] Kernel running (via monitor go)...
+
+[boot] 1800s elapsed. Halting kernel...
+[boot] Target halted at PC = 0x000000008000b1d2
+
+=== Phase 8: Dump kernel log (same session) ===
+[state] PC = 0x000000008000b1d2
+[state] satp = 0x800000000008202b
+[state] scause = 0x8000000000000005
+[state] sepc = 0xffffffff8050eb4e
+[state] stval = 0x0000000000000000
+[state] mcause = 0x0000000000000009
+[state] mepc = 0xffffffff80006be2
+[state] mtval = 0x0000000000000000
+[state] dcsr = 0x000000004000f0c1
+[state] dpc = 0xffffffff800030c0
+[klog] log_buf_len VA=0xffffffff80ecf868 PA=0x810cf868 -> 0x20000
+[klog] log_buf     VA=0xffffffff80ecf870 PA=0x810cf870 -> 0xffffffff80ee0190
+[klog] __log_buf   VA=0xffffffff80ee0190 PA=0x810e0190
+[dump] Dumping 131072 bytes from PA 0x810e0190 -> /tmp/klog_fedora_pio_stable_20260425_132754.bin
+[dump] Saved to /tmp/klog_fedora_pio_stable_20260425_132754.bin
+
+[strings] Found 274 strings in klog
+     0: Linux version 6.6.0-fpga-min-g67bc4513761f-dirty (root@YXY) (riscv64-unknown-linux-gnu-gcc (g04696df0963) 14.2.0, GNU ld
+     1: Machine model: ucb-bar,chipyardrd
+     2: SBI specification v1.0 detecteded
+     3: SBI implementation ID=0x1 Version=0x1000202
+     4: SBI TIME extension detecteded
+     5: SBI IPI extension detecteded
+     6: SBI RFENCE extension detecteded
+     7: earlycon: sifive0 at MMIO 0x0000000064000000 (options '')')
+     8: printk: bootconsole [sifive0] enableded
+     9: printk: debug: ignoring loglevel setting.g.
+    10: efi: UEFI not found.d.
+    11: OF: reserved mem: 0x0000000080000000..0x000000008001ffff (128 KiB) map non-reusable mmode_resv0@8000000000
+    12: OF: reserved mem: 0x0000000080020000..0x000000008003ffff (128 KiB) map non-reusable mmode_resv1@8002000000
+    13: Zone ranges:s:
+    14:   DMA32    [mem 0x0000000080000000-0x00000000ffffffff]f]
+    15:   Normal   emptyty
+    16: Movable zone start for each nodede
+    17: Early memory node rangeses
+    18:   node   0: [mem 0x0000000080000000-0x00000000ffffffff]f]
+    19: Initmem setup node 0 [mem 0x0000000080000000-0x00000000ffffffff]f]
+    20: Falling back to deprecated "riscv,isa"a"
+    21: riscv: base ISA extensions acdfimim
+    22: riscv: ELF capabilities acdfimim
+    23: pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+    24: pcpu-alloc: [0] 0 
+    25: Kernel command line: earlycon=sifive,0x64000000 console=ttySIF0,115200n8 init=/init loglevel=8 ignore_loglevelel
+    26: Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)r)
+    27: Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)r)
+    28: Built 1 zonelists, mobility grouping on.  Total pages: 51609696
+    29: mem auto-init: stack:off, heap alloc:off, heap free:offff
+    30: Virtual kernel memory layout:t:
+    31:       fixmap : 0xffffffc6fea00000 - 0xffffffc6ff000000   (6144 kB)B)
+    32:       pci io : 0xffffffc6ff000000 - 0xffffffc700000000   (  16 MB)B)
+    33:      vmemmap : 0xffffffc700000000 - 0xffffffc800000000   (4096 MB)B)
+    34:      vmalloc : 0xffffffc800000000 - 0xffffffd800000000   (  64 GB)B)
+    35:      modules : 0xffffffff00f33000 - 0xffffffff80000000   (2032 MB)B)
+    36:       lowmem : 0xffffffd800000000 - 0xffffffd880000000   (2048 MB)B)
+    37:       kernel : 0xffffffff80000000 - 0xffffffffffffffff   (2047 MB)B)
+    38: Memory: 2044592K/2097152K available (5190K kernel code, 3474K rwdata, 2048K rodata, 3501K init, 392K bss, 52560K reserve
+    39: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1=1
+    40: NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0 0
+    41: riscv-intc: 64 local interrupts mappeded
+    42: plic: interrupt-controller@c000000: mapped 4 interrupts with 1 handlers for 2 contexts.s.
+    43: clocksource: riscv_clocksource: mask: 0xffffffffffffffff max_cycles: 0xb8812736b, max_idle_ns: 440795202655 nsns
+    44: sched_clock: 64 bits at 50MHz, resolution 20ns, wraps every 4398046511100nsns
+    45: Calibrating delay loop (skipped), value calculated using timer frequency.. 100.00 BogoMIPS (lpj=200000)0)
+    46: pid_max: default: 32768 minimum: 30101
+    47: Mount-cache hash table entries: 4096 (order: 3, 32768 bytes, linear)r)
+    48: Mountpoint-cache hash table entries: 4096 (order: 3, 32768 bytes, linear)r)
+    49: RCU Tasks Trace: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1.1.
+    50: riscv: ELF compat mode unsupporteded
+    51: ASID allocator disabled (0 bits)s)
+    52: EFI services will not be available.e.
+    53: devtmpfs: initializeded
+    54: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 nsns
+    55: futex hash table entries: 256 (order: 1, 12288 bytes, linear)r)
+    56: pinctrl core: initialized pinctrl subsystemem
+    57: NET: Registered PF_NETLINK/PF_ROUTE protocol familyly
+    58: DMA: preallocated 256 KiB GFP_KERNEL pool for atomic allocationsns
+    59: DMA: preallocated 256 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocationsns
+  ... (194 more strings) ...
+   254: mmc0: IRQ intmask=0x00000022 data=(____ptrval____) data_cmd=(____ptrval____)_)
+   255: GPT:Primary header thinks Alt. header is not at the end of the disk.k.
+   256: GPT:20971519 != 3111628787
+   257: GPT:Alternate GPT header not at the end of the disk.k.
+   258: GPT:20971519 != 3111628787
+   259: GPT: Use GNU Parted to correct GPT errors.s.
+   260:  mmcblk0: p1 p2 p3p3
+   261: fedora-rootfs: FOUND mmcblk0p3 at loop=2901
+   262: fedora-rootfs: MOUNT attempt=1 subvol=root
+   263: BTRFS: device label fedora devid 1 transid 17 /dev/mmcblk0p3 scanned by busybox (115)5)
+   264: BTRFS info (device mmcblk0p3): using crc32c (crc32c-generic) checksum algorithmhm
+   265: BTRFS info (device mmcblk0p3): using free space treeee
+   266: BTRFS info (device mmcblk0p3): enabling ssd optimizationsns
+   267: BTRFS info (device mmcblk0p3): auto enabling async discardrd
+   268: fedora-rootfs: mount subvol=root rc=0
+   269: fedora-rootfs: MOUNT SUCCESS subvol=root attempt=1
+   270: fedora-rootfs: ls /newroot:
+   271: afs bin boot config.partids dev etc grub2 home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var 
+   272: fedora-rootfs: SWITCH_ROOT -> /sbin/init
+   273: systemd[1]: System time advanced to built-in epoch: Fri 2025-06-27 00:00:00 UTC
+
+[milestones]
+  clocksource         : YES
+  Freeing unused      : YES
+  Run /init           : YES
+  init_pipe_fs        : no
+  populate_rootfs     : no
+  Kernel panic        : no
+  Oops                : no
+  invalid magic       : no
+  Welcome             : no
+  busybox             : YES
+  /bin/sh             : no
+  sdhci               : YES
+  mmc0                : YES
+  mmcblk              : YES
+  arasan              : YES
+
+[files] klog binary: /tmp/klog_fedora_pio_stable_20260425_132754.bin
+[files] klog strings: /tmp/boot_fedora_pio_stable_20260425_132754.strings
+
+[post-check] Initramfs magic @ PA 0x80d2c1d0: 0x37303730 0x00003130 (OK)
+
+[stage_mark] dumped 256 bytes from PA 0x8f000000 -> /tmp/stage_fedora_pio_stable_20260425_132754.bin
+[stage_mark] last stage u64 = 0x5354474500000011 (tag=STGE, sub=0x00000011)
+[stage_mark] first 128 bytes (hex + ASCII):
+  0000: 11 00 00 00 45 47 54 53 00 00 00 00 00 00 00 00   |....EGTS........|
+  0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+  0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+  0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+  0040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+  0050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+  0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+  0070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   |................|
+
+=== Boot + dump complete ===

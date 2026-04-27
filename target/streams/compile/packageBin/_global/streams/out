@@ -92,6 +92,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/PSLPDDebugNames$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithPSLPDMem$$anonfun$$lessinit$greater$7$$anonfun$apply$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithPSLPDMem$$anonfun$$lessinit$greater$7$$anonfun$apply$7.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104DualCoreLinuxBringupConfig.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/RocketZCU104DualCoreLinuxBringupConfig.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/WithZCU104SystemModifications$$anonfun$$lessinit$greater$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /root/chipyard/fpga/target/scala-2.13/classes/chipyard/fpga/zcu104/WithZCU104SystemModifications$$anonfun$$lessinit$greater$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	chipyard/fpga/zcu104/RocketZCU104NoL2LinuxConfig.class[0m
