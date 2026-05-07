@@ -26,6 +26,7 @@ if [[ ! -f "${ORIG_VSRCS}" ]]; then
 fi
 # Converted copy with Windows UNC paths
 WIN_VSRCS="${BUILD_DIR}/vsrcs_win.f"
+TMP_WIN_VSRCS="${WIN_VSRCS}.tmp"
 
 # IP vivado TCL files (from generated-src)
 IP_TCLS=$(find "${BUILD_DIR}" -name '*.vivado.tcl' | sort)
@@ -38,7 +39,44 @@ if [[ ! -f "${ORIG_VSRCS}" ]]; then
 fi
 
 # Convert all paths in the vsrcs.f file
-sed "s|^/|${WIN_DRIVE_PREFIX}/|g" "$ORIG_VSRCS" > "$WIN_VSRCS"
+sed "s|^/|${WIN_DRIVE_PREFIX}/|g" "$ORIG_VSRCS" > "$TMP_WIN_VSRCS"
+
+# Preserve the vendor CEVA ordering for macro-carrying files. The generic
+# Chipyard filelist flow sorts manifests, which moves user_defines_dm.v behind
+# dependent sources such as rw_ble_core.v and breaks Vivado synthesis.
+CEVA_ORDER_LIST="/root/chipyard/fpga/generated-src/ceva/rw_dm_top_rtl_files.list"
+CEVA_WRAPPER_BASENAME="rw_dm_top_phase0b_real_wrapper.v"
+CEVA_GEN_COLLATERAL_PREFIX="${WIN_DRIVE_PREFIX}${BUILD_DIR}/gen-collateral"
+
+if [[ -f "${CEVA_ORDER_LIST}" && -f "${BUILD_DIR}/gen-collateral/${CEVA_WRAPPER_BASENAME}" ]]; then
+  declare -A ceva_paths=()
+  ordered_ceva_paths=()
+
+  while IFS= read -r linux_path; do
+    [[ -z "${linux_path}" ]] && continue
+    ceva_basename="$(basename -- "${linux_path}")"
+    win_path="${CEVA_GEN_COLLATERAL_PREFIX}/${ceva_basename}"
+    if [[ -f "${BUILD_DIR}/gen-collateral/${ceva_basename}" ]]; then
+      ceva_paths["${win_path}"]=1
+      ordered_ceva_paths+=("${win_path}")
+    fi
+  done < "${CEVA_ORDER_LIST}"
+
+  wrapper_win_path="${CEVA_GEN_COLLATERAL_PREFIX}/${CEVA_WRAPPER_BASENAME}"
+  ceva_paths["${wrapper_win_path}"]=1
+  ordered_ceva_paths+=("${wrapper_win_path}")
+
+  : > "${WIN_VSRCS}"
+  while IFS= read -r win_path; do
+    [[ -n "${ceva_paths["${win_path}"]+set}" ]] && continue
+    printf '%s\n' "${win_path}" >> "${WIN_VSRCS}"
+  done < "${TMP_WIN_VSRCS}"
+  printf '%s\n' "${ordered_ceva_paths[@]}" >> "${WIN_VSRCS}"
+else
+  mv "${TMP_WIN_VSRCS}" "${WIN_VSRCS}"
+fi
+
+rm -f "${TMP_WIN_VSRCS}"
 echo "  Created $WIN_VSRCS ($(wc -l < "$WIN_VSRCS") files)"
 
 # Convert IP TCL paths

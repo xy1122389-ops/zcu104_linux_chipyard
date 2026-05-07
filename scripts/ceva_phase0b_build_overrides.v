@@ -1,0 +1,3 @@
+`ifndef RW_DM_TIMING_GEN_LP_EXTERNAL
+`define RW_DM_TIMING_GEN_LP_EXTERNAL
+`endif
