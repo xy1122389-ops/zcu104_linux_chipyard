@@ -14,7 +14,7 @@ proc step {label body} {
 if {[info exists ::env(POST_FPGA_PROGRAM_WAIT_MS)] && $::env(POST_FPGA_PROGRAM_WAIT_MS) ne ""} {
   set post_fpga_program_wait_ms $::env(POST_FPGA_PROGRAM_WAIT_MS)
 } else {
-  set post_fpga_program_wait_ms 5000
+  set post_fpga_program_wait_ms 3000
 }
 
 if {[info exists ::env(CHIPYARD_BITSTREAM_LINUX)] && $::env(CHIPYARD_BITSTREAM_LINUX) ne ""} {
@@ -127,13 +127,9 @@ if {[info exists ::env(SKIP_FPGA_PROGRAM)] && $::env(SKIP_FPGA_PROGRAM) eq "1"} 
 } else {
   step "program FPGA bitstream" {
     # Rocket core starts immediately after FPGA programming (PowerOnResetFPGAOnly).
-    # Its first DDR access via AXI HP0 will stall until isolation is removed below.
+    # Do NOT wait here. BootROM can reach its first DDR touch well under 1 s,
+    # so PS-PL isolation must be removed immediately after fpga.
     fpga $bit_file
-  }
-
-  step "wait after FPGA program" {
-    puts "Waiting ${post_fpga_program_wait_ms} ms for PL settle / DS39 heartbeat..."
-    after $post_fpga_program_wait_ms
   }
 }
 
@@ -141,12 +137,19 @@ step "remove PS-PL isolation" {
   psu_ps_pl_isolation_removal
 }
 
-step "wait for isolation removal" {
+step "wait after isolation removal" {
+  puts "Waiting ${post_fpga_program_wait_ms} ms for PL settle / DS39 heartbeat..."
   after 2000
+  after $post_fpga_program_wait_ms
 }
 
-step "PS-PL reset config" {
-  psu_ps_pl_reset_config
+if {[info exists ::env(FORCE_PS_PL_RESET_CONFIG)] && $::env(FORCE_PS_PL_RESET_CONFIG) eq "1"} {
+  step "PS-PL reset config" {
+    psu_ps_pl_reset_config
+  }
+} else {
+  puts "\n==== PS-PL reset config (skipped) ===="
+  puts "Skipping psu_ps_pl_reset_config: EMIO GPIO reset is not connected to PL reset in this design."
 }
 
 step "final message" {

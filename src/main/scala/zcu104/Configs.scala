@@ -107,6 +107,16 @@ class RocketZCU104Config extends Config(
 // Alias for Linux bring-up (same as RocketZCU104Config)
 class RocketZCU104LinuxBringupConfig extends RocketZCU104Config
 
+// Phase 0B: CEVA BT5.2 DM VERSION read test.
+// CEVA_BASE = 0x65000000 (pbus, no address conflict).
+// Phase 0B: stub only, no EM SRAM, no IRQ, no VPHY, no Linux.
+// Test: read CEVA_BASE+0x4, expect 0x0B000500.
+class RocketZCU104Phase0bConfig extends Config(
+  new WithCevaBt52Phase0b ++
+  new WithZCU104TweaksNoPSLPD ++
+  new chipyard.RocketConfig
+)
+
 // Diagnostic config: removes the A2 PSLPD MMIO path entirely.
 class RocketZCU104JLinkDiagConfig extends Config(
   new WithZCU104TweaksNoPSLPD ++

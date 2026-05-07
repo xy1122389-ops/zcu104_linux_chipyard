@@ -1,1 +1,30 @@
-generated-src
+# Phase0B / simulation / FPGA generated artifacts
+csrc/
+work_phase0b/
+work_phase0b_real/
+simv
+simv*
+*.daidir/
+ucli.key
+flex*.log
+*.vcd
+*.vpd
+*.fsdb
+
+# build/generated artifacts
+target/
+generated-src/
+gen-collateral/
+build/
+
+# Vivado transient outputs
+*.jou
+*.str
+*.wdb
+*.dcp
+*.rpt
+phase0b_bitstream_*.log
+
+# Do not commit generated bitstreams by default
+*.bit
+*.ltx
