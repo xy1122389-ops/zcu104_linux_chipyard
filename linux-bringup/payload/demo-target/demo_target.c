@@ -10,9 +10,18 @@
 #define UART_DIV  ((TL_CLK * 1000000UL) / UART_BAUD)
 #define REG32(p, i) ((p)[(i) >> 2])
 
+#define CEVA_DM_VERSION_ADDR  ((volatile uint32_t *)0x65000004UL)
+#define CEVA_BT_VERSION_ADDR  ((volatile uint32_t *)0x65000404UL)
+#define CEVA_BLE_VERSION_ADDR ((volatile uint32_t *)0x65000804UL)
+
 static volatile uint32_t * const uart0 = (void *)(UART_CTRL_ADDR);
 static volatile uint32_t * const gpio0 = (void *)(GPIO_CTRL_ADDR);
 static uint32_t led_state;
+
+volatile uint32_t probe_magic;
+volatile uint32_t probe_dm_version;
+volatile uint32_t probe_bt_version;
+volatile uint32_t probe_ble_version;
 
 __attribute__((noinline, used)) void demo_target_entry_marker(void) { __asm__ __volatile__("nop"); }
 __attribute__((noinline, used)) void demo_target_loop_marker(void) { __asm__ __volatile__("nop"); }
@@ -110,6 +119,11 @@ int main(uint64_t a0, uint64_t a1, uint64_t a2)
   uart_init();
   gpio_init();
 
+  probe_magic = 0x53334230u;
+  probe_dm_version = *CEVA_DM_VERSION_ADDR;
+  probe_bt_version = *CEVA_BT_VERSION_ADDR;
+  probe_ble_version = *CEVA_BLE_VERSION_ADDR;
+
   demo_target_entry_marker();
   uart_puts("demo target entered\n");
   uart_puts("demo a0=");
@@ -123,6 +137,15 @@ int main(uint64_t a0, uint64_t a1, uint64_t a2)
   uart_puts("\n");
   uart_puts("demo pc=");
   print_hex64(read_pc());
+  uart_puts("\n");
+  uart_puts("ceva dm=");
+  print_hex64(probe_dm_version);
+  uart_puts("\n");
+  uart_puts("ceva bt=");
+  print_hex64(probe_bt_version);
+  uart_puts("\n");
+  uart_puts("ceva ble=");
+  print_hex64(probe_ble_version);
   uart_puts("\n");
 
   while (1) {
