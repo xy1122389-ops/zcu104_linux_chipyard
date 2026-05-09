@@ -2,7 +2,16 @@
 # Usage: vivado -nojournal -mode batch -source rebuild_incremental.tcl
 
 set scriptdir [file normalize "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/fpga-shells/xilinx/common/tcl"]
-set builddir  [file normalize "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig"]
+set cfg_name  "RocketZCU104LinuxBringupConfig"
+if {[llength $argv] > 0 && [lindex $argv 0] ne ""} {
+  set cfg_name [lindex $argv 0]
+}
+if {[string match "chipyard.fpga.zcu104.ZCU104FPGATestHarness.*" $cfg_name]} {
+  set cfg $cfg_name
+} else {
+  set cfg "chipyard.fpga.zcu104.ZCU104FPGATestHarness.${cfg_name}"
+}
+set builddir  [file normalize "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src/${cfg}"]
 
 set top        "ZCU104FPGATestHarness"
 set board      "zcu104"
@@ -25,18 +34,30 @@ set commondir [file dirname $scriptdir]
 
 # IP Vivado TCL scripts
 set ip_vivado_tcls [list \
-  [file join $builddir "chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.harnessSysPLL.vivado.tcl"] \
-  [file join $builddir "chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.shell.vivado.tcl"] \
-  [file join $builddir "chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig.zcu104ps.vivado.tcl"] \
+  [file join $builddir "${cfg}.harnessSysPLL.vivado.tcl"] \
+  [file join $builddir "${cfg}.shell.vivado.tcl"] \
+  [file join $builddir "${cfg}.zcu104ps.vivado.tcl"] \
 ]
 
 puts "=== Incremental BootROM Rebuild ==="
+puts "CFG: $cfg"
 puts "Build dir: $builddir"
 puts "Ref synth: $ref_synth"
 puts "Ref route: $ref_route"
 
 # --- Include helper functions ---
 source [file join $scriptdir "util.tcl"]
+
+proc route_error_count {report_path} {
+  report_route_status -file $report_path
+  set fp [open $report_path r]
+  set contents [read $fp]
+  close $fp
+  if {![regexp {# of nets with routing errors.*:\s*([0-9]+)\s*:} $contents -> route_errors]} {
+    error "Unable to parse route error count from $report_path"
+  }
+  return $route_errors
+}
 
 # --- Create project ---
 create_project -part $part_fpga -force $top
@@ -131,6 +152,21 @@ puts "=== Routing ==="
 route_design -directive Explore
 phys_opt_design -directive Explore
 write_checkpoint -force [file join $wrkdir post_route]
+set post_route_report [file join $wrkdir post_route_status.rpt]
+set post_route_errors [route_error_count $post_route_report]
+puts "Post-route routing errors: $post_route_errors"
+if {$post_route_errors > 0} {
+  puts "=== Reopening post_route checkpoint for final route cleanup ==="
+  open_checkpoint [file join $wrkdir post_route.dcp]
+  route_design -directive Explore
+  set post_route_retry_report [file join $wrkdir post_route_retry_status.rpt]
+  set post_route_errors [route_error_count $post_route_retry_report]
+  puts "Post-route retry routing errors: $post_route_errors"
+  if {$post_route_errors > 0} {
+    error "Routing still incomplete after retry: $post_route_errors routing errors"
+  }
+  write_checkpoint -force [file join $wrkdir post_route]
+}
 
 # === BITSTREAM ===
 puts "=== Writing Bitstream ==="
