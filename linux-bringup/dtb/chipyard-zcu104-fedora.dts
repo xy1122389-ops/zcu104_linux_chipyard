@@ -131,7 +131,14 @@
 			reg = <0xc000000 0x4000000>;
 			reg-names = "control";
 			riscv,max-priority = <7>;
-			riscv,ndev = <4>;
+			riscv,ndev = <5>;
+		};
+		L27_ceva: ceva-dm@65000000 {
+			compatible = "ceva,rw-dm-bt52";
+			interrupt-parent = <&L16>;
+			interrupts = <1>;
+			reg = <0x65000000 0x20000>;
+			reg-names = "mem";
 		};
 		L10: mbus_clock {
 			#clock-cells = <0>;
@@ -160,7 +167,7 @@
 			clocks = <&L6>;
 			compatible = "sifive,uart0";
 			interrupt-parent = <&L16>;
-			interrupts = <1>;
+			interrupts = <2>;
 			reg = <0x64000000 0x1000>;
 			reg-names = "control";
 		};
@@ -168,7 +175,7 @@
 			clocks = <&L6>;
 			compatible = "sifive,uart0";
 			interrupt-parent = <&L16>;
-			interrupts = <2>;
+			interrupts = <3>;
 			reg = <0x64003000 0x1000>;
 			reg-names = "control";
 		};
@@ -178,7 +185,7 @@
 			clocks = <&L6>;
 			compatible = "sifive,spi0";
 			interrupt-parent = <&L16>;
-			interrupts = <4>;
+			interrupts = <5>;
 			reg = <0x64001000 0x1000>;
 			reg-names = "control";
 			L33: mmc@0 {

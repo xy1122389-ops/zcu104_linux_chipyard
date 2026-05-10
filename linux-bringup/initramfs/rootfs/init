@@ -58,6 +58,27 @@ log_mmc_sysfs() {
     done
 }
 
+load_initramfs_module() {
+    name="$1"
+    path="/lib/modules/${name}"
+    errfile="/tmp/${name}.load.err"
+
+    if [ ! -f "$path" ]; then
+        log "ceva-bt52: ${name} not present in initramfs (built-in or not built)"
+        return 0
+    fi
+
+    log "ceva-bt52: loading ${name}"
+    /bin/busybox rm -f "$errfile" 2>/dev/null
+    if /bin/busybox insmod "$path" 2>"$errfile"; then
+        log "ceva-bt52: ${name} OK"
+        return 0
+    fi
+
+    log "ceva-bt52: ${name} FAILED: $(/bin/busybox cat "$errfile" 2>/dev/null)"
+    return 1
+}
+
 synthesize_block_node() {
     name="$1"
     sysdev="/sys/class/block/${name}/dev"
@@ -87,6 +108,21 @@ refresh_mmc_nodes() {
     synthesize_block_node mmcblk0p2
     synthesize_block_node mmcblk0p3
 }
+
+# ------------------------------------------------------------------
+# CEVA BT5.2: load kernel modules (bluetooth subsystem + HCI driver)
+# ------------------------------------------------------------------
+load_initramfs_module kpp.ko
+load_initramfs_module ecc.ko
+load_initramfs_module ecdh_generic.ko
+load_initramfs_module bluetooth.ko
+load_initramfs_module ceva_bt52.ko
+/bin/busybox sleep 1
+if [ -d /sys/class/bluetooth/hci0 ]; then
+    log "ceva-bt52: hci0 registered OK - CEVA BT5.2 controller READY"
+else
+    log "ceva-bt52: hci0 not found (HW not ready or insmod failed)"
+fi
 
 log "fedora-rootfs: J100/SDHCI Fedora bringup start (conservative, total wait 1800s)"
 log "fedora-rootfs: uname: $(/bin/busybox uname -a 2>&1)"

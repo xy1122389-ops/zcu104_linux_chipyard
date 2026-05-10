@@ -13,9 +13,11 @@ INITRAMFS_DIR="$ROOT_DIR/linux-bringup/initramfs"
 ROOTFS_DIR="$INITRAMFS_DIR/rootfs"
 INITRAMFS_CPIO="$INITRAMFS_DIR/initramfs.cpio"
 INITRAMFS_GZ="$INITRAMFS_DIR/initramfs.cpio.gz"
+ROOTFS_MODULE_DIR="$ROOTFS_DIR/lib/modules"
 
 KERNEL_DIR="/root/chipyard/software/firemarshal/boards/default/linux-clean"
 LINUX_IMAGE="$KERNEL_DIR/arch/riscv/boot/Image"
+CEVA_DRIVER_DIR="$ROOT_DIR/linux-bringup/kernel/ceva-bt52-driver"
 
 OPENSBI_DIR="/root/chipyard/software/firemarshal/boards/default/firmware/opensbi"
 FW_PAYLOAD_FDT_ADDR="0x84000000"
@@ -26,10 +28,18 @@ LEGACY_OUTPUT_BIN="$LEGACY_OUTPUT_DIR/fw_payload.bin"
 
 JOBS="${JOBS:-$(nproc)}"
 
+KERNEL_MODULE_TARGETS=(
+  crypto/ecc.ko
+  crypto/ecdh_generic.ko
+  net/bluetooth/bluetooth.ko
+)
+
 echo "[info] Rootfs dir        : $ROOTFS_DIR"
 echo "[info] Initramfs cpio   : $INITRAMFS_CPIO"
 echo "[info] Kernel dir       : $KERNEL_DIR"
 echo "[info] Linux Image      : $LINUX_IMAGE"
+echo "[info] Module dir       : $ROOTFS_MODULE_DIR"
+echo "[info] CEVA driver dir  : $CEVA_DRIVER_DIR"
 echo "[info] OpenSBI dir      : $OPENSBI_DIR"
 echo "[info] OpenSBI fw bin   : $FW_BIN"
 echo "[info] Jobs             : $JOBS"
@@ -64,6 +74,11 @@ if [[ ! -f "$KERNEL_DIR/.config" ]]; then
   exit 1
 fi
 
+if [[ ! -d "$CEVA_DRIVER_DIR" ]]; then
+  echo "[ERROR] Missing CEVA driver dir: $CEVA_DRIVER_DIR" >&2
+  exit 1
+fi
+
 configured_initramfs=$(grep '^CONFIG_INITRAMFS_SOURCE=' "$KERNEL_DIR/.config" | cut -d'=' -f2- | tr -d '"')
 if [[ "$configured_initramfs" != "$INITRAMFS_CPIO" ]]; then
   echo "[ERROR] Kernel CONFIG_INITRAMFS_SOURCE mismatch:" >&2
@@ -76,7 +91,49 @@ tmp_cpio=$(mktemp "$INITRAMFS_DIR/.initramfs.cpio.tmp.XXXXXX")
 tmp_gz=$(mktemp "$INITRAMFS_DIR/.initramfs.cpio.gz.tmp.XXXXXX")
 trap 'rm -f "$tmp_cpio" "$tmp_gz"' EXIT
 
-echo "[step 1/3] Repacking initramfs from rootfs"
+echo "[step 1/4] Rebuilding Phase 2 kernel modules"
+make -C "$KERNEL_DIR" \
+  ARCH=riscv \
+  CROSS_COMPILE="$LINUX_CROSS" \
+  -j"$JOBS" \
+  modules_prepare
+
+make -C "$KERNEL_DIR" \
+  ARCH=riscv \
+  CROSS_COMPILE="$LINUX_CROSS" \
+  -j"$JOBS" \
+  "${KERNEL_MODULE_TARGETS[@]}"
+
+echo "[step 1.1/4] Rebuilding external CEVA BT module"
+make -C "$CEVA_DRIVER_DIR" clean >/dev/null 2>&1 || true
+make -C "$CEVA_DRIVER_DIR" \
+  ARCH=riscv \
+  CROSS_COMPILE="$LINUX_CROSS" \
+  KDIR_RISCV="$KERNEL_DIR"
+
+echo "[step 1.2/4] Syncing modules into initramfs rootfs"
+mkdir -p "$ROOTFS_MODULE_DIR"
+rm -f "$ROOTFS_MODULE_DIR"/*.ko
+
+copy_module() {
+  local src="$1"
+  if [[ ! -f "$src" ]]; then
+    echo "[ERROR] Required module not found: $src" >&2
+    exit 1
+  fi
+  cp "$src" "$ROOTFS_MODULE_DIR/"
+  echo "      copied: $(basename "$src")"
+}
+
+copy_module "$KERNEL_DIR/crypto/ecc.ko"
+copy_module "$KERNEL_DIR/crypto/ecdh_generic.ko"
+copy_module "$KERNEL_DIR/net/bluetooth/bluetooth.ko"
+copy_module "$CEVA_DRIVER_DIR/ceva_bt52.ko"
+
+echo "[ok] initramfs rootfs module set refreshed"
+find "$ROOTFS_MODULE_DIR" -maxdepth 1 -type f -name '*.ko' | sort | sed 's/^/      /'
+
+echo "[step 2/4] Repacking initramfs from rootfs"
 (
   cd "$ROOTFS_DIR"
   find . \
@@ -92,7 +149,7 @@ echo "      entries: $(cpio -it < "$INITRAMFS_CPIO" 2>/dev/null | wc -l)"
 echo "      size   : $(stat -c %s "$INITRAMFS_CPIO") bytes"
 echo "      mtime  : $(stat -c %y "$INITRAMFS_CPIO")"
 
-echo "[step 2/3] Rebuilding Linux Image with embedded initramfs"
+echo "[step 3/4] Rebuilding Linux Image with embedded initramfs"
 make -C "$KERNEL_DIR" \
   ARCH=riscv \
   CROSS_COMPILE="$LINUX_CROSS" \
@@ -108,7 +165,7 @@ echo "[ok] Linux Image rebuilt"
 echo "      size   : $(stat -c %s "$LINUX_IMAGE") bytes"
 echo "      mtime  : $(stat -c %y "$LINUX_IMAGE")"
 
-echo "[step 3/3] Rebuilding OpenSBI fw_payload.bin"
+echo "[step 4/4] Rebuilding OpenSBI fw_payload.bin"
 make -C "$OPENSBI_DIR" clean >/dev/null 2>&1 || true
 CROSS_COMPILE="$OPENSBI_CROSS" \
 make -C "$OPENSBI_DIR" \
