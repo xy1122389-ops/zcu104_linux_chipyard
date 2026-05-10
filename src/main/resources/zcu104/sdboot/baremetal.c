@@ -40,6 +40,19 @@
 #define PHASE0E_MSTATUS_MIE_MASK            (1UL << 3)
 #define PHASE0E_MCAUSE_MACHINE_EXTERNAL     (MCAUSE_INT | 11UL)
 
+/* Phase 0G – BLE active-mode CLKN (half-slot) interrupt observation
+ * BLE block starts at DM offset 0x400 (FS Table 3-1; confirmed from RTL).
+ * RWBLECNTL is at BLE offset 0x000 → DM offset 0x400 → PA 0x65000400.
+ * RWBLE_EN = bit 8 (mask=0x100), confirmed: rw_ble_reg.v L2722 + TB LE_WR_RG 0x000=0x100. */
+#define PHASE0G_RWBLECNTL_OFFSET     0x400u     /* PA: 0x65000400 */
+#define PHASE0G_RWBLE_EN_MASK        (1u << 8)  /* bit 8 = RWBLE_EN */
+#define PHASE0G_INTSTAT0_OFFSET      0x00Cu     /* DM INTSTAT0 – error flags */
+#define PHASE0G_CLKNINTMSK           (1u << 0)  /* INTCNTL1 bit 0 = CLKN mask */
+#define PHASE0G_CLKNINTSTAT_MASK     (1u << 0)  /* INTSTAT1 bit 0 = CLKNINTSTAT */
+#define PHASE0G_CLKNINTACK_MASK      (1u << 0)  /* INTACK1  bit 0 = CLKNINTACK */
+#define PHASE0G_HSLOT_MIN_COUNT      10u         /* need >=10 toggles for PASS */
+#define PHASE0G_POLL_ITERS           50000000u   /* ~500ms budget @100MHz nop-loop */
+
 #define READ_CSR(reg) ({ uint64_t value; __asm__ volatile ("csrr %0, " #reg : "=r"(value)); value; })
 #define SET_CSR_BITS(reg, bits) __asm__ volatile ("csrs " #reg ", %0" :: "rK"(bits))
 #define CLEAR_CSR_BITS(reg, bits) __asm__ volatile ("csrc " #reg ", %0" :: "rK"(bits))
@@ -263,6 +276,92 @@ void phase0e_irq_trap_handler(void)
   }
 }
 
+/* Phase 0G: BLE active-mode CLKN interrupt observation.
+ * Writes RWBLE_EN (bit 8) to RWBLECNTL (0x65000400), then polls INTSTAT1[CLKNINTSTAT]
+ * for at least PHASE0G_HSLOT_MIN_COUNT rising edges.  CLKN fires every 312.5 µs in
+ * active mode; 10 edges require ~3.1 ms well within the ~500 ms poll budget.
+ * No PLIC/IRQ handler needed: pure register polling avoids any interrupt routing risk. */
+static void phase0g_test(void)
+{
+  uint32_t rwblecntl_before, rwblecntl_after;
+  uint32_t intstat0_before, intstat0_after;
+  uint32_t intcntl1_before;
+  uint32_t hslot_count = 0u;
+  uint32_t poll_iter;
+
+  uart_put_tag("PHASE0G: start BLE RWBLE_EN+CLKN test\n");
+
+  /* G1: read RWBLECNTL baseline (expect 0 after reset) */
+  rwblecntl_before = phase0e_ceva_read(PHASE0G_RWBLECNTL_OFFSET);
+  uart_put_tag("RWBLECNTL_before: ");
+  print_hex32(rwblecntl_before);
+  uart_puts("\n");
+
+  /* G2: read INTSTAT0 baseline (error flags) */
+  intstat0_before = phase0e_ceva_read(PHASE0G_INTSTAT0_OFFSET);
+  uart_put_tag("INTSTAT0_before: ");
+  print_hex32(intstat0_before);
+  uart_puts("\n");
+
+  /* G3: add CLKN mask to INTCNTL1 (Phase 0E left SW-IRQ mask set; OR in CLKN bit 0) */
+  intcntl1_before = phase0e_ceva_read(PHASE0E_INTCNTL1_OFFSET);
+  phase0e_ceva_write(PHASE0E_INTCNTL1_OFFSET, intcntl1_before | PHASE0G_CLKNINTMSK);
+  uart_put_tag("INTCNTL1_set: ");
+  print_hex32(intcntl1_before | PHASE0G_CLKNINTMSK);
+  uart_puts("\n");
+
+  /* G4: ACK any stale CLKN interrupt before enabling BLE */
+  phase0e_ceva_write(PHASE0E_INTACK1_OFFSET, PHASE0G_CLKNINTACK_MASK);
+  __asm__ __volatile__("fence rw, rw" ::: "memory");
+
+  /* G5: set RWBLE_EN (bit 8) — enters BLE active mode, starts blemaster1_gclk */
+  phase0e_ceva_write(PHASE0G_RWBLECNTL_OFFSET, PHASE0G_RWBLE_EN_MASK);
+  __asm__ __volatile__("fence rw, rw" ::: "memory");
+
+  /* G6: verify RWBLECNTL readback */
+  rwblecntl_after = phase0e_ceva_read(PHASE0G_RWBLECNTL_OFFSET);
+  uart_put_tag("RWBLECNTL_after: ");
+  print_hex32(rwblecntl_after);
+  uart_puts("\n");
+
+  /* G7: poll INTSTAT1[CLKNINTSTAT] for half-slot toggles */
+  uart_put_tag("PHASE0G: polling CLKNINTSTAT...\n");
+  for (poll_iter = 0u;
+       poll_iter < PHASE0G_POLL_ITERS && hslot_count < PHASE0G_HSLOT_MIN_COUNT;
+       ++poll_iter) {
+    uint32_t intstat1 = phase0e_ceva_read(PHASE0E_INTSTAT1_OFFSET);
+    if ((intstat1 & PHASE0G_CLKNINTSTAT_MASK) != 0u) {
+      /* ACK this CLKN edge and count it */
+      phase0e_ceva_write(PHASE0E_INTACK1_OFFSET, PHASE0G_CLKNINTACK_MASK);
+      __asm__ __volatile__("fence rw, rw" ::: "memory");
+      hslot_count++;
+    }
+  }
+
+  /* G8: capture final status */
+  intstat0_after = phase0e_ceva_read(PHASE0G_INTSTAT0_OFFSET);
+  uart_put_tag("INTSTAT0_after: ");
+  print_hex32(intstat0_after);
+  uart_puts("\n");
+  uart_put_tag("hslot_count: ");
+  print_hex32(hslot_count);
+  uart_puts("\n");
+
+  /* G9: verdict */
+  if ((rwblecntl_after & PHASE0G_RWBLE_EN_MASK) == 0u) {
+    uart_put_tag("PHASE0G: FAIL rwble_en_not_set\n");
+  } else if (hslot_count < PHASE0G_HSLOT_MIN_COUNT) {
+    uart_put_tag("PHASE0G: FAIL hslot_count_low\n");
+  } else {
+    uart_put_tag("PHASE0G: PASS\n");
+  }
+
+  /* G10: clear RWBLE_EN to return to standby before payload boot */
+  phase0e_ceva_write(PHASE0G_RWBLECNTL_OFFSET, 0u);
+  __asm__ __volatile__("fence rw, rw" ::: "memory");
+  uart_put_tag("PHASE0G: RWBLE_EN cleared\n");
+}
+
 static int ddr_report_mismatch(const char *label, volatile uint32_t *addr, uint32_t expected, uint32_t actual)
 {
   uart_puts(label);
@@ -428,6 +527,9 @@ int main(void)
   } else if (phase0e_irq_probe_timeout != 0u) {
     uart_put_tag("phase0e irq repeated timeout\n");
   }
+
+  /* Phase 0G: BLE active-mode CLKN half-slot interrupt observation */
+  phase0g_test();
 
   /* Do NOT clear sentinel — the sentinel is at 0x80001000 which is
      outside the DDR test area.  On cold boot the D-cache line for

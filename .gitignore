@@ -28,3 +28,21 @@ phase0b_bitstream_*.log
 # Do not commit generated bitstreams by default
 *.bit
 *.ltx
+
+# Local bringup runtime/build artifacts
+logs/
+linux-bringup/dtb/*.dtb
+linux-bringup/initramfs/initramfs.cpio
+linux-bringup/initramfs/initramfs.cpio.gz
+linux-bringup/initramfs/initramfs.cpio.bak*
+linux-bringup/initramfs/rootfs/lib/modules/*.ko
+linux-bringup/initramfs/rootfs/sbin/ceva_bt_hci_probe
+linux-bringup/payload/fw_payload.bin
+linux-bringup/kernel/ceva-bt52-driver/*.cmd
+linux-bringup/kernel/ceva-bt52-driver/*.ko
+linux-bringup/kernel/ceva-bt52-driver/*.mod
+linux-bringup/kernel/ceva-bt52-driver/*.mod.c
+linux-bringup/kernel/ceva-bt52-driver/*.mod.o
+linux-bringup/kernel/ceva-bt52-driver/*.o
+linux-bringup/kernel/ceva-bt52-driver/Module.symvers
+linux-bringup/kernel/ceva-bt52-driver/modules.order
