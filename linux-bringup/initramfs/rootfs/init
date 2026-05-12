@@ -8,10 +8,14 @@ PATH=/bin:/sbin
 # Each hard_echo is best-effort; failure of one path must NOT block.
 # ------------------------------------------------------------------
 hard_echo() {
-    /bin/busybox printf '<6>%s\n' "$1" >/dev/kmsg 2>/dev/null || true
-    /bin/busybox printf '%s\n' "$1" >/dev/console 2>/dev/null || true
+    msg="$*"
+    /bin/busybox printf '<6>%s\n' "$msg" >/dev/kmsg 2>/dev/null || true
+    /bin/busybox printf '%s\n' "$msg" >/dev/console 2>/dev/null || true
 }
 
+trap 'rc=$?; hard_echo "PHASE25_INIT_EXIT rc=$rc"; /bin/busybox sync 2>/dev/null || true; /bin/busybox sleep 2 2>/dev/null || true' EXIT
+
+hard_echo "PHASE25_INIT_ENTRY"
 hard_echo "INIT_ENTRY pid=$$ argv0=$0"
 
 # Mount pseudo-fs FIRST so /dev/console and /dev/kmsg exist.
@@ -35,6 +39,15 @@ hard_echo "INIT_AFTER_PSEUDO_MOUNTS"
 hard_echo "INIT_BEFORE_FIRST_STAGE_MARK"
 
 mark_stage() {
+    stage_hex=${1#0x}
+    stage_hi=0x${stage_hex%????????}
+    stage_lo=0x${stage_hex#????????}
+
+    if /bin/busybox devmem 0x8F000000 32 "$stage_lo" >/dev/null 2>&1; then
+        /bin/busybox devmem 0x8F000004 32 "$stage_hi" >/dev/null 2>&1 || true
+        return 0
+    fi
+
     /sbin/stage_mark "$1" 2>/dev/null || true
 }
 
@@ -47,6 +60,15 @@ log() {
         return 0
     fi
     /bin/busybox printf '%s\n' "$1" >/dev/console 2>/dev/null || true
+}
+
+phase25_note() {
+    hard_echo "$1"
+    log "$1"
+}
+
+phase25_stage() {
+    mark_stage "$1"
 }
 
 log_mmc_sysfs() {
@@ -115,14 +137,87 @@ refresh_mmc_nodes() {
 load_initramfs_module kpp.ko
 load_initramfs_module ecc.ko
 load_initramfs_module ecdh_generic.ko
+
+phase25_insmod_err="/tmp/phase25_insmod.err"
+
+phase25_note "PHASE25_BEFORE_LOAD_BLUETOOTH"
+phase25_stage 0x5354474500000011
+log "ceva-bt52: PHASE25_INITFLOW_BEFORE_LOAD_BLUETOOTH"
+phase25_bt_present=0
+[ -f /lib/modules/bluetooth.ko ] && phase25_bt_present=1
+set +e
 load_initramfs_module bluetooth.ko
-load_initramfs_module ceva_bt52.ko
-/bin/busybox sleep 1
-if [ -d /sys/class/bluetooth/hci0 ]; then
-    log "ceva-bt52: hci0 registered OK - CEVA BT5.2 controller READY"
+phase25_rc=$?
+set +e
+phase25_note "PHASE25_AFTER_LOAD_BLUETOOTH rc=$phase25_rc"
+phase25_stage 0x5354474500000012
+log "ceva-bt52: PHASE25_INITFLOW_AFTER_LOAD_BLUETOOTH rc=$phase25_rc"
+if [ "$phase25_rc" -eq 0 ]; then
+    if [ "$phase25_bt_present" -eq 1 ]; then
+        log "ceva-bt52: bluetooth.ko OK [PHASE25_INITFLOW]"
+    else
+        log "ceva-bt52: bluetooth.ko built-in-or-absent [PHASE25_INITFLOW]"
+    fi
 else
-    log "ceva-bt52: hci0 not found (HW not ready or insmod failed)"
+    phase25_note "ceva-bt52: bluetooth.ko FAILED [PHASE25_INITFLOW]"
 fi
+
+phase25_note "PHASE25_BEFORE_LOAD_CEVA"
+phase25_stage 0x5354474500000013
+log "ceva-bt52: PHASE25_INITFLOW_BEFORE_LOAD_CEVA"
+log "ceva-bt52: loading ceva_bt52.ko [PHASE25_INITFLOW]"
+set +e
+/bin/busybox rm -f "$phase25_insmod_err" 2>/dev/null
+/bin/busybox insmod /lib/modules/ceva_bt52.ko phase25_selftest=1 phase25_selftest_delay_ms=0 2>"$phase25_insmod_err"
+phase25_rc=$?
+set +e
+phase25_note "PHASE25_AFTER_LOAD_CEVA rc=$phase25_rc"
+phase25_stage 0x5354474500000014
+log "ceva-bt52: PHASE25_INITFLOW_AFTER_LOAD_CEVA rc=$phase25_rc"
+if [ "$phase25_rc" -eq 0 ]; then
+    log "ceva-bt52: ceva_bt52.ko OK [PHASE25_INITFLOW]"
+else
+    phase25_note "ceva-bt52: ceva_bt52.ko FAILED: $(/bin/busybox cat "$phase25_insmod_err" 2>/dev/null)"
+fi
+
+phase25_note "PHASE25_BEFORE_HCI_WAIT"
+phase25_stage 0x5354474500000015
+log "ceva-bt52: PHASE25_INITFLOW_BEFORE_HCI_WAIT"
+wait_hci0_secs=0
+while [ ! -d /sys/class/bluetooth/hci0 ] && [ "$wait_hci0_secs" -lt 30 ]; do
+    phase25_note "PHASE25_HCI_WAIT_${wait_hci0_secs}"
+    /bin/busybox sleep 1
+    wait_hci0_secs=$((wait_hci0_secs + 1))
+done
+
+if [ -d /sys/class/bluetooth/hci0 ]; then
+    phase25_note "PHASE25_AFTER_HCI_WAIT result=present"
+    phase25_note "PHASE25_USER_HCI0_PRESENT"
+    phase25_stage 0x5354474500000016
+else
+    phase25_note "PHASE25_AFTER_HCI_WAIT result=missing"
+    phase25_note "PHASE25_USER_HCI0_MISSING"
+    phase25_stage 0x5354474500000017
+fi
+
+set +e
+phase25_note "PHASE25_BEFORE_SMOKE_EXEC"
+phase25_stage 0x5354474500000018
+log "ceva-bt52: PHASE25_INITFLOW_BEFORE_SMOKE_EXEC"
+if [ -x /sbin/phase25_user_hci_smoke ]; then
+    PHASE25_USER_HCI_TIMEOUT_MS=3000 /sbin/phase25_user_hci_smoke >/tmp/phase25_user_hci_smoke.out 2>&1
+    smoke_rc=$?
+else
+    /bin/busybox printf '%s\n' 'PHASE25_USER_SMOKE_MISSING' >/tmp/phase25_user_hci_smoke.out 2>/dev/null || true
+    smoke_rc=127
+fi
+phase25_note "PHASE25_AFTER_SMOKE_EXEC rc=$smoke_rc"
+phase25_stage 0x5354474500000019
+log "ceva-bt52: PHASE25_INITFLOW_AFTER_SMOKE_EXEC rc=$smoke_rc"
+/bin/busybox cat /tmp/phase25_user_hci_smoke.out 2>/dev/null | while IFS= read -r line; do
+    phase25_note "$line"
+done
+set +e
 
 log "fedora-rootfs: J100/SDHCI Fedora bringup start (conservative, total wait 1800s)"
 log "fedora-rootfs: uname: $(/bin/busybox uname -a 2>&1)"
@@ -249,22 +344,22 @@ log "fedora-rootfs: /newroot/etc/os-release:"
 # Phase D: switch_root priority /sbin/init -> systemd -> /bin/sh.
 # ------------------------------------------------------------------
 if [ -x /newroot/sbin/init ] || [ -L /newroot/sbin/init ]; then
-    mark_stage 0x5354474500000011
+    mark_stage 0x5354474500000041
     log "fedora-rootfs: SWITCH_ROOT -> /sbin/init"
     exec /sbin/switch_root /newroot /sbin/init
 fi
 if [ -x /newroot/usr/lib/systemd/systemd ]; then
-    mark_stage 0x5354474500000012
+    mark_stage 0x5354474500000042
     log "fedora-rootfs: SWITCH_ROOT -> /usr/lib/systemd/systemd"
     exec /sbin/switch_root /newroot /usr/lib/systemd/systemd
 fi
 if [ -x /newroot/bin/sh ]; then
-    mark_stage 0x5354474500000013
+    mark_stage 0x5354474500000043
     log "fedora-rootfs: SWITCH_ROOT fallback -> /bin/sh"
     exec /sbin/switch_root /newroot /bin/sh
 fi
 if [ -x /newroot/bin/busybox ]; then
-    mark_stage 0x5354474500000014
+    mark_stage 0x5354474500000044
     log "fedora-rootfs: SWITCH_ROOT fallback -> /bin/busybox sh"
     exec /sbin/switch_root /newroot /bin/busybox sh
 fi

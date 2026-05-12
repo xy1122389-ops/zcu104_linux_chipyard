@@ -14,6 +14,10 @@ ROOTFS_DIR="$INITRAMFS_DIR/rootfs"
 INITRAMFS_CPIO="$INITRAMFS_DIR/initramfs.cpio"
 INITRAMFS_GZ="$INITRAMFS_DIR/initramfs.cpio.gz"
 ROOTFS_MODULE_DIR="$ROOTFS_DIR/lib/modules"
+PHASE25_SMOKE_SRC="$INITRAMFS_DIR/phase25_user_hci_smoke.c"
+PHASE25_SMOKE_BIN="$ROOTFS_DIR/sbin/phase25_user_hci_smoke"
+STAGE_MARK_SRC="$INITRAMFS_DIR/stage_mark.c"
+STAGE_MARK_BIN="$ROOTFS_DIR/sbin/stage_mark"
 
 KERNEL_DIR="/root/chipyard/software/firemarshal/boards/default/linux-clean"
 LINUX_IMAGE="$KERNEL_DIR/arch/riscv/boot/Image"
@@ -28,11 +32,24 @@ LEGACY_OUTPUT_BIN="$LEGACY_OUTPUT_DIR/fw_payload.bin"
 
 JOBS="${JOBS:-$(nproc)}"
 
-KERNEL_MODULE_TARGETS=(
-  crypto/ecc.ko
-  crypto/ecdh_generic.ko
-  net/bluetooth/bluetooth.ko
-)
+config_is_module() {
+  local symbol="$1"
+  grep -q "^${symbol}=m$" "$KERNEL_DIR/.config"
+}
+
+KERNEL_MODULE_TARGETS=()
+
+if config_is_module CONFIG_CRYPTO_ECC; then
+  KERNEL_MODULE_TARGETS+=(crypto/ecc.ko)
+fi
+
+if config_is_module CONFIG_CRYPTO_ECDH; then
+  KERNEL_MODULE_TARGETS+=(crypto/ecdh_generic.ko)
+fi
+
+if config_is_module CONFIG_BT; then
+  KERNEL_MODULE_TARGETS+=(net/bluetooth/bluetooth.ko)
+fi
 
 echo "[info] Rootfs dir        : $ROOTFS_DIR"
 echo "[info] Initramfs cpio   : $INITRAMFS_CPIO"
@@ -98,11 +115,15 @@ make -C "$KERNEL_DIR" \
   -j"$JOBS" \
   modules_prepare
 
-make -C "$KERNEL_DIR" \
-  ARCH=riscv \
-  CROSS_COMPILE="$LINUX_CROSS" \
-  -j"$JOBS" \
-  "${KERNEL_MODULE_TARGETS[@]}"
+if (( ${#KERNEL_MODULE_TARGETS[@]} > 0 )); then
+  make -C "$KERNEL_DIR" \
+    ARCH=riscv \
+    CROSS_COMPILE="$LINUX_CROSS" \
+    -j"$JOBS" \
+    "${KERNEL_MODULE_TARGETS[@]}"
+else
+  echo "[info] No in-tree kernel modules configured as =m for Phase 2 rootfs sync"
+fi
 
 echo "[step 1.1/4] Rebuilding external CEVA BT module"
 make -C "$CEVA_DRIVER_DIR" clean >/dev/null 2>&1 || true
@@ -125,10 +146,60 @@ copy_module() {
   echo "      copied: $(basename "$src")"
 }
 
-copy_module "$KERNEL_DIR/crypto/ecc.ko"
-copy_module "$KERNEL_DIR/crypto/ecdh_generic.ko"
-copy_module "$KERNEL_DIR/net/bluetooth/bluetooth.ko"
+if config_is_module CONFIG_CRYPTO_ECC; then
+  copy_module "$KERNEL_DIR/crypto/ecc.ko"
+else
+  echo "      builtin-or-absent: ecc.ko"
+fi
+
+if config_is_module CONFIG_CRYPTO_ECDH; then
+  copy_module "$KERNEL_DIR/crypto/ecdh_generic.ko"
+else
+  echo "      builtin-or-absent: ecdh_generic.ko"
+fi
+
+if config_is_module CONFIG_BT; then
+  copy_module "$KERNEL_DIR/net/bluetooth/bluetooth.ko"
+else
+  echo "      builtin-or-absent: bluetooth.ko"
+fi
 copy_module "$CEVA_DRIVER_DIR/ceva_bt52.ko"
+
+echo "[step 1.3/4] Building Phase 2.5 userspace HCI smoke"
+if [[ ! -f "$PHASE25_SMOKE_SRC" ]]; then
+  echo "[ERROR] Missing userspace smoke source: $PHASE25_SMOKE_SRC" >&2
+  exit 1
+fi
+
+"${LINUX_CROSS}gcc" \
+  -O2 \
+  -static \
+  -Wall \
+  -Wextra \
+  -o "$PHASE25_SMOKE_BIN" \
+  "$PHASE25_SMOKE_SRC"
+
+chmod 0755 "$PHASE25_SMOKE_BIN"
+echo "      built: $(basename "$PHASE25_SMOKE_BIN")"
+
+echo "[step 1.4/4] Building initramfs stage_mark helper"
+if [[ ! -f "$STAGE_MARK_SRC" ]]; then
+  echo "[ERROR] Missing stage_mark source: $STAGE_MARK_SRC" >&2
+  exit 1
+fi
+
+"${LINUX_CROSS}gcc" \
+  -Os \
+  -static \
+  -nostdlib \
+  -nostartfiles \
+  -no-pie \
+  -Wl,-e,_start \
+  -o "$STAGE_MARK_BIN" \
+  "$STAGE_MARK_SRC"
+
+chmod 0755 "$STAGE_MARK_BIN"
+echo "      built: $(basename "$STAGE_MARK_BIN")"
 
 echo "[ok] initramfs rootfs module set refreshed"
 find "$ROOTFS_MODULE_DIR" -maxdepth 1 -type f -name '*.ko' | sort | sed 's/^/      /'

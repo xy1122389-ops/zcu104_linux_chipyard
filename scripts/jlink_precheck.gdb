@@ -17,6 +17,13 @@ echo halt done\n
 echo \n=== PC ===\n
 print/x $pc
 
+python
+pc = int(gdb.parse_and_eval("(unsigned long long)$pc"))
+gdb.write(f"[precheck] pc=0x{pc:016X}\n")
+if pc == 0 or pc == 0xDEADBEEF:
+	raise gdb.GdbError(f"invalid precheck pc 0x{pc:016X}")
+end
+
 # Read mstatus, mcause, mtvec
 echo \n=== CSRs ===\n
 print/x $mstatus

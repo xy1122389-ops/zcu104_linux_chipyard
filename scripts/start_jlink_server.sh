@@ -17,6 +17,7 @@ JLINK_EXE="${JLINK_GDB_SERVER:-C:\\Program Files\\SEGGER\\JLink\\JLinkGDBServerC
 JLINK_SERIAL="${JLINK_USB_SERIAL:-601012542}"
 JLINK_STARTUP_TIMEOUT_SECS="${JLINK_STARTUP_TIMEOUT_SECS:-20}"
 JLINK_LAUNCH_TIMEOUT_SECS="${JLINK_LAUNCH_TIMEOUT_SECS:-15}"
+JLINK_FORCE_RESTART="${JLINK_FORCE_RESTART:-0}"
 
 sync_server_log() {
     if [[ -f "$LOG_WIN_WSL" ]]; then
@@ -122,10 +123,14 @@ wait_for_server() {
 }
 
 # Fast path: if a healthy server is already up, do not block on the start lock.
-if server_ready; then
+if [[ "$JLINK_FORCE_RESTART" != "1" ]] && server_ready; then
     echo "[jlink] GDB Server already listening on :3333 — reusing existing instance"
     echo "[jlink] DO NOT restart. Use 'target remote :3333' from GDB."
     exit 0
+fi
+
+if [[ "$JLINK_FORCE_RESTART" == "1" ]]; then
+    echo "[jlink] FORCE_RESTART=1: bypassing healthy-server reuse checks"
 fi
 
 if command -v flock >/dev/null 2>&1; then
@@ -137,7 +142,7 @@ if command -v flock >/dev/null 2>&1; then
 fi
 
 # Re-check after taking the lock to avoid a race with another starter.
-if server_ready; then
+if [[ "$JLINK_FORCE_RESTART" != "1" ]] && server_ready; then
     echo "[jlink] GDB Server already listening on :3333 — reusing existing instance"
     echo "[jlink] DO NOT restart. Use 'target remote :3333' from GDB."
     exit 0

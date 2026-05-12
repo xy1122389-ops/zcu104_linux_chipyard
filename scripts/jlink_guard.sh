@@ -40,7 +40,7 @@ PY
 }
 
 gdb_precheck() {
-    timeout 20 "${GDB_BIN}" -q -batch -x "${SCRIPT_DIR}/jlink_precheck.gdb"
+    timeout 20 "${GDB_BIN}" -q -batch -x "${SCRIPT_DIR}/jlink_precheck.gdb" 2>&1
 }
 
 start_or_reuse_server() {
@@ -72,10 +72,25 @@ echo "[jlink-guard] Starting or reusing J-Link server on ${JLINK_HOST}:${JLINK_P
 start_or_reuse_server
 
 echo "[jlink-guard] Running minimal GDB precheck"
-if ! gdb_precheck; then
-    echo "[jlink-guard] FAIL: GDB precheck failed after server recovery" >&2
-    status_snapshot
-    exit 3
+precheck_out=""
+if ! precheck_out="$(gdb_precheck)"; then
+    printf '%s\n' "$precheck_out"
+    echo "[jlink-guard] WARN: GDB precheck failed; forcing one J-Link server restart" >&2
+    if ! JLINK_FORCE_RESTART=1 bash "${SCRIPT_DIR}/start_jlink_server.sh"; then
+        echo "[jlink-guard] FAIL: forced J-Link server restart failed after precheck failure" >&2
+        status_snapshot
+        exit 3
+    fi
+
+    echo "[jlink-guard] Re-running minimal GDB precheck after forced restart"
+    if ! precheck_out="$(gdb_precheck)"; then
+        printf '%s\n' "$precheck_out"
+        echo "[jlink-guard] FAIL: GDB precheck failed after forced restart" >&2
+        status_snapshot
+        exit 3
+    fi
 fi
+
+printf '%s\n' "$precheck_out"
 
 echo "[jlink-guard] PASS: J-Link server and target precheck succeeded"

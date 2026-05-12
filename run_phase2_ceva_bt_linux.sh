@@ -30,7 +30,8 @@ PAYLOAD_BIN="${SCRIPT_DIR}/linux-bringup/payload/fw_payload.bin"
 CHUNK_DIR="/tmp/fw_chunks_phase2"
 GDB_BIN="/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-gdb"
 DTB="${SCRIPT_DIR}/linux-bringup/dtb/chipyard-zcu104-fedora.dtb"
-GDB_SCRIPT="${SCRIPT_DIR}/scripts/linux_boot_phase2.gdb"
+GDB_LAUNCH_SCRIPT="${SCRIPT_DIR}/scripts/linux_boot_phase2_launch.gdb"
+GDB_CAPTURE_SCRIPT="${SCRIPT_DIR}/scripts/linux_boot_phase2_capture.gdb"
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
 ok()   { echo -e "${GREEN}[OK]${NC} $*"; }
@@ -51,7 +52,8 @@ echo ""
 [[ -f "$PAYLOAD_BIN" ]] || fail "fw_payload.bin not found: $PAYLOAD_BIN"
 [[ -f "$DTB" ]] || fail "DTB not found: $DTB"
 [[ -x "$GDB_BIN" ]] || fail "GDB not found: $GDB_BIN"
-[[ -f "$GDB_SCRIPT" ]] || fail "GDB script not found: $GDB_SCRIPT"
+[[ -f "$GDB_LAUNCH_SCRIPT" ]] || fail "GDB launch script not found: $GDB_LAUNCH_SCRIPT"
+[[ -f "$GDB_CAPTURE_SCRIPT" ]] || fail "GDB capture script not found: $GDB_CAPTURE_SCRIPT"
 
 # ── Step 0: PS DDR initialization via XSDB ──────────────────────────────────
 # CRITICAL: ZCU104 is in JTAG-boot mode. PS DDR is NOT initialized on power-up.
@@ -98,12 +100,35 @@ echo ""
 echo "[boot] Starting kernel boot + module load (${KERNEL_RUN_SECS}s)..."
 echo ""
 
-JLINK_HOST="$JLINK_HOST" \
-JLINK_PORT="$JLINK_PORT" \
-KERNEL_RUN_SECS="$KERNEL_RUN_SECS" \
-PHASE2_CHUNK_DIR="$CHUNK_DIR" \
-PHASE2_DTB="$DTB" \
-"$GDB_BIN" -q -batch -x "$GDB_SCRIPT" 2>&1 | tee "/tmp/phase2_boot_$(date +%Y%m%d_%H%M%S).log"
+LOG_PATH="/tmp/phase2_boot_$(date +%Y%m%d_%H%M%S).log"
+
+set +e
+{
+    echo "[boot] Launch session: load payload + let kernel run"
+    JLINK_HOST="$JLINK_HOST" \
+    JLINK_PORT="$JLINK_PORT" \
+    KERNEL_RUN_SECS="$KERNEL_RUN_SECS" \
+    PHASE2_CHUNK_DIR="$CHUNK_DIR" \
+    PHASE2_DTB="$DTB" \
+    "$GDB_BIN" -q -batch -x "$GDB_LAUNCH_SCRIPT"
+    LAUNCH_RC=$?
+    echo "[boot] Launch session rc=$LAUNCH_RC"
+
+    echo "[boot] Capture session: reconnect + halt + dump current-run evidence"
+    JLINK_HOST="$JLINK_HOST" \
+    JLINK_PORT="$JLINK_PORT" \
+    KERNEL_RUN_SECS="$KERNEL_RUN_SECS" \
+    PHASE2_CHUNK_DIR="$CHUNK_DIR" \
+    PHASE2_DTB="$DTB" \
+    "$GDB_BIN" -q -batch -x "$GDB_CAPTURE_SCRIPT"
+    CAPTURE_RC=$?
+    echo "[boot] Capture session rc=$CAPTURE_RC"
+
+    if [[ $LAUNCH_RC -ne 0 || $CAPTURE_RC -ne 0 ]]; then
+        exit 1
+    fi
+} 2>&1 | tee "$LOG_PATH"
+set -e
 
 GDB_RC=$?
 

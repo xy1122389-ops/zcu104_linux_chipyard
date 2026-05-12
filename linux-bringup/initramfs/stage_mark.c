@@ -1,14 +1,14 @@
 #define SYS_openat 56
 #define SYS_close 57
-#define SYS_mmap 222
+#define SYS_lseek 62
+#define SYS_write 64
 #define SYS_exit 93
 
 #define AT_FDCWD -100
 #define O_RDWR 2
+#define O_SYNC 0x101000
 
-#define PROT_READ 1
-#define PROT_WRITE 2
-#define MAP_SHARED 1
+#define SEEK_SET 0
 
 #define STAGE_MARK_PA 0x8F000000UL
 
@@ -27,23 +27,6 @@ static long syscall3(long num, long arg0, long arg1, long arg2)
 	register long a1 asm("a1") = arg1;
 	register long a2 asm("a2") = arg2;
 	asm volatile("ecall" : "+r"(a0) : "r"(a1), "r"(a2), "r"(a7) : "memory");
-	return a0;
-}
-
-static long syscall6(long num, long arg0, long arg1, long arg2,
-			 long arg3, long arg4, long arg5)
-{
-	register long a7 asm("a7") = num;
-	register long a0 asm("a0") = arg0;
-	register long a1 asm("a1") = arg1;
-	register long a2 asm("a2") = arg2;
-	register long a3 asm("a3") = arg3;
-	register long a4 asm("a4") = arg4;
-	register long a5 asm("a5") = arg5;
-	asm volatile("ecall"
-		     : "+r"(a0)
-		     : "r"(a1), "r"(a2), "r"(a3), "r"(a4), "r"(a5), "r"(a7)
-		     : "memory");
 	return a0;
 }
 
@@ -86,34 +69,31 @@ void _start(void)
 	long argc;
 	char **argv;
 	unsigned long long stage;
-	unsigned long page_base;
-	unsigned long page_off;
+	unsigned long long stage_le;
 	long mem_fd;
-	void *mapped;
-	volatile unsigned long long *slot;
+	long write_rc;
 
 	asm volatile("mv %0, sp" : "=r"(stack));
 	argc = stack[0];
 	argv = (char **)&stack[1];
 
 	stage = (argc > 1) ? parse_u64(argv[1]) : 0;
-	page_base = STAGE_MARK_PA & ~4095UL;
-	page_off = STAGE_MARK_PA & 4095UL;
+	stage_le = stage;
 
-	mem_fd = syscall3(SYS_openat, AT_FDCWD, (long)"/dev/mem", O_RDWR);
+	mem_fd = syscall3(SYS_openat, AT_FDCWD, (long)"/dev/mem", O_RDWR | O_SYNC);
 	if (mem_fd < 0)
 		syscall1(SYS_exit, 2);
 
-	mapped = (void *)syscall6(SYS_mmap, 0, 4096, PROT_READ | PROT_WRITE,
-				 MAP_SHARED, mem_fd, page_base);
-	if ((long)mapped < 0) {
+	if (syscall3(SYS_lseek, mem_fd, STAGE_MARK_PA, SEEK_SET) < 0) {
 		syscall1(SYS_close, mem_fd);
 		syscall1(SYS_exit, 3);
 	}
 
-	slot = (volatile unsigned long long *)((char *)mapped + page_off);
-	*slot = stage;
-	asm volatile("fence rw, rw" ::: "memory");
+	write_rc = syscall3(SYS_write, mem_fd, (long)&stage_le, sizeof(stage_le));
+	if (write_rc != sizeof(stage_le)) {
+		syscall1(SYS_close, mem_fd);
+		syscall1(SYS_exit, 4);
+	}
 
 	syscall1(SYS_close, mem_fd);
 	syscall1(SYS_exit, 0);

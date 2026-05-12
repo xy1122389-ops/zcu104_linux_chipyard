@@ -1,6 +1,5 @@
-# linux_boot_phase2.gdb - Phase 2: CEVA BT5.2 Linux kernel module boot
-# Loads new fw_payload.bin (with BT modules) + CEVA-enabled DTB
-# Based on linux_boot.gdb but using Phase 2 payload/DTB
+# linux_boot_phase2_capture.gdb - Phase 2 capture session
+# Reconnects after the launch window, halts the kernel, and dumps current-run evidence.
 
 set pagination off
 set confirm off
@@ -12,115 +11,16 @@ import os, gdb, time
 
 host = os.environ.get("JLINK_HOST", "127.0.0.1")
 port = int(os.environ.get("JLINK_PORT", "3333"))
-run_secs = int(os.environ.get("KERNEL_RUN_SECS", "120"))
-chunk_dir = os.environ.get("PHASE2_CHUNK_DIR", "/tmp/fw_chunks_phase2")
-dtb_path  = os.environ.get("PHASE2_DTB", "/root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-fedora.dtb")
-vmlinux   = "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux"
-fw_elf    = "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
+vmlinux = "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux"
 
-# Load OpenSBI symbol table first (for fw entry)
-if os.path.exists(fw_elf):
-    gdb.execute(f"file {fw_elf}", to_string=True)
-    gdb.write(f"[init] Loaded fw_payload.elf symbol table\n")
-
-gdb.write(f"[init] Connecting to J-Link {host}:{port}...\n")
+gdb.write(f"[capture] Connecting to J-Link {host}:{port}...\n")
 gdb.execute(f"target remote {host}:{port}")
 gdb.execute("monitor halt")
-gdb.write("[init] Halted\n")
-end
+gdb.write("[capture] Halted target\n")
 
-echo [phase2] Phase 2 CEVA BT5.2 Linux driver boot\n
-echo [phase2] Step 1: Zero DDR range 0x80000000-0x84000000\n
-
-monitor WriteU32 0x80000000 0x00000000
-monitor WriteU32 0x80100000 0x00000000
-
-# Set a1=DTB address before OpenSBI overwrites
-set $a1 = 0x84000000
-
-echo [phase2] Step 2: Load fw_payload.bin chunks\n
-
-python
-chunk_dir = os.environ.get("PHASE2_CHUNK_DIR", "/tmp/fw_chunks_phase2")
-base_addr = 0x80000000
-chunk_size = 4194304
-# For 5 chunks (17.6MB), no reconnect needed - single session handles all
-RECONNECT_EVERY = 99  # effectively disabled for <=5 chunks
-
-chunks = sorted([f for f in os.listdir(chunk_dir) if f.startswith("chunk_") and f.endswith(".bin")])
-total = len(chunks)
-gdb.write(f"[restore] Loading fw_payload.bin in {total} chunks (4MB each)...\n")
-
-for i, fname in enumerate(chunks):
-    addr = base_addr + i * chunk_size
-    fpath = os.path.join(chunk_dir, fname)
-    gdb.write(f"[restore] chunk {i+1}/{total}: {fname} → 0x{addr:08X}\n")
-    gdb.execute(f"restore {fpath} binary 0x{addr:x}")
-
-gdb.write("[ok] fw_payload.bin restored\n")
-end
-
-echo [phase2] Step 3: Load DTB at 0x84000000\n
-
-python
-dtb_path = os.environ.get("PHASE2_DTB", "/root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-fedora.dtb")
-gdb.write(f"[dtb] Loading {dtb_path} at 0x84000000...\n")
-gdb.execute(f"restore {dtb_path} binary 0x84000000")
-gdb.write("[ok] DTB loaded at 0x84000000\n")
-end
-
-echo [phase2] Step 4: Set entry point and registers\n
-
-# OpenSBI fw_payload entry
-set $pc = 0x80000000
-set $a0 = 0
-set $a1 = 0x84000000
-
-echo [phase2] Step 4a: Clear init stage slot
-
-monitor WriteU32 0x8F000000 0x00000000
-echo [phase2] Step 4b: Clear CEVA EM command/event slots\n
-monitor WriteU32 0x65010100 0x00000000
-monitor WriteU32 0x65010104 0x00000000
-monitor WriteU32 0x65010108 0x00000000
-monitor WriteU32 0x65010110 0x00000000
-monitor WriteU32 0x65010114 0x00000000
-monitor WriteU32 0x65010118 0x00000000
-monitor WriteU32 0x65010180 0x00000000
-monitor WriteU32 0x65010184 0x00000000
-monitor WriteU32 0x65010188 0x00000000
-monitor WriteU32 0x6501018C 0x00000000
-monitor WriteU32 0x65010190 0x00000000
-monitor WriteU32 0x65010194 0x00000000
-monitor WriteU32 0x65010198 0x00000000
-monitor WriteU32 0x8F000004 0x00000000
-
-python
-run_secs = int(os.environ.get("KERNEL_RUN_SECS", "120"))
-gdb.write("[phase2] Step 5: Boot kernel (continue &)\n")
-gdb.execute("continue &")
-gdb.write(f"[wait] Running kernel for {run_secs}s (waiting for insmod to complete)...\n")
-time.sleep(run_secs)
-gdb.write("[wait] Done waiting, halting CPU\n")
-try:
-    gdb.execute("interrupt")
-    time.sleep(2)
-except Exception as e:
-    gdb.write(f"[wait] interrupt failed: {e}\n")
-    raise
-end
-
-echo [phase2] CPU halted after boot\n
-
-# Print PC and key CSRs
-python
 pc = gdb.parse_and_eval("(unsigned long long)$pc")
 gdb.write(f"[state] PC = 0x{int(pc):016X}\n")
-end
 
-# Load vmlinux for kernel symbol access (log_buf, log_buf_len, etc.)
-python
-vmlinux = "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux"
 if os.path.exists(vmlinux):
     gdb.write(f"[sym] Loading vmlinux symbols from {vmlinux}...\n")
     try:
@@ -143,7 +43,6 @@ python
 import struct
 
 def va_to_pa(va):
-    """Convert kernel high VA to physical address (Rocket kernel at 0x80200000)"""
     return (int(va) + 0x100200000) & 0xFFFFFFFFFFFFFFFF
 
 def dump_pa(path, pa, size):
@@ -172,46 +71,7 @@ def nonzero_bytes(path):
     with open(path, "rb") as fh:
         return sum(1 for byte in fh.read() if byte != 0)
 
-def cpu_block_copy(src_pa, size, dst_pa):
-    blkcopy = 0x81400000
-    for addr, val in [
-        (blkcopy + 0x00, 0x0000100f),
-        (blkcopy + 0x04, 0x00053683),
-        (blkcopy + 0x08, 0x00d63023),
-        (blkcopy + 0x0C, 0x00850513),
-        (blkcopy + 0x10, 0x00860613),
-        (blkcopy + 0x14, 0xFEB548E3),
-        (blkcopy + 0x18, 0x0000006F),
-    ]:
-        gdb.execute(f"set *(unsigned int*)0x{addr:X} = 0x{val:08X}")
-
-    gdb.execute(f"set $a0 = 0x{src_pa:X}")
-    gdb.execute(f"set $a1 = 0x{(src_pa + size):X}")
-    gdb.execute(f"set $a2 = 0x{dst_pa:X}")
-    gdb.execute(f"set $pc = 0x{blkcopy:X}")
-    gdb.execute("stepi")
-
-    for attempt in range(1, 21):
-        gdb.execute("monitor go")
-        time.sleep(0.05)
-        gdb.execute("monitor halt")
-
-        pc = int(gdb.parse_and_eval("(unsigned long long)$pc"))
-        a0 = int(gdb.parse_and_eval("(unsigned long long)$a0"))
-        a1 = int(gdb.parse_and_eval("(unsigned long long)$a1"))
-        a2 = int(gdb.parse_and_eval("(unsigned long long)$a2"))
-
-        if a0 >= a1 and a2 >= (dst_pa + size):
-            gdb.write(f"[klog] CPU block copy complete after {attempt} poll(s), pc=0x{pc:016X}\n")
-            return
-
-    raise Exception(
-        f"CPU block copy did not complete: pc=0x{pc:016X} a0=0x{a0:016X} a1=0x{a1:016X} a2=0x{a2:016X}"
-    )
-
-# Read log_buf using symbol address → PA conversion (never use kernel VA for SBA)
 try:
-    # Step 1: Get VA of log_buf SYMBOL (address-of, not value - no memory read needed)
     log_buf_sym_va = int(gdb.parse_and_eval("(unsigned long long)&log_buf"))
     log_buf_len_sym_va = int(gdb.parse_and_eval("(unsigned long long)&log_buf_len"))
     static_log_buf_sym_va = int(gdb.parse_and_eval("(unsigned long long)&__log_buf"))
@@ -219,7 +79,6 @@ try:
     gdb.write(f"[klog] log_buf_len symbol VA=0x{log_buf_len_sym_va:016X}\n")
     gdb.write(f"[klog] __log_buf symbol VA=0x{static_log_buf_sym_va:016X}\n")
 
-    # Step 2: Convert symbol VA → PA and read the pointer value from DDR
     log_buf_sym_pa = va_to_pa(log_buf_sym_va)
     log_buf_len_sym_pa = va_to_pa(log_buf_len_sym_va)
     static_log_buf_sym_pa = va_to_pa(static_log_buf_sym_va)
@@ -231,13 +90,11 @@ try:
         raise Exception("Cannot read log_buf pointer from PA")
     gdb.write(f"[klog] log_buf pointer VA=0x{log_buf_ptr_va:016X}\n")
 
-    # Step 3: Get log_buf_len similarly
     log_buf_len = read_pa_u32(log_buf_len_sym_pa)
     if log_buf_len is None or log_buf_len == 0 or log_buf_len > 0x40000:
-        log_buf_len = 0x20000  # fallback: 128KB
+        log_buf_len = 0x20000
     gdb.write(f"[klog] log_buf_len={log_buf_len}\n")
 
-    # Step 4: Convert log buffer VA → PA and dump
     log_buf_pa = va_to_pa(log_buf_ptr_va)
     gdb.write(f"[klog] log buffer PA=0x{log_buf_pa:016X}\n")
     dump_size = min(131072, log_buf_len)
@@ -251,15 +108,11 @@ try:
         dump_pa("/tmp/phase2_klog.bin", static_log_buf_sym_pa, dump_size)
         nz = nonzero_bytes("/tmp/phase2_klog.bin")
         gdb.write(f"[klog] __log_buf fallback non-zero bytes={nz}\n")
-    if nz == 0:
-        gdb.write("[klog] direct SBA still empty; skipping CPU block copy fallback in main run\n")
 except Exception as e:
     gdb.write(f"[klog] Symbol-based klog read failed: {e}\n")
-    # Fallback: scan kernel data region 0x80400000-0x80800000 for log messages
-    gdb.write("[klog] Fallback: scanning kernel data region for strings...\n")
     try:
         dump_pa("/tmp/phase2_klog.bin", 0x80400000, 0x400000)
-        gdb.write("[klog] Fallback dump done: 0x80400000-0x80800000 → /tmp/phase2_klog.bin\n")
+        gdb.write("[klog] Fallback dump done: 0x80400000-0x80800000 -> /tmp/phase2_klog.bin\n")
     except Exception as e2:
         gdb.write(f"[klog] Fallback dump also failed: {e2}\n")
 end
@@ -425,27 +278,23 @@ if cmd_shadow_present:
     if em_cmd_shadow_bits & PHASE25_MARK_SELFTEST_PASS:
         phase25_selftest_pass = True
 
-# PASS criteria
 pass_count = 0
 total_checks = 4
 
 gdb.write("\n=== Phase 2 PASS/FAIL Criteria ===\n")
 
-# Check 1: DM accessible
 if dm_ver != 0xFFFFFFFF and dm_ver != 0xDEADBEEF:
     gdb.write(f"CHECK 1: DM_VERSION=0x{dm_ver:08X} - PASS (CEVA accessible)\n")
     pass_count += 1
 else:
     gdb.write(f"CHECK 1: DM_VERSION=0x{dm_ver:08X} - FAIL (not accessible)\n")
 
-# Check 2: BT enabled by driver open()
 if bt_cntl & 0x100:
-    gdb.write(f"CHECK 2: BT_RWBTCNTL bit8 SET - PASS (driver called open())\n")
+    gdb.write("CHECK 2: BT_RWBTCNTL bit8 SET - PASS (driver called open())\n")
     pass_count += 1
 else:
-    gdb.write(f"CHECK 2: BT_RWBTCNTL bit8 CLEAR - FAIL/WARN (driver open not called)\n")
+    gdb.write("CHECK 2: BT_RWBTCNTL bit8 CLEAR - FAIL/WARN (driver open not called)\n")
 
-# Check 3: EM accessible (Phase 1A)
 if em_w0 != 0xFFFFFFFF and em_w0 != 0xDEADBEEF:
     gdb.write(f"CHECK 3: EM[0]=0x{em_w0:08X} - PASS (EM MMIO accessible)\n")
     pass_count += 1
@@ -453,7 +302,6 @@ else:
     gdb.write(f"CHECK 3: EM[0]=0x{em_w0:08X} - SKIP (EM MMIO needs Phase 1A bitstream)\n")
     total_checks -= 1
 
-# Check 4: klog shows hci0 registration
 if hci0_registered:
     gdb.write("CHECK 4: hci0 registration found in klog - PASS\n")
     pass_count += 1
@@ -467,20 +315,10 @@ else:
     gdb.write("CEVA_PHASE25_LAST_EVENT: MISSING\n")
 if cmd_shadow_present:
     gdb.write(f"CEVA_PHASE25_CMD_SHADOW: PRESENT bits=0x{em_cmd_shadow_bits:08X}\n")
-    if em_cmd_shadow_bits & PHASE25_MARK_READ_LOCAL_VERSION_PASS:
-        hci_ver = (em_cmd_shadow_aux >> 24) & 0xff
-        lmp_ver = (em_cmd_shadow_aux >> 16) & 0xff
-        manufacturer = em_cmd_shadow_aux & 0xffff
-        gdb.write(f"CEVA_PHASE25_CMD_VERSION_FIELDS: hci_ver=0x{hci_ver:02X} lmp_ver=0x{lmp_ver:02X} manufacturer=0x{manufacturer:04X}\n")
 else:
     gdb.write("CEVA_PHASE25_CMD_SHADOW: MISSING\n")
 if evt_shadow_present:
     gdb.write(f"CEVA_PHASE25_EVT_SHADOW: PRESENT bits=0x{em_evt_shadow_bits:08X}\n")
-    if em_evt_shadow_bits & PHASE25_MARK_READ_LOCAL_VERSION_PASS:
-        hci_ver = (em_evt_shadow_aux >> 24) & 0xff
-        lmp_ver = (em_evt_shadow_aux >> 16) & 0xff
-        manufacturer = em_evt_shadow_aux & 0xffff
-        gdb.write(f"CEVA_PHASE25_VERSION_FIELDS: hci_ver=0x{hci_ver:02X} lmp_ver=0x{lmp_ver:02X} manufacturer=0x{manufacturer:04X}\n")
 else:
     gdb.write("CEVA_PHASE25_EVT_SHADOW: MISSING\n")
 if phase25_markers_present:
@@ -496,11 +334,6 @@ if phase25_markers_present:
     gdb.write(f"CEVA_PHASE25_HCI_RESET_FAIL: {'SET' if em_p25_bits & PHASE25_MARK_HCI_RESET_FAIL else 'MISSING'}\n")
     gdb.write(f"CEVA_PHASE25_READ_LOCAL_VERSION_FAIL: {'SET' if em_p25_bits & PHASE25_MARK_READ_LOCAL_VERSION_FAIL else 'MISSING'}\n")
     gdb.write(f"CEVA_PHASE25_SELFTEST_FAIL: {'SET' if em_p25_bits & PHASE25_MARK_SELFTEST_FAIL else 'MISSING'}\n")
-    if em_p25_bits & PHASE25_MARK_READ_LOCAL_VERSION_PASS:
-        hci_ver = (em_p25_aux >> 24) & 0xff
-        lmp_ver = (em_p25_aux >> 16) & 0xff
-        manufacturer = em_p25_aux & 0xffff
-        gdb.write(f"CEVA_PHASE25_VERSION_FIELDS: hci_ver=0x{hci_ver:02X} lmp_ver=0x{lmp_ver:02X} manufacturer=0x{manufacturer:04X}\n")
 else:
     gdb.write("CEVA_PHASE25_MARKERS: MISSING\n")
     gdb.write(f"CEVA_PHASE25_HCI_RESET_PASS: {'PASS' if phase25_reset_pass else 'MISSING'}\n")
@@ -511,6 +344,5 @@ gdb.write(f"\n[result] {pass_count}/{total_checks} hardware checks PASS\n")
 gdb.write("Phase 2 PASS requires: DM accessible + hci0 in klog\n")
 end
 
-monitor go
 detach
 quit
