@@ -69,6 +69,7 @@ void _start(void)
 	long argc;
 	char **argv;
 	unsigned long long stage;
+	unsigned long long stage_pa;
 	unsigned long long stage_le;
 	long mem_fd;
 	long write_rc;
@@ -78,13 +79,14 @@ void _start(void)
 	argv = (char **)&stack[1];
 
 	stage = (argc > 1) ? parse_u64(argv[1]) : 0;
+	stage_pa = (argc > 2) ? parse_u64(argv[2]) : STAGE_MARK_PA;
 	stage_le = stage;
 
 	mem_fd = syscall3(SYS_openat, AT_FDCWD, (long)"/dev/mem", O_RDWR | O_SYNC);
 	if (mem_fd < 0)
 		syscall1(SYS_exit, 2);
 
-	if (syscall3(SYS_lseek, mem_fd, STAGE_MARK_PA, SEEK_SET) < 0) {
+	if (syscall3(SYS_lseek, mem_fd, stage_pa, SEEK_SET) < 0) {
 		syscall1(SYS_close, mem_fd);
 		syscall1(SYS_exit, 3);
 	}

@@ -132,6 +132,7 @@ MODULE_PARM_DESC(phase25_selftest_delay_ms,
 #define EM_PHASE25_MARK_BITS_WORD   4096    /* byte offset 0x4000, board-validated scratch */
 #define EM_PHASE25_MARK_AUX_WORD    16383   /* byte offset 0xFFFC, board-validated boundary */
 #define EM_PHASE25_MARK_MAGIC   0x50323521U
+#define EM_P3BD_MARK_MAGIC      0x50334244U
 #define EM_CMD_READY        0xA5A5A5A5
 #define EM_EVT_READY        0x5A5A5A5A
 #define EM_PHASE25_EVID_WORD    16320   /* byte offset 0xFF00 within EM window */
@@ -150,6 +151,19 @@ MODULE_PARM_DESC(phase25_selftest_delay_ms,
 #define PHASE25_MARK_HCI_RESET_FAIL             BIT(8)
 #define PHASE25_MARK_READ_LOCAL_VERSION_FAIL    BIT(9)
 #define PHASE25_MARK_SELFTEST_FAIL              BIT(10)
+
+#define P3BD_MARK_DRV_PROBE_START               BIT(0)
+#define P3BD_MARK_DRV_HCI_REGISTER_OK           BIT(1)
+#define P3BD_MARK_DRV_OPEN_START                BIT(2)
+#define P3BD_MARK_DRV_OPEN_OK                   BIT(3)
+#define P3BD_MARK_DRV_SEND_ENTER                BIT(4)
+#define P3BD_MARK_DRV_SEND_RESET_SEEN           BIT(5)
+#define P3BD_MARK_DRV_EM_CMD_WRITTEN            BIT(6)
+#define P3BD_MARK_DRV_SWINT_TRIGGERED           BIT(7)
+#define P3BD_MARK_DRV_IRQ_ENTER                 BIT(8)
+#define P3BD_MARK_DRV_EM_EVT_READY              BIT(9)
+#define P3BD_MARK_DRV_RX_WORK_ENTER             BIT(10)
+#define P3BD_MARK_DRV_HCI_RECV_DONE             BIT(11)
 
 /* Maximum HCI packet sizes in EM (words) */
 #define EM_CMD_MAX_WORDS    8       /* 32 bytes max HCI cmd */
@@ -207,18 +221,70 @@ static inline void ceva_bt_em_debug_window_open(struct ceva_bt *cbt)
     dm_write(cbt, DM_DEBUGADDMIN, DM_DEBUGADDMIN_FULL);
 }
 
-static void ceva_bt_phase25_write_evt_shadow(struct ceva_bt *cbt)
+static void ceva_bt_trace_write_evt_shadow(struct ceva_bt *cbt, u32 magic)
 {
-    em_write_word(cbt, EM_EVT_WORD + 4, EM_PHASE25_MARK_MAGIC);
+    em_write_word(cbt, EM_EVT_WORD + 4, magic);
     em_write_word(cbt, EM_EVT_WORD + 5, cbt->phase25_mark_bits);
     em_write_word(cbt, EM_EVT_WORD + 6, cbt->phase25_mark_aux);
 }
 
-static void ceva_bt_phase25_write_cmd_shadow(struct ceva_bt *cbt)
+static void ceva_bt_trace_write_cmd_shadow(struct ceva_bt *cbt, u32 magic)
 {
-    em_write_word(cbt, EM_CMD_WORD + 4, EM_PHASE25_MARK_MAGIC);
+    em_write_word(cbt, EM_CMD_WORD + 4, magic);
     em_write_word(cbt, EM_CMD_WORD + 5, cbt->phase25_mark_bits);
     em_write_word(cbt, EM_CMD_WORD + 6, cbt->phase25_mark_aux);
+}
+
+static void ceva_bt_phase25_write_evt_shadow(struct ceva_bt *cbt)
+{
+    ceva_bt_trace_write_evt_shadow(cbt, EM_PHASE25_MARK_MAGIC);
+}
+
+static void ceva_bt_phase25_write_cmd_shadow(struct ceva_bt *cbt)
+{
+    ceva_bt_trace_write_cmd_shadow(cbt, EM_PHASE25_MARK_MAGIC);
+}
+
+static bool ceva_bt_p3bd_enabled(void)
+{
+    return !phase25_selftest;
+}
+
+static void ceva_bt_p3bd_sync(struct ceva_bt *cbt)
+{
+    em_write_word(cbt, EM_PHASE25_MARK_MAGIC_WORD, EM_P3BD_MARK_MAGIC);
+    em_write_word(cbt, EM_PHASE25_MARK_BITS_WORD, cbt->phase25_mark_bits);
+    em_write_word(cbt, EM_PHASE25_MARK_AUX_WORD, cbt->phase25_mark_aux);
+    ceva_bt_trace_write_evt_shadow(cbt, EM_P3BD_MARK_MAGIC);
+    ceva_bt_trace_write_cmd_shadow(cbt, EM_P3BD_MARK_MAGIC);
+}
+
+static void ceva_bt_p3bd_clear(struct ceva_bt *cbt)
+{
+    if (!ceva_bt_p3bd_enabled())
+        return;
+
+    cbt->phase25_mark_bits = 0;
+    cbt->phase25_mark_aux = 0;
+    ceva_bt_p3bd_sync(cbt);
+}
+
+static void ceva_bt_p3bd_mark(struct ceva_bt *cbt, u32 bits)
+{
+    if (!ceva_bt_p3bd_enabled())
+        return;
+
+    cbt->phase25_mark_bits |= bits;
+    ceva_bt_p3bd_sync(cbt);
+}
+
+static void ceva_bt_p3bd_set_aux(struct ceva_bt *cbt, u32 aux)
+{
+    if (!ceva_bt_p3bd_enabled())
+        return;
+
+    cbt->phase25_mark_aux = aux;
+    ceva_bt_p3bd_sync(cbt);
 }
 
 static void ceva_bt_phase25_mirror_event_to_em(struct ceva_bt *cbt,
@@ -838,6 +904,8 @@ static void ceva_bt_rx_work(struct work_struct *work)
     u8 *buf;
     int i, len, ret;
 
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_RX_WORK_ENTER);
+
     /* Read event from EM event buffer */
     for (i = 0; i < EM_EVT_MAX_WORDS; i++)
         words[i] = em_read_word(cbt, EM_EVT_WORD + i);
@@ -861,6 +929,8 @@ static void ceva_bt_rx_work(struct work_struct *work)
     ret = ceva_bt_recv_event_buf(cbt, buf, len);
     if (ret < 0)
         dev_err(&cbt->pdev->dev, "Failed to deliver HCI event: %d\n", ret);
+    else
+        ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_HCI_RECV_DONE);
 }
 
 /* ====== IRQ handler ====== */
@@ -873,12 +943,16 @@ static irqreturn_t ceva_bt_irq(int irq, void *dev_id)
     if (!(intstat1 & DM_SWINTSTAT))
         return IRQ_NONE;
 
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_IRQ_ENTER);
+
     /* Acknowledge SWINT */
     dm_write(cbt, DM_INTACK1, DM_SWINTACK);
 
     /* Check if firmware wrote an HCI event */
-    if (em_read_word(cbt, EM_EVT_FLAG_WORD) == EM_EVT_READY)
+    if (em_read_word(cbt, EM_EVT_FLAG_WORD) == EM_EVT_READY) {
+        ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_EM_EVT_READY);
         schedule_work(&cbt->rx_work);
+    }
 
     return IRQ_HANDLED;
 }
@@ -890,6 +964,7 @@ static int ceva_bt_open(struct hci_dev *hdev)
     struct ceva_bt *cbt = hci_get_drvdata(hdev);
     int ret;
 
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_OPEN_START);
     dev_info(&cbt->pdev->dev, "ceva_bt_open: initializing hardware\n");
 
     ret = ceva_bt_hw_init(cbt);
@@ -897,6 +972,7 @@ static int ceva_bt_open(struct hci_dev *hdev)
         return ret;
 
     cbt->running = true;
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_OPEN_OK);
     if (phase25_selftest) {
         ceva_bt_phase25_mark(cbt, PHASE25_MARK_OPEN_REACHED);
         ceva_bt_phase25_evidence_append(cbt, "CEVA_PHASE25_OPEN_REACHED\n");
@@ -949,15 +1025,22 @@ static int ceva_bt_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
     if (len >= 2)
         opcode = buf[1] | (buf[2] << 8);
 
+    ceva_bt_p3bd_set_aux(cbt, opcode);
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_SEND_ENTER);
+    if (opcode == CEVA_BT_HCI_OP_RESET)
+        ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_SEND_RESET_SEEN);
+
     /* Write cmd to EM */
     for (i = 0; i < EM_CMD_MAX_WORDS; i++)
         em_write_word(cbt, EM_CMD_WORD + i, words[i]);
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_EM_CMD_WRITTEN);
 
     /* Set cmd-ready flag */
     em_write_word(cbt, EM_CMD_FLAG_WORD, EM_CMD_READY);
 
     /* Notify firmware via SWINT_REQ */
     dm_write(cbt, DM_RWDMCNTL, DM_SWINT_REQ);
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_SWINT_TRIGGERED);
 
     if (phase25_selftest) {
         if (opcode == CEVA_BT_HCI_OP_RESET) {
@@ -1065,6 +1148,8 @@ static int ceva_bt_probe(struct platform_device *pdev)
                                                   PHASE25_DDR_EVID_SIZE);
 
     ceva_bt_em_debug_window_open(cbt);
+    ceva_bt_p3bd_clear(cbt);
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_PROBE_START);
 
     if (phase25_selftest && !cbt->phase25_ddr_evidence_base) {
         dev_warn(&pdev->dev,
@@ -1117,6 +1202,8 @@ static int ceva_bt_probe(struct platform_device *pdev)
         hci_free_dev(hdev);
         return ret;
     }
+
+    ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_HCI_REGISTER_OK);
 
     platform_set_drvdata(pdev, cbt);
     dev_info(&pdev->dev, "CEVA BT5.2 registered as %s (IRQ %d, EM@0x%llx)\n",

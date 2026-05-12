@@ -42,16 +42,44 @@ mark_stage() {
     stage_hex=${1#0x}
     stage_hi=0x${stage_hex%????????}
     stage_lo=0x${stage_hex#????????}
+    stage_pa=${2:-0x8F000000}
+    stage_pa_hi=$(printf '0x%X' $((stage_pa + 4)))
 
-    if /bin/busybox devmem 0x8F000000 32 "$stage_lo" >/dev/null 2>&1; then
-        /bin/busybox devmem 0x8F000004 32 "$stage_hi" >/dev/null 2>&1 || true
+    if /bin/busybox devmem "$stage_pa" 32 "$stage_lo" >/dev/null 2>&1; then
+        /bin/busybox devmem "$stage_pa_hi" 32 "$stage_hi" >/dev/null 2>&1 || true
         return 0
     fi
 
-    /sbin/stage_mark "$1" 2>/dev/null || true
+    /sbin/stage_mark "$1" "$stage_pa" 2>/dev/null || true
 }
 
 mark_stage 0x5354474500000001
+
+P3BD_SLOT_INIT_START=0x8F000040
+P3BD_SLOT_INIT_SELFTEST_OFF=0x8F000048
+P3BD_SLOT_INSMOD_START=0x8F000050
+P3BD_SLOT_INSMOD_DONE=0x8F000058
+P3BD_SLOT_WAIT_HCI0_START=0x8F000060
+P3BD_SLOT_WAIT_HCI0_FOUND=0x8F000068
+P3BD_SLOT_WAIT_HCI0_TIMEOUT=0x8F000070
+P3BD_SLOT_USER_SMOKE_START=0x8F000078
+P3BD_SLOT_USER_SMOKE_DONE=0x8F000080
+
+P3BD_MARK_INIT_START=0x5033424400000001
+P3BD_MARK_INIT_SELFTEST_OFF=0x5033424400000002
+P3BD_MARK_INSMOD_START=0x5033424400000003
+P3BD_MARK_INSMOD_DONE=0x5033424400000004
+P3BD_MARK_WAIT_HCI0_START=0x5033424400000005
+P3BD_MARK_WAIT_HCI0_FOUND=0x5033424400000006
+P3BD_MARK_WAIT_HCI0_TIMEOUT=0x5033424400000007
+P3BD_MARK_USER_SMOKE_START=0x5033424400000008
+P3BD_MARK_USER_SMOKE_DONE=0x5033424400000009
+
+p3bd_mark() {
+    mark_stage "$1" "$2"
+}
+
+p3bd_mark "$P3BD_MARK_INIT_START" "$P3BD_SLOT_INIT_START"
 
 hard_echo "INIT_AFTER_FIRST_STAGE_MARK sm=0x01"
 
@@ -169,17 +197,26 @@ log "ceva-bt52: loading ceva_bt52.ko [PHASE25_INITFLOW]"
 set +e
 /bin/busybox rm -f "$phase25_insmod_err" 2>/dev/null
 phase25_ceva_params="phase25_selftest=1 phase25_selftest_delay_ms=0"
+phase25_realpath_observe=0
 if /bin/busybox grep -qw "ceva_phase25_selftest=0" /proc/cmdline 2>/dev/null; then
     phase25_ceva_params="phase25_selftest=0"
+    phase25_realpath_observe=1
     phase25_note "PHASE25_CEVA_SELFTEST_OFF"
     log "ceva-bt52: PHASE25_REALPATH_OBSERVE selftest=0 [PHASE25_INITFLOW]"
+    p3bd_mark "$P3BD_MARK_INIT_SELFTEST_OFF" "$P3BD_SLOT_INIT_SELFTEST_OFF"
 else
     phase25_note "PHASE25_CEVA_SELFTEST_ON"
     log "ceva-bt52: PHASE25_REPLAY_CONTROL selftest=1 delay=0 [PHASE25_INITFLOW]"
 fi
+if [ "$phase25_realpath_observe" -eq 1 ]; then
+    p3bd_mark "$P3BD_MARK_INSMOD_START" "$P3BD_SLOT_INSMOD_START"
+fi
 /bin/busybox insmod /lib/modules/ceva_bt52.ko $phase25_ceva_params 2>"$phase25_insmod_err"
 phase25_rc=$?
 set +e
+if [ "$phase25_realpath_observe" -eq 1 ] && [ "$phase25_rc" -eq 0 ]; then
+    p3bd_mark "$P3BD_MARK_INSMOD_DONE" "$P3BD_SLOT_INSMOD_DONE"
+fi
 phase25_note "PHASE25_AFTER_LOAD_CEVA rc=$phase25_rc"
 phase25_stage 0x5354474500000014
 log "ceva-bt52: PHASE25_INITFLOW_AFTER_LOAD_CEVA rc=$phase25_rc"
@@ -192,6 +229,9 @@ fi
 phase25_note "PHASE25_BEFORE_HCI_WAIT"
 phase25_stage 0x5354474500000015
 log "ceva-bt52: PHASE25_INITFLOW_BEFORE_HCI_WAIT"
+if [ "$phase25_realpath_observe" -eq 1 ]; then
+    p3bd_mark "$P3BD_MARK_WAIT_HCI0_START" "$P3BD_SLOT_WAIT_HCI0_START"
+fi
 wait_hci0_secs=0
 while [ ! -d /sys/class/bluetooth/hci0 ] && [ "$wait_hci0_secs" -lt 30 ]; do
     phase25_note "PHASE25_HCI_WAIT_${wait_hci0_secs}"
@@ -203,16 +243,25 @@ if [ -d /sys/class/bluetooth/hci0 ]; then
     phase25_note "PHASE25_AFTER_HCI_WAIT result=present"
     phase25_note "PHASE25_USER_HCI0_PRESENT"
     phase25_stage 0x5354474500000016
+    if [ "$phase25_realpath_observe" -eq 1 ]; then
+        p3bd_mark "$P3BD_MARK_WAIT_HCI0_FOUND" "$P3BD_SLOT_WAIT_HCI0_FOUND"
+    fi
 else
     phase25_note "PHASE25_AFTER_HCI_WAIT result=missing"
     phase25_note "PHASE25_USER_HCI0_MISSING"
     phase25_stage 0x5354474500000017
+    if [ "$phase25_realpath_observe" -eq 1 ]; then
+        p3bd_mark "$P3BD_MARK_WAIT_HCI0_TIMEOUT" "$P3BD_SLOT_WAIT_HCI0_TIMEOUT"
+    fi
 fi
 
 set +e
 phase25_note "PHASE25_BEFORE_SMOKE_EXEC"
 phase25_stage 0x5354474500000018
 log "ceva-bt52: PHASE25_INITFLOW_BEFORE_SMOKE_EXEC"
+if [ "$phase25_realpath_observe" -eq 1 ]; then
+    p3bd_mark "$P3BD_MARK_USER_SMOKE_START" "$P3BD_SLOT_USER_SMOKE_START"
+fi
 if [ -x /sbin/phase25_user_hci_smoke ]; then
     PHASE25_USER_HCI_TIMEOUT_MS=3000 /sbin/phase25_user_hci_smoke >/tmp/phase25_user_hci_smoke.out 2>&1
     smoke_rc=$?
@@ -223,6 +272,9 @@ fi
 phase25_note "PHASE25_AFTER_SMOKE_EXEC rc=$smoke_rc"
 phase25_stage 0x5354474500000019
 log "ceva-bt52: PHASE25_INITFLOW_AFTER_SMOKE_EXEC rc=$smoke_rc"
+if [ "$phase25_realpath_observe" -eq 1 ]; then
+    p3bd_mark "$P3BD_MARK_USER_SMOKE_DONE" "$P3BD_SLOT_USER_SMOKE_DONE"
+fi
 /bin/busybox cat /tmp/phase25_user_hci_smoke.out 2>/dev/null | while IFS= read -r line; do
     phase25_note "$line"
 done

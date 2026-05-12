@@ -10,6 +10,7 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -59,6 +60,31 @@
 #define CEVA_EVT_SHADOW_BITS_OFF 0x194
 #define CEVA_EVT_SHADOW_AUX_OFF 0x198
 #define CEVA_PHASE25_MAGIC 0x50323521U
+
+#define P3BD_STAGE_HELPER "/sbin/stage_mark"
+#define P3BD_SLOT_USER_MAIN_START           0x8F000088ULL
+#define P3BD_SLOT_USER_SOCKET_START         0x8F000090ULL
+#define P3BD_SLOT_USER_SOCKET_OK            0x8F000098ULL
+#define P3BD_SLOT_USER_BIND_USER_OK         0x8F0000A0ULL
+#define P3BD_SLOT_USER_BIND_RAW_FALLBACK    0x8F0000A8ULL
+#define P3BD_SLOT_USER_SEND_RESET_START     0x8F0000B0ULL
+#define P3BD_SLOT_USER_SEND_RESET_OK        0x8F0000B8ULL
+#define P3BD_SLOT_USER_SEND_RESET_ERR       0x8F0000C0ULL
+#define P3BD_SLOT_USER_RECV_TIMEOUT         0x8F0000C8ULL
+#define P3BD_SLOT_USER_RECV_MALFORMED       0x8F0000D0ULL
+#define P3BD_SLOT_USER_RECV_VALID_RESET_CC  0x8F0000D8ULL
+
+#define P3BD_MARK_USER_MAIN_START           0x5033424400000101ULL
+#define P3BD_MARK_USER_SOCKET_START         0x5033424400000102ULL
+#define P3BD_MARK_USER_SOCKET_OK            0x5033424400000103ULL
+#define P3BD_MARK_USER_BIND_USER_OK         0x5033424400000104ULL
+#define P3BD_MARK_USER_BIND_RAW_FALLBACK    0x5033424400000105ULL
+#define P3BD_MARK_USER_SEND_RESET_START     0x5033424400000106ULL
+#define P3BD_MARK_USER_SEND_RESET_OK        0x5033424400000107ULL
+#define P3BD_MARK_USER_SEND_RESET_ERR       0x5033424400000108ULL
+#define P3BD_MARK_USER_RECV_TIMEOUT         0x5033424400000109ULL
+#define P3BD_MARK_USER_RECV_MALFORMED       0x503342440000010AULL
+#define P3BD_MARK_USER_RECV_VALID_RESET_CC  0x503342440000010BULL
 
 struct sockaddr_hci {
 	sa_family_t hci_family;
@@ -205,6 +231,37 @@ static void probe_command_stage(uint16_t opcode, const char *stage)
 	probe_log(msg);
 }
 
+static void p3bd_mark(unsigned long long stage, unsigned long long stage_pa)
+{
+	char stage_text[32];
+	char stage_pa_text[32];
+	pid_t pid;
+	int status;
+
+	snprintf(stage_text, sizeof(stage_text), "0x%016llX", stage);
+	snprintf(stage_pa_text, sizeof(stage_pa_text), "0x%016llX", stage_pa);
+
+	pid = fork();
+	if (pid == 0) {
+		execl(P3BD_STAGE_HELPER,
+		      P3BD_STAGE_HELPER,
+		      stage_text,
+		      stage_pa_text,
+		      (char *) NULL);
+		_exit(127);
+	}
+
+	if (pid < 0)
+		return;
+
+	for (;;) {
+		if (waitpid(pid, &status, 0) >= 0)
+			break;
+		if (errno != EINTR)
+			break;
+	}
+}
+
 static void print_command_recv(const char *label,
 				      int recv_len,
 				      uint8_t event,
@@ -345,6 +402,13 @@ static bool wait_for_mmio_event(int mem_fd,
 		}
 
 		memcpy(raw, words, sizeof(raw));
+		if (raw[0] != HCI_EVENT_PKT) {
+			if (opcode == HCI_OP_RESET)
+				p3bd_mark(P3BD_MARK_USER_RECV_MALFORMED,
+					  P3BD_SLOT_USER_RECV_MALFORMED);
+			usleep(10000);
+			continue;
+		}
 		event_opcode = (uint16_t) raw[4] | ((uint16_t) raw[5] << 8);
 		event_status = raw[6];
 		if (event_opcode != opcode) {
@@ -365,6 +429,9 @@ static bool wait_for_mmio_event(int mem_fd,
 		}
 
 		probe_command_stage(opcode, "MMIO_MATCH");
+		if (opcode == HCI_OP_RESET)
+			p3bd_mark(P3BD_MARK_USER_RECV_VALID_RESET_CC,
+				  P3BD_SLOT_USER_RECV_VALID_RESET_CC);
 		print_command_recv(label, (int) sizeof(raw), HCI_EV_CMD_COMPLETE,
 				   event_opcode, event_status, 0);
 		return event_status == 0;
@@ -372,6 +439,9 @@ static bool wait_for_mmio_event(int mem_fd,
 
 	result->recv_errno = result->recv_errno ? result->recv_errno : ETIMEDOUT;
 	probe_command_stage(opcode, "MMIO_TIMEOUT");
+	if (opcode == HCI_OP_RESET)
+		p3bd_mark(P3BD_MARK_USER_RECV_TIMEOUT,
+			  P3BD_SLOT_USER_RECV_TIMEOUT);
 	print_command_recv(label, -1, 0, opcode, 0xff, result->recv_errno);
 	return false;
 }
@@ -482,16 +552,24 @@ static bool wait_for_command_result(int sock,
 			return false;
 		}
 
-		if (recv_rc < 1 + (ssize_t) sizeof(struct hci_event_hdr) || buffer[0] != HCI_EVENT_PKT)
+		if (recv_rc < 1 + (ssize_t) sizeof(struct hci_event_hdr) || buffer[0] != HCI_EVENT_PKT) {
+			if (opcode == HCI_OP_RESET)
+				p3bd_mark(P3BD_MARK_USER_RECV_MALFORMED,
+					  P3BD_SLOT_USER_RECV_MALFORMED);
 			continue;
+		}
 
 		{
 			const struct hci_event_hdr *event_hdr = (const struct hci_event_hdr *) (buffer + 1);
 			const uint8_t *payload = buffer + 1 + sizeof(*event_hdr);
 			size_t payload_len = (size_t) recv_rc - 1 - sizeof(*event_hdr);
 
-			if (payload_len < event_hdr->plen)
+			if (payload_len < event_hdr->plen) {
+				if (opcode == HCI_OP_RESET)
+					p3bd_mark(P3BD_MARK_USER_RECV_MALFORMED,
+						  P3BD_SLOT_USER_RECV_MALFORMED);
 				continue;
+			}
 
 			if (event_hdr->evt == HCI_EV_CMD_STATUS) {
 				const struct hci_ev_cmd_status *status_evt;
@@ -520,8 +598,12 @@ static bool wait_for_command_result(int sock,
 			if (event_hdr->evt != HCI_EV_CMD_COMPLETE)
 				continue;
 
-			if (payload_len < sizeof(struct hci_ev_cmd_complete) + 1)
+			if (payload_len < sizeof(struct hci_ev_cmd_complete) + 1) {
+				if (opcode == HCI_OP_RESET)
+					p3bd_mark(P3BD_MARK_USER_RECV_MALFORMED,
+						  P3BD_SLOT_USER_RECV_MALFORMED);
 				continue;
+			}
 
 			{
 				const struct hci_ev_cmd_complete *complete_evt =
@@ -536,6 +618,9 @@ static bool wait_for_command_result(int sock,
 				result->status = return_params[0];
 				result->recv_errno = 0;
 				probe_command_stage(opcode, "CMD_COMPLETE");
+				if (opcode == HCI_OP_RESET)
+					p3bd_mark(P3BD_MARK_USER_RECV_VALID_RESET_CC,
+						  P3BD_SLOT_USER_RECV_VALID_RESET_CC);
 				print_command_recv(label,
 						   (int) recv_rc,
 						   event_hdr->evt,
@@ -553,6 +638,9 @@ static bool wait_for_command_result(int sock,
 	}
 
 	probe_command_stage(opcode, "WAIT_TIMEOUT");
+	if (opcode == HCI_OP_RESET)
+		p3bd_mark(P3BD_MARK_USER_RECV_TIMEOUT,
+			  P3BD_SLOT_USER_RECV_TIMEOUT);
 	print_command_recv(label, -1, 0, opcode, 0xff, result->recv_errno);
 	return false;
 }
@@ -590,6 +678,9 @@ static bool run_command(int sock,
 	command_hdr->opcode = cpu_to_le16_u(opcode);
 	command_hdr->plen = 0;
 
+	if (opcode == HCI_OP_RESET)
+		p3bd_mark(P3BD_MARK_USER_SEND_RESET_START,
+			  P3BD_SLOT_USER_SEND_RESET_START);
 	probe_command_stage(opcode, "BEFORE_SEND");
 	send_rc = send(sock, command, sizeof(command), 0);
 	result->send_errno = (send_rc < 0) ? errno : 0;
@@ -600,8 +691,15 @@ static bool run_command(int sock,
 	       err_text(result->send_errno),
 	       opcode);
 	fflush(stdout);
-	if (send_rc < 0)
+	if (send_rc < 0) {
+		if (opcode == HCI_OP_RESET)
+			p3bd_mark(P3BD_MARK_USER_SEND_RESET_ERR,
+				  P3BD_SLOT_USER_SEND_RESET_ERR);
 		return false;
+	}
+	if (opcode == HCI_OP_RESET)
+		p3bd_mark(P3BD_MARK_USER_SEND_RESET_OK,
+			  P3BD_SLOT_USER_SEND_RESET_OK);
 	probe_command_stage(opcode, "AFTER_SEND");
 
 	probe_command_stage(opcode, "WAIT_RESULT");
@@ -630,6 +728,7 @@ int main(int argc, char **argv)
 	setvbuf(stderr, NULL, _IOLBF, 0);
 	signal(SIGALRM, smoke_alarm_handler);
 	alarm(20);
+	p3bd_mark(P3BD_MARK_USER_MAIN_START, P3BD_SLOT_USER_MAIN_START);
 	probe_log("PHASE25_USER_SMOKE_START");
 
 	if (hci0_present)
@@ -638,12 +737,14 @@ int main(int argc, char **argv)
 		printf("PHASE25_USER_HCI0_MISSING\n");
 	printf("PHASE25_USER_TIMEOUT_MS %d\n", timeout_ms);
 
+	p3bd_mark(P3BD_MARK_USER_SOCKET_START, P3BD_SLOT_USER_SOCKET_START);
 	probe_log("PHASE25_USER_STEP_SOCKET");
 	sock = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
 	saved_errno = (sock < 0) ? errno : 0;
 	print_errno_result("PHASE25_USER_SOCKET", sock, saved_errno);
 	if (sock < 0)
 		goto summary;
+	p3bd_mark(P3BD_MARK_USER_SOCKET_OK, P3BD_SLOT_USER_SOCKET_OK);
 
 	probe_log("PHASE25_USER_STEP_GETDEVINFO");
 	if (fetch_dev_info(sock, &dev_info, "PHASE25_USER_IOCTL_HCIGETDEVINFO") == 0)
@@ -664,11 +765,15 @@ int main(int argc, char **argv)
 	if (!hci_up) {
 		probe_log("PHASE25_USER_BIND_CHANNEL_USER");
 		if (!bind_hci_socket(sock, HCI_CHANNEL_USER)) {
+			p3bd_mark(P3BD_MARK_USER_BIND_RAW_FALLBACK,
+				  P3BD_SLOT_USER_BIND_RAW_FALLBACK);
 			probe_log("PHASE25_USER_BIND_CHANNEL_RAW_FALLBACK");
 			if (!bind_hci_socket(sock, HCI_CHANNEL_RAW))
 				goto close_and_summary;
 			active_channel = HCI_CHANNEL_RAW;
 		} else {
+			p3bd_mark(P3BD_MARK_USER_BIND_USER_OK,
+				  P3BD_SLOT_USER_BIND_USER_OK);
 			active_channel = HCI_CHANNEL_USER;
 		}
 	} else if (!bind_hci_socket(sock, HCI_CHANNEL_RAW)) {

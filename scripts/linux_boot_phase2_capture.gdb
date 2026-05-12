@@ -137,6 +137,31 @@ echo [phase2] Step 6a: Read init stage marker\n
 python
 import struct
 
+P3BD_TRACE_BASE = 0x8F000040
+P3BD_TRACE_SIZE = 0xA0
+P3BD_TRACE_SLOTS = [
+    (0x8F000040, "P3BD_INIT_START"),
+    (0x8F000048, "P3BD_INIT_SELFTEST_OFF"),
+    (0x8F000050, "P3BD_INSMOD_START"),
+    (0x8F000058, "P3BD_INSMOD_DONE"),
+    (0x8F000060, "P3BD_WAIT_HCI0_START"),
+    (0x8F000068, "P3BD_WAIT_HCI0_FOUND"),
+    (0x8F000070, "P3BD_WAIT_HCI0_TIMEOUT"),
+    (0x8F000078, "P3BD_USER_SMOKE_START"),
+    (0x8F000080, "P3BD_USER_SMOKE_DONE"),
+    (0x8F000088, "P3BD_USER_MAIN_START"),
+    (0x8F000090, "P3BD_USER_SOCKET_START"),
+    (0x8F000098, "P3BD_USER_SOCKET_OK"),
+    (0x8F0000A0, "P3BD_USER_BIND_USER_OK"),
+    (0x8F0000A8, "P3BD_USER_BIND_RAW_FALLBACK"),
+    (0x8F0000B0, "P3BD_USER_SEND_RESET_START"),
+    (0x8F0000B8, "P3BD_USER_SEND_RESET_OK"),
+    (0x8F0000C0, "P3BD_USER_SEND_RESET_ERR"),
+    (0x8F0000C8, "P3BD_USER_RECV_TIMEOUT"),
+    (0x8F0000D0, "P3BD_USER_RECV_MALFORMED"),
+    (0x8F0000D8, "P3BD_USER_RECV_VALID_RESET_CC"),
+]
+
 try:
     dump_pa("/tmp/phase2_stage_mark.bin", 0x8F000000, 8)
     with open("/tmp/phase2_stage_mark.bin", "rb") as fh:
@@ -144,6 +169,21 @@ try:
     gdb.write(f"[stage] init_stage_mark=0x{stage_mark:016X}\n")
 except Exception as e:
     gdb.write(f"[stage] init_stage_mark read failed: {e}\n")
+
+try:
+    dump_pa("/tmp/phase2_p3bd_trace.bin", P3BD_TRACE_BASE, P3BD_TRACE_SIZE)
+    with open("/tmp/phase2_p3bd_trace.bin", "rb") as fh:
+        trace = fh.read()
+    gdb.write("[p3bd] breadcrumb slots:\n")
+    for slot_pa, label in P3BD_TRACE_SLOTS:
+        offset = slot_pa - P3BD_TRACE_BASE
+        value = struct.unpack_from("<Q", trace, offset)[0]
+        gdb.write(f"[p3bd] {label}: {'SET' if value else 'MISSING'}")
+        if value:
+            gdb.write(f" value=0x{value:016X}")
+        gdb.write("\n")
+except Exception as e:
+    gdb.write(f"[p3bd] breadcrumb dump failed: {e}\n")
 end
 
 echo [phase2] Step 6b: Scan Phase 2.5 DDR evidence\n
@@ -172,6 +212,7 @@ EM_PHASE25_MARK_MAGIC_ADDR = EM_BASE + 0x1000
 EM_PHASE25_MARK_BITS_ADDR = EM_BASE + 0x4000
 EM_PHASE25_MARK_AUX_ADDR = EM_BASE + 0xFFFC
 EM_PHASE25_MARK_MAGIC = 0x50323521
+EM_P3BD_MARK_MAGIC = 0x50334244
 
 PHASE25_MARK_PROBE_REACHED = 1 << 0
 PHASE25_MARK_OPEN_REACHED = 1 << 1
@@ -184,6 +225,18 @@ PHASE25_MARK_SELFTEST_PASS = 1 << 7
 PHASE25_MARK_HCI_RESET_FAIL = 1 << 8
 PHASE25_MARK_READ_LOCAL_VERSION_FAIL = 1 << 9
 PHASE25_MARK_SELFTEST_FAIL = 1 << 10
+P3BD_MARK_DRV_PROBE_START = 1 << 0
+P3BD_MARK_DRV_HCI_REGISTER_OK = 1 << 1
+P3BD_MARK_DRV_OPEN_START = 1 << 2
+P3BD_MARK_DRV_OPEN_OK = 1 << 3
+P3BD_MARK_DRV_SEND_ENTER = 1 << 4
+P3BD_MARK_DRV_SEND_RESET_SEEN = 1 << 5
+P3BD_MARK_DRV_EM_CMD_WRITTEN = 1 << 6
+P3BD_MARK_DRV_SWINT_TRIGGERED = 1 << 7
+P3BD_MARK_DRV_IRQ_ENTER = 1 << 8
+P3BD_MARK_DRV_EM_EVT_READY = 1 << 9
+P3BD_MARK_DRV_RX_WORK_ENTER = 1 << 10
+P3BD_MARK_DRV_HCI_RECV_DONE = 1 << 11
 
 def r32(addr):
     try:
@@ -263,6 +316,7 @@ phase25_reset_pass = "CEVA_PHASE25_HCI_RESET_PASS" in phase25_text
 phase25_version_pass = "CEVA_PHASE25_READ_LOCAL_VERSION_PASS" in phase25_text
 phase25_selftest_pass = "CEVA_PHASE25_SELFTEST_PASS" in phase25_text
 phase25_markers_present = em_p25_magic == EM_PHASE25_MARK_MAGIC
+p3bd_markers_present = em_p25_magic == EM_P3BD_MARK_MAGIC
 if evt_shadow_present:
     if em_evt_shadow_bits & PHASE25_MARK_HCI_RESET_PASS:
         phase25_reset_pass = True
@@ -339,6 +393,24 @@ else:
     gdb.write(f"CEVA_PHASE25_HCI_RESET_PASS: {'PASS' if phase25_reset_pass else 'MISSING'}\n")
     gdb.write(f"CEVA_PHASE25_READ_LOCAL_VERSION_PASS: {'PASS' if phase25_version_pass else 'MISSING'}\n")
     gdb.write(f"CEVA_PHASE25_SELFTEST_PASS: {'PASS' if phase25_selftest_pass else 'MISSING'}\n")
+
+if p3bd_markers_present:
+    gdb.write(f"P3BD_DRV_MARKERS: PRESENT bits=0x{em_p25_bits:08X} aux=0x{em_p25_aux:08X}\n")
+    gdb.write(f"P3BD_DRV_PROBE_START: {'SET' if em_p25_bits & P3BD_MARK_DRV_PROBE_START else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_HCI_REGISTER_OK: {'SET' if em_p25_bits & P3BD_MARK_DRV_HCI_REGISTER_OK else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_OPEN_START: {'SET' if em_p25_bits & P3BD_MARK_DRV_OPEN_START else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_OPEN_OK: {'SET' if em_p25_bits & P3BD_MARK_DRV_OPEN_OK else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_SEND_ENTER: {'SET' if em_p25_bits & P3BD_MARK_DRV_SEND_ENTER else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_SEND_RESET_SEEN: {'SET' if em_p25_bits & P3BD_MARK_DRV_SEND_RESET_SEEN else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_EM_CMD_WRITTEN: {'SET' if em_p25_bits & P3BD_MARK_DRV_EM_CMD_WRITTEN else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_SWINT_TRIGGERED: {'SET' if em_p25_bits & P3BD_MARK_DRV_SWINT_TRIGGERED else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_IRQ_ENTER: {'SET' if em_p25_bits & P3BD_MARK_DRV_IRQ_ENTER else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_EM_EVT_READY: {'SET' if em_p25_bits & P3BD_MARK_DRV_EM_EVT_READY else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_RX_WORK_ENTER: {'SET' if em_p25_bits & P3BD_MARK_DRV_RX_WORK_ENTER else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_HCI_RECV_DONE: {'SET' if em_p25_bits & P3BD_MARK_DRV_HCI_RECV_DONE else 'MISSING'}\n")
+    gdb.write(f"P3BD_DRV_LAST_OPCODE: 0x{em_p25_aux & 0xFFFF:04X}\n")
+else:
+    gdb.write("P3BD_DRV_MARKERS: MISSING\n")
 
 gdb.write(f"\n[result] {pass_count}/{total_checks} hardware checks PASS\n")
 gdb.write("Phase 2 PASS requires: DM accessible + hci0 in klog\n")

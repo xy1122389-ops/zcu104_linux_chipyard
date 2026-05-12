@@ -85,6 +85,15 @@ echo [phase2] Step 4a: Clear init stage slot\n
 monitor WriteU32 0x8F000000 0x00000000
 monitor WriteU32 0x8F000004 0x00000000
 
+python
+zero_p3bd_path = "/tmp/phase2_zero_p3bd.bin"
+if not os.path.exists(zero_p3bd_path) or os.path.getsize(zero_p3bd_path) != 0xA0:
+    with open(zero_p3bd_path, "wb") as fh:
+        fh.write(b"\x00" * 0xA0)
+gdb.write("[phase2] Clearing P3BD breadcrumb slots at PA 0x8F000040\n")
+gdb.execute(f"restore {zero_p3bd_path} binary 0x8f000040")
+end
+
 echo [phase2] Step 4b: Clear CEVA EM command/event slots\n
 
 python
@@ -119,6 +128,17 @@ monitor WriteU32 0x6501018C 0x00000000
 monitor WriteU32 0x65010190 0x00000000
 monitor WriteU32 0x65010194 0x00000000
 monitor WriteU32 0x65010198 0x00000000
+monitor WriteU32 0x65011000 0x00000000
+monitor WriteU32 0x65014000 0x00000000
+monitor WriteU32 0x6501FFFC 0x00000000
+
+python
+try:
+    gdb.write("[phase2] Clearing Phase 2.5 DDR evidence scratch at 0x8FF00000\n")
+    gdb.execute(f"restore {zero_klog_path} binary 0x8ff00000")
+except Exception as e:
+    gdb.write(f"[phase2] DDR evidence clear skipped: {e}\n")
+end
 
 python
 run_secs = int(os.environ.get("KERNEL_RUN_SECS", "120"))
