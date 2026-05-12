@@ -168,7 +168,16 @@ log "ceva-bt52: PHASE25_INITFLOW_BEFORE_LOAD_CEVA"
 log "ceva-bt52: loading ceva_bt52.ko [PHASE25_INITFLOW]"
 set +e
 /bin/busybox rm -f "$phase25_insmod_err" 2>/dev/null
-/bin/busybox insmod /lib/modules/ceva_bt52.ko phase25_selftest=1 phase25_selftest_delay_ms=0 2>"$phase25_insmod_err"
+phase25_ceva_params="phase25_selftest=1 phase25_selftest_delay_ms=0"
+if /bin/busybox grep -qw "ceva_phase25_selftest=0" /proc/cmdline 2>/dev/null; then
+    phase25_ceva_params="phase25_selftest=0"
+    phase25_note "PHASE25_CEVA_SELFTEST_OFF"
+    log "ceva-bt52: PHASE25_REALPATH_OBSERVE selftest=0 [PHASE25_INITFLOW]"
+else
+    phase25_note "PHASE25_CEVA_SELFTEST_ON"
+    log "ceva-bt52: PHASE25_REPLAY_CONTROL selftest=1 delay=0 [PHASE25_INITFLOW]"
+fi
+/bin/busybox insmod /lib/modules/ceva_bt52.ko $phase25_ceva_params 2>"$phase25_insmod_err"
 phase25_rc=$?
 set +e
 phase25_note "PHASE25_AFTER_LOAD_CEVA rc=$phase25_rc"
