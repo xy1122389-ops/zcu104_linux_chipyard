@@ -111,3 +111,15 @@ Stop and do not claim Phase3 completion if any item is true:
 - Linux RX does not show real event bytes.
 - BlueZ is used before real Reset/RLV repeated PASS.
 - Generated bitstream, payload, DTB, ELF, BIN, MAP, DUMP, or log artifacts are staged.
+
+## 8. Execution Pack Added
+
+The current execution pack adds stricter evidence validation and repeatable status collection:
+
+- `scripts/check_ceva_phase3_completion_gate.sh` now checks required PASS tokens, marker tokens, and HCI byte tokens inside evidence files.
+- `scripts/collect_ceva_phase3_status_snapshot.sh` captures git state, H4 memory guard, H9 no-synthetic guard, current completion gate output, and evidence-file inventory.
+- `docs/bringup/phase3_completion_evidence/README.md` defines the evidence directory policy.
+- `docs/bringup/phase3_completion_evidence/EVIDENCE_TEMPLATES.md` contains non-unlocking templates for the required future evidence files.
+- `docs/bringup/ceva_bt52_phase3_completion_execution_runbook_20260513.md` records the execution order for completing Phase3.
+
+These files are preparation and guardrail artifacts only. They do not claim Phase3 PASS, and they do not permit Phase4 execution until `check_ceva_phase3_completion_gate.sh --require-pass` succeeds.
