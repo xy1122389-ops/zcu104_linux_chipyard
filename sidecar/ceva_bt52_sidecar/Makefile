@@ -15,7 +15,7 @@ CFLAGS += -march=rv64imac -mabi=lp64 -I.
 LDFLAGS := -T linker.ld -nostdlib -nostartfiles
 LDFLAGS += -Wl,--gc-sections -Wl,-Map=$(TARGET).map
 
-OBJECTS := $(BUILD_DIR)/start.o $(BUILD_DIR)/main.o
+OBJECTS := $(BUILD_DIR)/start.o $(BUILD_DIR)/main.o $(BUILD_DIR)/sidecar_event_bridge.o
 
 .PHONY: all clean
 
@@ -27,7 +27,7 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%.o: %.S marker.h | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(BUILD_DIR)/%.o: %.c marker.h bridge_contract.h | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.c marker.h bridge_contract.h vendor_adapter_boundary.h sidecar_event_bridge.h | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TARGET).elf: $(OBJECTS) linker.ld

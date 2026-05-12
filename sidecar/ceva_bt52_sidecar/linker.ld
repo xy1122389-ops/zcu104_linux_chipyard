@@ -14,6 +14,7 @@ SECTIONS
   .text : ALIGN(4)
   {
     KEEP(*(.text.entry))
+    KEEP(*(.text.ceva_bt52_sidecar_publish_vendor_event))
     *(.text*)
   } > SIDECAR
 
