@@ -40,6 +40,7 @@
 #include <linux/delay.h>
 #include <linux/completion.h>
 #include <linux/string.h>
+#include <linux/jiffies.h>
 
 #include <net/bluetooth/bluetooth.h>
 #include <net/bluetooth/hci_core.h>
@@ -98,6 +99,7 @@ MODULE_PARM_DESC(phase25_selftest_delay_ms,
 #define BT_INTSTAT0         0x0810
 #define BT_INTACK0          0x0814
 #define BT_CURRENTRXDESC    0x0828
+#define BT_DIAGCNTL         0x0850
 
 /* Register bit fields */
 #define DM_MASTER_SOFT_RST  BIT(31)
@@ -106,8 +108,13 @@ MODULE_PARM_DESC(phase25_selftest_delay_ms,
 #define DM_SWINTSTAT        BIT(3)
 #define DM_SWINTACK         BIT(3)
 #define DM_CLKNINTMSK       BIT(0)
+#define DM_SLPINTMSK        BIT(1)
+#define DM_CRYPTINTMSK      BIT(2)
 #define DM_CLKNINTSTAT      BIT(0)
 #define DM_CLKNINTACK       BIT(0)
+#define DM_FIFOINTMSK       BIT(15)
+#define DM_REALPATH_INTMSK  (DM_FIFOINTMSK | DM_CRYPTINTMSK | \
+                             DM_SWINTMSK | DM_SLPINTMSK)
 #define BT_RWBTEN           BIT(8)
 #define BT_NWINSIZE_MASK    0x3F
 #define BT_NWINSIZE_DEFAULT 13
@@ -165,6 +172,9 @@ MODULE_PARM_DESC(phase25_selftest_delay_ms,
 #define P3BD_MARK_DRV_RX_WORK_ENTER             BIT(10)
 #define P3BD_MARK_DRV_HCI_RECV_DONE             BIT(11)
 
+#define CEVA_BT_EVT_RECHECK_MS                  1
+#define CEVA_BT_EVT_RECHECK_TRIES               50
+
 /* Maximum HCI packet sizes in EM (words) */
 #define EM_CMD_MAX_WORDS    8       /* 32 bytes max HCI cmd */
 #define EM_EVT_MAX_WORDS    16      /* 64 bytes max HCI event */
@@ -180,6 +190,7 @@ struct ceva_bt {
     struct work_struct   rx_work;
     struct work_struct   phase25_rsp_work;
     struct delayed_work  phase25_selftest_work;
+    struct delayed_work  evt_recheck_work;
     struct sk_buff_head  rx_queue;
     bool                 running;
     bool                 phase25_started;
@@ -189,6 +200,7 @@ struct ceva_bt {
     unsigned long        phase25_pending_responses;
     u32                  phase25_mark_bits;
     u32                  phase25_mark_aux;
+    unsigned int         evt_recheck_tries;
     unsigned int         phase25_evidence_len;
     char                 phase25_evidence_buf[PHASE25_DDR_EVID_SIZE];
 };
@@ -303,6 +315,64 @@ static void ceva_bt_phase25_mirror_event_to_em(struct ceva_bt *cbt,
     ceva_bt_phase25_write_evt_shadow(cbt);
 }
 
+static bool ceva_bt_evt_ready(struct ceva_bt *cbt)
+{
+    return em_read_word(cbt, EM_EVT_FLAG_WORD) == EM_EVT_READY;
+}
+
+static void ceva_bt_clear_evt_recheck(struct ceva_bt *cbt)
+{
+    unsigned long flags;
+
+    spin_lock_irqsave(&cbt->lock, flags);
+    cbt->evt_recheck_tries = 0;
+    spin_unlock_irqrestore(&cbt->lock, flags);
+}
+
+static void ceva_bt_arm_evt_recheck(struct ceva_bt *cbt, unsigned int tries)
+{
+    unsigned long flags;
+
+    spin_lock_irqsave(&cbt->lock, flags);
+    if (tries > cbt->evt_recheck_tries)
+        cbt->evt_recheck_tries = tries;
+    spin_unlock_irqrestore(&cbt->lock, flags);
+
+    mod_delayed_work(system_wq, &cbt->evt_recheck_work,
+             msecs_to_jiffies(CEVA_BT_EVT_RECHECK_MS));
+}
+
+static void ceva_bt_queue_rx_work(struct ceva_bt *cbt)
+{
+    ceva_bt_clear_evt_recheck(cbt);
+    schedule_work(&cbt->rx_work);
+}
+
+static void ceva_bt_evt_recheck_work(struct work_struct *work)
+{
+    struct ceva_bt *cbt = container_of(to_delayed_work(work),
+                       struct ceva_bt,
+                       evt_recheck_work);
+    unsigned long flags;
+    unsigned int tries_left;
+
+    if (ceva_bt_evt_ready(cbt)) {
+        ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_EM_EVT_READY);
+        ceva_bt_queue_rx_work(cbt);
+        return;
+    }
+
+    spin_lock_irqsave(&cbt->lock, flags);
+    tries_left = cbt->evt_recheck_tries;
+    if (tries_left)
+        cbt->evt_recheck_tries--;
+    spin_unlock_irqrestore(&cbt->lock, flags);
+
+    if (tries_left > 1 && cbt->running)
+        mod_delayed_work(system_wq, &cbt->evt_recheck_work,
+                 msecs_to_jiffies(CEVA_BT_EVT_RECHECK_MS));
+}
+
 /* ====== Hardware init/cleanup (Phase 0M/0P sequence) ====== */
 
 static int ceva_bt_hw_init(struct ceva_bt *cbt)
@@ -328,6 +398,7 @@ static int ceva_bt_hw_init(struct ceva_bt *cbt)
     ceva_bt_em_debug_window_open(cbt);
 
     /* BT block init */
+    dm_write(cbt, BT_DIAGCNTL, 0);
     dm_write(cbt, BT_INTCNTL0, BT_INTCNTL0_INIT);
     dm_write(cbt, BT_INTACK0, 0xFFFFFFFF);
     dm_write(cbt, BT_CURRENTRXDESC, 0);
@@ -354,9 +425,8 @@ static int ceva_bt_hw_init(struct ceva_bt *cbt)
 
     dev_info(&cbt->pdev->dev, "BT core running (CLKN %d/5 OK)\n", clkn);
 
-    /* Enable SWINT for HCI transport */
-    val = dm_read(cbt, DM_INTCNTL1) | DM_SWINTMSK;
-    dm_write(cbt, DM_INTCNTL1, val);
+    /* Switch from CLKN bring-up polling to the proven rwip_driver_init mask. */
+    dm_write(cbt, DM_INTCNTL1, DM_REALPATH_INTMSK);
 
     return 0;
 }
@@ -904,6 +974,7 @@ static void ceva_bt_rx_work(struct work_struct *work)
     u8 *buf;
     int i, len, ret;
 
+    ceva_bt_clear_evt_recheck(cbt);
     ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_RX_WORK_ENTER);
 
     /* Read event from EM event buffer */
@@ -939,19 +1010,23 @@ static irqreturn_t ceva_bt_irq(int irq, void *dev_id)
 {
     struct ceva_bt *cbt = dev_id;
     u32 intstat1 = dm_read(cbt, DM_INTSTAT1);
+    bool swint = intstat1 & DM_SWINTSTAT;
+    bool evt_ready = ceva_bt_evt_ready(cbt);
 
-    if (!(intstat1 & DM_SWINTSTAT))
+    if (!swint && !evt_ready)
         return IRQ_NONE;
 
     ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_IRQ_ENTER);
 
-    /* Acknowledge SWINT */
-    dm_write(cbt, DM_INTACK1, DM_SWINTACK);
+    if (swint)
+        dm_write(cbt, DM_INTACK1, DM_SWINTACK);
 
-    /* Check if firmware wrote an HCI event */
-    if (em_read_word(cbt, EM_EVT_FLAG_WORD) == EM_EVT_READY) {
+    if (evt_ready) {
         ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_EM_EVT_READY);
-        schedule_work(&cbt->rx_work);
+        ceva_bt_queue_rx_work(cbt);
+    } else if (swint) {
+        /* SWINT can arrive before CEVA publishes the event in EM. */
+        ceva_bt_arm_evt_recheck(cbt, CEVA_BT_EVT_RECHECK_TRIES);
     }
 
     return IRQ_HANDLED;
@@ -990,6 +1065,7 @@ static int ceva_bt_close(struct hci_dev *hdev)
     cbt->running = false;
     ceva_bt_hw_stop(cbt);
     cancel_delayed_work_sync(&cbt->phase25_selftest_work);
+    cancel_delayed_work_sync(&cbt->evt_recheck_work);
     cancel_work_sync(&cbt->phase25_rsp_work);
     cancel_work_sync(&cbt->rx_work);
     skb_queue_purge(&cbt->rx_queue);
@@ -1041,6 +1117,7 @@ static int ceva_bt_send_frame(struct hci_dev *hdev, struct sk_buff *skb)
     /* Notify firmware via SWINT_REQ */
     dm_write(cbt, DM_RWDMCNTL, DM_SWINT_REQ);
     ceva_bt_p3bd_mark(cbt, P3BD_MARK_DRV_SWINT_TRIGGERED);
+    ceva_bt_arm_evt_recheck(cbt, CEVA_BT_EVT_RECHECK_TRIES);
 
     if (phase25_selftest) {
         if (opcode == CEVA_BT_HCI_OP_RESET) {
@@ -1134,6 +1211,7 @@ static int ceva_bt_probe(struct platform_device *pdev)
     INIT_WORK(&cbt->rx_work, ceva_bt_rx_work);
     INIT_WORK(&cbt->phase25_rsp_work, ceva_bt_phase25_rsp_work);
     INIT_DELAYED_WORK(&cbt->phase25_selftest_work, ceva_bt_phase25_selftest);
+    INIT_DELAYED_WORK(&cbt->evt_recheck_work, ceva_bt_evt_recheck_work);
     skb_queue_head_init(&cbt->rx_queue);
 
     /* ioremap the full 0x20000 region (registers + EM window) */
@@ -1225,6 +1303,7 @@ static int ceva_bt_remove(struct platform_device *pdev)
 
     dev_info(&pdev->dev, "CEVA BT5.2 remove\n");
     cancel_delayed_work_sync(&cbt->phase25_selftest_work);
+    cancel_delayed_work_sync(&cbt->evt_recheck_work);
     cancel_work_sync(&cbt->phase25_rsp_work);
     hci_unregister_dev(cbt->hdev);
     hci_free_dev(cbt->hdev);

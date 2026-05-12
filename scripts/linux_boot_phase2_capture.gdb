@@ -208,11 +208,20 @@ echo [phase2] Step 7: Check CEVA hardware registers\n
 python
 CEVA_BASE = 0x65000000
 EM_BASE   = 0x65010000
+DM_RWDMCNTL_ADDR = CEVA_BASE + 0x0000
+DM_INTCNTL1_ADDR = CEVA_BASE + 0x0018
+DM_INTACK1_ADDR = CEVA_BASE + 0x0020
+DM_ACTFIFOSTAT_ADDR = CEVA_BASE + 0x0024
+DM_ETPTR_ADDR = CEVA_BASE + 0x002C
 EM_PHASE25_MARK_MAGIC_ADDR = EM_BASE + 0x1000
 EM_PHASE25_MARK_BITS_ADDR = EM_BASE + 0x4000
 EM_PHASE25_MARK_AUX_ADDR = EM_BASE + 0xFFFC
 EM_PHASE25_MARK_MAGIC = 0x50323521
 EM_P3BD_MARK_MAGIC = 0x50334244
+EM_CMD_FLAG_WORD = 72
+EM_EVT_FLAG_WORD = 73
+EM_CMD_READY = 0xA5A5A5A5
+EM_EVT_READY = 0x5A5A5A5A
 
 PHASE25_MARK_PROBE_REACHED = 1 << 0
 PHASE25_MARK_OPEN_REACHED = 1 << 1
@@ -245,14 +254,52 @@ def r32(addr):
     except:
         return 0xDEADBEEF
 
+def fmt_intstat1(value):
+    bit_names = {
+        0: "CLKN",
+        1: "SLP",
+        2: "CRYPT",
+        3: "SWINT",
+        4: "FINETGT",
+        5: "TSTGT1",
+        6: "TSTGT2",
+        7: "TSTGT3",
+    }
+    names = [name for bit, name in bit_names.items() if value & (1 << bit)]
+    return ",".join(names) if names else "none"
+
+def dump_em_range(start_word, end_word, label):
+    gdb.write(f"[hw] {label} words {start_word}..{end_word}:\n")
+    for word in range(start_word, end_word + 1):
+        value = r32(EM_BASE + word * 4)
+        suffix = ""
+        if word == EM_CMD_FLAG_WORD:
+            if value == EM_CMD_READY:
+                suffix = " (cmd-ready SET)"
+            elif value == 0:
+                suffix = " (cmd-ready CLEAR)"
+        elif word == EM_EVT_FLAG_WORD:
+            if value == EM_EVT_READY:
+                suffix = " (evt-ready SET)"
+            elif value == 0:
+                suffix = " (evt-ready CLEAR)"
+        gdb.write(f"[hw]   EM[{word:03d}] = 0x{value:08X}{suffix}\n")
+
+dm_rwdmcntl = r32(DM_RWDMCNTL_ADDR)
 dm_ver  = r32(CEVA_BASE + 0x0004)
 dm_stat = r32(CEVA_BASE + 0x000C)
+dm_intcntl1 = r32(DM_INTCNTL1_ADDR)
 dm_stat1 = r32(CEVA_BASE + 0x001C)
+dm_intack1 = r32(DM_INTACK1_ADDR)
+dm_actfifostat = r32(DM_ACTFIFOSTAT_ADDR)
+dm_etptr = r32(DM_ETPTR_ADDR)
 dm_debug_add_max = r32(CEVA_BASE + 0x0058)
 dm_debug_add_min = r32(CEVA_BASE + 0x005C)
 bt_cntl = r32(CEVA_BASE + 0x0800)
 em_w0   = r32(EM_BASE)
 em_w64  = r32(EM_BASE + 0x100)
+em_cmd_flag = r32(EM_BASE + EM_CMD_FLAG_WORD * 4)
+em_evt_flag = r32(EM_BASE + EM_EVT_FLAG_WORD * 4)
 em_cmd_shadow_magic = r32(EM_BASE + 0x110)
 em_cmd_shadow_bits = r32(EM_BASE + 0x114)
 em_cmd_shadow_aux = r32(EM_BASE + 0x118)
@@ -268,13 +315,20 @@ em_p25_bits = r32(EM_PHASE25_MARK_BITS_ADDR)
 em_p25_aux = r32(EM_PHASE25_MARK_AUX_ADDR)
 
 gdb.write(f"\n[hw] DM_VERSION  = 0x{dm_ver:08X}\n")
+gdb.write(f"[hw] DM_RWDMCNTL = 0x{dm_rwdmcntl:08X}\n")
 gdb.write(f"[hw] DM_INTSTAT0 = 0x{dm_stat:08X}\n")
-gdb.write(f"[hw] DM_INTSTAT1 = 0x{dm_stat1:08X}\n")
+gdb.write(f"[hw] DM_INTCNTL1 = 0x{dm_intcntl1:08X}\n")
+gdb.write(f"[hw] DM_INTSTAT1 = 0x{dm_stat1:08X} (bits={fmt_intstat1(dm_stat1)})\n")
+gdb.write(f"[hw] DM_INTACK1  = 0x{dm_intack1:08X}\n")
+gdb.write(f"[hw] DM_ACTFIFOSTAT = 0x{dm_actfifostat:08X}\n")
+gdb.write(f"[hw] DM_ETPTR    = 0x{dm_etptr:08X}\n")
 gdb.write(f"[hw] DEBUGADDMAX = 0x{dm_debug_add_max:08X}\n")
 gdb.write(f"[hw] DEBUGADDMIN = 0x{dm_debug_add_min:08X}\n")
 gdb.write(f"[hw] BT_RWBTCNTL = 0x{bt_cntl:08X} (bit8=RWBTEN: {'SET' if bt_cntl & 0x100 else 'CLEAR'})\n")
 gdb.write(f"[hw] EM[0]       = 0x{em_w0:08X}\n")
 gdb.write(f"[hw] EM[64]      = 0x{em_w64:08X} (cmd buf)\n")
+gdb.write(f"[hw] EM[72]      = 0x{em_cmd_flag:08X} (cmd-ready flag)\n")
+gdb.write(f"[hw] EM[73]      = 0x{em_evt_flag:08X} (evt-ready flag)\n")
 gdb.write(f"[hw] EM[68]      = 0x{em_cmd_shadow_magic:08X} (cmd shadow magic)\n")
 gdb.write(f"[hw] EM[69]      = 0x{em_cmd_shadow_bits:08X} (cmd shadow bits)\n")
 gdb.write(f"[hw] EM[70]      = 0x{em_cmd_shadow_aux:08X} (cmd shadow aux)\n")
@@ -288,6 +342,8 @@ gdb.write(f"[hw] EM[102]     = 0x{em_evt_shadow_aux:08X} (evt shadow aux)\n")
 gdb.write(f"[hw] EM[P25 magic@0x1000] = 0x{em_p25_magic:08X}\n")
 gdb.write(f"[hw] EM[P25 bits@0x4000]  = 0x{em_p25_bits:08X}\n")
 gdb.write(f"[hw] EM[P25 aux@0xFFFC]   = 0x{em_p25_aux:08X}\n")
+dump_em_range(64, 72, "EM command window")
+dump_em_range(88, 120, "EM event search window")
 
 evt_bytes = b''.join(word.to_bytes(4, 'little') for word in [em_evt_w0, em_evt_w1, em_evt_w2, em_evt_w3])
 evt_pkt_ok = len(evt_bytes) >= 7 and evt_bytes[0] == 0x04 and evt_bytes[1] == 0x0E
