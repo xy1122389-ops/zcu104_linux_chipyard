@@ -1,0 +1,9 @@
+CEVA Phase4-D..F hardening contract
+proof_log=/root/chipyard/fpga/logs/phase5c_fullsoak_after_jlink_20260514_210043/round_3/run.log
+p4d_checker=/root/chipyard/fpga/scripts/check_ceva_phase4d_vendor_build_reproducibility.sh
+p4e_checker=/root/chipyard/fpga/scripts/check_ceva_phase4e_driver_lifecycle_hardening.sh
+p4f_checker=/root/chipyard/fpga/scripts/check_ceva_phase4f_interrupt_timer_power_hardening.sh
+P4D_VENDOR_BUILD_REPRODUCIBILITY=PASS
+P4E_DRIVER_LIFECYCLE_HARDENING=PASS
+P4F_INTERRUPT_TIMER_POWER_HARDENING=PASS
+P4D_TO_F_HARDENING_CONTRACT=PASS

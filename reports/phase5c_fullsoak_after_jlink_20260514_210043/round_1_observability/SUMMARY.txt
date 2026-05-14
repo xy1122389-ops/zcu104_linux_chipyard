@@ -1,0 +1,26 @@
+CEVA Phase4-H observability bundle
+created=20260514_210947
+proof_log=/root/chipyard/fpga/logs/phase5c_fullsoak_after_jlink_20260514_210043/round_1/run.log
+bundle_dir=/root/chipyard/fpga/reports/phase5c_fullsoak_after_jlink_20260514_210043/round_1_observability
+PROOF_LOG_SHA256=cdbf7db229956744e471b37a47635cd36fe2f6a56e78afcb15cc8b8e4cf061f8
+PROOF_LOG_SIZE=36997
+MANIFEST_SHA256=bb31e704af7f08c845bcd89d360979ba502a9f5c41803aa6eb0bb766293ec3b2
+MANIFEST_SIZE=3278
+DTS_SHA256=5a43441d7a06e0014497bcd9ebfe8a084715c314a41a48971eb0ce0372980e0a
+DTS_SIZE=6348
+SIDECAR_BIN_SHA256=787b543b095ad480adb42a795bc5a65ce827289e74bad3b4a1d9d7f410d03ca8
+SIDECAR_BIN_SIZE=728
+
+Key proof markers:
+ceva-bt52 65000000.ceva-dm: CEVA BT5.2 registered as hci0 (IRQ 15, EM@0x65010000)
+ceva-bt52 65000000.ceva-dm: BT core running (CLKN 5/5 OK)
+ceva-bt52 65000000.ceva-dm: ceva_bt_open: OK
+PHASE25_USER_HCI_RESET_PASS
+PHASE25_USER_HCI_RLV_PASS
+PHASE25_USER_SMOKE_PASS
+[boot-owner] claimed=yes
+CEVA_PHASE25_SELFTEST_PASS: PASS
+
+Failure marker scan:
+
+P4H_OBSERVABILITY_BUNDLE=PASS

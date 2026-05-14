@@ -785,19 +785,16 @@ int main(int argc, char **argv)
 	probe_log("PHASE25_USER_STEP_HCI_RESET");
 	if (!run_command(sock, mem_fd, active_channel,
 			 "HCI_RESET", HCI_OP_RESET, timeout_ms, &reset_result)) {
-		printf("PHASE25_USER_HCI_RESET_FAIL\n");
-		fflush(stdout);
+		probe_log("PHASE25_USER_HCI_RESET_FAIL");
 		goto close_and_summary;
 	}
 
-	printf("PHASE25_USER_HCI_RESET_PASS\n");
-	fflush(stdout);
+	probe_log("PHASE25_USER_HCI_RESET_PASS");
 
 	probe_log("PHASE25_USER_STEP_HCI_RLV");
 	if (!run_command(sock, mem_fd, active_channel,
 			 "HCI_RLV", HCI_OP_READ_LOCAL_VERSION, timeout_ms, &rlv_result)) {
-		printf("PHASE25_USER_HCI_RLV_FAIL\n");
-		fflush(stdout);
+		probe_log("PHASE25_USER_HCI_RLV_FAIL");
 		goto close_and_summary;
 	}
 
@@ -809,6 +806,7 @@ int main(int argc, char **argv)
 	       le16_to_cpu_u(rlv_result.version.lmp_subver));
 	printf("PHASE25_USER_HCI_RLV_PASS\n");
 	fflush(stdout);
+	probe_log("PHASE25_USER_HCI_RLV_PASS");
 
 	overall_pass = hci0_present && reset_result.pass && rlv_result.pass;
 
@@ -819,9 +817,9 @@ close_and_summary:
 
 summary:
 	if (overall_pass)
-		printf("PHASE25_USER_SMOKE_PASS\n");
+		probe_log("PHASE25_USER_SMOKE_PASS");
 	else
-		printf("PHASE25_USER_SMOKE_FAIL\n");
+		probe_log("PHASE25_USER_SMOKE_FAIL");
 
 	alarm(0);
 	fflush(stdout);

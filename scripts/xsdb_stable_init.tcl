@@ -31,11 +31,22 @@ proc step {label body} {
 }
 
 # --- Resolve paths ---
-set zcu104_cfg "RocketZCU104LinuxBringupConfig"
-set base "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src"
-set obj_dir [string map {/ \\} "${base}/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]
-set psu_init_tcl "${obj_dir}\\ip\\zcu104ps\\psu_init.tcl"
-set bit_file "${obj_dir}\\ZCU104FPGATestHarness.bit"
+if {[info exists ::env(CHIPYARD_BITSTREAM_LINUX)] && $::env(CHIPYARD_BITSTREAM_LINUX) ne ""} {
+    if {$tcl_platform(platform) eq "windows"} {
+        set bit_file $::env(CHIPYARD_BITSTREAM_WINDOWS)
+        set psu_init_tcl $::env(CHIPYARD_PSU_INIT_TCL_WINDOWS)
+    } else {
+        set bit_file $::env(CHIPYARD_BITSTREAM_LINUX)
+        set psu_init_tcl $::env(CHIPYARD_PSU_INIT_TCL_LINUX)
+    }
+    set zcu104_cfg "env-override"
+} else {
+    set zcu104_cfg "RocketZCU104LinuxBringupConfig"
+    set base "//wsl.localhost/Ubuntu-22.04/root/chipyard/fpga/generated-src"
+    set obj_dir [string map {/ \\} "${base}/chipyard.fpga.zcu104.ZCU104FPGATestHarness.${zcu104_cfg}/obj"]
+    set psu_init_tcl "${obj_dir}\\ip\\zcu104ps\\psu_init.tcl"
+    set bit_file "${obj_dir}\\ZCU104FPGATestHarness.bit"
+}
 
 step "connect hw_server" {
     connect -url tcp:127.0.0.1:3121

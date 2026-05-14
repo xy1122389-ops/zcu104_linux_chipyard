@@ -1,0 +1,8 @@
+CEVA Phase4-G Fedora/BlueZ service integration
+proof_log=/root/chipyard/fpga/logs/phase5c_fullsoak_after_jlink_20260514_210043/round_1/run.log
+runner=/root/chipyard/fpga/scripts/run_ceva_phase4g_service_managed_smoke.sh
+phase3_bluez_evidence=/root/chipyard/fpga/docs/bringup/phase3_completion_evidence/07_bluez_controlled_bringup_pass.md
+P4G_FEDORA_BLUEZ_SERVICE_INTEGRATION=PASS
+P4G_SERVICE_CONTRACT=PASS
+P4G_CONTROLLED_BLUEZ_WORKFLOW=PASS
+P4G_NO_RF_SCAN_PAIR_CONNECT_CLAIM=PASS
