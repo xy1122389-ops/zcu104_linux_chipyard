@@ -4,6 +4,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MARKER_H="${ROOT_DIR}/sidecar/ceva_bt52_sidecar/marker.h"
 LINKER_LD="${ROOT_DIR}/sidecar/ceva_bt52_sidecar/linker.ld"
+CONTRACT="${ROOT_DIR}/scripts/ceva_reserved_memory_contract.sh"
+
+source "$CONTRACT"
 
 require_text() {
   local needle="$1"
@@ -40,30 +43,21 @@ check_no_overlap() {
   echo "PASS: $name_a does not overlap $name_b"
 }
 
-require_text "CEVA_BT52_SIDECAR_MARKER_BASE 0x000000008F010000ULL" "$MARKER_H"
-require_text "CEVA_BT52_SIDECAR_IMAGE_BASE 0x000000008F020000ULL" "$MARKER_H"
-require_text "ORIGIN = 0x000000008F020000" "$LINKER_LD"
+require_text "CEVA_BT52_SIDECAR_MARKER_BASE 0x000000008FBE0000ULL" "$MARKER_H"
+require_text "CEVA_BT52_SIDECAR_IMAGE_BASE 0x000000008FBF0000ULL" "$MARKER_H"
+require_text "ORIGIN = 0x000000008FBF0000" "$LINKER_LD"
 require_text "LENGTH = 64K" "$LINKER_LD"
 
-SIDECAR_MARKER_START=0x8F010000
-SIDECAR_MARKER_END=0x8F010FFF
-SIDECAR_IMAGE_START=0x8F020000
-SIDECAR_IMAGE_END=0x8F02FFFF
-
-declare -a REGIONS=(
-  "OpenSBI:0x80000000:0x80020DE8"
-  "LinuxImage:0x80200000:0x830D4808"
-  "FuturePayloadInitramfs:0x83000000:0x86FFFFFF"
-  "DTB:0x84000000:0x8401FFFF"
-  "FrontChain:0x88000000:0x883FFFFF"
-  "LegacyStageP3BD:0x8F000000:0x8F0000D8"
-)
+SIDECAR_MARKER_START="$CEVA_SIDECAR_MARKER_START"
+SIDECAR_MARKER_END="$CEVA_SIDECAR_MARKER_END"
+SIDECAR_IMAGE_START="$CEVA_SIDECAR_IMAGE_START"
+SIDECAR_IMAGE_END="$CEVA_SIDECAR_IMAGE_END"
 
 echo "CEVA sidecar memory contract static check"
 echo "marker=${SIDECAR_MARKER_START}..${SIDECAR_MARKER_END}"
 echo "image=${SIDECAR_IMAGE_START}..${SIDECAR_IMAGE_END}"
 
-for region in "${REGIONS[@]}"; do
+for region in "${CEVA_MEMORY_REGIONS[@]}"; do
   IFS=: read -r name start end <<<"$region"
   check_no_overlap SidecarMarker "$SIDECAR_MARKER_START" "$SIDECAR_MARKER_END" "$name" "$start" "$end"
   check_no_overlap SidecarImage "$SIDECAR_IMAGE_START" "$SIDECAR_IMAGE_END" "$name" "$start" "$end"

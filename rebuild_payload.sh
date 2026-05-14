@@ -6,6 +6,14 @@ ROOT_DIR="/root/chipyard/fpga"
 TOOLCHAIN_DIR="/root/chipyard/.oclaw-env/riscv-tools/bin"
 export PATH="$TOOLCHAIN_DIR:$PATH"
 
+LAUNCH_CONTRACT_SCRIPT="$ROOT_DIR/scripts/ceva_runtime_launch_contract.sh"
+LAUNCH_MANIFEST_SCRIPT="$ROOT_DIR/scripts/generate_ceva_runtime_launch_manifest.sh"
+
+if [[ -f "$LAUNCH_CONTRACT_SCRIPT" ]]; then
+  # shellcheck source=/root/chipyard/fpga/scripts/ceva_runtime_launch_contract.sh
+  source "$LAUNCH_CONTRACT_SCRIPT"
+fi
+
 LINUX_CROSS="$TOOLCHAIN_DIR/riscv64-unknown-linux-gnu-"
 OPENSBI_CROSS="$TOOLCHAIN_DIR/riscv64-unknown-elf-"
 
@@ -22,15 +30,75 @@ STAGE_MARK_BIN="$ROOTFS_DIR/sbin/stage_mark"
 KERNEL_DIR="/root/chipyard/software/firemarshal/boards/default/linux-clean"
 LINUX_IMAGE="$KERNEL_DIR/arch/riscv/boot/Image"
 CEVA_DRIVER_DIR="$ROOT_DIR/linux-bringup/kernel/ceva-bt52-driver"
+DTC_BIN="${DTC_BIN:-dtc}"
+DTB_SOURCE="$ROOT_DIR/linux-bringup/dtb/chipyard-zcu104-fedora.dts"
 
 OPENSBI_DIR="/root/chipyard/software/firemarshal/boards/default/firmware/opensbi"
-FW_PAYLOAD_FDT_ADDR="0x84000000"
+PAYLOAD_MANIFEST_PATH="${CEVA_RUNTIME_MANIFEST_PATH:-$ROOT_DIR/linux-bringup/payload/ceva_runtime_launch_manifest.env}"
+FW_PAYLOAD_FDT_ADDR="${CEVA_RUNTIME_DTB_LOAD_ADDR:-0x84000000}"
+FW_PAYLOAD_OFFSET="${CEVA_RUNTIME_OPENSBI_PAYLOAD_OFFSET:-0x200000}"
+CEVA_OPENSBI_RESERVED_NODE_NAME="${CEVA_RESERVED_MEMORY_DTB_NODE:-ceva_runtime_reserved}"
+CEVA_OPENSBI_RESERVED_COMPAT="${CEVA_RESERVED_MEMORY_DTB_COMPAT:-shared-dma-pool}"
+CEVA_OPENSBI_RESERVED_START="${CEVA_RUNTIME_RESERVED_START:-0x8FBE0000}"
+CEVA_OPENSBI_RESERVED_SIZE="${CEVA_RUNTIME_RESERVED_SIZE:-0x00320000}"
+CEVA_OPENSBI_RESERVED_NO_MAP="${CEVA_RESERVED_MEMORY_NO_MAP:-1}"
+CEVA_OPENSBI_MARKER_BASE="${CEVA_RUNTIME_BOOT_OWNER_MARKER_ADDR:-0x8FBE0000}"
 FW_BIN="$OPENSBI_DIR/build/platform/generic/firmware/fw_payload.bin"
 
 LEGACY_OUTPUT_DIR="$ROOT_DIR/linux-bringup/payload"
 LEGACY_OUTPUT_BIN="$LEGACY_OUTPUT_DIR/fw_payload.bin"
 
 JOBS="${JOBS:-$(nproc)}"
+
+print_manifest_field() {
+  local name="$1"
+  printf 'P4B_MANIFEST_FIELD %s=%s\n' "$name" "${!name:-UNSET}"
+}
+
+if [[ "${CEVA_RUNTIME_MANIFEST_CHECK_ONLY:-0}" == "1" ]]; then
+  if [[ ! -f "$PAYLOAD_MANIFEST_PATH" ]]; then
+    echo "[ERROR] Missing runtime manifest for check-only mode: $PAYLOAD_MANIFEST_PATH" >&2
+    exit 1
+  fi
+
+  # shellcheck disable=SC1090
+  source "$PAYLOAD_MANIFEST_PATH"
+
+  echo "[info] CEVA runtime manifest check-only"
+  echo "[info] Manifest path     : $PAYLOAD_MANIFEST_PATH"
+  print_manifest_field "CEVA_RUNTIME_DTB_LOAD_ADDR"
+  print_manifest_field "CEVA_RUNTIME_OPENSBI_PAYLOAD_OFFSET"
+  print_manifest_field "CEVA_RUNTIME_LAUNCH_OWNER_CURRENT"
+  print_manifest_field "CEVA_RUNTIME_LAUNCH_OWNER_TARGET"
+  print_manifest_field "CEVA_RUNTIME_PAYLOAD_BOOTSTRAP_CURRENT"
+  print_manifest_field "CEVA_RUNTIME_PAYLOAD_BOOTSTRAP_ROLE"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_METADATA_VERSION"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_CLEAR_MARKER_POLICY"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_STAGE_ORDER"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_LINUX_HANDOFF_POLICY"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_SIDECAR_START_POLICY"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_REQUIRED_READY_MARKER"
+  print_manifest_field "CEVA_RUNTIME_SIDECAR_IMAGE_LOAD_ADDR"
+  print_manifest_field "CEVA_RUNTIME_SIDECAR_IMAGE_MAX_SIZE"
+  print_manifest_field "CEVA_RUNTIME_SIDECAR_ENTRY_ADDR"
+  print_manifest_field "CEVA_RUNTIME_SIDECAR_MARKER_PAGE_ADDR"
+  print_manifest_field "CEVA_RUNTIME_SIDECAR_MARKER_PAGE_SIZE"
+  print_manifest_field "CEVA_RUNTIME_BOOT_OWNER_MARKER_ADDR"
+  print_manifest_field "CEVA_RUNTIME_VENDOR_IMAGE_LOAD_ADDR"
+  print_manifest_field "CEVA_RUNTIME_VENDOR_IMAGE_MAX_SIZE"
+  print_manifest_field "CEVA_RUNTIME_PROOF_IMAGE_LOAD_ADDR"
+  print_manifest_field "CEVA_RUNTIME_PROOF_IMAGE_MAX_SIZE"
+  print_manifest_field "CEVA_RUNTIME_STAGING_OWNER"
+  print_manifest_field "CEVA_RUNTIME_STAGING_CONSUMER"
+  print_manifest_field "CEVA_RUNTIME_STAGING_ACTIVE"
+  print_manifest_field "CEVA_OPENSBI_RESERVED_NODE_NAME"
+  print_manifest_field "CEVA_OPENSBI_RESERVED_COMPAT"
+  print_manifest_field "CEVA_OPENSBI_RESERVED_START"
+  print_manifest_field "CEVA_OPENSBI_RESERVED_SIZE"
+  print_manifest_field "CEVA_OPENSBI_RESERVED_NO_MAP"
+  print_manifest_field "CEVA_OPENSBI_MARKER_BASE"
+  exit 0
+fi
 
 config_is_module() {
   local symbol="$1"
@@ -57,6 +125,7 @@ echo "[info] Kernel dir       : $KERNEL_DIR"
 echo "[info] Linux Image      : $LINUX_IMAGE"
 echo "[info] Module dir       : $ROOTFS_MODULE_DIR"
 echo "[info] CEVA driver dir  : $CEVA_DRIVER_DIR"
+echo "[info] DTB source       : $DTB_SOURCE"
 echo "[info] OpenSBI dir      : $OPENSBI_DIR"
 echo "[info] OpenSBI fw bin   : $FW_BIN"
 echo "[info] Jobs             : $JOBS"
@@ -93,6 +162,11 @@ fi
 
 if [[ ! -d "$CEVA_DRIVER_DIR" ]]; then
   echo "[ERROR] Missing CEVA driver dir: $CEVA_DRIVER_DIR" >&2
+  exit 1
+fi
+
+if [[ ! -f "$DTB_SOURCE" ]]; then
+  echo "[ERROR] Missing DTB source: $DTB_SOURCE" >&2
   exit 1
 fi
 
@@ -236,6 +310,45 @@ echo "[ok] Linux Image rebuilt"
 echo "      size   : $(stat -c %s "$LINUX_IMAGE") bytes"
 echo "      mtime  : $(stat -c %y "$LINUX_IMAGE")"
 
+echo "[step 3a/4] Recompiling runtime DTB from DTS"
+if ! command -v "$DTC_BIN" >/dev/null 2>&1; then
+  echo "[ERROR] dtc not found in PATH; cannot refresh runtime DTB" >&2
+  exit 1
+fi
+
+"$DTC_BIN" -I dts -O dtb -o "$CEVA_RUNTIME_DTB" "$DTB_SOURCE"
+
+echo "[ok] DTB rebuilt"
+echo "      path   : $CEVA_RUNTIME_DTB"
+echo "      size   : $(stat -c %s "$CEVA_RUNTIME_DTB") bytes"
+echo "      mtime  : $(stat -c %y "$CEVA_RUNTIME_DTB")"
+
+echo "[step 3b/4] Refreshing CEVA runtime launch manifest for OpenSBI inputs"
+if [[ ! -x "$LAUNCH_MANIFEST_SCRIPT" ]]; then
+  echo "[ERROR] launch manifest generator not executable: $LAUNCH_MANIFEST_SCRIPT" >&2
+  exit 1
+fi
+
+"$LAUNCH_MANIFEST_SCRIPT" "$PAYLOAD_MANIFEST_PATH"
+
+# shellcheck disable=SC1090
+source "$PAYLOAD_MANIFEST_PATH"
+FW_PAYLOAD_FDT_ADDR="${CEVA_RUNTIME_DTB_LOAD_ADDR}"
+FW_PAYLOAD_OFFSET="${CEVA_RUNTIME_OPENSBI_PAYLOAD_OFFSET}"
+CEVA_OPENSBI_RESERVED_NODE_NAME="${CEVA_RESERVED_MEMORY_DTB_NODE}"
+CEVA_OPENSBI_RESERVED_COMPAT="${CEVA_RESERVED_MEMORY_DTB_COMPAT}"
+CEVA_OPENSBI_RESERVED_START="${CEVA_RUNTIME_RESERVED_START}"
+CEVA_OPENSBI_RESERVED_SIZE="${CEVA_RUNTIME_RESERVED_SIZE}"
+CEVA_OPENSBI_RESERVED_NO_MAP="${CEVA_RESERVED_MEMORY_NO_MAP}"
+CEVA_OPENSBI_MARKER_BASE="${CEVA_RUNTIME_BOOT_OWNER_MARKER_ADDR}"
+
+echo "[ok] OpenSBI input manifest refreshed"
+echo "      path   : $PAYLOAD_MANIFEST_PATH"
+echo "      fdt    : $FW_PAYLOAD_FDT_ADDR"
+echo "      offset : $FW_PAYLOAD_OFFSET"
+echo "      rsvd   : $CEVA_OPENSBI_RESERVED_NODE_NAME @ $CEVA_OPENSBI_RESERVED_START size $CEVA_OPENSBI_RESERVED_SIZE"
+echo "      marker : $CEVA_OPENSBI_MARKER_BASE"
+
 echo "[step 4/4] Rebuilding OpenSBI fw_payload.bin"
 make -C "$OPENSBI_DIR" clean >/dev/null 2>&1 || true
 CROSS_COMPILE="$OPENSBI_CROSS" \
@@ -245,6 +358,13 @@ make -C "$OPENSBI_DIR" \
   FW_PAYLOAD=y \
   FW_PAYLOAD_PATH="$LINUX_IMAGE" \
   FW_PAYLOAD_FDT_ADDR="$FW_PAYLOAD_FDT_ADDR" \
+  FW_PAYLOAD_OFFSET="$FW_PAYLOAD_OFFSET" \
+  CEVA_OPENSBI_RESERVED_NODE_NAME="$CEVA_OPENSBI_RESERVED_NODE_NAME" \
+  CEVA_OPENSBI_RESERVED_COMPAT="$CEVA_OPENSBI_RESERVED_COMPAT" \
+  CEVA_OPENSBI_RESERVED_START="$CEVA_OPENSBI_RESERVED_START" \
+  CEVA_OPENSBI_RESERVED_SIZE="$CEVA_OPENSBI_RESERVED_SIZE" \
+  CEVA_OPENSBI_RESERVED_NO_MAP="$CEVA_OPENSBI_RESERVED_NO_MAP" \
+  CEVA_OPENSBI_MARKER_BASE="$CEVA_OPENSBI_MARKER_BASE" \
   -j"$JOBS"
 
 if [[ ! -f "$FW_BIN" ]]; then
@@ -260,8 +380,20 @@ echo "      size   : $(stat -c %s "$FW_BIN") bytes"
 echo "      mtime  : $(stat -c %y "$FW_BIN")"
 echo "      mirror : $LEGACY_OUTPUT_BIN"
 
+echo "[step 4b/4] Refreshing CEVA runtime launch manifest"
+if [[ ! -x "$LAUNCH_MANIFEST_SCRIPT" ]]; then
+  echo "[ERROR] launch manifest generator not executable: $LAUNCH_MANIFEST_SCRIPT" >&2
+  exit 1
+fi
+
+"$LAUNCH_MANIFEST_SCRIPT" "$PAYLOAD_MANIFEST_PATH"
+
+echo "[ok] CEVA runtime launch manifest refreshed"
+echo "      path   : $PAYLOAD_MANIFEST_PATH"
+
 echo ""
 echo "[done] Rebuild complete"
 echo "       1. initramfs.cpio matches $ROOTFS_DIR"
 echo "       2. Image embeds the updated initramfs"
 echo "       3. fw_payload.bin now wraps the rebuilt Image"
+echo "       4. CEVA runtime launch manifest matches the launch contract"

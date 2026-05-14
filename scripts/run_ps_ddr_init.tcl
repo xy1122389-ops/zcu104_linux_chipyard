@@ -122,6 +122,15 @@ step "run psu_init (PS DDR init first)" {
   psu_init
 }
 
+step "relax IOU secure gating for boot devices" {
+  # Match Xilinx U-Boot's post-psu_init sequence so SD0/SD1/QSPI/NAND are
+  # accessible to non-secure masters. Rocket's S_AXI_LPD path is hardwired
+  # as privileged + non-secure, so without this override SDIO1 can return
+  # bus errors even when clocks/resets were set up correctly by psu_init.
+  mwr -force 0xFF240000 0x04920492
+  mwr -force 0xFF240004 0x00920492
+}
+
 if {[info exists ::env(SKIP_FPGA_PROGRAM)] && $::env(SKIP_FPGA_PROGRAM) eq "1"} {
   puts "\n==== SKIP FPGA programming (SKIP_FPGA_PROGRAM=1) ===="
 } else {

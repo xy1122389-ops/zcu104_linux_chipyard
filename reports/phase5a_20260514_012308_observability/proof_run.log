@@ -1,0 +1,935 @@
+CEVA Phase4-G service-managed smoke
+run_tag=phase5a_20260514_012308
+jlink=127.0.0.1:3333
+kernel_run_secs=180
+skip_ddr_init=1
+workflow=JLink-precheck -> Linux/Fedora bringup -> hci0 Reset/RLV proof capture
+PHASE4G_SERVICE_MANAGED_RUN_START
+[recover] status before init
+=== J-Link PnP ===
+
+Status  Class FriendlyName                InstanceId                                    Present
+------  ----- ------------                ----------                                    -------
+Unknown USB   USB Composite Device        USB\VID_1366&PID_0105\000601012352              False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0101\7&D8C7DB4&0&1             False
+OK      USB   J-Link driver               USB\VID_1366&PID_0101\000601012542               True
+Unknown Ports JLink CDC UART Port (COM14) USB\VID_1366&PID_0105&MI_00\8&2FAED60D&0&0000   False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0105&MI_02\8&2FAED60D&0&0002   False
+
+
+
+=== J-Link Processes ===
+
+=== J-Link Ports ===
+
+=== J-Link Log Tail ===
+Writing 0x00000000 @ address 0x650101A8
+Received monitor command: WriteU32 0x650101AC 0x00000000
+Writing 0x00000000 @ address 0x650101AC
+Received monitor command: WriteU32 0x650101B0 0x00000000
+Writing 0x00000000 @ address 0x650101B0
+Received monitor command: WriteU32 0x650101B4 0x00000000
+Writing 0x00000000 @ address 0x650101B4
+Received monitor command: WriteU32 0x650101B8 0x00000000
+Writing 0x00000000 @ address 0x650101B8
+Received monitor command: WriteU32 0x650101BC 0x00000000
+Writing 0x00000000 @ address 0x650101BC
+Received monitor command: WriteU32 0x650101C0 0x00000000
+Writing 0x00000000 @ address 0x650101C0
+Received monitor command: WriteU32 0x650101C4 0x00000000
+Writing 0x00000000 @ address 0x650101C4
+Received monitor command: WriteU32 0x650101C8 0x00000000
+Writing 0x00000000 @ address 0x650101C8
+Received monitor command: WriteU32 0x650101CC 0x00000000
+Writing 0x00000000 @ address 0x650101CC
+Received monitor command: WriteU32 0x650101D0 0x00000000
+Writing 0x00000000 @ address 0x650101D0
+Received monitor command: WriteU32 0x650101D4 0x00000000
+Writing 0x00000000 @ address 0x650101D4
+Received monitor command: WriteU32 0x650101D8 0x00000000
+Writing 0x00000000 @ address 0x650101D8
+Received monitor command: WriteU32 0x650101DC 0x00000000
+Writing 0x00000000 @ address 0x650101DC
+Received monitor command: WriteU32 0x650101E0 0x00000000
+Writing 0x00000000 @ address 0x650101E0
+Received monitor command: WriteU32 0x65011000 0x00000000
+Writing 0x00000000 @ address 0x65011000
+Received monitor command: WriteU32 0x65014000 0x00000000
+Writing 0x00000000 @ address 0x65014000
+Received monitor command: WriteU32 0x6501FFFC 0x00000000
+Writing 0x00000000 @ address 0x6501FFFC
+Downloading 256 bytes @ address 0x8FF00000
+Received monitor command: go
+Starting target CPU...
+GDB closed TCP/IP connection (Socket 1016)
+Starting target CPU...
+
+=== J-Link Commander Enumeration ===
+SEGGER J-Link Commander V7.82b (Compiled Nov  9 2022 17:08:19)
+DLL version V7.82b, compiled Nov  9 2022 17:06:50
+
+
+J-Link Command File read successfully.
+Processing script file...
+J-Link>ShowEmuList
+J-Link[0]: Connection: USB, Serial number: 601012542, ProductName: J-Link PLUS
+J-Link>exit
+
+Script processing completed.
+
+
+[recover] starting hw_server on :3121
+[recover] hw_server is listening on :3121
+
+[recover] running stable init
+[stable_init] Programming LinuxBringup bit + full PS init + GPIO[31]=0
+[stable_init] TCL: \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\scripts\xsdb_stable_init.tcl
+
+'\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga'
+ÓÃ×÷Îªµ±Ç°Ä¿Â¼µÄÒÔÉÏÂ·¾¶Æô¶¯ÁË CMD.EXE¡£
+UNC Â·¾¶²»ÊÜÖ§³Ö¡£Ä¬ÈÏÖµÉèÎª Windows Ä¿Â¼¡£
+
+==== connect hw_server ====
+
+==== show targets ====
+
+==== select PSU target ====
+PSU target found
+
+==== source psu_init.tcl ====
+Loading: \\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl
+ERROR in source psu_init.tcl: couldn't read file "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl": no such file or directory
+couldn't read file "\\wsl.localhost\Ubuntu-22.04\root\chipyard\fpga\generated-src\chipyard.fpga.zcu104.ZCU104FPGATestHarness.RocketZCU104LinuxBringupConfig\obj\ip\zcu104ps\psu_init.tcl": no such file or directory
+    while executing
+"source $psu_init_tcl"
+    ("uplevel" body line 3)
+    invoked from within
+"uplevel 1 $body"
+
+[stable_init] SUCCESS â€” ready for J-Link
+
+[recover] status after init
+=== J-Link PnP ===
+
+Status  Class FriendlyName                InstanceId                                    Present
+------  ----- ------------                ----------                                    -------
+Unknown USB   USB Composite Device        USB\VID_1366&PID_0105\000601012352              False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0101\7&D8C7DB4&0&1             False
+OK      USB   J-Link driver               USB\VID_1366&PID_0101\000601012542               True
+Unknown Ports JLink CDC UART Port (COM14) USB\VID_1366&PID_0105&MI_00\8&2FAED60D&0&0000   False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0105&MI_02\8&2FAED60D&0&0002   False
+
+
+
+=== J-Link Processes ===
+
+=== J-Link Ports ===
+
+=== J-Link Log Tail ===
+Writing 0x00000000 @ address 0x650101A8
+Received monitor command: WriteU32 0x650101AC 0x00000000
+Writing 0x00000000 @ address 0x650101AC
+Received monitor command: WriteU32 0x650101B0 0x00000000
+Writing 0x00000000 @ address 0x650101B0
+Received monitor command: WriteU32 0x650101B4 0x00000000
+Writing 0x00000000 @ address 0x650101B4
+Received monitor command: WriteU32 0x650101B8 0x00000000
+Writing 0x00000000 @ address 0x650101B8
+Received monitor command: WriteU32 0x650101BC 0x00000000
+Writing 0x00000000 @ address 0x650101BC
+Received monitor command: WriteU32 0x650101C0 0x00000000
+Writing 0x00000000 @ address 0x650101C0
+Received monitor command: WriteU32 0x650101C4 0x00000000
+Writing 0x00000000 @ address 0x650101C4
+Received monitor command: WriteU32 0x650101C8 0x00000000
+Writing 0x00000000 @ address 0x650101C8
+Received monitor command: WriteU32 0x650101CC 0x00000000
+Writing 0x00000000 @ address 0x650101CC
+Received monitor command: WriteU32 0x650101D0 0x00000000
+Writing 0x00000000 @ address 0x650101D0
+Received monitor command: WriteU32 0x650101D4 0x00000000
+Writing 0x00000000 @ address 0x650101D4
+Received monitor command: WriteU32 0x650101D8 0x00000000
+Writing 0x00000000 @ address 0x650101D8
+Received monitor command: WriteU32 0x650101DC 0x00000000
+Writing 0x00000000 @ address 0x650101DC
+Received monitor command: WriteU32 0x650101E0 0x00000000
+Writing 0x00000000 @ address 0x650101E0
+Received monitor command: WriteU32 0x65011000 0x00000000
+Writing 0x00000000 @ address 0x65011000
+Received monitor command: WriteU32 0x65014000 0x00000000
+Writing 0x00000000 @ address 0x65014000
+Received monitor command: WriteU32 0x6501FFFC 0x00000000
+Writing 0x00000000 @ address 0x6501FFFC
+Downloading 256 bytes @ address 0x8FF00000
+Received monitor command: go
+Starting target CPU...
+GDB closed TCP/IP connection (Socket 1016)
+Starting target CPU...
+
+=== J-Link Commander Enumeration ===
+SEGGER J-Link Commander V7.82b (Compiled Nov  9 2022 17:08:19)
+DLL version V7.82b, compiled Nov  9 2022 17:06:50
+
+
+J-Link Command File read successfully.
+Processing script file...
+J-Link>ShowEmuList
+J-Link[0]: Connection: USB, Serial number: 601012542, ProductName: J-Link PLUS
+J-Link>exit
+
+Script processing completed.
+
+
+[recover] stopping residual hw_server/xsdb processes (preserve healthy J-Link server)
+
+[recover] starting J-Link server
+[jlink] Starting J-Link GDB Server on 127.0.0.1:3333 (background)...
+[jlink] Log: /tmp/jlink_gdbserver.log
+
+[jlink] Attempt 1: start with -noir -nohalt -noreset
+[jlink] Waiting for GDB Server to become ready...
+[jlink] GDB Server is listening on :3333
+[jlink] Ready for GDB connections.
+
+[recover] precheck run #1
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0xffffffff80003206 in ?? ()
+
+=== HALT ===
+halt done
+
+=== PC ===
+$1 = 0xffffffff80003206
+[precheck] pc=0xFFFFFFFF80003206
+
+=== CSRs ===
+$2 = void
+$3 = void
+$4 = void
+
+=== BootROM 0x10000 ===
+0x10000:	0x08000117	0x00010113	0x00000297	0x01428293
+
+=== CLINT mtime ===
+0x200bff8:	0x24b4e1df	0x00000000
+
+=== PLIC 0x0C000000 ===
+0xc000000:	0x00000000	0x00000001	0x00000001	0x00000001
+
+=== PRECHECK PASSED ===
+
+[recover] precheck run #2
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0xffffffff80003206 in ?? ()
+
+=== HALT ===
+halt done
+
+=== PC ===
+$1 = 0xffffffff80003206
+[precheck] pc=0xFFFFFFFF80003206
+
+=== CSRs ===
+$2 = void
+$3 = void
+$4 = void
+
+=== BootROM 0x10000 ===
+0x10000:	0x08000117	0x00010113	0x00000297	0x01428293
+
+=== CLINT mtime ===
+0x200bff8:	0x24b4f0e6	0x00000000
+
+=== PLIC 0x0C000000 ===
+0xc000000:	0x00000000	0x00000001	0x00000001	0x00000001
+
+=== PRECHECK PASSED ===
+================================================================
+  ZCU104 Phase 2: CEVA BT5.2 Linux Driver Boot Verification
+================================================================
+  Payload  : /root/chipyard/fpga/linux-bringup/payload/fw_payload.bin
+  DTB      : /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-fedora.dtb
+  Runtime  : opensbi-owned-runtime-with-gdb-bootstrap (target=opensbi)
+  Run secs : 180
+  J-Link   : 127.0.0.1:3333
+  DDR init : SKIP
+
+[1;33m[WARN][0m SKIP_DDR_INIT=1: Skipping PS DDR init. FPGA must already be programmed.
+[jlink] Running guarded J-Link recovery/precheck...
+[jlink-guard] === status snapshot ===
+=== J-Link PnP ===
+
+Status  Class FriendlyName                InstanceId                                    Present
+------  ----- ------------                ----------                                    -------
+Unknown USB   USB Composite Device        USB\VID_1366&PID_0105\000601012352              False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0101\7&D8C7DB4&0&1             False
+OK      USB   J-Link driver               USB\VID_1366&PID_0101\000601012542               True
+Unknown Ports JLink CDC UART Port (COM14) USB\VID_1366&PID_0105&MI_00\8&2FAED60D&0&0000   False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0105&MI_02\8&2FAED60D&0&0002   False
+
+
+
+=== J-Link Processes ===
+
+ProcessName         Id Path                                              
+-----------         -- ----                                              
+JLinkGDBServerCL 47224 C:\Program Files\SEGGER\JLink\JLinkGDBServerCL.exe
+
+
+
+=== J-Link Ports ===
+
+LocalAddress LocalPort OwningProcess  State
+------------ --------- -------------  -----
+::                3333         47224 Listen
+0.0.0.0           3333         47224 Listen
+0.0.0.0           2333         47224 Listen
+0.0.0.0           2332         47224 Listen
+
+
+
+=== J-Link Log Tail ===
+JLinkARM.dll V7.82b (DLL compiled Nov  9 2022 17:06:50)
+
+Command line: -select USB=601012542 -device RISC-V -endian little -if JTAG -speed 1000 -JTAGConf 0,0 -port 3333 -LocalhostOnly 0 -noir -nohalt -noreset
+-----GDB Server start settings-----
+GDBInit file:                  none
+GDB Server Listening port:     3333
+SWO raw output listening port: 2332
+Terminal I/O port:             2333
+Accept remote connection:      yes
+Generate logfile:              off
+Verify download:               off
+Init regs on start:            off
+Silent mode:                   off
+Single run mode:               off
+Target connection timeout:     0 ms
+------J-Link related settings------
+J-Link Host interface:         USB
+J-Link script:                 none
+J-Link settings file:          none
+------Target related settings------
+Target device:                 RISC-V
+Target device parameters:      none
+Target interface:              JTAG
+Target interface speed:        1000kHz
+Target endian:                 little
+
+Connecting to J-Link...
+J-Link is connected.
+Firmware: J-Link Pro V4 compiled Sep 22 2029 15:00:37
+Hardware: V11.00
+S/N: 601012542
+Feature(s): RDI, FlashBP, FlashDL, JFlash, GDB
+Checking target voltage...
+Target voltage: 3.24 V
+Listening on TCP/IP port 3333
+Connecting to target...
+
+J-Link found 1 JTAG device, Total IRLen = 5
+JTAG ID: 0x00000001 (RV64)
+Connected to target
+
+=== J-Link Commander Enumeration ===
+SEGGER J-Link Commander V7.82b (Compiled Nov  9 2022 17:08:19)
+DLL version V7.82b, compiled Nov  9 2022 17:06:50
+
+
+J-Link Command File read successfully.
+Processing script file...
+J-Link>ShowEmuList
+J-Link[0]: Connection: USB, Serial number: 601012542, ProductName: J-Link PLUS
+J-Link>exit
+
+Script processing completed.
+
+[jlink-guard] J-Link USB device is Present/OK
+[jlink-guard] Starting or reusing J-Link server on 127.0.0.1:3333
+[jlink] GDB Server already listening on :3333 â€” reusing existing instance
+[jlink] DO NOT restart. Use 'target remote :3333' from GDB.
+[jlink-guard] Running minimal GDB precheck
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0xffffffff80003206 in ?? ()
+
+=== HALT ===
+halt done
+
+=== PC ===
+$1 = 0xffffffff80003206
+[precheck] pc=0xFFFFFFFF80003206
+
+=== CSRs ===
+$2 = void
+$3 = void
+$4 = void
+
+=== BootROM 0x10000 ===
+0x10000:	0x08000117	0x00010113	0x00000297	0x01428293
+
+=== CLINT mtime ===
+0x200bff8:	0x24b7f444	0x00000000
+
+=== PLIC 0x0C000000 ===
+0xc000000:	0x00000000	0x00000001	0x00000001	0x00000001
+
+=== PRECHECK PASSED ===
+[jlink-guard] PASS: J-Link server and target precheck succeeded
+[0;32m[OK][0m J-Link guard passed
+[0;32m[OK][0m fw_payload.bin size: 19731464 bytes
+[preflight] Splitting fw_payload.bin into chunks...
+[0;32m[OK][0m 5 chunks created in /tmp/fw_chunks_phase2
+
+[boot] Starting kernel boot + module load (180s)...
+
+[boot] Launch session: load payload + let kernel run
+[init] Loaded fw_payload.elf symbol table
+[init] Added vmlinux symbols for pre-boot evidence clears
+[init] Connecting to J-Link 127.0.0.1:3333...
+0xffffffff80003206 in ?? ()
+[init] Halted
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+O.K.
+[init] Reset machine, satp, PMP, and dcsr state to known boot state
+[phase2] Phase 2 CEVA BT5.2 Linux driver boot
+[phase2] Step 1: Zero DDR range 0x80000000-0x84000000
+Writing 0x00000000 @ address 0x80000000
+Writing 0x00000000 @ address 0x80100000
+[phase2] Step 2: Load fw_payload.bin chunks
+[restore] Loading fw_payload.bin in 5 chunks (4MB each)...
+[restore] chunk 1/5: chunk_00.bin -> 0x80000000
+Restoring binary file /tmp/fw_chunks_phase2/chunk_00.bin into memory (0x80000000 to 0x80400000)
+[restore] chunk 2/5: chunk_01.bin -> 0x80400000
+Restoring binary file /tmp/fw_chunks_phase2/chunk_01.bin into memory (0x80400000 to 0x80800000)
+[restore] chunk 3/5: chunk_02.bin -> 0x80800000
+Restoring binary file /tmp/fw_chunks_phase2/chunk_02.bin into memory (0x80800000 to 0x80c00000)
+[restore] chunk 4/5: chunk_03.bin -> 0x80C00000
+Restoring binary file /tmp/fw_chunks_phase2/chunk_03.bin into memory (0x80c00000 to 0x81000000)
+[restore] chunk 5/5: chunk_04.bin -> 0x81000000
+Restoring binary file /tmp/fw_chunks_phase2/chunk_04.bin into memory (0x81000000 to 0x812d1408)
+[ok] fw_payload.bin restored
+[phase2] Step 3: Load DTB at 0x84000000
+[dtb] Loading /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-fedora.dtb at 0x84000000...
+Restoring binary file /root/chipyard/fpga/linux-bringup/dtb/chipyard-zcu104-fedora.dtb into memory (0x84000000 to 0x840014ec)
+[ok] DTB loaded at 0x84000000
+[phase2] Step 4: Set entry point and registers
+[phase2] Step 4-pre: Execute fence.i helper before entering payload
+[phase2] Installing fence.i helper at PA 0x8FFFE000
+Restoring binary file /tmp/phase2_fence_i_helper.bin into memory (0x8fffe000 to 0x8fffe008)
+0x000000008fffe004 in ?? ()
+_start () at /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/firmware/fw_base.S:50
+warning: Source file is more recent than executable.
+50			li	t5, 0x1000
+[phase2] fence.i executed; returned to payload entry
+[phase2] Step 4a: Clear init stage slot
+Writing 0x00000000 @ address 0x8F000000
+Writing 0x00000000 @ address 0x8F000004
+[phase2] Clearing P3BD breadcrumb slots at PA 0x8F000040
+Restoring binary file /tmp/phase2_zero_p3bd.bin into memory (0x8f000040 to 0x8f0000e0)
+[phase2] Step 4b: Clear CEVA EM command/event slots
+[phase2] Clearing __log_buf at PA 0x812E2A48
+Restoring binary file /tmp/phase2_zero_klog.bin into memory (0x812e2a48 to 0x81302a48)
+Writing 0x00000000 @ address 0x65000800
+Writing 0x00000000 @ address 0x65010100
+Writing 0x00000000 @ address 0x65010104
+Writing 0x00000000 @ address 0x65010108
+Writing 0x00000000 @ address 0x65010120
+Writing 0x00000000 @ address 0x65010124
+Writing 0x00000000 @ address 0x65010110
+Writing 0x00000000 @ address 0x65010114
+Writing 0x00000000 @ address 0x65010118
+Writing 0x00000000 @ address 0x65010160
+Writing 0x00000000 @ address 0x65010164
+Writing 0x00000000 @ address 0x65010168
+Writing 0x00000000 @ address 0x6501016C
+Writing 0x00000000 @ address 0x65010170
+Writing 0x00000000 @ address 0x65010174
+Writing 0x00000000 @ address 0x65010178
+Writing 0x00000000 @ address 0x6501017C
+Writing 0x00000000 @ address 0x65010180
+Writing 0x00000000 @ address 0x65010184
+Writing 0x00000000 @ address 0x65010188
+Writing 0x00000000 @ address 0x6501018C
+Writing 0x00000000 @ address 0x65010190
+Writing 0x00000000 @ address 0x65010194
+Writing 0x00000000 @ address 0x65010198
+Writing 0x00000000 @ address 0x6501019C
+Writing 0x00000000 @ address 0x650101A0
+Writing 0x00000000 @ address 0x650101A4
+Writing 0x00000000 @ address 0x650101A8
+Writing 0x00000000 @ address 0x650101AC
+Writing 0x00000000 @ address 0x650101B0
+Writing 0x00000000 @ address 0x650101B4
+Writing 0x00000000 @ address 0x650101B8
+Writing 0x00000000 @ address 0x650101BC
+Writing 0x00000000 @ address 0x650101C0
+Writing 0x00000000 @ address 0x650101C4
+Writing 0x00000000 @ address 0x650101C8
+Writing 0x00000000 @ address 0x650101CC
+Writing 0x00000000 @ address 0x650101D0
+Writing 0x00000000 @ address 0x650101D4
+Writing 0x00000000 @ address 0x650101D8
+Writing 0x00000000 @ address 0x650101DC
+Writing 0x00000000 @ address 0x650101E0
+Writing 0x00000000 @ address 0x65011000
+Writing 0x00000000 @ address 0x65014000
+Writing 0x00000000 @ address 0x6501FFFC
+[phase2] Clearing Phase 2.5 DDR evidence scratch at 0x8FF00000
+Restoring binary file /tmp/phase2_zero_phase25.bin into memory (0x8ff00000 to 0x8ff00100)
+[phase2] Step 5: Boot kernel (monitor go)
+[wait] Running kernel for 180s before capture session...
+[phase2] Launch window complete; ending launch session
+[boot] Launch session rc=0
+[jlink] Running guarded J-Link recovery/precheck...
+[jlink-guard] === status snapshot ===
+=== J-Link PnP ===
+
+Status  Class FriendlyName                InstanceId                                    Present
+------  ----- ------------                ----------                                    -------
+Unknown USB   USB Composite Device        USB\VID_1366&PID_0105\000601012352              False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0101\7&D8C7DB4&0&1             False
+OK      USB   J-Link driver               USB\VID_1366&PID_0101\000601012542               True
+Unknown Ports JLink CDC UART Port (COM14) USB\VID_1366&PID_0105&MI_00\8&2FAED60D&0&0000   False
+Unknown USB   J-Link driver               USB\VID_1366&PID_0105&MI_02\8&2FAED60D&0&0002   False
+
+
+
+=== J-Link Processes ===
+
+ProcessName         Id Path                                              
+-----------         -- ----                                              
+JLinkGDBServerCL 47224 C:\Program Files\SEGGER\JLink\JLinkGDBServerCL.exe
+
+
+
+=== J-Link Ports ===
+
+LocalAddress LocalPort OwningProcess  State
+------------ --------- -------------  -----
+::                3333         47224 Listen
+0.0.0.0           3333         47224 Listen
+0.0.0.0           2333         47224 Listen
+0.0.0.0           2332         47224 Listen
+
+
+
+=== J-Link Log Tail ===
+JTAG ID: 0x00000001 (RV64)
+Connected to target
+Waiting for GDB connection...Connected to 127.0.0.1
+Reading common registers: zero, ra, sp, gp, tp, t0, t1, t2, fp, s1, a0, a1, a2, a3, a4, a5, a6, a7, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, t3, t4, t5, t6, pc
+...Target halted (PC = 0x80003206)
+Read 4 bytes @ address 0x80003206 (Data = 0x879320C4)
+Read 4 bytes @ address 0x80003202 (Data = 0xA7B7E5C7)
+Received monitor command: halt
+Halting target CPU...
+...Target halted (PC = 0x80003206)
+Read 4 bytes @ address 0x00010000 (Data = 0x08000117)
+Read 4 bytes @ address 0x00010004 (Data = 0x00010113)
+Read 4 bytes @ address 0x00010008 (Data = 0x00000297)
+Read 4 bytes @ address 0x0001000C (Data = 0x01428293)
+Read 4 bytes @ address 0x0200BFF8 (Data = 0x24B4E1DF)
+Read 4 bytes @ address 0x0200BFFC (Data = 0x00000000)
+Read 4 bytes @ address 0x0C000000 (Data = 0x00000000)
+Read 4 bytes @ address 0x0C000004 (Data = 0x00000001)
+Read 4 bytes @ address 0x0C000008 (Data = 0x00000001)
+Read 4 bytes @ address 0x0C00000C (Data = 0x00000001)
+GDB closed TCP/IP connection (Socket 992)
+Connected to 127.0.0.1
+Reading common registers: zero, ra, sp, gp, tp, t0, t1, t2, fp, s1, a0, a1, a2, a3, a4, a5, a6, a7, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, t3, t4, t5, t6, pc
+Read 4 bytes @ address 0x80003206 (Data = 0x879320C4)
+Read 4 bytes @ address 0x80003202 (Data = 0xA7B7E5C7)
+Received monitor command: halt
+Halting target CPU...
+...Target halted (PC = 0x80003206)
+Read 4 bytes @ address 0x00010000 (Data = 0x08000117)
+Read 4 bytes @ address 0x00010004 (Data = 0x00010113)
+Read 4 bytes @ address 0x00010008 (Data = 0x00000297)
+Read 4 bytes @ address 0x0001000C (Data = 0x01428293)
+Read 4 bytes @ address 0x0200BFF8 (Data = 0x24B4F0E6)
+Read 4 bytes @ address 0x0200BFFC (Data = 0x00000000)
+Read 4 bytes @ address 0x0C000000 (Data = 0x00000000)
+Read 4 bytes @ address 0x0C000004 (Data = 0x00000001)
+Read 4 bytes @ address 0x0C000008 (Data = 0x00000001)
+Read 4 bytes @ address 0x0C00000C (Data = 0x00000001)
+GDB closed TCP/IP connection (Socket 1036)
+Starting target CPU...
+
+=== J-Link Commander Enumeration ===
+SEGGER J-Link Commander V7.82b (Compiled Nov  9 2022 17:08:19)
+DLL version V7.82b, compiled Nov  9 2022 17:06:50
+
+
+J-Link Command File read successfully.
+Processing script file...
+J-Link>ShowEmuList
+J-Link[0]: Connection: USB, Serial number: 601012542, ProductName: J-Link PLUS
+J-Link>exit
+
+Script processing completed.
+
+[jlink-guard] J-Link USB device is Present/OK
+[jlink-guard] Starting or reusing J-Link server on 127.0.0.1:3333
+[jlink] GDB Server already listening on :3333 â€” reusing existing instance
+[jlink] DO NOT restart. Use 'target remote :3333' from GDB.
+[jlink-guard] Running minimal GDB precheck
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0xffffffff80003206 in ?? ()
+
+=== HALT ===
+halt done
+
+=== PC ===
+$1 = 0xffffffff80003206
+[precheck] pc=0xFFFFFFFF80003206
+
+=== CSRs ===
+$2 = void
+$3 = void
+$4 = void
+
+=== BootROM 0x10000 ===
+0x10000:	0x08000117	0x00010113	0x00000297	0x01428293
+
+=== CLINT mtime ===
+0x200bff8:	0x261fb702	0x00000000
+
+=== PLIC 0x0C000000 ===
+0xc000000:	0x00000000	0x00000001	0x00000001	0x00000001
+
+=== PRECHECK PASSED ===
+[jlink-guard] PASS: J-Link server and target precheck succeeded
+[0;32m[OK][0m J-Link guard passed
+[boot] Capture session attempt 1: reconnect + halt + dump current-run evidence
+[capture] Connecting to J-Link 127.0.0.1:3333...
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0xffffffff80003206 in ?? ()
+[capture] Halted target
+[sym] fw_payload symbols loaded from /root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf
+[state] PC = 0xFFFFFFFF80003206
+[state] symbol = No symbol matches 0xFFFFFFFF80003206.
+[opensbi] debug_stage=0x0000000000004002 value0=0x0000000000000000 value1=0x0000000084000000 value2=0x0000000080200000 value3=0x0000000000000001
+[opensbi] pmp_install_rc=0x0000000000000002 pmpcfg0_snapshot=0x00000000001F0000 pmpaddr0_snapshot=0x000000003FFFFFFF pmpaddr1_snapshot=0x0000000000000000 pmpaddr2_snapshot=0x000000003FFFFFFF
+[sym] Loading vmlinux symbols from /root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux...
+[sym] vmlinux symbols loaded OK
+[phase2] Step 6: Scan klog for CEVA BT5.2 evidence
+[klog] log_buf symbol VA=0xFFFFFFFF810D0D70
+[klog] log_buf_len symbol VA=0xFFFFFFFF810D0D68
+[klog] __log_buf symbol VA=0xFFFFFFFF810E2A48
+[klog] log_buf symbol PA=0x00000000812D0D70
+[klog] log_buf_len symbol PA=0x00000000812D0D68
+[klog] __log_buf symbol PA=0x00000000812E2A48
+[klog] log_buf pointer VA=0xFFFFFFFF810E2A48
+[klog] log_buf_len=131072
+[klog] log buffer PA=0x00000000812E2A48
+[klog] Dumped 131072 bytes from runtime log_buf to /tmp/phase2_klog.bin
+[klog] runtime log_buf non-zero bytes=16668
+[klog check] Searching for CEVA BT5.2 strings:
+OF: reserved mem: initialized node ceva_runtime_reserved@8fbe0000, compatible id shared-dma-poolol
+OF: reserved mem: 0x000000008fbe0000..0x000000008fefffff (3200 KiB) nomap non-reusable ceva_runtime_reserved@8fbe000000
+mem auto-init: stack:off, heap alloc:off, heap free:offff
+rcu: srcu_init: Setting srcu_struct sizes based on contention.n.
+ceva-bt52: kpp.ko not present in initramfs (built-in or not built)
+ceva-bt52: ecc.ko not present in initramfs (built-in or not built)
+ceva-bt52: ecdh_generic.ko not present in initramfs (built-in or not built)
+ceva-bt52: PHASE25_INITFLOW_BEFORE_LOAD_BLUETOOTH
+ceva-bt52: bluetooth.ko not present in initramfs (built-in or not built)
+ceva-bt52: PHASE25_INITFLOW_AFTER_LOAD_BLUETOOTH rc=0
+ceva-bt52: bluetooth.ko built-in-or-absent [PHASE25_INITFLOW]
+PHASE25_BEFORE_LOAD_CEVA
+PHASE25_BEFORE_LOAD_CEVA
+ceva-bt52: PHASE25_INITFLOW_BEFORE_LOAD_CEVA
+ceva-bt52: loading ceva_bt52.ko [PHASE25_INITFLOW]
+PHASE25_CEVA_SELFTEST_ON
+PHASE25_CEVA_SELFTEST_ON
+ceva-bt52: PHASE25_REPLAY_CONTROL selftest=1 delay=0 [PHASE25_INITFLOW]
+ceva_bt52: loading out-of-tree module taints kernel.l.
+ceva-bt52 65000000.ceva-dm: CEVA BT5.2 probe
+ceva-bt52 65000000.ceva-dm: MMIO base: 0x65000000 (regs) + 0x65010000 (EM)
+ceva-bt52 65000000.ceva-dm: Phase 2.5 evidence DDR scratch: 0x8ff00000
+ceva-bt52 65000000.ceva-dm: CEVA BT5.2 registered as hci0 (IRQ 15, EM@0x65010000)
+ceva-bt52 65000000.ceva-dm: CEVA_PHASE25 selftest command responder enabled
+ceva-bt52 65000000.ceva-dm: ceva_bt_open: initializing hardware
+ceva-bt52 65000000.ceva-dm: BT core running (CLKN 5/5 OK)
+ceva-bt52 65000000.ceva-dm: ceva_bt_open: OK
+ceva-bt52 65000000.ceva-dm: CEVA DM VERSION = 0x0B000500
+ceva-bt52 65000000.ceva-dm: CEVA_PHASE25_SELFTEST_START path=send_frame_reset hdev=hci0 running=1
+ceva-bt52 65000000.ceva-dm: CEVA_PHASE25_HCI_RESET_PASS opcode=0x0C03 status=0x00
+[klog check] Searching for userspace smoke strings:
+PHASE25_USER_HCI0_PRESENT
+PHASE25_USER_HCI0_PRESENT
+PHASE25_USER_SMOKE_START
+PHASE25_USER_STEP_SOCKET
+PHASE25_USER_STEP_GETDEVINFO
+PHASE25_USER_HCI0_NOT_UP_CONTINUE
+PHASE25_USER_STEP_BIND
+PHASE25_USER_BIND_CHANNEL_USER
+PHASE25_USER_STEP_HCI_RESET
+PHASE25_USER_CMD_0c03_FILTER_OK
+PHASE25_USER_CMD_0c03_BEFORE_SEND
+PHASE25_USER_CMD_0c03_AFTER_SEND
+PHASE25_USER_CMD_0c03_WAIT_RESULT
+PHASE25_USER_CMD_0c03_POLL_READY
+PHASE25_USER_CMD_0c03_CMD_COMPLETE
+PHASE25_USER_STEP_HCI_RLV
+PHASE25_USER_CMD_1001_FILTER_OK
+PHASE25_USER_CMD_1001_BEFORE_SEND
+PHASE25_USER_CMD_1001_AFTER_SEND
+PHASE25_USER_CMD_1001_WAIT_RESULT
+PHASE25_USER_CMD_1001_POLL_READY
+PHASE25_USER_CMD_1001_CMD_COMPLETE
+PHASE25_USER_SMOKE_START
+PHASE25_USER_SMOKE_START
+PHASE25_USER_HCI0_PRESENT
+PHASE25_USER_HCI0_PRESENT
+PHASE25_USER_TIMEOUT_MS 3000
+PHASE25_USER_TIMEOUT_MS 3000
+PHASE25_USER_STEP_SOCKET
+PHASE25_USER_STEP_SOCKET
+PHASE25_USER_SOCKET rc=3 errno=0 (OK)
+PHASE25_USER_SOCKET rc=3 errno=0 (OK)
+PHASE25_USER_STEP_GETDEVINFO
+PHASE25_USER_STEP_GETDEVINFO
+PHASE25_USER_IOCTL_HCIGETDEVINFO rc=0 errno=0 (OK)
+PHASE25_USER_IOCTL_HCIGETDEVINFO rc=0 errno=0 (OK)
+PHASE25_USER_IOCTL_HCIGETDEVINFO name=hci0 flags=0x00000004 type=0
+PHASE25_USER_IOCTL_HCIGETDEVINFO name=hci0 flags=0x00000004 type=0
+PHASE25_USER_HCI0_NOT_UP_CONTINUE
+PHASE25_USER_HCI0_NOT_UP_CONTINUE
+PHASE25_USER_HCI0_UP no
+PHASE25_USER_HCI0_UP no
+PHASE25_USER_STEP_BIND
+PHASE25_USER_STEP_BIND
+PHASE25_USER_BIND_CHANNEL_USER
+PHASE25_USER_BIND_CHANNEL_USER
+PHASE25_USER_BIND rc=0 errno=0 (OK)
+PHASE25_USER_BIND rc=0 errno=0 (OK)
+PHASE25_USER_STEP_HCI_RESET
+PHASE25_USER_STEP_HCI_RESET
+PHASE25_USER_SETSOCKOPT_SKIP_USER rc=0 errno=0 (OK)
+PHASE25_USER_SETSOCKOPT_SKIP_USER rc=0 errno=0 (OK)
+PHASE25_USER_CMD_0c03_FILTER_OK
+PHASE25_USER_CMD_0c03_FILTER_OK
+PHASE25_USER_CMD_0c03_BEFORE_SEND
+PHASE25_USER_CMD_0c03_BEFORE_SEND
+PHASE25_USER_HCI_RESET_SEND rc=4 errno=0 (OK) opcode=0x0c03
+PHASE25_USER_HCI_RESET_SEND rc=4 errno=0 (OK) opcode=0x0c03
+PHASE25_USER_CMD_0c03_AFTER_SEND
+PHASE25_USER_CMD_0c03_AFTER_SEND
+PHASE25_USER_CMD_0c03_WAIT_RESULT
+PHASE25_USER_CMD_0c03_WAIT_RESULT
+PHASE25_USER_CMD_0c03_POLL_READY
+PHASE25_USER_CMD_0c03_POLL_READY
+PHASE25_USER_CMD_0c03_CMD_COMPLETE
+PHASE25_USER_CMD_0c03_CMD_COMPLETE
+PHASE25_USER_HCI_RESET_RECV rc=7 errno=0 (OK) evt=0x0e opcode=0x0c03 status=0x00
+PHASE25_USER_HCI_RESET_RECV rc=7 errno=0 (OK) evt=0x0e opcode=0x0c03 status=0x00
+PHASE25_USER_HCI_RESET_PASS
+PHASE25_USER_HCI_RESET_PASS
+PHASE25_USER_STEP_HCI_RLV
+PHASE25_USER_STEP_HCI_RLV
+PHASE25_USER_SETSOCKOPT_SKIP_USER rc=0 errno=0 (OK)
+PHASE25_USER_SETSOCKOPT_SKIP_USER rc=0 errno=0 (OK)
+PHASE25_USER_CMD_1001_FILTER_OK
+PHASE25_USER_CMD_1001_FILTER_OK
+PHASE25_USER_CMD_1001_BEFORE_SEND
+PHASE25_USER_CMD_1001_BEFORE_SEND
+PHASE25_USER_HCI_RLV_SEND rc=4 errno=0 (OK) opcode=0x1001
+PHASE25_USER_HCI_RLV_SEND rc=4 errno=0 (OK) opcode=0x1001
+PHASE25_USER_CMD_1001_AFTER_SEND
+PHASE25_USER_CMD_1001_AFTER_SEND
+PHASE25_USER_CMD_1001_WAIT_RESULT
+PHASE25_USER_CMD_1001_WAIT_RESULT
+PHASE25_USER_CMD_1001_POLL_READY
+PHASE25_USER_CMD_1001_POLL_READY
+PHASE25_USER_CMD_1001_CMD_COMPLETE
+PHASE25_USER_CMD_1001_CMD_COMPLETE
+PHASE25_USER_HCI_RLV_RECV rc=15 errno=0 (OK) evt=0x0e opcode=0x1001 status=0x00
+PHASE25_USER_HCI_RLV_RECV rc=15 errno=0 (OK) evt=0x0e opcode=0x1001 status=0x00
+PHASE25_USER_HCI_RLV_VERSION hci_ver=0x0b hci_rev=0x0520 lmp_ver=0x0b manufacturer=0x0057 lmp_subver=0x0520
+PHASE25_USER_HCI_RLV_VERSION hci_ver=0x0b hci_rev=0x0520 lmp_ver=0x0b manufacturer=0x0057 lmp_subver=0x0520
+PHASE25_USER_HCI_RLV_PASS
+PHASE25_USER_HCI_RLV_PASS
+PHASE25_USER_SMOKE_PASS
+PHASE25_USER_SMOKE_PASS
+[klog check] Searching for init-flow breadcrumbs:
+PHASE25_BEFORE_LOAD_BLUETOOTH
+PHASE25_BEFORE_LOAD_BLUETOOTH
+PHASE25_AFTER_LOAD_BLUETOOTH rc=0
+PHASE25_AFTER_LOAD_BLUETOOTH rc=0
+PHASE25_BEFORE_LOAD_CEVA
+PHASE25_BEFORE_LOAD_CEVA
+PHASE25_AFTER_LOAD_CEVA rc=0
+PHASE25_AFTER_LOAD_CEVA rc=0
+PHASE25_BEFORE_HCI_WAIT
+PHASE25_BEFORE_HCI_WAIT
+PHASE25_AFTER_HCI_WAIT result=present
+PHASE25_AFTER_HCI_WAIT result=present
+PHASE25_BEFORE_SMOKE_EXEC
+PHASE25_BEFORE_SMOKE_EXEC
+PHASE25_AFTER_SMOKE_EXEC rc=0
+PHASE25_AFTER_SMOKE_EXEC rc=0
+[klog check] Searching for panic/error strings:
+efi: UEFI not found.d.
+PHASE25_BEFORE_SMOKE_EXEC
+PHASE25_BEFORE_SMOKE_EXEC
+PHASE25_AFTER_SMOKE_EXEC rc=0
+PHASE25_AFTER_SMOKE_EXEC rc=0
+fedora-rootfs: dev: ls: /dev/mmcblk0*: No such file or directory
+[klog check] Linux boot strings:
+Linux version 6.6.0-fpga-min-g67bc4513761f-dirty (root@YXY) (riscv64-unknown-linux-gnu-gcc (g04696df0963) 14.2.0, GNU ld (GNU Binutils) 2.43.1) #236 SMP Wed May 13 22:29:58 CST 202626
+Kernel command line: earlycon=sifive,0x64000000 console=ttySIF0,115200n8 root=/dev/mmcblk0p1 rootfstype=ext4 rootwait random.trust_cpu=on loglevel=7=7
+Freeing unused kernel image (initmem) memory: 3896K6K
+Run /init as init processss
+[phase2] Step 6a: Read init stage marker
+[stage] init_stage_mark=0x5354474500000019
+[p3bd] breadcrumb slots:
+[p3bd] P3BD_INIT_START: SET value=0x5033424400000001
+[p3bd] P3BD_INIT_SELFTEST_OFF: MISSING
+[p3bd] P3BD_INSMOD_START: MISSING
+[p3bd] P3BD_INSMOD_DONE: MISSING
+[p3bd] P3BD_WAIT_HCI0_START: MISSING
+[p3bd] P3BD_WAIT_HCI0_FOUND: MISSING
+[p3bd] P3BD_WAIT_HCI0_TIMEOUT: MISSING
+[p3bd] P3BD_USER_SMOKE_START: MISSING
+[p3bd] P3BD_USER_SMOKE_DONE: MISSING
+[p3bd] P3BD_USER_MAIN_START: MISSING
+[p3bd] P3BD_USER_SOCKET_START: MISSING
+[p3bd] P3BD_USER_SOCKET_OK: MISSING
+[p3bd] P3BD_USER_BIND_USER_OK: MISSING
+[p3bd] P3BD_USER_BIND_RAW_FALLBACK: MISSING
+[p3bd] P3BD_USER_SEND_RESET_START: MISSING
+[p3bd] P3BD_USER_SEND_RESET_OK: MISSING
+[p3bd] P3BD_USER_SEND_RESET_ERR: MISSING
+[p3bd] P3BD_USER_RECV_TIMEOUT: MISSING
+[p3bd] P3BD_USER_RECV_MALFORMED: MISSING
+[p3bd] P3BD_USER_RECV_VALID_RESET_CC: MISSING
+[boot-owner] claimed=yes
+[boot-owner] magic=0x4F5342494F574E52 state=0x434C41494D454421 staging=0x4F50454E53424921
+[boot-owner] reserved_start=0x000000008FBE0000 reserved_size=0x0000000000320000 linux_handoff=0x4C494E585F434F4E
+[phase2] Step 6b: Scan Phase 2.5 DDR evidence
+[phase25] Dumped DDR evidence 0x8FF00000-0x8FF00100 to /tmp/phase2_phase25_evidence.bin
+[phase25] DDR evidence strings:
+[phase2] Step 7: Check CEVA hardware registers
+
+[hw] DM_VERSION  = 0x0B000500
+[hw] DM_RWDMCNTL = 0x00000000
+[hw] DM_INTSTAT0 = 0x00000000
+[hw] DM_INTCNTL1 = 0x00000000
+[hw] DM_INTSTAT1 = 0x00000000 (bits=none)
+[hw] DM_INTACK1  = 0x00000000
+[hw] DM_ACTFIFOSTAT = 0x00000000
+[hw] DM_ETPTR    = 0x00000000
+[hw] DEBUGADDMAX = 0xFFFFFFFF
+[hw] DEBUGADDMIN = 0x00000000
+[hw] BT_RWBTCNTL = 0x00000E0D (bit8=RWBTEN: CLEAR)
+[hw] EM[0]       = 0x00000000
+[hw] EM[64]      = 0x00100101 (cmd buf)
+[hw] EM[72]      = 0xA5A5A5A5 (cmd-ready flag)
+[hw] EM[73]      = 0x00000000 (evt-ready flag)
+[hw] EM[68]      = 0x50323521 (cmd shadow magic)
+[hw] EM[69]      = 0x000000FF (cmd shadow bits)
+[hw] EM[70]      = 0x0B0B0057 (cmd shadow aux)
+[hw] EM[96]      = 0x010C0E04 (evt buf[0])
+[hw] EM[97]      = 0x0B001001 (evt buf[1])
+[hw] EM[98]      = 0x570B0520 (evt buf[2])
+[hw] EM[99]      = 0x00052000 (evt buf[3])
+[hw] EM[100]     = 0x50323521 (evt shadow magic)
+[hw] EM[101]     = 0x000000FF (evt shadow bits)
+[hw] EM[102]     = 0x0B0B0057 (evt shadow aux)
+[hw] EM[P25 magic@0x1000] = 0x50323521
+[hw] EM[P25 bits@0x4000]  = 0x000000FF
+[hw] EM[P25 aux@0xFFFC]   = 0x0B0B0057
+[hw] EM command window words 64..72:
+[hw]   EM[064] = 0x00100101
+[hw]   EM[065] = 0x00000000
+[hw]   EM[066] = 0x00000000
+[hw]   EM[067] = 0x00000000
+[hw]   EM[068] = 0x50323521
+[hw]   EM[069] = 0x000000FF
+[hw]   EM[070] = 0x0B0B0057
+[hw]   EM[071] = 0x00000000
+[hw]   EM[072] = 0xA5A5A5A5 (cmd-ready SET)
+[hw] EM event search window words 88..120:
+[hw]   EM[088] = 0x00000000
+[hw]   EM[089] = 0x00000000
+[hw]   EM[090] = 0x00000000
+[hw]   EM[091] = 0x00000000
+[hw]   EM[092] = 0x00000000
+[hw]   EM[093] = 0x00000000
+[hw]   EM[094] = 0x00000000
+[hw]   EM[095] = 0x00000000
+[hw]   EM[096] = 0x010C0E04
+[hw]   EM[097] = 0x0B001001
+[hw]   EM[098] = 0x570B0520
+[hw]   EM[099] = 0x00052000
+[hw]   EM[100] = 0x50323521
+[hw]   EM[101] = 0x000000FF
+[hw]   EM[102] = 0x0B0B0057
+[hw]   EM[103] = 0x00000000
+[hw]   EM[104] = 0x00000000
+[hw]   EM[105] = 0x00000000
+[hw]   EM[106] = 0x00000000
+[hw]   EM[107] = 0x00000000
+[hw]   EM[108] = 0x00000000
+[hw]   EM[109] = 0x00000000
+[hw]   EM[110] = 0x00000000
+[hw]   EM[111] = 0x00000000
+[hw]   EM[112] = 0x00000000
+[hw]   EM[113] = 0x00000000
+[hw]   EM[114] = 0x00000000
+[hw]   EM[115] = 0x00000000
+[hw]   EM[116] = 0x00000000
+[hw]   EM[117] = 0x00000000
+[hw]   EM[118] = 0x00000000
+[hw]   EM[119] = 0x00000000
+[hw]   EM[120] = 0x00000000
+
+=== Phase 2 PASS/FAIL Criteria ===
+CHECK 1: DM_VERSION=0x0B000500 - PASS (CEVA accessible)
+CHECK 2: BT_RWBTCNTL bit8 CLEAR - FAIL/WARN (driver open not called)
+CHECK 3: EM[0]=0x00000000 - PASS (EM MMIO accessible)
+CHECK 4: hci0 registration found in klog - PASS
+
+=== Phase 2.5 Evidence ===
+CEVA_PHASE25_LAST_EVENT: code=0x0E opcode=0x1001 status=0x00
+CEVA_PHASE25_CMD_SHADOW: PRESENT bits=0x000000FF
+CEVA_PHASE25_EVT_SHADOW: PRESENT bits=0x000000FF
+CEVA_PHASE25_MARKERS: PRESENT bits=0x000000FF
+CEVA_PHASE25_PROBE_REACHED: SET
+CEVA_PHASE25_OPEN_REACHED: SET
+CEVA_PHASE25_SELFTEST_START: SET
+CEVA_PHASE25_SEND_RESET_SEEN: SET
+CEVA_PHASE25_SEND_READ_LOCAL_VERSION_SEEN: SET
+CEVA_PHASE25_HCI_RESET_PASS: PASS
+CEVA_PHASE25_READ_LOCAL_VERSION_PASS: PASS
+CEVA_PHASE25_SELFTEST_PASS: PASS
+CEVA_PHASE25_HCI_RESET_FAIL: MISSING
+CEVA_PHASE25_READ_LOCAL_VERSION_FAIL: MISSING
+CEVA_PHASE25_SELFTEST_FAIL: MISSING
+P3BD_DRV_MARKERS: MISSING
+
+[result] 3/4 hardware checks PASS
+Phase 2 PASS requires: DM accessible + hci0 in klog
+[Inferior 1 (Remote target) detached]
+[boot] Capture session attempt 1 rc=0
+[boot] Capture session rc=0
+
+[0;32m[OK][0m Phase 2 boot GDB session completed (rc=0)
+
+Check /tmp/phase2_boot_*.log for:
+  ceva-bt52: bluetooth.ko OK
+  ceva-bt52: ceva_bt52.ko OK
+  registered as hci0
+PHASE4G_SERVICE_MANAGED_RUN_DONE

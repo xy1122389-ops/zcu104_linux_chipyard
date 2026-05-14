@@ -26,23 +26,56 @@ PHASE2_CFG="${PHASE2_CFG:-RocketZCU104Phase0bConfig}"
 SKIP_DDR_INIT="${SKIP_DDR_INIT:-0}"
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-PAYLOAD_BIN="${SCRIPT_DIR}/linux-bringup/payload/fw_payload.bin"
+RUNTIME_CONTRACT="${SCRIPT_DIR}/scripts/ceva_runtime_launch_contract.sh"
+if [[ -f "$RUNTIME_CONTRACT" ]]; then
+    # shellcheck source=/root/chipyard/fpga/scripts/ceva_runtime_launch_contract.sh
+    source "$RUNTIME_CONTRACT"
+fi
+
+PAYLOAD_BIN="${CEVA_RUNTIME_PAYLOAD_BIN:-${SCRIPT_DIR}/linux-bringup/payload/fw_payload.bin}"
 CHUNK_DIR="/tmp/fw_chunks_phase2"
-GDB_BIN="/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-gdb"
-DTB="${SCRIPT_DIR}/linux-bringup/dtb/chipyard-zcu104-fedora.dtb"
-GDB_LAUNCH_SCRIPT="${SCRIPT_DIR}/scripts/linux_boot_phase2_launch.gdb"
-GDB_CAPTURE_SCRIPT="${SCRIPT_DIR}/scripts/linux_boot_phase2_capture.gdb"
+GDB_BIN="${CEVA_RUNTIME_GDB_BIN:-/root/chipyard/.oclaw-env/riscv-tools/bin/riscv64-unknown-elf-gdb}"
+DTB="${CEVA_RUNTIME_DTB:-${SCRIPT_DIR}/linux-bringup/dtb/chipyard-zcu104-fedora.dtb}"
+GDB_LAUNCH_SCRIPT="${CEVA_RUNTIME_PHASE2_LAUNCH_GDB:-${SCRIPT_DIR}/scripts/linux_boot_phase2_launch.gdb}"
+GDB_CAPTURE_SCRIPT="${CEVA_RUNTIME_PHASE2_CAPTURE_GDB:-${SCRIPT_DIR}/scripts/linux_boot_phase2_capture.gdb}"
+PROGRAM_BIT_SCRIPT="${CEVA_RUNTIME_PROGRAM_BIT_SCRIPT:-${SCRIPT_DIR}/scripts/program_phase0b_bit.sh}"
+JLINK_GUARD_SCRIPT="${CEVA_RUNTIME_JLINK_GUARD_SCRIPT:-${SCRIPT_DIR}/scripts/jlink_guard.sh}"
+RUNTIME_MODE="${CEVA_RUNTIME_LAUNCH_MODE:-dev-gdb}"
+RUNTIME_TARGET_OWNER="${CEVA_RUNTIME_PRODUCTION_OWNER:-opensbi}"
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
 ok()   { echo -e "${GREEN}[OK]${NC} $*"; }
 warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
 fail() { echo -e "${RED}[FAIL]${NC} $*" >&2; exit 1; }
 
+run_jlink_guard() {
+    echo "[jlink] Running guarded J-Link recovery/precheck..."
+    if JLINK_HOST="$JLINK_HOST" JLINK_PORT="$JLINK_PORT" bash "$JLINK_GUARD_SCRIPT"; then
+        ok "J-Link guard passed"
+        return 0
+    fi
+
+    return 1
+}
+
+run_capture_session() {
+    local attempt="$1"
+
+    echo "[boot] Capture session attempt ${attempt}: reconnect + halt + dump current-run evidence"
+    JLINK_HOST="$JLINK_HOST" \
+    JLINK_PORT="$JLINK_PORT" \
+    KERNEL_RUN_SECS="$KERNEL_RUN_SECS" \
+    PHASE2_CHUNK_DIR="$CHUNK_DIR" \
+    PHASE2_DTB="$DTB" \
+    "$GDB_BIN" -q -batch -x "$GDB_CAPTURE_SCRIPT"
+}
+
 echo "================================================================"
 echo "  ZCU104 Phase 2: CEVA BT5.2 Linux Driver Boot Verification"
 echo "================================================================"
 echo "  Payload  : $PAYLOAD_BIN"
 echo "  DTB      : $DTB"
+echo "  Runtime  : $RUNTIME_MODE (target=$RUNTIME_TARGET_OWNER)"
 echo "  Run secs : $KERNEL_RUN_SECS"
 echo "  J-Link   : $JLINK_HOST:$JLINK_PORT"
 echo "  DDR init : $([ "$SKIP_DDR_INIT" = "1" ] && echo SKIP || echo "YES (cfg=$PHASE2_CFG)")"
@@ -61,7 +94,7 @@ echo ""
 if [[ "$SKIP_DDR_INIT" != "1" ]]; then
     echo "[ddr-init] Running PS DDR init + PL program (cfg=$PHASE2_CFG)..."
     echo "[ddr-init] This flashes bitstream and initializes PS DDR via psu_init.tcl"
-    if bash "${SCRIPT_DIR}/scripts/program_phase0b_bit.sh" --cfg "$PHASE2_CFG"; then
+    if bash "$PROGRAM_BIT_SCRIPT" --cfg "$PHASE2_CFG"; then
         ok "PS DDR init + PL program done"
         # After XSDB programming, give J-Link time to re-enumerate
         echo "[ddr-init] Waiting 5s for J-Link to stabilize after PL re-program..."
@@ -75,9 +108,8 @@ else
 fi
 
 # Check and recover J-Link using the guarded flow
-echo "[jlink] Running guarded J-Link recovery/precheck..."
-if JLINK_HOST="$JLINK_HOST" JLINK_PORT="$JLINK_PORT" bash "${SCRIPT_DIR}/scripts/jlink_guard.sh"; then
-    ok "J-Link guard passed"
+if run_jlink_guard; then
+    :
 else
     fail "J-Link guard failed at $JLINK_HOST:$JLINK_PORT"
 fi
@@ -114,14 +146,26 @@ set +e
     LAUNCH_RC=$?
     echo "[boot] Launch session rc=$LAUNCH_RC"
 
-    echo "[boot] Capture session: reconnect + halt + dump current-run evidence"
-    JLINK_HOST="$JLINK_HOST" \
-    JLINK_PORT="$JLINK_PORT" \
-    KERNEL_RUN_SECS="$KERNEL_RUN_SECS" \
-    PHASE2_CHUNK_DIR="$CHUNK_DIR" \
-    PHASE2_DTB="$DTB" \
-    "$GDB_BIN" -q -batch -x "$GDB_CAPTURE_SCRIPT"
-    CAPTURE_RC=$?
+    CAPTURE_RC=1
+    if run_jlink_guard; then
+        run_capture_session 1
+        CAPTURE_RC=$?
+        echo "[boot] Capture session attempt 1 rc=$CAPTURE_RC"
+    else
+        echo "[boot] Capture guard failed before attempt 1"
+    fi
+
+    if [[ $CAPTURE_RC -ne 0 ]]; then
+        warn "Capture attempt 1 failed (rc=$CAPTURE_RC); retrying after guarded J-Link recovery"
+        if run_jlink_guard; then
+            run_capture_session 2
+            CAPTURE_RC=$?
+            echo "[boot] Capture session attempt 2 rc=$CAPTURE_RC"
+        else
+            echo "[boot] Capture guard failed before attempt 2"
+        fi
+    fi
+
     echo "[boot] Capture session rc=$CAPTURE_RC"
 
     if [[ $LAUNCH_RC -ne 0 || $CAPTURE_RC -ne 0 ]]; then

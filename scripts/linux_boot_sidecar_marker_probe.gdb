@@ -19,8 +19,8 @@ sidecar_bin = os.environ.get(
     "SIDECAR_BIN",
     "/root/chipyard/fpga/sidecar/ceva_bt52_sidecar/build/sidecar.bin",
 )
-marker_base = int(os.environ.get("SIDECAR_MARKER_BASE", "0x8f010000"), 0)
-image_base = int(os.environ.get("SIDECAR_IMAGE_BASE", "0x8f020000"), 0)
+marker_base = int(os.environ.get("SIDECAR_MARKER_BASE", "0x8FBE0000"), 0)
+image_base = int(os.environ.get("SIDECAR_IMAGE_BASE", "0x8FBF0000"), 0)
 marker_size = int(os.environ.get("SIDECAR_MARKER_SIZE", "0x90"), 0)
 dump_path = os.environ.get("SIDECAR_MARKER_DUMP", "/tmp/phase3b_h3_sidecar_marker.bin")
 

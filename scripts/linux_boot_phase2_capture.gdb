@@ -11,6 +11,7 @@ import os, gdb, time
 
 host = os.environ.get("JLINK_HOST", "127.0.0.1")
 port = int(os.environ.get("JLINK_PORT", "3333"))
+fw_elf = "/root/chipyard/software/firemarshal/boards/default/firmware/opensbi/build/platform/generic/firmware/fw_payload.elf"
 vmlinux = "/root/chipyard/software/firemarshal/boards/default/linux-clean/vmlinux"
 
 gdb.write(f"[capture] Connecting to J-Link {host}:{port}...\n")
@@ -18,8 +19,40 @@ gdb.execute(f"target remote {host}:{port}")
 gdb.execute("monitor halt")
 gdb.write("[capture] Halted target\n")
 
+if os.path.exists(fw_elf):
+    try:
+        gdb.execute(f"file {fw_elf}", to_string=True)
+        gdb.write(f"[sym] fw_payload symbols loaded from {fw_elf}\n")
+    except Exception as e:
+        gdb.write(f"[sym] fw_payload load failed: {e}\n")
+
 pc = gdb.parse_and_eval("(unsigned long long)$pc")
 gdb.write(f"[state] PC = 0x{int(pc):016X}\n")
+try:
+    sym = gdb.execute(f"info symbol 0x{int(pc):X}", to_string=True).strip()
+    gdb.write(f"[state] symbol = {sym}\n")
+except Exception as e:
+    gdb.write(f"[state] symbol lookup failed: {e}\n")
+
+try:
+    debug_stage = int(gdb.parse_and_eval("(unsigned long long)_debug_stage"))
+    debug_value0 = int(gdb.parse_and_eval("(unsigned long long)_debug_value0"))
+    debug_value1 = int(gdb.parse_and_eval("(unsigned long long)_debug_value1"))
+    debug_value2 = int(gdb.parse_and_eval("(unsigned long long)_debug_value2"))
+    debug_value3 = int(gdb.parse_and_eval("(unsigned long long)_debug_value3"))
+    gdb.write(f"[opensbi] debug_stage=0x{debug_stage:016X} value0=0x{debug_value0:016X} value1=0x{debug_value1:016X} value2=0x{debug_value2:016X} value3=0x{debug_value3:016X}\n")
+except Exception as e:
+    gdb.write(f"[opensbi] debug marker read failed: {e}\n")
+
+try:
+    pmp_install_rc = int(gdb.parse_and_eval("(unsigned long long)_debug_pmp_install_rc"))
+    pmpcfg0_snapshot = int(gdb.parse_and_eval("(unsigned long long)_debug_pmpcfg0_snapshot"))
+    pmpaddr0_snapshot = int(gdb.parse_and_eval("(unsigned long long)_debug_pmpaddr0_snapshot"))
+    pmpaddr1_snapshot = int(gdb.parse_and_eval("(unsigned long long)_debug_pmpaddr1_snapshot"))
+    pmpaddr2_snapshot = int(gdb.parse_and_eval("(unsigned long long)_debug_pmpaddr2_snapshot"))
+    gdb.write(f"[opensbi] pmp_install_rc=0x{pmp_install_rc:016X} pmpcfg0_snapshot=0x{pmpcfg0_snapshot:016X} pmpaddr0_snapshot=0x{pmpaddr0_snapshot:016X} pmpaddr1_snapshot=0x{pmpaddr1_snapshot:016X} pmpaddr2_snapshot=0x{pmpaddr2_snapshot:016X}\n")
+except Exception as e:
+    gdb.write(f"[opensbi] pmp snapshot read failed: {e}\n")
 
 if os.path.exists(vmlinux):
     gdb.write(f"[sym] Loading vmlinux symbols from {vmlinux}...\n")
@@ -184,6 +217,54 @@ try:
         gdb.write("\n")
 except Exception as e:
     gdb.write(f"[p3bd] breadcrumb dump failed: {e}\n")
+
+BOOT_OWNER_MARKER_BASE = int(os.environ.get("CEVA_RUNTIME_BOOT_OWNER_MARKER_ADDR", "0x8FBE0000"), 0)
+BOOT_OWNER_MARKER_SIZE = 0x1000
+BOOT_OWNER_MAGIC = 0x4F5342494F574E52
+BOOT_OWNER_STATE = 0x434C41494D454421
+BOOT_OWNER_STAGING = 0x4F50454E53424921
+BOOT_OWNER_HANDOFF = 0x4C494E585F434F4E
+
+try:
+    dump_pa("/tmp/phase2_boot_owner_marker.bin", BOOT_OWNER_MARKER_BASE, BOOT_OWNER_MARKER_SIZE)
+    with open("/tmp/phase2_boot_owner_marker.bin", "rb") as fh:
+        marker_blob = fh.read()
+
+    boot_owner_magic = struct.unpack_from("<Q", marker_blob, 0x88)[0]
+    boot_owner_state = struct.unpack_from("<Q", marker_blob, 0x90)[0]
+    boot_owner_staging = struct.unpack_from("<Q", marker_blob, 0x98)[0]
+    reserved_start = struct.unpack_from("<Q", marker_blob, 0xA0)[0]
+    reserved_size = struct.unpack_from("<Q", marker_blob, 0xA8)[0]
+    linux_handoff = struct.unpack_from("<Q", marker_blob, 0xB0)[0]
+    claimed = (boot_owner_magic == BOOT_OWNER_MAGIC and
+               boot_owner_state == BOOT_OWNER_STATE and
+               boot_owner_staging == BOOT_OWNER_STAGING and
+               linux_handoff == BOOT_OWNER_HANDOFF)
+
+    gdb.write(f"[boot-owner] claimed={'yes' if claimed else 'no'}\n")
+    gdb.write(f"[boot-owner] magic=0x{boot_owner_magic:016X} state=0x{boot_owner_state:016X} staging=0x{boot_owner_staging:016X}\n")
+    gdb.write(f"[boot-owner] reserved_start=0x{reserved_start:016X} reserved_size=0x{reserved_size:016X} linux_handoff=0x{linux_handoff:016X}\n")
+except Exception as e:
+    gdb.write(f"[boot-owner] marker dump failed: {e}\n")
+    try:
+        boot_owner_magic = int(gdb.parse_and_eval("(unsigned long long)_debug_boot_owner_magic"))
+        boot_owner_state = int(gdb.parse_and_eval("(unsigned long long)_debug_boot_owner_state"))
+        boot_owner_staging = int(gdb.parse_and_eval("(unsigned long long)_debug_boot_owner_staging"))
+        reserved_start = int(gdb.parse_and_eval("(unsigned long long)_debug_boot_owner_reserved_start"))
+        reserved_size = int(gdb.parse_and_eval("(unsigned long long)_debug_boot_owner_reserved_size"))
+        linux_handoff = int(gdb.parse_and_eval("(unsigned long long)_debug_boot_owner_linux_handoff"))
+        claimed = (boot_owner_magic == BOOT_OWNER_MAGIC and
+                   boot_owner_state == BOOT_OWNER_STATE and
+                   boot_owner_staging == BOOT_OWNER_STAGING and
+                   linux_handoff == BOOT_OWNER_HANDOFF)
+
+        if claimed:
+            gdb.write("[boot-owner] source=opensbi-record-fallback\n")
+        gdb.write(f"[boot-owner] claimed={'yes' if claimed else 'no'}\n")
+        gdb.write(f"[boot-owner] magic=0x{boot_owner_magic:016X} state=0x{boot_owner_state:016X} staging=0x{boot_owner_staging:016X}\n")
+        gdb.write(f"[boot-owner] reserved_start=0x{reserved_start:016X} reserved_size=0x{reserved_size:016X} linux_handoff=0x{linux_handoff:016X}\n")
+    except Exception as fallback_e:
+        gdb.write(f"[boot-owner] opensbi fallback failed: {fallback_e}\n")
 end
 
 echo [phase2] Step 6b: Scan Phase 2.5 DDR evidence\n

@@ -19,6 +19,9 @@ build/
 
 # Vivado transient outputs
 *.jou
+vivado*.log
+jlink*.log
+tmp_*.tcl
 *.str
 *.wdb
 *.dcp
@@ -37,7 +40,9 @@ linux-bringup/initramfs/initramfs.cpio.gz
 linux-bringup/initramfs/initramfs.cpio.bak*
 linux-bringup/initramfs/rootfs/lib/modules/*.ko
 linux-bringup/initramfs/rootfs/sbin/ceva_bt_hci_probe
+linux-bringup/initramfs/rootfs/sbin/phase25_user_hci_smoke
 linux-bringup/payload/fw_payload.bin
+linux-bringup/payload/ceva_runtime_launch_manifest.env
 linux-bringup/kernel/ceva-bt52-driver/*.cmd
 linux-bringup/kernel/ceva-bt52-driver/*.ko
 linux-bringup/kernel/ceva-bt52-driver/*.mod

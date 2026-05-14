@@ -32,9 +32,15 @@ gdb.write(f"[init] Connecting to J-Link {host}:{port}...\n")
 gdb.execute(f"target remote {host}:{port}")
 gdb.execute("monitor halt")
 gdb.write("[init] Halted\n")
+gdb.execute("monitor WriteCSR 0x300 0")
+gdb.execute("monitor WriteCSR 0x302 0")
+gdb.execute("monitor WriteCSR 0x303 0")
+gdb.execute("monitor WriteCSR 0x304 0")
 gdb.execute("monitor WriteCSR 0x180 0")
+gdb.execute("monitor WriteCSR 0x3a0 0")
+gdb.execute("monitor WriteCSR 0x3b0 0")
 gdb.execute("monitor WriteCSR 0x7b0 0x4000F0C3")
-gdb.write("[init] Reset satp and dcsr to known boot state\n")
+gdb.write("[init] Reset machine, satp, PMP, and dcsr state to known boot state\n")
 end
 
 echo [phase2] Phase 2 CEVA BT5.2 Linux driver boot\n
@@ -79,6 +85,24 @@ echo [phase2] Step 4: Set entry point and registers\n
 set $pc = 0x80000000
 set $a0 = 0
 set $a1 = 0x84000000
+
+echo [phase2] Step 4-pre: Execute fence.i helper before entering payload\n
+
+python
+fence_i_helper_path = "/tmp/phase2_fence_i_helper.bin"
+if not os.path.exists(fence_i_helper_path):
+    with open(fence_i_helper_path, "wb") as fh:
+        fh.write((0x0000100F).to_bytes(4, byteorder="little"))
+        fh.write((0x00008067).to_bytes(4, byteorder="little"))
+
+gdb.write("[phase2] Installing fence.i helper at PA 0x8FFFE000\n")
+gdb.execute(f"restore {fence_i_helper_path} binary 0x8fffe000")
+gdb.execute("set $ra = 0x80000000")
+gdb.execute("set $pc = 0x8fffe000")
+gdb.execute("stepi")
+gdb.execute("stepi")
+gdb.write("[phase2] fence.i executed; returned to payload entry\n")
+end
 
 echo [phase2] Step 4a: Clear init stage slot\n
 
@@ -162,8 +186,12 @@ monitor WriteU32 0x6501FFFC 0x00000000
 
 python
 try:
+    zero_phase25_path = "/tmp/phase2_zero_phase25.bin"
+    if not os.path.exists(zero_phase25_path) or os.path.getsize(zero_phase25_path) != 0x100:
+        with open(zero_phase25_path, "wb") as fh:
+            fh.write(b"\x00" * 0x100)
     gdb.write("[phase2] Clearing Phase 2.5 DDR evidence scratch at 0x8FF00000\n")
-    gdb.execute(f"restore {zero_klog_path} binary 0x8ff00000")
+    gdb.execute(f"restore {zero_phase25_path} binary 0x8ff00000")
 except Exception as e:
     gdb.write(f"[phase2] DDR evidence clear skipped: {e}\n")
 end

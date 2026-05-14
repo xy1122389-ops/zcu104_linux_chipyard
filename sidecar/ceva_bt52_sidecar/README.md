@@ -7,8 +7,8 @@ It is not CEVA vendor runtime, not a Bluetooth controller, not an H4 stack, and 
 ## Scope
 
 - Builds a freestanding RV64 image with `_start`, stack setup, BSS clear, marker writes, and an idle loop.
-- Uses the candidate marker page from G9G: `0x8F010000`.
-- Uses a candidate image base: `0x8F020000`.
+- Uses the P4-C6 marker page: `0x8FBE0000`.
+- Uses the P4-C6 sidecar image base: `0x8FBF0000`.
 - Does not call `rwip_init()` or any vendor runtime function.
 - Does not modify Linux driver, RTL, payload layout, DTB/DTS, OpenSBI, Vivado, or board scripts.
 
